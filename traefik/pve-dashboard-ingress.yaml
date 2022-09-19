@@ -41,3 +41,5 @@ spec:
       name: pve1
       port: 8006
       serversTransport: insecuretransport
+  tls:
+    secretName: local-xuhuisun-com-tls
