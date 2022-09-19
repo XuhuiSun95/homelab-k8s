@@ -1,6 +1,6 @@
-# experimental:
-#   http3:
-#     enabled: true
+experimental:
+  http3:
+    enabled: true
 
 ingressRoute:
   dashboard:
@@ -20,11 +20,13 @@ ports:
   web:
     redirectTo: websecure
   websecure:
-    # http3: true
+    http3: true
     tls:
       enabled: true
 
 service:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "http3-share-192.168.1.80"
   spec:
     loadBalancerIP: "192.168.1.80"
 
