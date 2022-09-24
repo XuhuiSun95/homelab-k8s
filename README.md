@@ -4,6 +4,17 @@
 - Helm
 - Oh my zsh kubectl plugin
 
+### OpenEBS
+#### Setup apps
+```bash
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
+k create namespace openebs
+helm upgrade --install openebs openebs/openebs --values=openebs/values.yaml --namespace=openebs --create-namespace
+k patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+k patch storageclass openebs-device -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
 ### Reflector
 #### Setup apps
 ```bash

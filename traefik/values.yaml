@@ -32,8 +32,8 @@ service:
 
 autoscaling:
   enabled: true
-  minReplicas: 1
-  maxReplicas: 10
+  minReplicas: 3
+  maxReplicas: 100
   metrics:
   - type: Resource
     resource:
