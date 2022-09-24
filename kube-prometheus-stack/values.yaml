@@ -1,0 +1,95 @@
+fullnameOverride: prometheus
+
+alertmanager:
+  fullnameOverride: alertmanager
+
+grafana:
+  fullnameOverride: grafana
+  adminPassword: prom-operator
+
+kubelet:
+  serviceMonitor:
+    metricRelabelings:
+      - action: replace
+        sourceLabels:
+          - node
+        targetLabel: instance
+
+kubeControllerManager:
+  endpoints:
+    - 192.168.1.28
+    - 192.168.1.29
+    - 192.168.1.30
+
+kubeEtcd:
+  endpoints:
+    - 192.168.1.28
+    - 192.168.1.29
+    - 192.168.1.30
+
+kubeScheduler:
+  endpoints:
+    - 192.168.1.28
+    - 192.168.1.29
+    - 192.168.1.30
+
+kubeProxy:
+  endpoints:
+    - 192.168.1.28
+    - 192.168.1.29
+    - 192.168.1.30
+
+kube-state-metrics:
+  fullnameOverride: kube-state-metrics
+  prometheus:
+    monitor:
+      relabelings:
+        - action: replace
+          regex: (.*)
+          replacement: $1
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: kubernetes_node
+  selfMonitor:
+    enabled: true
+
+nodeExporter:
+  serviceMonitor:
+    relabelings:
+      - action: replace
+        regex: (.*)
+        replacement: $1
+        sourceLabels:
+          - __meta_kubernetes_pod_node_name
+        targetLabel: kubernetes_node
+
+prometheus-node-exporter:
+  fullnameOverride: node-exporter
+  prometheus:
+    monitor:
+      relabelings:
+        - action: replace
+          regex: (.*)
+          replacement: $1
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: kubernetes_node
+
+prometheus:
+  prometheusSpec:
+    replicas: 1
+    replicaExternalLabelName: "replica"
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    retention: 6h
+    enableAdminAPI: true
+    storageSpec:
+     volumeClaimTemplate:
+       spec:
+         storageClassName: openebs-device
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 50Gi

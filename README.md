@@ -55,3 +55,16 @@ k apply -f traefik/traefik-dashborad-ingress.yaml
 k create namespace proxmox
 k apply -f traefik/pve-dashboard-ingress.yaml
 ```
+
+### Kube-Prometheus-Stack
+#### Setup apps
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+k create namespace monitoring
+helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --values=kube-prometheus-stack/values.yaml --namespace=monitoring --create-namespace
+```
+#### Dashboards
+```bash
+k apply -f kube-prometheus-stack/grafana-dashboard-ingress.yaml
+```
