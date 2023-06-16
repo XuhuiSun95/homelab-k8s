@@ -56,8 +56,8 @@ helm repo add istio https://istio-release.storage.googleapis.com/charts
 helm repo update
 helm upgrade --install istio-base istio/base --namespace=istio-system --create-namespace
 # In the output locate the entry for istio-base and make sure the status is set to deployed.
-helm upgrade --install istiod istio/istiod --namespace=istio-system --create-namespace --wait
-helm upgrade --install istio-ingress istio/gateway --values=istio/values.yaml --namespace=istio-ingress --create-namespace --wait
+helm upgrade --install istiod istio/istiod --values=istio/istiod-values.yaml --namespace=istio-system --create-namespace --wait
+helm upgrade --install istio-ingress istio/gateway --values=istio/gateway-values.yaml --namespace=istio-ingress --create-namespace --wait
 ```
 #### Kiali dashboard
 ```bash
@@ -66,7 +66,7 @@ helm repo update
 helm upgrade --install kiali-operator kiali/kiali-operator --values=istio/kiali-values.yaml --namespace kiali-operator --create-namespace
 
 # To get login token
-kubectl -n istio-system create token kiali-service-account
+kubectl -n istio-system create token kiali-service-account | xclip
 ```
 #### Ingress gateway
 ```bash

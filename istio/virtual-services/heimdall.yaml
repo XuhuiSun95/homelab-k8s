@@ -5,7 +5,7 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "heimdall.local.xuhuisun.com"
+  - "heimdall.com"
   location: MESH_EXTERNAL
   ports:
   - number: 443
@@ -29,10 +29,9 @@ spec:
   gateways:
   - gateway
   http:
-  - timeout: 3s
-    route:
+  - route:
     - destination:
-        host: "heimdall.local.xuhuisun.com"
+        host: "heimdall.com"
         port:
           number: 443
 ---
@@ -42,7 +41,7 @@ metadata:
   name: heimdall
   namespace: istio-ingress
 spec:
-  host: "heimdall.local.xuhuisun.com"
+  host: "heimdall.com"
   trafficPolicy:
     tls:
       mode: DISABLE

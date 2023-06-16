@@ -1,0 +1,3 @@
+# pilot:
+#   env:
+#     PILOT_ENABLE_QUIC_LISTENERS: true
