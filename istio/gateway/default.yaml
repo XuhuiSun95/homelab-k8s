@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: gateway
+  namespace: istio-ingress
+spec:
+  selector:
+    istio: ingress
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "local.xuhuisun.com"
+    - "*.local.xuhuisun.com"
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "local.xuhuisun.com"
+    - "*.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls

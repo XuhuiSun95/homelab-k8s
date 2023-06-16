@@ -1,0 +1,51 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: pve-ext
+  namespace: istio-ingress
+spec:
+  hosts:
+  - "pve.local.xuhuisun.com"
+  location: MESH_EXTERNAL
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  endpoints:
+  - address: 192.168.60.2
+    ports:
+      https: 8006
+  - address: 192.168.60.3
+    ports:
+      https: 8006
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: pve-vs
+  namespace: istio-ingress
+spec:
+  hosts:
+  - "pve.local.xuhuisun.com"
+  gateways:
+  - gateway
+  http:
+  - timeout: 3s
+    route:
+    - destination:
+        host: "pve.local.xuhuisun.com"
+        port:
+          number: 443
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: pve
+  namespace: istio-ingress
+spec:
+  host: "pve.local.xuhuisun.com"
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      insecureSkipVerify: true
