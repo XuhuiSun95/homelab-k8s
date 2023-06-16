@@ -63,7 +63,7 @@ helm upgrade --install istio-ingress istio/gateway --values=istio/values.yaml --
 ```bash
 helm repo add kiali https://kiali.org/helm-charts
 helm repo update
-helm upgrade --install kiali-operator kiali/kiali-operator --set cr.create=true --set cr.namespace=istio-system --namespace kiali-operator --create-namespace
+helm upgrade --install kiali-operator kiali/kiali-operator --values=istio/kiali-values.yaml --namespace kiali-operator --create-namespace
 
 # To get login token
 kubectl -n istio-system create token kiali-service-account
@@ -71,10 +71,10 @@ kubectl -n istio-system create token kiali-service-account
 #### Ingress gateway
 ```bash
 kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
-kubectl apply -f istio/gateway/default.yaml
-kubectl apply -f istio/virtual-service/kiali-console.yaml
-kubectl apply -f istio/virtual-service/heimdall.yaml
-kubectl apply -f istio/virtual-service/pve.yaml
+kubectl apply -f istio/gateways/default.yaml
+kubectl apply -f istio/virtual-services/kiali-console.yaml
+kubectl apply -f istio/virtual-services/heimdall.yaml
+kubectl apply -f istio/virtual-services/pve.yaml
 ```
 
 ### Kube-Prometheus-Stack
