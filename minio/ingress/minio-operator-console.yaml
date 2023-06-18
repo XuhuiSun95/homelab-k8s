@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: minio-operator-console-vs
+  namespace: minio-operator
+spec:
+  hosts:
+  - "minio-operator-console.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: console
+        port:
+          number: 9090
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: minio-operator-console
+  namespace: minio-operator
+spec:
+  host: console
+  trafficPolicy:
+    tls:
+      mode: DISABLE

@@ -21,6 +21,14 @@ helm repo add openebs https://openebs.github.io/charts
 helm repo update
 helm upgrade --install openebs openebs/openebs --values=openebs/values.yaml --namespace=openebs --create-namespace
 ```
+#### Setup node label
+```bash
+kubectl label nodes worker-01 disktype=ssd
+kubectl label nodes worker-02 disktype=ssd
+kubectl label nodes worker-03 disktype=ssd
+kubectl label nodes worker-04 disktype=ssd
+kubectl label nodes worker-05 disktype=ssd
+```
 
 ### MetalLB
 ### Setup apps
@@ -59,6 +67,13 @@ helm upgrade --install istio-base istio/base --namespace=istio-system --create-n
 helm upgrade --install istiod istio/istiod --values=istio/istiod-values.yaml --namespace=istio-system --create-namespace --wait
 helm upgrade --install istio-ingress istio/gateway --values=istio/gateway-values.yaml --namespace=istio-ingress --create-namespace --wait
 ```
+#### Ingress gateway
+```bash
+kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
+kubectl apply -f istio/gateways/default.yaml
+kubectl apply -f istio/virtual-services/heimdall.yaml
+kubectl apply -f istio/virtual-services/pve.yaml
+```
 #### Kiali dashboard
 ```bash
 helm repo add kiali https://kiali.org/helm-charts
@@ -66,15 +81,25 @@ helm repo update
 helm upgrade --install kiali-operator kiali/kiali-operator --values=istio/kiali-values.yaml --namespace kiali-operator --create-namespace
 
 # To get login token
+kubectl apply -f istio/virtual-services/kiali-console.yaml
 kubectl -n istio-system create token kiali-service-account | xclip
 ```
-#### Ingress gateway
+
+### MinIO
+#### Setup operator
 ```bash
-kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
-kubectl apply -f istio/gateways/default.yaml
-kubectl apply -f istio/virtual-services/kiali-console.yaml
-kubectl apply -f istio/virtual-services/heimdall.yaml
-kubectl apply -f istio/virtual-services/pve.yaml
+helm upgrade --install minio-operator minio/operator --namespace minio-operator --create-namespace
+
+# To get login token
+kubectl apply -f minio/ingress/minio-operator-console.yaml
+kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
+```
+#### Setup tenant
+```bash
+helm upgrade --install tenant minio/tenant --values=minio/values.yaml --namespace minio --create-namespace
+
+kubectl apply -f minio/ingress/minio-tenant-console.yaml
+kubectl apply -f minio/ingress/minio-tenant-s3.yaml
 ```
 
 ### Kube-Prometheus-Stack
@@ -84,8 +109,4 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 k create namespace monitoring
 helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --values=kube-prometheus-stack/values.yaml --namespace=monitoring --create-namespace
-```
-#### Dashboards
-```bash
-k apply -f kube-prometheus-stack/grafana-dashboard-ingress.yaml
 ```
