@@ -1,143 +1,44 @@
-fullnameOverride: prometheus
-
 alertmanager:
-  fullnameOverride: alertmanager
   alertmanagerSpec:
-    replicas: 1
-    retention: 120h
-    # storage:
-    #  volumeClaimTemplate:
-    #    spec:
-    #      storageClassName: openebs-device
-    #      accessModes: ["ReadWriteOnce"]
-    #      resources:
-    #        requests:
-    #          storage: 50Gi
-
-
-grafana:
-  fullnameOverride: grafana
-  adminPassword: prom-operator
-
-kubelet:
-  serviceMonitor:
-    metricRelabelings:
-      - action: replace
-        sourceLabels:
-          - node
-        targetLabel: instance
-
-kubeControllerManager:
-  endpoints:
-    - 192.168.1.28
-    - 192.168.1.29
-    - 192.168.1.30
-
-kubeEtcd:
-  endpoints:
-    - 192.168.1.28
-    - 192.168.1.29
-    - 192.168.1.30
-
-kubeScheduler:
-  endpoints:
-    - 192.168.1.28
-    - 192.168.1.29
-    - 192.168.1.30
-
-kubeProxy:
-  endpoints:
-    - 192.168.1.28
-    - 192.168.1.29
-    - 192.168.1.30
-
-kube-state-metrics:
-  fullnameOverride: kube-state-metrics
-  prometheus:
-    monitor:
-      relabelings:
-        - action: replace
-          regex: (.*)
-          replacement: $1
-          sourceLabels:
-            - __meta_kubernetes_pod_node_name
-          targetLabel: kubernetes_node
-  selfMonitor:
-    enabled: true
-
-nodeExporter:
-  serviceMonitor:
-    relabelings:
-      - action: replace
-        regex: (.*)
-        replacement: $1
-        sourceLabels:
-          - __meta_kubernetes_pod_node_name
-        targetLabel: kubernetes_node
-
-prometheus-node-exporter:
-  fullnameOverride: node-exporter
-  prometheus:
-    monitor:
-      relabelings:
-        - action: replace
-          regex: (.*)
-          replacement: $1
-          sourceLabels:
-            - __meta_kubernetes_pod_node_name
-          targetLabel: kubernetes_node
+    replicas: 3
+    podAntiAffinity: hard
+    affinity:
+       nodeAffinity:
+         requiredDuringSchedulingIgnoredDuringExecution:
+           nodeSelectorTerms:
+           - matchExpressions:
+             - key: disktype
+               operator: In
+               values:
+               - ssd
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: openebs-device
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 80Gi
 
 prometheus:
   prometheusSpec:
-    replicas: 1
-    # replicas: 3
-    replicaExternalLabelName: "replica"
-    ruleSelectorNilUsesHelmValues: false
+    replicas: 3
     serviceMonitorSelectorNilUsesHelmValues: false
-    podMonitorSelectorNilUsesHelmValues: false
-    probeSelectorNilUsesHelmValues: false
-    retention: 6h
-    enableAdminAPI: true
+    podAntiAffinity: hard
+    affinity:
+       nodeAffinity:
+         requiredDuringSchedulingIgnoredDuringExecution:
+           nodeSelectorTerms:
+           - matchExpressions:
+             - key: disktype
+               operator: In
+               values:
+               - ssd
     storageSpec:
-     volumeClaimTemplate:
-       spec:
-         storageClassName: openebs-device
-         accessModes: ["ReadWriteOnce"]
-         resources:
-           requests:
-             storage: 50Gi
-         # selector:
-         #   matchLabels:
-         #     kubernetes.io/hostname: worker-02
-    # podAntiAffinity: "hard"
-    additionalScrapeConfigs:
-      - job_name: kubernetes-pod-endpoints
-        scrape_interval: 5s
-        scrape_timeout: 2s
-        kubernetes_sd_configs:
-          - role: endpoints
-        relabel_configs:
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-            action: keep
-            regex: true
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
-            action: replace
-            target_label: __scheme__
-            regex: (https?)
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-            action: replace
-            target_label: __metrics_path__
-            regex: (.+)
-          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-            action: replace
-            target_label: __address__
-            regex: (.+)(?::\d+);(\d+)
-            replacement: $1:$2
-          - action: labelmap
-            regex: __meta_kubernetes_pod_label_(.+)
-          - source_labels: [__meta_kubernetes_namespace]
-            action: replace
-            target_label: kubernetes_namespace
-          - source_labels: [__meta_kubernetes_pod_name]
-            action: replace
-            target_label: kubernetes_name
+      volumeClaimTemplate:
+        spec:
+          storageClassName: openebs-device
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 80Gi

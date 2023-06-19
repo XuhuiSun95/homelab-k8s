@@ -4,7 +4,7 @@
 - Helm
 - Oh my zsh kubectl plugin
 
-### Rook
+### Rook (HCI ceph only)
 #### Setup apps
 ```bash
 helm repo add rook-release https://charts.rook.io/release
@@ -57,6 +57,14 @@ kubectl create secret generic route53-credentials-secret --from-literal="secret-
 kubectl apply -f cert-manager/issuers/letsencrypt-production.yaml
 ```
 
+### Kube-Prometheus-Stack
+#### Setup apps
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --values=kube-prometheus-stack/values.yaml --namespace=monitoring --create-namespace
+```
+
 ### Istio
 #### Setup apps
 ```bash
@@ -98,15 +106,8 @@ kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.toke
 ```bash
 helm upgrade --install tenant minio/tenant --values=minio/values.yaml --namespace minio --create-namespace
 
+# kubectl label namespace minio istio-injection=enabled --overwrite
+
 kubectl apply -f minio/ingress/minio-tenant-console.yaml
 kubectl apply -f minio/ingress/minio-tenant-s3.yaml
-```
-
-### Kube-Prometheus-Stack
-#### Setup apps
-```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-k create namespace monitoring
-helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --values=kube-prometheus-stack/values.yaml --namespace=monitoring --create-namespace
 ```
