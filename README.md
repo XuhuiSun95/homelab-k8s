@@ -92,6 +92,11 @@ helm upgrade --install kiali-operator kiali/kiali-operator --values=istio/kiali-
 kubectl apply -f istio/virtual-services/kiali-console.yaml
 kubectl -n istio-system create token kiali-service-account | xclip
 ```
+#### Prometheus dashboard
+```bash
+kubectl apply -f kube-prometheus-stack/ingress/prometheus.yaml
+kubectl apply -f kube-prometheus-stack/ingress/grafana.yaml
+```
 
 ### MinIO
 #### Setup operator
