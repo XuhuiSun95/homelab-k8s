@@ -30,26 +30,7 @@ kubectl label nodes worker-04 disktype=ssd
 kubectl label nodes worker-05 disktype=ssd
 ```
 
-### MetalLB
-### Setup apps
-```bash
-helm repo add metallb https://metallb.github.io/metallb
-helm repo update
-helm upgrade --install metallb metallb/metallb --values=metallb/values.yaml --namespace=metallb-system --create-namespace
-```
-#### Setup pools
-```bash
-kubectl apply -f metallb/pools/vlan60.yaml
-```
-
 ### Cert-Manager
-#### Setup apps
-```bash
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.1/cert-manager.crds.yaml
-helm upgrade --install cert-manager jetstack/cert-manager --values=cert-manager/values.yaml --namespace=cert-manager --create-namespace --version v1.12.1
-```
 #### Setup cluster issuer
 ```bash
   export aws_secret=<supersecretsupersecretsupersecret>
@@ -79,17 +60,22 @@ helm upgrade --install istio-ingress istio/gateway --values=istio/gateway-values
 ```bash
 kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
 kubectl apply -f istio/gateways/default.yaml
-kubectl apply -f istio/virtual-services/heimdall.yaml
-kubectl apply -f istio/virtual-services/pve.yaml
 ```
-#### Kiali dashboard
+#### External services
+```bash
+kubectl apply -f istio/virtual-services/heimdall.yaml
+kubectl apply -f istio/virtual-services/pve1.yaml
+kubectl apply -f istio/virtual-services/pve2.yaml
+```
+#### Kiali
+<!-- TODO fix prometheus integration -->
 ```bash
 helm repo add kiali https://kiali.org/helm-charts
 helm repo update
-helm upgrade --install kiali-operator kiali/kiali-operator --values=istio/kiali-values.yaml --namespace kiali-operator --create-namespace
+helm upgrade --install kiali-operator kiali/kiali-operator --values=kiali/values.yaml --namespace kiali-operator --create-namespace
 
 # To get login token
-kubectl apply -f istio/virtual-services/kiali-console.yaml
+kubectl apply -f kiali/ingress/kiali-console.yaml
 kubectl -n istio-system create token kiali-service-account | xclip
 ```
 #### Prometheus dashboard

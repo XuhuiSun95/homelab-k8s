@@ -1,11 +1,11 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
-  name: pve-ext
+  name: pve1-ext
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve.com"
+  - "pve1.com"
   location: MESH_EXTERNAL
   ports:
   - number: 443
@@ -23,27 +23,27 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: pve-vs
+  name: pve1-vs
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve.local.xuhuisun.com"
+  - "pve1.local.xuhuisun.com"
   gateways:
   - gateway
   http:
   - route:
     - destination:
-        host: "pve.com"
+        host: "pve1.com"
         port:
           number: 443
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: pve
+  name: pve1
   namespace: istio-ingress
 spec:
-  host: "pve.com"
+  host: "pve1.com"
   trafficPolicy:
     tls:
       mode: SIMPLE
