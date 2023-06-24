@@ -103,7 +103,7 @@ kubectl apply -f kube-prometheus-stack/ingress/grafana.yaml
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
 kubectl apply -f minio/storageclass/minio.yaml
 
-helm upgrade --install minio-operator minio/operator --namespace minio-operator --create-namespace
+helm upgrade --install minio-operator minio/operator --values=minio/operator-values.yaml --namespace minio-operator --create-namespace
 
 # To get login token
 kubectl apply -f minio/ingress/minio-operator-console.yaml

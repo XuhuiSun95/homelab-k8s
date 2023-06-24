@@ -48,7 +48,7 @@ spec:
     tls:
       mode: SIMPLE
       insecureSkipVerify: true
-    outlierDetection:
-      consecutive5xxErrors: 1
-      interval: 15s
-      baseEjectionTime: 1m
+    # outlierDetection:
+    #   consecutive5xxErrors: 1
+    #   interval: 15s
+    #   baseEjectionTime: 1m
