@@ -3,18 +3,27 @@ alertmanager:
     replicas: 3
     podAntiAffinity: hard
     affinity:
-       nodeAffinity:
-         requiredDuringSchedulingIgnoredDuringExecution:
-           nodeSelectorTerms:
-           - matchExpressions:
-             - key: disktype
-               operator: In
-               values:
-               - ssd
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: disktype
+              operator: In
+              values:
+              - ssd
+    tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: openebs-device
+          storageClassName: local-device-prometheus
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -26,18 +35,27 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
     podAntiAffinity: hard
     affinity:
-       nodeAffinity:
-         requiredDuringSchedulingIgnoredDuringExecution:
-           nodeSelectorTerms:
-           - matchExpressions:
-             - key: disktype
-               operator: In
-               values:
-               - ssd
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: disktype
+              operator: In
+              values:
+              - ssd
+    tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: openebs-device
+          storageClassName: local-device-prometheus
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:

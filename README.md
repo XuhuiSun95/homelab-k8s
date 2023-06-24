@@ -4,6 +4,16 @@
 - Helm
 - Oh my zsh kubectl plugin
 
+### Setup k8s
+```bash
+docker pull quay.io/kubespray/kubespray:v2.22.1
+docker run --rm -it --mount type=bind,source="$(pwd)"/ansible/inventory/myculster,dst=/inventory \
+  --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
+  quay.io/kubespray/kubespray:v2.22.1 bash
+
+ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml -u esun-local -b
+```
+
 ### Rook (HCI ceph only)
 #### Setup apps
 ```bash
@@ -41,6 +51,9 @@ kubectl apply -f cert-manager/issuers/letsencrypt-production.yaml
 ### Kube-Prometheus-Stack
 #### Setup apps
 ```bash
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
+kubectl apply -f kube-prometheus-stack/storageclass/prometheus.yaml
+
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --values=kube-prometheus-stack/values.yaml --namespace=monitoring --create-namespace
@@ -87,6 +100,9 @@ kubectl apply -f kube-prometheus-stack/ingress/grafana.yaml
 ### MinIO
 #### Setup operator
 ```bash
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
+kubectl apply -f minio/storageclass/minio.yaml
+
 helm upgrade --install minio-operator minio/operator --namespace minio-operator --create-namespace
 
 # To get login token
