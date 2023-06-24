@@ -74,9 +74,13 @@ helm upgrade --install istio-ingress istio/gateway --values=istio/gateway-values
 kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
 kubectl apply -f istio/gateways/default.yaml
 ```
+#### Prometheus dashboard
+```bash
+kubectl apply -f kube-prometheus-stack/ingress/prometheus.yaml
+kubectl apply -f kube-prometheus-stack/ingress/grafana.yaml
+```
 #### External services
 ```bash
-kubectl apply -f istio/virtual-services/heimdall.yaml
 kubectl apply -f istio/virtual-services/pve1.yaml
 kubectl apply -f istio/virtual-services/pve2.yaml
 ```
@@ -91,11 +95,17 @@ helm upgrade --install kiali-operator kiali/kiali-operator --values=kiali/values
 kubectl apply -f kiali/ingress/kiali-console.yaml
 kubectl -n istio-system create token kiali-service-account | xclip
 ```
-#### Prometheus dashboard
+
+### Heimdall
+#### Setup apps
 ```bash
-kubectl apply -f kube-prometheus-stack/ingress/prometheus.yaml
-kubectl apply -f kube-prometheus-stack/ingress/grafana.yaml
+helm repo add djjudas21 https://djjudas21.github.io/charts
+helm repo update
+helm upgrade --install heimdall djjudas21/heimdall --namespace heimdall --create-namespace
+
+kubectl apply -f heimdall/ingress/heimdall.yaml
 ```
+
 
 ### MinIO
 #### Setup operator
