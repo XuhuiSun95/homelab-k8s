@@ -17,3 +17,17 @@ service:
   #   protocol: UDP
   #   targetPort: 443
   loadBalancerIP: "192.168.60.50"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 2000m
+    memory: 1536Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 15
+  targetCPUUtilizationPercentage: 80
