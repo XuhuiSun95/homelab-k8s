@@ -85,7 +85,6 @@ kubectl apply -f istio/virtual-services/pve1.yaml
 kubectl apply -f istio/virtual-services/pve2.yaml
 ```
 #### Kiali
-<!-- TODO fix prometheus integration -->
 ```bash
 helm repo add kiali https://kiali.org/helm-charts
 helm repo update

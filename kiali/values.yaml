@@ -14,3 +14,5 @@ cr:
             is_core: true
             is_proxy: true
             namespace: istio-ingress
+      prometheus:
+        url: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
