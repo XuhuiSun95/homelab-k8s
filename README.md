@@ -44,6 +44,7 @@ kubectl label nodes worker-05 disktype=ssd
 #### Setup cluster issuer
 ```bash
   export aws_secret=<supersecretsupersecretsupersecret>
+
 kubectl create secret generic route53-credentials-secret --from-literal="secret-access-key=$aws_secret" --namespace cert-manager
 kubectl apply -f cert-manager/issuers/letsencrypt-production.yaml
 ```

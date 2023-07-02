@@ -24,7 +24,7 @@ resources:
     memory: 128Mi
   limits:
     cpu: 2000m
-    memory: 1536Mi
+    memory: 2048Mi
 
 autoscaling:
   enabled: true
