@@ -37,17 +37,6 @@ helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-
 kubectl create -f rook/storageclass.yaml
 ```
 
-### OpenEBS
-#### Setup apps
-```bash
-kubectl apply -f argocd/applications/openebs.yaml
-```
-### Cert-Manager
-#### Setup cluster issuer
-```bash
-kubectl apply -f argocd/applications/cert-manager.yaml
-```
-
 ### All in one deployment
 ```bash
 kubectl apply -f deployment.yaml
@@ -57,7 +46,6 @@ kubectl apply -f deployment.yaml
 #### Setup apps
 ```bash
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
-kubectl apply -f kube-prometheus-stack/storageclass/prometheus.yaml
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
@@ -123,7 +111,6 @@ kubectl apply -f heimdall/ingress/heimdall.yaml
 #### Setup operator
 ```bash
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
-kubectl apply -f minio/storageclass/minio.yaml
 
 helm upgrade --install minio-operator minio/operator --values=minio/operator-values.yaml --namespace minio-operator --create-namespace
 
