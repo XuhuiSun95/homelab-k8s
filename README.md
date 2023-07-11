@@ -45,11 +45,8 @@ kubectl apply -f deployment.yaml
 ### Kube-Prometheus-Stack
 #### Setup apps
 ```bash
+# setup openebs block device tag
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
-
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --values=kube-prometheus-stack/values.yaml --namespace=monitoring --create-namespace
 ```
 
 ### Istio
