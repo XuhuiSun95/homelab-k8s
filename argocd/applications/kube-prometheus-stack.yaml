@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
-  name: kube-prometheus-stack
+  name: prometheus
   namespace: argocd
 spec:
   project: default
