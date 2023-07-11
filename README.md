@@ -40,12 +40,17 @@ kubectl create -f rook/storageclass.yaml
 ### OpenEBS
 #### Setup apps
 ```bash
-kubectl apply -f openebs/argocd.yaml
+kubectl apply -f argocd/applications/openebs.yaml
 ```
 ### Cert-Manager
 #### Setup cluster issuer
 ```bash
-kubectl apply -f cert-manager/argocd.yaml
+kubectl apply -f argocd/applications/cert-manager.yaml
+```
+
+### All in one deployment
+```bash
+kubectl apply -f deployment.yaml
 ```
 
 ### Kube-Prometheus-Stack
