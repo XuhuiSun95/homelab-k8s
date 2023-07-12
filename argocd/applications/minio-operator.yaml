@@ -11,7 +11,7 @@ spec:
     namespace: minio-operator
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: minio-operator
+    - chart: operator
       repoURL: 'https://operator.min.io/'
       targetRevision: 5.0.6
       helm:
