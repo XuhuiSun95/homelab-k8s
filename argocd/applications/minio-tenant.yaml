@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: tenant
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: minio
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: tenant
+      repoURL: 'https://operator.min.io/'
+      targetRevision: 5.0.6
+      helm:
+        valueFiles:
+        - $values/minio/tenant-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

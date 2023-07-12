@@ -107,15 +107,12 @@ kubectl apply -f heimdall/ingress/heimdall.yaml
 ### MinIO
 #### Setup operator
 ```bash
-
 # To get login token
 kubectl apply -f minio/ingress/minio-operator-console.yaml
 kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
 ```
 #### Setup tenant
 ```bash
-helm upgrade --install tenant minio/tenant --values=minio/values.yaml --namespace minio --create-namespace
-
 # kubectl label namespace minio istio-injection=enabled --overwrite
 
 kubectl apply -f minio/ingress/minio-tenant-console.yaml
