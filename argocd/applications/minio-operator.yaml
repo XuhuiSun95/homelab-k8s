@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: minio-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: minio-operator
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: minio-operator
+      repoURL: 'https://operator.min.io/'
+      targetRevision: 5.0.6
+      helm:
+        valueFiles:
+        - $values/minio/operator-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

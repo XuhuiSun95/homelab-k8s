@@ -26,6 +26,13 @@ kubectl label nodes worker-05 disktype=ssd
   export aws_secret=<supersecretsupersecretsupersecret>
 kubectl create secret generic route53-credentials-secret --from-literal="secret-access-key=$aws_secret" --namespace cert-manager
 ```
+#### Setup openebs block device tags
+```bash
+# setup openebs block device tag
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
+
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
+```
 
 ### Rook (HCI ceph only)
 #### Setup apps
@@ -40,13 +47,6 @@ kubectl create -f rook/storageclass.yaml
 ### All in one deployment
 ```bash
 kubectl apply -f deployment.yaml
-```
-
-### Kube-Prometheus-Stack
-#### Setup apps
-```bash
-# setup openebs block device tag
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
 ```
 
 ### Istio
@@ -107,9 +107,6 @@ kubectl apply -f heimdall/ingress/heimdall.yaml
 ### MinIO
 #### Setup operator
 ```bash
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
-
-helm upgrade --install minio-operator minio/operator --values=minio/operator-values.yaml --namespace minio-operator --create-namespace
 
 # To get login token
 kubectl apply -f minio/ingress/minio-operator-console.yaml
