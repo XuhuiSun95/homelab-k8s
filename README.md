@@ -50,10 +50,6 @@ kubectl apply -f deployment.yaml
 ```
 
 ### Istio
-#### Setup apps
-```bash
-kubectl apply -f istio/prometheus/istio-service-monitor.yaml
-```
 #### Ingress gateway
 ```bash
 kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
@@ -77,24 +73,20 @@ kubectl apply -f istio/virtual-services/pve2.yaml
 ```
 #### Kiali
 ```bash
-helm repo add kiali https://kiali.org/helm-charts
-helm repo update
-helm upgrade --install kiali-operator kiali/kiali-operator --values=kiali/values.yaml --namespace kiali-operator --create-namespace
-
 # To get login token
 kubectl apply -f kiali/ingress/kiali-console.yaml
 kubectl -n istio-system create token kiali-service-account | xclip
 ```
 
-### Heimdall
-#### Setup apps
-```bash
-helm repo add djjudas21 https://djjudas21.github.io/charts
-helm repo update
-helm upgrade --install heimdall djjudas21/heimdall --namespace heimdall --create-namespace
+<!-- ### Heimdall -->
+<!-- #### Setup apps -->
+<!-- ```bash -->
+<!-- helm repo add djjudas21 https://djjudas21.github.io/charts -->
+<!-- helm repo update -->
+<!-- helm upgrade --install heimdall djjudas21/heimdall --namespace heimdall --create-namespace -->
 
-kubectl apply -f heimdall/ingress/heimdall.yaml
-```
+<!-- kubectl apply -f heimdall/ingress/heimdall.yaml -->
+<!-- ``` -->
 
 
 ### MinIO

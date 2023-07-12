@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: kiali-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: kiali-operator
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: kiali-operator
+      repoURL: 'https://kiali.org/helm-charts'
+      targetRevision: 1.70.0
+      helm:
+        valueFiles:
+        - $values/kiali/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
