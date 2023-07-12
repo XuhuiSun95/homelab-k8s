@@ -3,7 +3,7 @@
   "extends": [
     "config:base"
   ],
-  "kubernetes": {
-    "fileMatch": ["\\.yaml$"]
+  "argocd": {
+    "fileMatch": ["argocd/applications/.+\\.yaml$", "^deployment\\.yaml$"]
   }
 }
