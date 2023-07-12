@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: istio-ingress
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: istio-ingress
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: gateway
+      repoURL: 'https://istio-release.storage.googleapis.com/charts'
+      targetRevision: 1.18.0
+      helm:
+        valueFiles:
+        - $values/istio/gateway-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

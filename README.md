@@ -52,13 +52,6 @@ kubectl apply -f deployment.yaml
 ### Istio
 #### Setup apps
 ```bash
-helm repo add istio https://istio-release.storage.googleapis.com/charts
-helm repo update
-helm upgrade --install istio-base istio/base --namespace=istio-system --create-namespace
-# In the output locate the entry for istio-base and make sure the status is set to deployed.
-helm upgrade --install istiod istio/istiod --values=istio/istiod-values.yaml --namespace=istio-system --create-namespace --wait
-helm upgrade --install istio-ingress istio/gateway --values=istio/gateway-values.yaml --namespace=istio-ingress --create-namespace --wait
-
 kubectl apply -f istio/prometheus/istio-service-monitor.yaml
 ```
 #### Ingress gateway
