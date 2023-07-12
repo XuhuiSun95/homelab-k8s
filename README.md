@@ -34,43 +34,21 @@ kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
 ```
 
-### Rook (HCI ceph only)
-#### Setup apps
-```bash
-helm repo add rook-release https://charts.rook.io/release
-helm repo update
-helm upgrade --install rook-ceph rook-release/rook-ceph --values=rook/values.yaml --namespace=rook-ceph --create-namespace
-helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster --values=rook/values.yaml --namespace=rook-ceph --create-namespace
-kubectl create -f rook/storageclass.yaml
-```
-
 ### All in one deployment
 ```bash
 kubectl apply -f deployment.yaml
 ```
-
-### Istio
-#### ArgoCD
+#### ArgoCD token
 ```bash
-# To get login token
-kubectl apply -f argocd/ingress/argocd.yaml
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | xclip
 ```
-#### Prometheus dashboard
+#### Kiali token
 ```bash
-kubectl apply -f kube-prometheus-stack/ingress/prometheus.yaml
-kubectl apply -f kube-prometheus-stack/ingress/grafana.yaml
-```
-#### External services
-```bash
-kubectl apply -f istio/virtual-services/pve1.yaml
-kubectl apply -f istio/virtual-services/pve2.yaml
-```
-#### Kiali
-```bash
-# To get login token
-kubectl apply -f kiali/ingress/kiali-console.yaml
 kubectl -n istio-system create token kiali-service-account | xclip
+```
+#### Minio operator token
+```bash
+kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
 ```
 
 <!-- ### Heimdall -->
@@ -83,18 +61,18 @@ kubectl -n istio-system create token kiali-service-account | xclip
 <!-- kubectl apply -f heimdall/ingress/heimdall.yaml -->
 <!-- ``` -->
 
+<!-- ### MinIO -->
+<!-- #### Setup tenant -->
+<!-- ```bash -->
+<!-- # kubectl label namespace minio istio-injection=enabled --overwrite -->
+<!-- ``` -->
 
-### MinIO
-#### Setup operator
-```bash
-# To get login token
-kubectl apply -f minio/ingress/minio-operator-console.yaml
-kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
-```
-#### Setup tenant
-```bash
-# kubectl label namespace minio istio-injection=enabled --overwrite
-
-kubectl apply -f minio/ingress/minio-tenant-console.yaml
-kubectl apply -f minio/ingress/minio-tenant-s3.yaml
-```
+<!-- ### Rook (HCI ceph only) -->
+<!-- #### Setup apps -->
+<!-- ```bash -->
+<!-- helm repo add rook-release https://charts.rook.io/release -->
+<!-- helm repo update -->
+<!-- helm upgrade --install rook-ceph rook-release/rook-ceph --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
+<!-- helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
+<!-- kubectl create -f rook/storageclass.yaml -->
+<!-- ``` -->
