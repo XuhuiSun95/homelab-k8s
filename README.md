@@ -50,11 +50,6 @@ kubectl apply -f deployment.yaml
 ```
 
 ### Istio
-#### Ingress gateway
-```bash
-kubectl apply -f istio/certificates/production/local-xuhuisun-com.yaml
-kubectl apply -f istio/gateways/default.yaml
-```
 #### ArgoCD
 ```bash
 # To get login token
