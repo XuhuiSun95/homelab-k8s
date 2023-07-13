@@ -1,2 +1,5 @@
-legacy:
-  enabled: false
+localprovisioner:
+  replicas: 2
+
+ndmOperator:
+  replicas: 2
