@@ -1,3 +1,5 @@
+replicaCount: 2
+
 cr:
   create: true
   namespace: istio-system
