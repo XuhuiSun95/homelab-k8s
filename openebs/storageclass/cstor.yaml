@@ -3,6 +3,8 @@ kind: CStorPoolCluster
 metadata:
   name: cstor-disk-pool
   namespace: openebs
+  annotations:
+    openebs.io/allowed-bd-tags: cstor
 spec:
   pools:
     - nodeSelector:
