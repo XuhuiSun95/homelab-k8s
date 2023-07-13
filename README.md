@@ -1,8 +1,10 @@
 # homelab-k8s
 
-### Prerequisite
-- Helm
-- Oh my zsh kubectl plugin
+Installing Kubernetes with Kubespray with kube_vip, metric server, cert manager,
+metallb, argocd enabled.
+
+Renovate scan and bump up helm chart dependencies' version and ArgoCD for
+in-cluster deployment.
 
 ### Setup k8s
 ```bash
