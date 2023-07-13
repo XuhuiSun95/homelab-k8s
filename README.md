@@ -55,16 +55,6 @@ kubectl -n istio-system create token kiali-service-account | xclip
 kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
 ```
 
-<!-- ### Heimdall -->
-<!-- #### Setup apps -->
-<!-- ```bash -->
-<!-- helm repo add djjudas21 https://djjudas21.github.io/charts -->
-<!-- helm repo update -->
-<!-- helm upgrade --install heimdall djjudas21/heimdall --namespace heimdall --create-namespace -->
-
-<!-- kubectl apply -f heimdall/ingress/heimdall.yaml -->
-<!-- ``` -->
-
 <!-- ### MinIO -->
 <!-- #### Setup tenant -->
 <!-- ```bash -->
