@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: openebs
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: heimdall
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: heimdall
+      repoURL: 'https://djjudas21.github.io/charts'
+      targetRevision: 8.5.2
+      helm:
+        valueFiles:
+        - $values/heimdall/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
