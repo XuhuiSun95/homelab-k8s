@@ -34,6 +34,8 @@ kubectl create secret generic route53-credentials-secret --from-literal="secret-
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
 
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
+
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=cstor
 ```
 
 ### All in one deployment

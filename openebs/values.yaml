@@ -3,3 +3,6 @@ localprovisioner:
 
 ndmOperator:
   replicas: 2
+
+cstor:
+  enabled: true
