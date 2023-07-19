@@ -29,48 +29,6 @@ alertmanager:
             requests:
               storage: 80Gi
 
-grafana:
-  defaultDashboardsTimezone: America/Los_Angeles
-  replicas: 2
-  dashboardProviders:
-    dashboardproviders.yaml:
-      apiVersion: 1
-      providers:
-      - name: 'default'
-        orgId: 1
-        folder: ''
-        type: file
-        disableDeletion: false
-        editable: true
-        options:
-          path: /var/lib/grafana/dashboards/default
-  dashboards:
-    default:
-      istio-mesh-dashboard:
-        gnetId: 7639
-        revision: 171
-        datasource: Prometheus
-      istio-service-dashboard:
-        gnetId: 7636
-        revision: 171
-        datasource: Prometheus
-      istio-workload-dashboard:
-        gnetId: 7630
-        revision: 171
-        datasource: Prometheus
-      istio-performance-dashboard:
-        gnetId: 11829
-        revision: 171
-        datasource: Prometheus
-      istio-control-plane-dashboard:
-        gnetId: 7645
-        revision: 171
-        datasource: Prometheus
-      minio-dashboard:
-        gnetId: 13502
-        revision: 22
-        datasource: Prometheus
-
 prometheus:
   prometheusSpec:
     replicas: 3
