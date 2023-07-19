@@ -31,7 +31,6 @@ alertmanager:
 
 grafana:
   defaultDashboardsTimezone: America/Los_Angeles
-  replicas: 2
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
