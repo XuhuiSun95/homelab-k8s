@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: jaeger-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: observability
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: jaeger-operator
+      repoURL: 'https://jaegertracing.github.io/helm-charts'
+      targetRevision: 2.46.2
+      helm:
+        valueFiles:
+        - $values/jaeger/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
