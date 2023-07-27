@@ -1,0 +1,57 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: kafka-cluster
+  namespace: kafka
+spec:
+  kafka:
+    version: 3.5.0
+    replicas: 5
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "4"
+    jvmOptions:
+      -Xms: 6g
+      -Xmx: 6g
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    config:
+      auto.create.topics.enable: "false"
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      inter.broker.protocol.version: "3.5"
+    storage:
+      type: persistent-claim
+      size: 90Gi
+      deleteClaim: false
+      class: local-device-kafka
+  zookeeper:
+    replicas: 3
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: "1"
+      limits:
+        memory: 4Gi
+        cpu: "1"
+    jvmOptions:
+      -Xms: 1g
+      -Xmx: 2g
+    storage:
+      type: persistent-claim
+      size: 30Gi
+      deleteClaim: false
+      class: local-device-zookeeper
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
