@@ -35,6 +35,10 @@ kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
 
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
 
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=zookeeper
+
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=kafka
+
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=cstor
 ```
 
