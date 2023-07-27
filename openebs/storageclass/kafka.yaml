@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-device-kafka
+  annotations:
+    openebs.io/cas-type: local
+    cas.openebs.io/config: |
+      - name: StorageType
+        value: device
+      - name: BlockDeviceSelectors
+        data:
+          openebs.io/block-device-tag: kafka
+provisioner: openebs.io/local
+volumeBindingMode: WaitForFirstConsumer
