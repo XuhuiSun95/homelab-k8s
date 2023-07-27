@@ -1,4 +1,5 @@
-replicas: 2
+replicas: 3
+watchNamespaces: ["kafka"]
 
 dashboards:
   enabled: true

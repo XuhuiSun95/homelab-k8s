@@ -36,7 +36,7 @@ spec:
       deleteClaim: false
       class: local-device-kafka
   zookeeper:
-    replicas: 3
+    replicas: 5
     resources:
       requests:
         memory: 4Gi
