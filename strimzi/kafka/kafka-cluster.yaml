@@ -35,6 +35,17 @@ spec:
       size: 90Gi
       deleteClaim: false
       class: local-device-kafka
+    template:
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: disktype
+                  operator: In
+                  values:
+                  - ssd
   zookeeper:
     replicas: 5
     resources:
@@ -52,6 +63,17 @@ spec:
       size: 30Gi
       deleteClaim: false
       class: local-device-zookeeper
+    template:
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: disktype
+                  operator: In
+                  values:
+                  - ssd
   entityOperator:
     topicOperator: {}
     userOperator: {}
