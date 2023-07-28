@@ -34,5 +34,4 @@ spec:
     - "local.xuhuisun.com"
     - "*.local.xuhuisun.com"
     tls:
-      mode: SIMPLE
-      credentialName: local-xuhuisun-com-tls
+      mode: PASSTHROUGH
