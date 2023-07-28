@@ -23,9 +23,9 @@ spec:
         type: internal
         tls: false
       - name: external
-        port: 9093
-        type: ingress
-        tls: true
+        port: 9092
+        type: cluster-ip
+        tls: false
         configuration:
           bootstrap:
             host: kafka-bootstrap.local.xuhuisun.com

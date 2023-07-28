@@ -29,7 +29,7 @@ spec:
   - port:
       number: 9092
       name: kafka
-      protocol: TCP
+      protocol: TLS
     hosts:
     - "local.xuhuisun.com"
     - "*.local.xuhuisun.com"
