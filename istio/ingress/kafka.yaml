@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kafka-vs
+  namespace: kafka
+spec:
+  hosts:
+  - "kafka.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  tcp:
+  - route:
+    - destination:
+        host: kafka-cluster-kafka-bootstrap
+        port:
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: kafka
+  namespace: kafka
+spec:
+  host: kafka-cluster-kafka-bootstrap
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
