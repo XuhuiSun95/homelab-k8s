@@ -10,11 +10,22 @@ spec:
   - istio-ingress/gateway
   tls:
   - match:
-    - port: 9092
+    - port: 9093
       sniHosts:
         - "kafka-bootstrap.local.xuhuisun.com"
   - route:
     - destination:
         host: kafka-cluster-external-kafka-bootstrap
         port:
-          number: 9092
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: kafka
+  namespace: kafka
+spec:
+  host: kafka-cluster-external-kafka-bootstrap
+  trafficPolicy:
+    tls:
+      mode: DISABLE
