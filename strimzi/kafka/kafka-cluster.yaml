@@ -24,22 +24,34 @@ spec:
         tls: false
       - name: external
         port: 9092
-        type: cluster-ip
-        tls: false
+        type: ingress
+        tls: true
         configuration:
           bootstrap:
             host: kafka-bootstrap.local.xuhuisun.com
+            annotations:
+              kubernetes.io/ingress.class: istio
           brokers:
           - broker: 0
             host: kafka-broker-0.local.xuhuisun.com
+            annotations:
+              kubernetes.io/ingress.class: istio
           - broker: 1
             host: kafka-broker-1.local.xuhuisun.com
+            annotations:
+              kubernetes.io/ingress.class: istio
           - broker: 2
             host: kafka-broker-2.local.xuhuisun.com
+            annotations:
+              kubernetes.io/ingress.class: istio
           - broker: 3
             host: kafka-broker-3.local.xuhuisun.com
+            annotations:
+              kubernetes.io/ingress.class: istio
           - broker: 4
             host: kafka-broker-4.local.xuhuisun.com
+            annotations:
+              kubernetes.io/ingress.class: istio
     config:
       auto.create.topics.enable: "false"
       offsets.topic.replication.factor: 3
