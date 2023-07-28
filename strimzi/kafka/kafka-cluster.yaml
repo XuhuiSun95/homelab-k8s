@@ -93,5 +93,27 @@ spec:
                   values:
                   - ssd
   entityOperator:
-    topicOperator: {}
-    userOperator: {}
+    tlsSidecar:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 64Mi
+        limits:
+          cpu: 500m
+          memory: 128Mi
+    topicOperator:
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: "1"
+        limits:
+          memory: 512Mi
+          cpu: "1"
+    userOperator:
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: "1"
+        limits:
+          memory: 512Mi
+          cpu: "1"
