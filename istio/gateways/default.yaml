@@ -26,3 +26,13 @@ spec:
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
+  - port:
+      number: 9092
+      name: kafka
+      protocol: TCP
+    hosts:
+    - "local.xuhuisun.com"
+    - "*.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls

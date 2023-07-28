@@ -22,6 +22,24 @@ spec:
         port: 9092
         type: internal
         tls: false
+      - name: external
+        port: 9093
+        type: ingress
+        tls: true
+        configuration:
+          bootstrap:
+            host: kafka-bootstrap.local.xuhuisun.com
+          brokers:
+          - broker: 0
+            host: kafka-broker-0.local.xuhuisun.com
+          - broker: 1
+            host: kafka-broker-1.local.xuhuisun.com
+          - broker: 2
+            host: kafka-broker-2.local.xuhuisun.com
+          - broker: 3
+            host: kafka-broker-3.local.xuhuisun.com
+          - broker: 4
+            host: kafka-broker-4.local.xuhuisun.com
     config:
       auto.create.topics.enable: "false"
       offsets.topic.replication.factor: 3
@@ -75,5 +93,27 @@ spec:
                   values:
                   - ssd
   entityOperator:
-    topicOperator: {}
-    userOperator: {}
+    tlsSidecar:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 64Mi
+        limits:
+          cpu: 500m
+          memory: 128Mi
+    topicOperator:
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: "1"
+        limits:
+          memory: 512Mi
+          cpu: "1"
+    userOperator:
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: "1"
+        limits:
+          memory: 512Mi
+          cpu: "1"
