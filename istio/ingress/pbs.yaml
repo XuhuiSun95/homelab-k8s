@@ -1,11 +1,11 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
-  name: pve1-ext
+  name: pbs-ext
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve1.com"
+  - "pbs.com"
   location: MESH_EXTERNAL
   ports:
   - number: 443
@@ -15,35 +15,32 @@ spec:
   endpoints:
   - address: 192.168.60.2
     ports:
-      https: 8006
-  # - address: 192.168.60.3
-  #   ports:
-  #     https: 8006
+      https: 8007
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: pve1-vs
+  name: pbs-vs
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve1.local.xuhuisun.com"
+  - "pbs.local.xuhuisun.com"
   gateways:
   - gateway
   http:
   - route:
     - destination:
-        host: "pve1.com"
+        host: "pbs.com"
         port:
           number: 443
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: pve1
+  name: pbs
   namespace: istio-ingress
 spec:
-  host: "pve1.com"
+  host: "pbs.com"
   trafficPolicy:
     tls:
       mode: SIMPLE
