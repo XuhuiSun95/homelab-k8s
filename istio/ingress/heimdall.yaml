@@ -15,14 +15,3 @@ spec:
         host: heimdall
         port:
           number: 80
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: heimdall
-  namespace: heimdall
-spec:
-  host: heimdall
-  trafficPolicy:
-    tls:
-      mode: DISABLE

@@ -14,14 +14,3 @@ spec:
         host: prometheus-grafana
         port:
           number: 80
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: grafana
-  namespace: monitoring
-spec:
-  host: prometheus-grafana
-  trafficPolicy:
-    tls:
-      mode: DISABLE
