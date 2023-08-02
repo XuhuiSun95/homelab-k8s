@@ -40,6 +40,8 @@ kubectl label bd -n openebs <bd> openebs.io/block-device-tag=zookeeper
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=kafka
 
 kubectl label bd -n openebs <bd> openebs.io/block-device-tag=cstor
+
+kubectl label bd -n openebs <bd> openebs.io/block-device-tag=elasticsearch
 ```
 
 ### All in one deployment
