@@ -28,11 +28,55 @@ spec:
       credentialName: local-xuhuisun-com-tls
   - port:
       number: 9092
-      name: kafka
+      name: kafka-bootstrap
       protocol: TLS
     hosts:
-    - "local.xuhuisun.com"
-    - "*.local.xuhuisun.com"
+    - "kafka-bootstrap.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls
+  - port:
+      number: 9092
+      name: kafka-broker-0
+      protocol: TLS
+    hosts:
+    - "kafka-broker-0.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls
+  - port:
+      number: 9092
+      name: kafka-broker-1
+      protocol: TLS
+    hosts:
+    - "kafka-broker-1.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls
+  - port:
+      number: 9092
+      name: kafka-broker-2
+      protocol: TLS
+    hosts:
+    - "kafka-broker-2.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls
+  - port:
+      number: 9092
+      name: kafka-broker-3
+      protocol: TLS
+    hosts:
+    - "kafka-broker-3.local.xuhuisun.com"
+    tls:
+      mode: SIMPLE
+      credentialName: local-xuhuisun-com-tls
+  - port:
+      number: 9092
+      name: kafka-broker-4
+      protocol: TLS
+    hosts:
+    - "kafka-broker-4.local.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls

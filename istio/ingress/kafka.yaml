@@ -16,3 +16,98 @@ spec:
         host: kafka-cluster-kafka-external-bootstrap
         port:
           number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kafka-broker-0-vs
+  namespace: kafka
+spec:
+  hosts:
+  - "kafka-broker-0.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  tcp:
+  - match:
+    - port: 9092
+    route:
+    - destination:
+        host: kafka-cluster-kafka-external-0
+        port:
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kafka-broker-1-vs
+  namespace: kafka
+spec:
+  hosts:
+  - "kafka-broker-1.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  tcp:
+  - match:
+    - port: 9092
+    route:
+    - destination:
+        host: kafka-cluster-kafka-external-1
+        port:
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kafka-broker-2-vs
+  namespace: kafka
+spec:
+  hosts:
+  - "kafka-broker-2.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  tcp:
+  - match:
+    - port: 9092
+    route:
+    - destination:
+        host: kafka-cluster-kafka-external-2
+        port:
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kafka-broker-3-vs
+  namespace: kafka
+spec:
+  hosts:
+  - "kafka-broker-3.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  tcp:
+  - match:
+    - port: 9092
+    route:
+    - destination:
+        host: kafka-cluster-kafka-external-3
+        port:
+          number: 9093
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kafka-broker-4-vs
+  namespace: kafka
+spec:
+  hosts:
+  - "kafka-broker-4.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  tcp:
+  - match:
+    - port: 9092
+    route:
+    - destination:
+        host: kafka-cluster-kafka-external-4
+        port:
+          number: 9093
