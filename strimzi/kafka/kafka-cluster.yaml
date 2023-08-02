@@ -26,6 +26,23 @@ spec:
         port: 9093
         type: cluster-ip
         tls: false
+        configuration:
+          brokers:
+            - advertisedHost: kafka-broker-0.local.xuhuisun.com
+              advertisedPort: 9092
+              broker: 0
+            - advertisedHost: kafka-broker-1.local.xuhuisun.com
+              advertisedPort: 9092
+              broker: 1
+            - advertisedHost: kafka-broker-2.local.xuhuisun.com
+              advertisedPort: 9092
+              broker: 2
+            - advertisedHost: kafka-broker-3.local.xuhuisun.com
+              advertisedPort: 9092
+              broker: 3
+            - advertisedHost: kafka-broker-4.local.xuhuisun.com
+              advertisedPort: 9092
+              broker: 4
     config:
       auto.create.topics.enable: "false"
       offsets.topic.replication.factor: 3
