@@ -13,16 +13,4 @@ spec:
     - destination:
         host: myminio-console
         port:
-          number: 9443
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: minio-tenant-console
-  namespace: minio
-spec:
-  host: myminio-console
-  trafficPolicy:
-    tls:
-      mode: SIMPLE
-      insecureSkipVerify: true
+          number: 9090
