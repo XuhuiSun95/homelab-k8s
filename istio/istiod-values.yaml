@@ -7,3 +7,11 @@ pilot:
   rollingMaxUnavailable: 25%
 #   env:
 #     PILOT_ENABLE_QUIC_LISTENERS: true
+
+meshConfig:
+  enableTracing: true
+  defaultConfig:
+    tracing:
+      sampling: 100
+      zipkin:
+        address: streaming-collector.observability.svc.cluster.local:9411

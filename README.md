@@ -65,6 +65,8 @@ kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.toke
 kubectl -n elastic get secret elasticsearch-es-elastic-user -o jsonpath="{.data.elastic}" | base64 --decode | xclip
 ```
 
+check kiali jaeger integration
+
 <!-- ### MinIO -->
 <!-- #### Setup tenant -->
 <!-- ```bash -->
