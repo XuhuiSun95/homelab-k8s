@@ -4,4 +4,4 @@ operator:
       value: "monitoring"
 
 console:
-  replicaCount: 2
+  replicaCount: 1
