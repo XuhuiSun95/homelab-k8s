@@ -9,6 +9,10 @@ spec:
   elasticsearchRef:
     name: elasticsearch
     namespace: elastic
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   podTemplate:
     spec:
       containers:
