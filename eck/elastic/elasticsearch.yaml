@@ -5,12 +5,21 @@ metadata:
   namespace: elastic
 spec:
   version: 7.17.12
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   nodeSets:
   - name: masters
     count: 3
     config:
       node.roles: ["master"]
       xpack.ml.enabled: true
+      xpack.security.authc:
+          anonymous:
+            username: anonymous
+            roles: superuser
+            authz_exception: false
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -50,6 +59,11 @@ spec:
     count: 5
     config:
       node.roles: ["data", "ingest", "ml", "transform"]
+      xpack.security.authc:
+          anonymous:
+            username: anonymous
+            roles: superuser
+            authz_exception: false
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
