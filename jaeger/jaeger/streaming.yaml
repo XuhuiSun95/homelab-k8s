@@ -27,7 +27,6 @@ spec:
         consumer:
           topic: jaeger-spans
           brokers: kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
-  query:
   storage:
     type: elasticsearch
     options:
@@ -43,3 +42,5 @@ spec:
       conditions: "{\"max_age\": \"2d\"}"
       readTTL: 168h
       schedule: "55 23 * * *"
+  ingress:
+    enabled: false
