@@ -12,6 +12,6 @@ meshConfig:
   enableTracing: true
   defaultConfig:
     tracing:
-      sampling: 100
+      sampling: 10.0
       zipkin:
         address: streaming-collector.observability.svc.cluster.local:9411
