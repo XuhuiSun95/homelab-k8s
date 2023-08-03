@@ -61,6 +61,11 @@ kubectl -n istio-system create token kiali-service-account | xclip
 kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
 ```
 
+### Kibasns token
+```bash
+kubectl -n elastic get secret elasticsearch-es-elastic-user -o jsonpath="{.data.elastic}" | base64 --decode | xclip
+```
+
 <!-- ### MinIO -->
 <!-- #### Setup tenant -->
 <!-- ```bash -->
