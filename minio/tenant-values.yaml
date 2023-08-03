@@ -12,7 +12,8 @@ tenant:
       ## Used to specify annotations for pods
       annotations: { }
       ## Used to specify labels for pods
-      labels: { }
+      labels:
+        sidecar.istio.io/inject: "true"
       ## Used to specify a toleration for a pod
       tolerations:
         - key: "node-role.kubernetes.io/master"
@@ -58,8 +59,10 @@ tenant:
       # runtimeClassName: ""
   metrics:
     enabled: true
+  certificate:
+    requestAutoCert: false
   features:
-    bucketDNS: "false"
+    bucketDNS: false
     domains:
       minio:
         - https://s3.local.xuhuisun.com
