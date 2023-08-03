@@ -31,6 +31,13 @@ spec:
             storage: 10Gi
         storageClassName: cstor-csi
     podTemplate:
+      metadata:
+        labels:
+          sidecar.istio.io/inject: "true"
+        annotations:
+          traffic.sidecar.istio.io/includeInboundPorts: "*"
+          traffic.sidecar.istio.io/excludeOutboundPorts: "9300"
+          traffic.sidecar.istio.io/excludeInboundPorts: "9300"
       spec:
         initContainers:
         - name: sysctl
@@ -75,6 +82,13 @@ spec:
             storage: 60Gi
         storageClassName: local-device-elasticsearch
     podTemplate:
+      metadata:
+        labels:
+          sidecar.istio.io/inject: "true"
+        annotations:
+          traffic.sidecar.istio.io/includeInboundPorts: "*"
+          traffic.sidecar.istio.io/excludeOutboundPorts: "9300"
+          traffic.sidecar.istio.io/excludeInboundPorts: "9300"
       spec:
         initContainers:
         - name: sysctl

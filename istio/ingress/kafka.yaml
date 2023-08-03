@@ -16,6 +16,7 @@ spec:
         host: kafka-cluster-kafka-external-bootstrap
         port:
           number: 9093
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -35,6 +36,7 @@ spec:
         host: kafka-cluster-kafka-external-0
         port:
           number: 9093
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -54,6 +56,7 @@ spec:
         host: kafka-cluster-kafka-external-1
         port:
           number: 9093
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -73,6 +76,7 @@ spec:
         host: kafka-cluster-kafka-external-2
         port:
           number: 9093
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -92,6 +96,7 @@ spec:
         host: kafka-cluster-kafka-external-3
         port:
           number: 9093
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -111,3 +116,4 @@ spec:
         host: kafka-cluster-kafka-external-4
         port:
           number: 9093
+      weight: 100
