@@ -5,6 +5,10 @@ metadata:
   namespace: elastic
 spec:
   version: 7.17.12
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   nodeSets:
   - name: masters
     count: 3
