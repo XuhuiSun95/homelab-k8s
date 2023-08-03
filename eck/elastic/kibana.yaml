@@ -4,11 +4,15 @@ metadata:
   name: kibana
   namespace: elastic
 spec:
-  version: 7.17
+  version: 7.17.12
   count: 1
   elasticsearchRef:
     name: elasticsearch
     namespace: elastic
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   podTemplate:
     spec:
       containers:

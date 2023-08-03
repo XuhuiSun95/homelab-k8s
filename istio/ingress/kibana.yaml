@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kibana-vs
+  namespace: elastic 
+spec:
+  hosts:
+  - "kibana.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: kibana-kb-http
+        port:
+          number: 5601

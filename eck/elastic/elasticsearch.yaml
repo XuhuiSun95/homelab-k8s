@@ -4,14 +4,13 @@ metadata:
   name: elasticsearch
   namespace: elastic
 spec:
-  version: 7.17
+  version: 7.17.12
   nodeSets:
   - name: masters
     count: 3
     config:
       node.roles: ["master"]
       xpack.ml.enabled: true
-      node.remote_cluster_client: false
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -24,6 +23,12 @@ spec:
         storageClassName: cstor-csi
     podTemplate:
       spec:
+        initContainers:
+        - name: sysctl
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
         containers:
         - name: elasticsearch
           resources:
@@ -45,7 +50,6 @@ spec:
     count: 5
     config:
       node.roles: ["data", "ingest", "ml", "transform"]
-      node.remote_cluster_client: false
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -58,6 +62,12 @@ spec:
         storageClassName: local-device-elasticsearch
     podTemplate:
       spec:
+        initContainers:
+        - name: sysctl
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
         containers:
         - name: elasticsearch
           resources:
