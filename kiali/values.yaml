@@ -5,20 +5,21 @@ cr:
   namespace: istio-system
 
   spec:
-    hpa:
-      api_version: ""
-      spec:
-        maxReplicas: 2
-        minReplicas: 1
-        metrics:
-        - type: Resource
-          resource:
-            name: cpu
-            target:
-              type: Utilization
-              averageUtilization: 50
-    pod_labels:
-      sidecar.istio.io/inject: "true"
+    deployment:
+      hpa:
+        api_version: ""
+        spec:
+          maxReplicas: 2
+          minReplicas: 1
+          metrics:
+          - type: Resource
+            resource:
+              name: cpu
+              target:
+                type: Utilization
+                averageUtilization: 50
+      pod_labels:
+        sidecar.istio.io/inject: "true"
     external_services:
       istio:
         component_status:
