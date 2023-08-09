@@ -37,10 +37,10 @@ spec:
     esIndexCleaner:
       enabled: true
       numberOfDays: 7
-      schedule: "55 23 * * *"
+      schedule: "CRON_TZ=America/Los_Angeles 55 23 * * *"
     esRollover:
       conditions: "{\"max_age\": \"2d\"}"
       readTTL: 168h
-      schedule: "55 23 * * *"
+      schedule: "CRON_TZ=America/Los_Angeles 55 23 * * *"
   ingress:
     enabled: false
