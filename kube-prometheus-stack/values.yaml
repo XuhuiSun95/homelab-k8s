@@ -29,6 +29,10 @@ alertmanager:
             requests:
               storage: 80Gi
 
+kubeEtcd:
+  service:
+    enabled: false
+
 grafana:
   defaultDashboardsTimezone: America/Los_Angeles
   dashboardProviders:
