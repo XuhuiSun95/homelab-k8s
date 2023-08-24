@@ -29,6 +29,10 @@ alertmanager:
             requests:
               storage: 80Gi
 
+kubeEtcd:
+  service:
+    enabled: false
+
 grafana:
   defaultDashboardsTimezone: America/Los_Angeles
   dashboardProviders:
@@ -47,23 +51,23 @@ grafana:
     default:
       istio-mesh-dashboard:
         gnetId: 7639
-        revision: 171
+        revision: 174
         datasource: Prometheus
       istio-service-dashboard:
         gnetId: 7636
-        revision: 171
+        revision: 174
         datasource: Prometheus
       istio-workload-dashboard:
         gnetId: 7630
-        revision: 171
+        revision: 174
         datasource: Prometheus
       istio-performance-dashboard:
         gnetId: 11829
-        revision: 171
+        revision: 174
         datasource: Prometheus
       istio-control-plane-dashboard:
         gnetId: 7645
-        revision: 171
+        revision: 174
         datasource: Prometheus
       minio-dashboard:
         gnetId: 13502
