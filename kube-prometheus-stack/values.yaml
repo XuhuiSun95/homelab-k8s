@@ -72,7 +72,9 @@ grafana:
       minio-dashboard:
         gnetId: 13502
         revision: 24
-        datasource: Prometheus
+        datasource:
+        - name: DS_PROMETHEUS
+          value: Prometheus
 
 prometheus:
   prometheusSpec:
