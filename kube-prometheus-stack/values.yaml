@@ -79,6 +79,9 @@ grafana:
 prometheus:
   prometheusSpec:
     replicas: 3
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     podAntiAffinity: hard
     affinity:
