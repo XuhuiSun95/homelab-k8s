@@ -3,8 +3,6 @@ kind: PodMonitor
 metadata:
   name: cluster-operator-metrics
   namespace: strimzi
-  labels:
-    app: strimzi
 spec:
   selector:
     matchLabels:
@@ -18,8 +16,6 @@ kind: PodMonitor
 metadata:
   name: entity-operator-metrics
   namespace: strimzi
-  labels:
-    app: strimzi
 spec:
   selector:
     matchLabels:
@@ -33,8 +29,6 @@ kind: PodMonitor
 metadata:
   name: bridge-metrics
   namespace: strimzi
-  labels:
-    app: strimzi
 spec:
   selector:
     matchLabels:
@@ -48,8 +42,6 @@ kind: PodMonitor
 metadata:
   name: kafka-resources-metrics
   namespace: strimzi
-  labels:
-    app: strimzi
 spec:
   selector:
     matchExpressions:
