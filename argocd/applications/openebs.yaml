@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: openebs
       repoURL: 'https://openebs.github.io/charts'
-      targetRevision: 3.8.0
+      targetRevision: 3.9.0
       helm:
         valueFiles:
         - $values/openebs/values.yaml
