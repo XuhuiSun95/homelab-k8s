@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: kiali-operator
       repoURL: 'https://kiali.org/helm-charts'
-      targetRevision: 1.73.0
+      targetRevision: 1.74.0
       helm:
         valueFiles:
         - $values/kiali/values.yaml
