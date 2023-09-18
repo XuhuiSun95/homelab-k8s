@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: keycloak-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: keycloak
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: keycloak-operator
+      repoURL: 'https://kbumsik.io/keycloak-kubernetes/'
+      targetRevision: 0.0.4
+      helm:
+        valueFiles:
+        - $values/keycloak/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
