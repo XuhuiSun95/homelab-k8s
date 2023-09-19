@@ -80,7 +80,7 @@ grafana:
       root_url: https://grafana.local.xuhuisun.com
     auth.generic_oauth:
       enabled: true
-      name: keycloak
+      name: Keycloak
       allow_sign_up: true
       client_id: grafana
       client_secret: rHTt9Q7YOKZUjlmpRC9g8mcRNmupnXiV
@@ -91,7 +91,8 @@ grafana:
       auth_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/auth
       token_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/token
       api_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/userinfo
-      role_attribute_path: "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
+      role_attribute_path: "contains(resource_access.grafana.roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(resource_access.grafana.roles[*], 'admin') && 'Admin' || contains(resource_access.grafana.roles[*], 'editor') && 'Editor' || 'Viewer'"
+      allow_assign_grafana_admin: true
 
 prometheus:
   prometheusSpec:
