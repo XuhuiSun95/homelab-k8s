@@ -76,6 +76,8 @@ grafana:
         - name: DS_PROMETHEUS
           value: Prometheus
   grafana.ini:
+    server:
+      root_url: https://grafana.local.xuhuisun.com
     auth.generic_oauth:
       enabled: true
       name: keycloak
