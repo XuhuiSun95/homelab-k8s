@@ -12,7 +12,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   sources:
     - chart: keycloak
-      repoURL: 'oci://registry-1.docker.io/bitnamicharts'
+      repoURL: 'registry-1.docker.io/bitnamicharts'
       targetRevision: 16.1.5
       helm:
         valueFiles:
