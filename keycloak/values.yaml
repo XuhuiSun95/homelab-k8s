@@ -1,1 +1,14 @@
+global:
+  storageClass: cstor-csi
+
+production: true
+
+proxy: edge
+
 replicaCount: 2
+
+podLabels:
+  sidecar.istio.io/inject: "true"
+
+postgresql:
+  architecture: replication

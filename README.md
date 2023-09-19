@@ -65,6 +65,17 @@ kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.toke
 kubectl -n elastic get secret elasticsearch-es-elastic-user -o jsonpath="{.data.elastic}" | base64 --decode | xclip
 ```
 
+### Upgrade
+#### Graceful upgrade kubespary version and config
+```bash
+ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa upgrade-cluster.yml -u esun-local -b
+```
+#### OpenEBS cstor cspc and volume
+```bash
+kubectl apply -f jobs/cstor-cspc-upgrade.yaml
+kubectl apply -f jobs/cstor-volume-upgrade.yaml
+```
+
 <!-- ### Rook (HCI ceph only) -->
 <!-- #### Setup apps -->
 <!-- ```bash -->
