@@ -1,6 +1,9 @@
 global:
   storageClass: cstor-csi
 
+auth:
+  adminPassword: nIskQiijss
+
 production: true
 
 proxy: edge
@@ -11,4 +14,8 @@ podLabels:
   sidecar.istio.io/inject: "true"
 
 postgresql:
+  auth:
+    postgresPassword: iPdaWcbKq5
+    password: u4rmKA7w0q
+    replicationPassword: hF7jn7wwhJ
   architecture: replication
