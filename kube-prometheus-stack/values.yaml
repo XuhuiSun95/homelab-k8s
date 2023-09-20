@@ -88,9 +88,9 @@ grafana:
       email_attribute_path: email
       login_attribute_path: username
       name_attribute_path: full_name
-      auth_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/auth
-      token_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/token
-      api_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/userinfo
+      auth_url: https://iam.local.xuhuisun.com/realms/grafana/protocol/openid-connect/auth
+      token_url: https://iam.local.xuhuisun.com/realms/grafana/protocol/openid-connect/token
+      api_url: https://iam.local.xuhuisun.com/realms/grafana/protocol/openid-connect/userinfo
       role_attribute_path: "contains(resource_access.grafana.roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(resource_access.grafana.roles[*], 'admin') && 'Admin' || contains(resource_access.grafana.roles[*], 'editor') && 'Editor' || 'Viewer'"
       allow_assign_grafana_admin: true
 
