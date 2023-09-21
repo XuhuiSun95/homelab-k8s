@@ -73,3 +73,13 @@ tenant:
       value: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
     - name: MINIO_PROMETHEUS_JOB_ID
       value: "myminio-minio-job"
+    - name: MINIO_IDENTITY_OPENID_CONFIG_URL
+      value: "https://iam.local.xuhuisun.com/realms/minio/.well-known/openid-configuration"
+    - name: MINIO_IDENTITY_OPENID_CLIENT_ID
+      value: "minio"
+    - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+      value: "RaiL7sSioQ7TbgukDzEzOdl7mCqOwAPf"
+    - name: MINIO_IDENTITY_OPENID_SCOPES
+      value: "openid,profile,email"
+    - name: MINIO_IDENTITY_REDIRECT_URI_DYNAMIC
+      value: "on"
