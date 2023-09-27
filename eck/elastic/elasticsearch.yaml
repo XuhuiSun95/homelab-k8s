@@ -9,6 +9,8 @@ spec:
     tls:
       selfSignedCertificate:
         disabled: true
+  secureSettings:
+  - secretName: elastic-secret-settings
   nodeSets:
   - name: masters
     count: 3
@@ -25,7 +27,6 @@ spec:
           realms.oidc.keycloak:
             order: 2
             rp.client_id: "elastic"
-            rp.client_secret: "N6mCm56qs9d02dYY42Vp7VFmuvt5AYVt"
             rp.response_type: code
             rp.redirect_uri: "https://kibana.local.xuhuisun.com/api/security/oidc/callback"
             rp.post_logout_redirect_uri: "https://kibana.local.xuhuisun.com/security/logged_out"
@@ -92,7 +93,6 @@ spec:
           realms.oidc.keycloak:
             order: 2
             rp.client_id: "elastic"
-            rp.client_secret: "N6mCm56qs9d02dYY42Vp7VFmuvt5AYVt"
             rp.response_type: code
             rp.redirect_uri: "https://kibana.local.xuhuisun.com/api/security/oidc/callback"
             rp.post_logout_redirect_uri: "https://kibana.local.xuhuisun.com/security/logged_out"
