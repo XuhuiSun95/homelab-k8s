@@ -79,7 +79,9 @@ tenant:
       value: "minio"
     - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET
       value: "RaiL7sSioQ7TbgukDzEzOdl7mCqOwAPf"
+    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
+      value: "MinIO OpenID Login - Keycloak"
     - name: MINIO_IDENTITY_OPENID_SCOPES
       value: "openid,profile,email"
-    - name: MINIO_IDENTITY_REDIRECT_URI_DYNAMIC
+    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC
       value: "on"
