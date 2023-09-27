@@ -5,8 +5,10 @@ metadata:
   namespace: elastic
 spec:
   version: 7.17.12
-  secureSettings:
-  - secretName: elastic-secret-settings
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   nodeSets:
   - name: masters
     count: 3
@@ -18,19 +20,6 @@ spec:
             username: anonymous
             roles: superuser
             authz_exception: false
-          realms.oidc.keycloak:
-            order: 2
-            rp.client_id: "elastic"
-            rp.response_type: code
-            rp.redirect_uri: "https://kibana.local.xuhuisun.com/api/security/oidc/callback"
-            rp.post_logout_redirect_uri: "https://kibana.local.xuhuisun.com/security/logged_out"
-            op.issuer: "https://iam.local.xuhuisun.com/realms/elastic"
-            op.authorization_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/auth"
-            op.token_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/token"
-            op.userinfo_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/userinfo"
-            op.endsession_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/logout"
-            op.jwkset_path: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/certs"
-            claims.principal: email
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -82,19 +71,6 @@ spec:
             username: anonymous
             roles: superuser
             authz_exception: false
-          realms.oidc.keycloak:
-            order: 2
-            rp.client_id: "elastic"
-            rp.response_type: code
-            rp.redirect_uri: "https://kibana.local.xuhuisun.com/api/security/oidc/callback"
-            rp.post_logout_redirect_uri: "https://kibana.local.xuhuisun.com/security/logged_out"
-            op.issuer: "https://iam.local.xuhuisun.com/realms/elastic"
-            op.authorization_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/auth"
-            op.token_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/token"
-            op.userinfo_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/userinfo"
-            op.endsession_endpoint: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/logout"
-            op.jwkset_path: "https://iam.local.xuhuisun.com/realms/elastic/protocol/openid-connect/certs"
-            claims.principal: email
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
