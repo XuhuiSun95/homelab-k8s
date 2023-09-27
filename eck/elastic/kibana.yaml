@@ -9,12 +9,12 @@ spec:
   elasticsearchRef:
     name: elasticsearch
     namespace: elastic
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   config:
     server.publicBaseUrl: "https://kibana.local.xuhuisun.com"
-    xpack.security.authc.providers:
-      oidc.keycloak:
-        order: 0
-        realm: "elastic"
   podTemplate:
     metadata:
       labels:
