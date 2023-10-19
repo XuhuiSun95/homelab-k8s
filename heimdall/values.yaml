@@ -1,3 +1,7 @@
+defaultPodOptions:
+  labels:
+    sidecar.istio.io/inject: "true"
+
 persistence:
   config:
     enabled: true
