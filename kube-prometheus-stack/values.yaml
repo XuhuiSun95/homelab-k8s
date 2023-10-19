@@ -34,6 +34,8 @@ kubeEtcd:
     enabled: false
 
 grafana:
+  podLabels:
+    sidecar.istio.io/inject: "true"
   defaultDashboardsTimezone: America/Los_Angeles
   dashboardProviders:
     dashboardproviders.yaml:
