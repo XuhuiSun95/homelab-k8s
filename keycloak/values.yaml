@@ -14,6 +14,8 @@ podLabels:
   sidecar.istio.io/inject: "true"
 
 postgresql:
+  image:
+    tag: 15.5.0-debian-11-r15
   auth:
     postgresPassword: iPdaWcbKq5
     password: u4rmKA7w0q
