@@ -10,29 +10,97 @@ defaultPodOptions:
   labels:
     sidecar.istio.io/inject: "true"
 
+image:
+  repository: ghcr.io/gethomepage/homepage
+  tag: v0.8.4
+
 config:
+  settings:
+    title: Homelab Homepage
+    background:
+      image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80
+      blur: sm
+      saturate: 50
+      brightness: 50
+      opacity: 50
+    theme: dark
+    color: slate
   bookmarks:
     - Developer:
         - Github:
             - abbr: GH
               href: https://github.com/
+        - Gitlab:
+            - abbr: GL
+              href: https://gitlab.com/
   services:
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
-
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
-
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
+    - Network:
+        - UniFi:
+            icon: unifi-controller.png
+            href: https://unifi.ui.com/consoles
+            description: network
+        - UniFi UID:
+            icon: unifi-controller.png
+            href: https://xuhuisun.ui.com
+            description: network uid
+    - Hypervisor:
+        - Proxmox:
+            icon: proxmox.png
+            href: https://pve2.local.xuhuisun.com
+            description: pve2
+        - Proxmox Backup Server:
+            icon: proxmox.png
+            href: https://pbs.local.xuhuisun.com
+            description: pbs
+    - Remote Access:
+        - IPMI:
+            icon: supermicro.png
+            href: https://192.168.10.201
+            description: supermicro ipmi
+    - Storage:
+        - MinIO:
+            icon: minio.png
+            href: https://minio-console.local.xuhuisun.com
+            description: object storage
+        - Kibana:
+            icon: kibana.png
+            href: https://kibana.local.xuhuisun.com
+            description: elasticsearch stack
+    - Home Automation:
+        - Scrypted:
+            icon: scrypted.png
+            href: https://scrypted.local.xuhuisun.com
+            description: mgmt console
+    - Management:
+        - Keycloak:
+            icon: keycloak.png
+            href: https://keycloak.local.xuhuisun.com
+            description: iam
+        - Argo CD:
+            icon: argocd.png
+            href: https://argocd.local.xuhuisun.com
+            description: in-cluster cd
+    - Monitoring:
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.local.xuhuisun.com
+            description: dashboard
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.local.xuhuisun.com
+            description: tsdb
+        - Kiali:
+            href: https://kiali.local.xuhuisun.com
+            description: istio mgmt console
+        - Jaeger:
+            icon: jaeger.png
+            href: https://jaeger.local.xuhuisun.com
+            description: tracing
+        - MinIO Operator:
+            icon: minio.png
+            href: https://minio-operator-console.local.xuhuisun.com
+            description: minio mgmt console
   widgets:
-    # show the kubernetes widget, with the cluster summary and individual nodes
     - kubernetes:
         cluster:
           show: true
@@ -45,17 +113,21 @@ config:
           cpu: true
           memory: true
           showLabel: true
+    - datetime:
+        format:
+          dateStyle: short
+          timeStyle: short
+          hour12: true
     - search:
-        provider: duckduckgo
+        provider: [google, baidu]
         target: _blank
   kubernetes:
     mode: cluster
-  settings:
 
-# resources:
-#   requests:
-#     memory: 10Mi
-#     cpu: 10m
-#   limits:
-#     memory: 200Mi
-#     cpu: 500m
+resources:
+  requests:
+    memory: 10Mi
+    cpu: 10m
+  limits:
+    memory: 200Mi
+    cpu: 500m
