@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: homepage
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: homepage
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: homepage
+      repoURL: 'https://jameswynn.github.io/helm-charts'
+      targetRevision: 1.2.3
+      helm:
+        valueFiles:
+        - $values/homepage/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

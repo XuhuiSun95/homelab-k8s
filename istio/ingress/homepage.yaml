@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: homepage-vs
+  namespace: homepage
+spec:
+  hosts:
+  # - "local.xuhuisun.com"
+  - "homepage.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: homepage
+        port:
+          number: 3000
