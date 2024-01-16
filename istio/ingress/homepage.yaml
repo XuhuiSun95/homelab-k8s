@@ -5,7 +5,7 @@ metadata:
   namespace: homepage
 spec:
   hosts:
-  # - "local.xuhuisun.com"
+  - "local.xuhuisun.com"
   - "homepage.local.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
