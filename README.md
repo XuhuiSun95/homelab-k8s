@@ -28,6 +28,11 @@ kubectl label nodes worker-05 disktype=ssd
   export aws_secret=<supersecretsupersecretsupersecret>
 kubectl create secret generic route53-credentials-secret --from-literal="secret-access-key=$aws_secret" --namespace cert-manager
 ```
+#### Setup secret for grafana generic oauth client secret
+```bash
+  export client_secret=<supersecretsupersecretsupersecret>
+kubectl create secret generic auth-generic-oauth-secret --from-literal="client_secret=$client_secret" --namespace monitoring
+```
 #### Setup openebs block device tags
 ```bash
 # setup openebs block device tag
@@ -76,8 +81,8 @@ ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa upg
 ```
 #### OpenEBS cstor cspc and volume
 ```bash
-kubectl apply -f jobs/cstor-cspc-upgrade.yaml
-kubectl apply -f jobs/cstor-volume-upgrade.yaml
+kubectl apply -f jobs/cstor-cspc-upgrade-<version>.yaml
+kubectl apply -f jobs/cstor-volume-upgrade-<version>.yaml
 ```
 
 <!-- ### Rook (HCI ceph only) -->
@@ -89,3 +94,6 @@ kubectl apply -f jobs/cstor-volume-upgrade.yaml
 <!-- helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
 <!-- kubectl create -f rook/storageclass.yaml -->
 <!-- ``` -->
+
+
+grafana dashboard config error(dashboardproviders)
