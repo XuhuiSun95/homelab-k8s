@@ -9,10 +9,6 @@ bin_dir: /usr/local/bin
 ## but don't know about that address themselves.
 # access_ip: 1.1.1.1
 
-kube_vip_enabled: true
-kube_vip_controlplane_enabled: true
-kube_vip_address: 192.168.60.20
-kube_vip_arp_enabled: true
 
 ## Etcd metrics
 etcd_metrics_port: 2381
@@ -69,7 +65,7 @@ loadbalancer_apiserver_healthcheck_port: 8081
 # https_proxy: ""
 # https_proxy_cert_file: ""
 
-## Refer to roles/kubespray-defaults/defaults/main.yml before modifying no_proxy
+## Refer to roles/kubespray-defaults/defaults/main/main.yml before modifying no_proxy
 # no_proxy: ""
 
 ## Some problems may occur when downloading files over https proxy due to ansible bug

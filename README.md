@@ -8,10 +8,10 @@ in-cluster deployment.
 
 ### Setup k8s
 ```bash
-docker pull quay.io/kubespray/kubespray:v2.23.2
+docker pull quay.io/kubespray/kubespray:v2.24.0
 docker run --rm -it --mount type=bind,source="$(pwd)"/ansible/inventory/myculster,dst=/inventory \
   --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
-  quay.io/kubespray/kubespray:v2.23.2 bash
+  quay.io/kubespray/kubespray:v2.24.0 bash
 
 ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml -u esun-local -b
 ```
