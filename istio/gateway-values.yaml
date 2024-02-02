@@ -12,6 +12,10 @@ service:
     port: 443
     protocol: TCP
     targetPort: 443
+  - name: http3
+    port: 443
+    protocol: UDP
+    targetPort: 443
   - name: kafka
     port: 9092
     protocol: TCP
