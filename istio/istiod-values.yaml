@@ -5,8 +5,8 @@ pilot:
   replicaCount: 2
   rollingMaxSurge: 100%
   rollingMaxUnavailable: 25%
-#   env:
-#     PILOT_ENABLE_QUIC_LISTENERS: true
+  env:
+    PILOT_ENABLE_QUIC_LISTENERS: true
 
 meshConfig:
   enableTracing: true
