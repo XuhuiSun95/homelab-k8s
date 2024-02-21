@@ -4,7 +4,7 @@ metadata:
   name: elasticsearch
   namespace: elastic
 spec:
-  version: 7.17.12
+  version: 8.12.1
   http:
     tls:
       selfSignedCertificate:
