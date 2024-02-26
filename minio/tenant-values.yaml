@@ -73,15 +73,21 @@ tenant:
       value: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
     - name: MINIO_PROMETHEUS_JOB_ID
       value: "myminio-minio-job"
-    - name: MINIO_IDENTITY_OPENID_CONFIG_URL
+    - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
       value: "https://iam.local.xuhuisun.com/realms/minio/.well-known/openid-configuration"
-    - name: MINIO_IDENTITY_OPENID_CLIENT_ID
+    - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
       value: "minio"
-    - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+    - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET_KEYCLOAK_PRIMARY
       value: "RaiL7sSioQ7TbgukDzEzOdl7mCqOwAPf"
-    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
+    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
       value: "MinIO OpenID Login - Keycloak"
-    - name: MINIO_IDENTITY_OPENID_SCOPES
-      value: "openid,profile,email"
-    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC
+    - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
+      value: "openid,email,preferred_username"
+    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_KEYCLOAK_PRIMARY
       value: "on"
+    # - name: MINIO_IDENTITY_OPENID_VENDOR_KEYCLOAK_PRIMARY
+    #   value: "keycloak"
+    # - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL_KEYCLOAK_PRIMARY
+    #   value: "https://keycloak.local.xuhuisun.com/admin"
+    # - name: MINIO_IDENTITY_OPENID_KEYCLOAK_REALM_KEYCLOAK_PRIMARY
+    #   value: "minio"
