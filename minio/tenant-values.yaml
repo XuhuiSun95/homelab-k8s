@@ -82,7 +82,7 @@ tenant:
     - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
       value: "MinIO OpenID Login - Keycloak"
     - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
-      value: "openid,email,preferred_username"
+      value: "openid,profile,email"
     - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_KEYCLOAK_PRIMARY
       value: "on"
     # - name: MINIO_IDENTITY_OPENID_VENDOR_KEYCLOAK_PRIMARY
