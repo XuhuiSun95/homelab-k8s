@@ -116,14 +116,6 @@ spec:
           name: kafka-metrics
           key: zookeeper-metrics-config.yml
   entityOperator:
-    tlsSidecar:
-      resources:
-        requests:
-          cpu: 200m
-          memory: 64Mi
-        limits:
-          cpu: 500m
-          memory: 128Mi
     topicOperator:
       resources:
         requests:
@@ -140,6 +132,40 @@ spec:
         limits:
           memory: 512Mi
           cpu: "1"
+  cruiseControl:
+    config:
+      goals: >
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.RackAwareGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.MinTopicLeadersPerBrokerGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.PotentialNwOutGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskUsageDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundUsageDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundUsageDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuUsageDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.TopicReplicaDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.LeaderReplicaDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.LeaderBytesInDistributionGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.PreferredLeaderElectionGoal
+      default.goals: >
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.RackAwareGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal
+      hard.goals: >
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.RackAwareGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,
+        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: cruise-control-metrics
+          key: metrics-config.yml
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -291,3 +317,17 @@ data:
       labels:
         replicaId: "$2"
         memberType: "$3"
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cruise-control-metrics
+  labels:
+    app: strimzi
+data:
+  metrics-config.yml: |
+    lowercaseOutputName: true
+    rules:
+    - pattern: kafka.cruisecontrol<name=(.+)><>(\w+)
+      name: kafka_cruisecontrol_$1_$2
+      type: GAUGE
