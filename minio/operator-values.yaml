@@ -4,7 +4,7 @@ operator:
       value: "monitoring"
 
 console:
-  replicaCount: 2
+  replicaCount: 1
   env:
     - name: CONSOLE_IDP_URL
       value: "https://iam.local.xuhuisun.com/realms/minio/.well-known/openid-configuration"
