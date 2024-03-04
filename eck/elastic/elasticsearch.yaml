@@ -5,6 +5,8 @@ metadata:
   namespace: elastic
 spec:
   version: 8.12.1
+  secureSettings:
+  - secretName: snapshot-settings
   http:
     tls:
       selfSignedCertificate:
