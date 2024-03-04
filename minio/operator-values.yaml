@@ -4,4 +4,15 @@ operator:
       value: "monitoring"
 
 console:
-  replicaCount: 1
+  # replicaCount: 1
+  env:
+    - name: CONSOLE_IDP_URL
+      value: "https://keycloak.local.xuhuisun.com/realms/minio/.well-known/openid-configuration"
+    - name: CONSOLE_IDP_CLIENT_ID
+      value: "minio-console"
+    - name: CONSOLE_IDP_SECRET
+      value: "FiA96idWK64JrAvm7Mhew3qRlXXxbSiB"
+    - name: CONSOLE_IDP_SCOPES
+      value: "openid,profile,email"
+    - name: CONSOLE_IDP_CALLBACK_DYNAMIC
+      value: "on"
