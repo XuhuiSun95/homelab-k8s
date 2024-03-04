@@ -33,6 +33,15 @@ kubectl create secret generic route53-credentials-secret --from-literal="secret-
   export client_secret=<supersecretsupersecretsupersecret>
 kubectl create secret generic auth-generic-oauth-secret --from-literal="client_secret=$client_secret" --namespace monitoring
 ```
+#### Setup secret for elasticsearch snapshot minio secret
+```bash
+  export YOUR_ACCESS_KEY=<supersecretsupersecretsupersecret>
+  export YOUR_SECRET_ACCESS_KEY=<supersecretsupersecretsupersecret>
+kubectl create secret generic snapshot-settings \
+   --from-literal=s3.client.default.access_key=$YOUR_ACCESS_KEY \
+   --from-literal=s3.client.default.secret_key=$YOUR_SECRET_ACCESS_KEY \
+   --namespace elastic
+```
 #### Setup openebs block device tags
 ```bash
 # setup openebs block device tag
