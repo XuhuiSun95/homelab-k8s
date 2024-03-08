@@ -6,13 +6,12 @@ serviceAccount:
 # This enables the service account to access the necessary resources
 enableRbac: true
 
-defaultPodOptions:
-  labels:
-    sidecar.istio.io/inject: "true"
-
 image:
   repository: ghcr.io/gethomepage/homepage
   tag: v0.8.8
+
+podLabels:
+  sidecar.istio.io/inject: "true"
 
 config:
   settings:
