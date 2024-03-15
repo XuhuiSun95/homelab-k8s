@@ -1,7 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: local-device-zookeeper
+  name: local-device-kraft
   annotations:
     openebs.io/cas-type: local
     cas.openebs.io/config: |
@@ -9,6 +9,6 @@ metadata:
         value: device
       - name: BlockDeviceSelectors
         data:
-          openebs.io/block-device-tag: zookeeper
+          openebs.io/block-device-tag: kraft
 provisioner: openebs.io/local
 volumeBindingMode: WaitForFirstConsumer
