@@ -5,9 +5,11 @@ metadata:
   namespace: kafka
   annotations:
     strimzi.io/node-pools: enabled
+    strimzi.io/kraft: enabled
 spec:
   kafka:
     version: 3.7.0
+    metadataVersion: 3.7-IV4
     listeners:
       - name: plain
         port: 9092
@@ -41,7 +43,6 @@ spec:
       transaction.state.log.min.isr: 2
       default.replication.factor: 3
       min.insync.replicas: 2
-      inter.broker.protocol.version: "3.7"
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
@@ -56,40 +57,6 @@ spec:
       limits:
         cpu: 500m
         memory: 128Mi
-  zookeeper:
-    replicas: 5
-    resources:
-      requests:
-        memory: 4Gi
-        cpu: "1"
-      limits:
-        memory: 4Gi
-        cpu: "1"
-    jvmOptions:
-      -Xms: 1g
-      -Xmx: 2g
-    storage:
-      type: persistent-claim
-      size: 30Gi
-      deleteClaim: false
-      class: local-device-zookeeper
-    template:
-      pod:
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: disktype
-                  operator: In
-                  values:
-                  - ssd
-    metricsConfig:
-      type: jmxPrometheusExporter
-      valueFrom:
-        configMapKeyRef:
-          name: kafka-metrics
-          key: zookeeper-metrics-config.yml
   entityOperator:
     topicOperator:
       resources:
@@ -263,35 +230,6 @@ data:
       type: GAUGE
       labels:
         quantile: "0.$4"
-  zookeeper-metrics-config.yml: |
-    lowercaseOutputName: true
-    rules:
-    - pattern: "org.apache.ZooKeeperService<name0=ReplicatedServer_id(\\d+)><>(\\w+)"
-      name: "zookeeper_$2"
-      type: GAUGE
-    - pattern: "org.apache.ZooKeeperService<name0=ReplicatedServer_id(\\d+), name1=replica.(\\d+)><>(\\w+)"
-      name: "zookeeper_$3"
-      type: GAUGE
-      labels:
-        replicaId: "$2"
-    - pattern: "org.apache.ZooKeeperService<name0=ReplicatedServer_id(\\d+), name1=replica.(\\d+), name2=(\\w+)><>(Packets\\w+)"
-      name: "zookeeper_$4"
-      type: COUNTER
-      labels:
-        replicaId: "$2"
-        memberType: "$3"
-    - pattern: "org.apache.ZooKeeperService<name0=ReplicatedServer_id(\\d+), name1=replica.(\\d+), name2=(\\w+)><>(\\w+)"
-      name: "zookeeper_$4"
-      type: GAUGE
-      labels:
-        replicaId: "$2"
-        memberType: "$3"
-    - pattern: "org.apache.ZooKeeperService<name0=ReplicatedServer_id(\\d+), name1=replica.(\\d+), name2=(\\w+), name3=(\\w+)><>(\\w+)"
-      name: "zookeeper_$4_$5"
-      type: GAUGE
-      labels:
-        replicaId: "$2"
-        memberType: "$3"
 ---
 kind: ConfigMap
 apiVersion: v1
