@@ -53,30 +53,37 @@ grafana:
     default:
       istio-mesh-dashboard:
         gnetId: 7639
-        revision: 174
+        revision: 203
         datasource: Prometheus
       istio-service-dashboard:
         gnetId: 7636
-        revision: 174
+        revision: 203
         datasource: Prometheus
       istio-workload-dashboard:
         gnetId: 7630
-        revision: 174
+        revision: 203
         datasource: Prometheus
       istio-performance-dashboard:
         gnetId: 11829
-        revision: 174
+        revision: 203
         datasource: Prometheus
       istio-control-plane-dashboard:
         gnetId: 7645
-        revision: 174
+        revision: 203
+        datasource: Prometheus
+      stio-wasm-extension-dashboard:
+        gnetId: 13277
+        revision: 160
         datasource: Prometheus
       minio-dashboard:
         gnetId: 13502
-        revision: 24
-        datasource:
-        - name: DS_PROMETHEUS
-          value: Prometheus
+        revision: 26
+        # datasource:
+        # - name: DS_PROMETHEUS
+        #   value: Prometheus
+      minio-bucket-dashboard:
+        gnetId: 19237
+        revision: 2
   grafana.ini:
     server:
       root_url: https://grafana.local.xuhuisun.com
