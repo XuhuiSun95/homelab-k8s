@@ -78,12 +78,15 @@ grafana:
       minio-dashboard:
         gnetId: 13502
         revision: 26
-        # datasource:
-        # - name: DS_PROMETHEUS
-        #   value: Prometheus
+        datasource:
+        - name: DS_PROMETHEUS
+          value: Prometheus
       minio-bucket-dashboard:
         gnetId: 19237
         revision: 2
+        datasource:
+        - name: DS_PROMETHEUS
+          value: Prometheus
   grafana.ini:
     server:
       root_url: https://grafana.local.xuhuisun.com
