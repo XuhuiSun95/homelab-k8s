@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: jaeger-operator
       repoURL: 'https://jaegertracing.github.io/helm-charts'
-      targetRevision: 2.51.0
+      targetRevision: 2.53.0
       helm:
         valueFiles:
         - $values/jaeger/values.yaml
