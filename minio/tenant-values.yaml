@@ -67,6 +67,8 @@ tenant:
       minio:
         - https://s3.local.xuhuisun.com
       console: https://minio-console.local.xuhuisun.com
+  buckets:
+    - name: "elasticsearch-backup"
   prometheusOperator: true
   env:
     - name: MINIO_PROMETHEUS_URL

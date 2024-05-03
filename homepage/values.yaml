@@ -79,6 +79,10 @@ config:
             icon: argocd.png
             href: https://argocd.local.xuhuisun.com
             description: in-cluster cd
+        - MinIO Operator:
+            icon: minio.png
+            href: https://minio-operator-console.local.xuhuisun.com
+            description: minio mgmt console
     - Monitoring:
         - Grafana:
             icon: grafana.png
@@ -95,10 +99,6 @@ config:
             icon: jaeger.png
             href: https://jaeger.local.xuhuisun.com
             description: tracing
-        - MinIO Operator:
-            icon: minio.png
-            href: https://minio-operator-console.local.xuhuisun.com
-            description: minio mgmt console
   widgets:
     - kubernetes:
         cluster:
