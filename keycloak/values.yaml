@@ -13,6 +13,13 @@ replicaCount: 2
 podLabels:
   sidecar.istio.io/inject: "true"
 
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
+
 postgresql:
   image:
     tag: 15.5.0-debian-11-r15
