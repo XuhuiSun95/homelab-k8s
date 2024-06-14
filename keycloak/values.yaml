@@ -34,3 +34,18 @@ postgresql:
     password: u4rmKA7w0q
     replicationPassword: hF7jn7wwhJ
   architecture: replication
+  primary:
+    resources:
+      requests:
+        cpu: 1.5
+        memory: 512Mi
+      limits:
+        cpu: 3
+        memory: 1024Mi
+  readReplicas:
+      requests:
+        cpu: 1.5
+        memory: 512Mi
+      limits:
+        cpu: 3
+        memory: 1024Mi
