@@ -43,6 +43,7 @@ postgresql:
         cpu: 3
         memory: 1024Mi
   readReplicas:
+    resources:
       requests:
         cpu: 1.5
         memory: 512Mi
