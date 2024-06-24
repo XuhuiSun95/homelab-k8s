@@ -1,15 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:recommended", ":dependencyDashboard"],
   "argocd": {
     "fileMatch": ["argocd/applications/.+\\.yaml$", "^deployment\\.yaml$"]
   },
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["kube-prometheus-stack/values\\.yaml$"],
+      "fileMatch": ["^kube-prometheus-stack/values\\.yaml$"],
       "matchStrings": [
         "#\\s+renovate:\\s+depName=\"(?<depName>.*)\"\\n\\s+gnetId:\\s+(?<packageName>.*?)\\n\\s+revision:\\s+(?<currentValue>.*)"
       ],
