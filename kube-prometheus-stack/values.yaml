@@ -51,37 +51,45 @@ grafana:
           path: /var/lib/grafana/dashboards/default
   dashboards:
     default:
-      istio-mesh-dashboard:
+      # renovate: depName="Istio Mesh Dashboard"
+      7639-istio-mesh-dashboard:
         gnetId: 7639
         revision: 203
         datasource: Prometheus
-      istio-service-dashboard:
+      # renovate: depName="Istio Service Dashboard"
+      7636-istio-service-dashboard:
         gnetId: 7636
         revision: 203
         datasource: Prometheus
-      istio-workload-dashboard:
+      # renovate: depName="Istio Workload Dashboard"
+      7630-istio-workload-dashboard:
         gnetId: 7630
         revision: 203
         datasource: Prometheus
-      istio-performance-dashboard:
+      # renovate: depName="Istio Performance Dashboard"
+      11829-istio-performance-dashboard:
         gnetId: 11829
         revision: 203
         datasource: Prometheus
-      istio-control-plane-dashboard:
+      # renovate: depName="Istio Control Plane Dashboard"
+      7645-istio-control-plane-dashboard:
         gnetId: 7645
         revision: 203
         datasource: Prometheus
-      stio-wasm-extension-dashboard:
+      # renovate: depName="Istio Wasm Extension Dashboard"
+      13277-istio-wasm-extension-dashboard:
         gnetId: 13277
         revision: 160
         datasource: Prometheus
-      minio-dashboard:
+      # renovate: depName="MinIO Dashboard"
+      13502-minio-dashboard:
         gnetId: 13502
         revision: 26
         datasource:
         - name: DS_PROMETHEUS
           value: Prometheus
-      minio-bucket-dashboard:
+      # renovate: depName="MinIO Bucket Dashboard"
+      19237-minio-bucket-dashboard:
         gnetId: 19237
         revision: 2
         datasource:

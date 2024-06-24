@@ -103,6 +103,3 @@ kubectl apply -f jobs/cstor-volume-upgrade-<version>.yaml
 <!-- helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
 <!-- kubectl create -f rook/storageclass.yaml -->
 <!-- ``` -->
-
-
-grafana dashboard config error(dashboardproviders)
