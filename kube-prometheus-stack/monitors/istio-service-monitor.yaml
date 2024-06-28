@@ -7,11 +7,6 @@ spec:
   selector:
     matchLabels:
       security.istio.io/tlsMode: 'istio'
-  namespaceSelector:
-    matchNames:
-      - istio-system
-      - elastic
-      - minio
   podMetricsEndpoints:
     - port: http-envoy-prom
       path: /stats/prometheus
