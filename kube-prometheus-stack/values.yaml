@@ -69,7 +69,7 @@ grafana:
       11829-istio-performance-dashboard:
         # renovate: depName="Istio Performance Dashboard"
         gnetId: 11829
-        revision: 220
+        revision: 221
         datasource: Prometheus
       7645-istio-control-plane-dashboard:
         # renovate: depName="Istio Control Plane Dashboard"
