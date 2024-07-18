@@ -29,6 +29,9 @@ cr:
       pod_labels:
         sidecar.istio.io/inject: "true"
     external_services:
+      grafana:
+        in_cluster_url: "http://prometheus-grafana.monitoring.svc.cluster.local:80"
+        url: "https://grafana.local.xuhuisun.com"
       istio:
         component_status:
           components:
@@ -43,6 +46,6 @@ cr:
         url: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
       tracing:
         enabled: true
-        in_cluster_url: 'http://streaming-query.observability.svc.cluster.local:16685'
+        in_cluster_url: "http://streaming-query.observability.svc.cluster.local:16685"
         use_grpc: true
-        url: 'https://jaeger.local.xuhuisun.com'
+        url: "https://jaeger.local.xuhuisun.com"
