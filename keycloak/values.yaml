@@ -6,7 +6,7 @@ auth:
 
 production: true
 
-proxy: edge
+proxyHeaders: xforwarded
 
 replicaCount: 2
 
