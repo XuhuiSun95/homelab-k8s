@@ -74,7 +74,7 @@ grafana:
       7645-istio-control-plane-dashboard:
         # renovate: depName="Istio Control Plane Dashboard"
         gnetId: 7645
-        revision: 226
+        revision: 227
         datasource: Prometheus
       13277-istio-wasm-extension-dashboard:
         # renovate: depName="Istio Wasm Extension Dashboard"
