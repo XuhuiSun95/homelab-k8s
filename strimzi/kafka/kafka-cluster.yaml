@@ -8,7 +8,7 @@ metadata:
     strimzi.io/kraft: enabled
 spec:
   kafka:
-    version: 3.7.0
+    version: 3.8.0
     metadataVersion: 3.7-IV4
     listeners:
       - name: plain
@@ -52,7 +52,7 @@ spec:
   kafkaExporter:
     resources:
       requests:
-        cpu: 200m
+        cpu: 500m
         memory: 64Mi
       limits:
         cpu: 500m
