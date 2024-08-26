@@ -74,10 +74,6 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```bash
 kubectl -n istio-system create token kiali-service-account | xclip
 ```
-#### Minio operator token
-```bash
-kubectl -n minio-operator  get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode | xclip
-```
 ### Kibana token
 ```bash
 kubectl -n elastic get secret elasticsearch-es-elastic-user -o jsonpath="{.data.elastic}" | base64 --decode | xclip
@@ -103,3 +99,6 @@ kubectl apply -f jobs/cstor-volume-upgrade-<version>.yaml
 <!-- helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
 <!-- kubectl create -f rook/storageclass.yaml -->
 <!-- ``` -->
+
+
+loki
