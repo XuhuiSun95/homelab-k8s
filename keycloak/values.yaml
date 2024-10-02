@@ -19,22 +19,27 @@ autoscaling:
   maxReplicas: 8
   targetCPU: 80
 
-extraContainerPorts:
-  - name: http-management
-    containerPort: 9000
-
-networkPolicy:
-  extraIngress:
-    - ports:
-      - port: 9000
-      - port: 15090
+# networkPolicy:
+#   extraIngress:
+#     - ports:
+#       - port: 9000
+#       - port: 15090
 
 metrics:
   enabled: true
+  service:
+    extraPorts:
+      - name: http-management
+        port: 9000
+        protocol: TCP
+        targetPort: 9000
   serviceMonitor:
     enabled: true
     endpoints:
       - path: '{{ include "keycloak.httpPath" . }}metrics'
+        port: http-management
+      - path: '{{ include "keycloak.httpPath" . }}realms/{{ .Values.adminRealm }}/metrics'
+        port: http
   # prometheusRule:
   #   enabled: true
 
