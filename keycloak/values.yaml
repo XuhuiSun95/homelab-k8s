@@ -19,15 +19,24 @@ autoscaling:
   maxReplicas: 8
   targetCPU: 80
 
+extraContainerPorts:
+  - name: http-management
+    containerPort: 9000
+
+networkPolicy:
+  extraIngress:
+    - ports:
+      - port: 9000
+      - port: 15090
+
 metrics:
   enabled: true
-  service:
-    extraPorts:
-      - 9000
   serviceMonitor:
     enabled: true
-  prometheusRule:
-    enabled: true
+    endpoints:
+      - path: '{{ include "keycloak.httpPath" . }}metrics'
+  # prometheusRule:
+  #   enabled: true
 
 postgresql:
   image:
