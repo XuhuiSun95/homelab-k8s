@@ -21,6 +21,9 @@ autoscaling:
 
 metrics:
   enabled: true
+  service:
+    extraPorts:
+      - 9000
   serviceMonitor:
     enabled: true
   prometheusRule:
