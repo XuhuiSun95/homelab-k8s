@@ -19,11 +19,11 @@ autoscaling:
   maxReplicas: 8
   targetCPU: 80
 
-# networkPolicy:
-#   extraIngress:
-#     - ports:
-#       - port: 9000
-#       - port: 15090
+networkPolicy:
+  extraIngress:
+    - ports:
+      - port: 9000
+      - port: 15090
 
 metrics:
   enabled: true
