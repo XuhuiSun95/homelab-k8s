@@ -23,7 +23,7 @@ networkPolicy:
   extraIngress:
     - ports:
       - port: 9000
-      - port: 15090
+      - port: 15008
 
 metrics:
   enabled: true
