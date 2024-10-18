@@ -33,7 +33,7 @@ spec:
   storage:
     dependencies:
       enabled: true
-      schedule: "CRON_TZ=America/Los_Angeles 55 23 * * *"
+      schedule: "55 23 * * *"
     type: elasticsearch
     options:
       es:
