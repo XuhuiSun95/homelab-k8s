@@ -13,7 +13,7 @@ tenant:
       annotations: { }
       ## Used to specify labels for pods
       labels:
-        sidecar.istio.io/inject: "true"
+        istio.io/dataplane-mode: ambient
       ## Used to specify a toleration for a pod
       tolerations:
         - key: "node-role.kubernetes.io/master"

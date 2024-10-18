@@ -27,7 +27,7 @@ cr:
                 type: Utilization
                 averageUtilization: 50
       pod_labels:
-        sidecar.istio.io/inject: "true"
+        istio.io/dataplane-mode: ambient
     external_services:
       grafana:
         in_cluster_url: "http://prometheus-grafana.monitoring.svc.cluster.local:80"

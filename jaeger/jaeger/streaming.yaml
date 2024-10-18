@@ -29,7 +29,7 @@ spec:
           brokers: kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
   query:
     labels:
-      sidecar.istio.io/inject: "true"
+      istio.io/dataplane-mode: ambient
   storage:
     dependencies:
       enabled: true
