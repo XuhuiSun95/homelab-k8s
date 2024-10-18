@@ -18,7 +18,7 @@ spec:
   podTemplate:
     metadata:
       labels:
-        sidecar.istio.io/inject: "true"
+        istio.io/dataplane-mode: ambient
     spec:
       containers:
       - name: kibana

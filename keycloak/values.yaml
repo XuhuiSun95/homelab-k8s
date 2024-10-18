@@ -11,7 +11,7 @@ proxyHeaders: xforwarded
 replicaCount: 2
 
 podLabels:
-  sidecar.istio.io/inject: "true"
+  istio.io/dataplane-mode: ambient
 
 autoscaling:
   enabled: true

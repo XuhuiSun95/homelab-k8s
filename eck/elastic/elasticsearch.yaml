@@ -35,11 +35,7 @@ spec:
     podTemplate:
       metadata:
         labels:
-          sidecar.istio.io/inject: "true"
-        annotations:
-          traffic.sidecar.istio.io/includeInboundPorts: "*"
-          traffic.sidecar.istio.io/excludeOutboundPorts: "9300"
-          traffic.sidecar.istio.io/excludeInboundPorts: "9300"
+          istio.io/dataplane-mode: ambient
       spec:
         initContainers:
         - name: sysctl
@@ -86,11 +82,7 @@ spec:
     podTemplate:
       metadata:
         labels:
-          sidecar.istio.io/inject: "true"
-        annotations:
-          traffic.sidecar.istio.io/includeInboundPorts: "*"
-          traffic.sidecar.istio.io/excludeOutboundPorts: "9300"
-          traffic.sidecar.istio.io/excludeInboundPorts: "9300"
+          istio.io/dataplane-mode: ambient
       spec:
         initContainers:
         - name: sysctl
