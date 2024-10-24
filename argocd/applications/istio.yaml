@@ -13,7 +13,7 @@ spec:
   source:
     chart: base
     repoURL: 'https://istio-release.storage.googleapis.com/charts'
-    targetRevision: 1.23.2
+    targetRevision: 1.23.3
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
