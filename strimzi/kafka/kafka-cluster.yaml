@@ -52,10 +52,10 @@ spec:
   kafkaExporter:
     resources:
       requests:
-        cpu: 500m
+        cpu: "1"
         memory: 64Mi
       limits:
-        cpu: 500m
+        cpu: "1"
         memory: 128Mi
   entityOperator:
     topicOperator:
