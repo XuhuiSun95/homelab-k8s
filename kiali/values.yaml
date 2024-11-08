@@ -25,7 +25,7 @@ cr:
               name: cpu
               target:
                 type: Utilization
-                averageUtilization: 50
+                averageUtilization: 75
       pod_labels:
         istio.io/dataplane-mode: ambient
     external_services:
