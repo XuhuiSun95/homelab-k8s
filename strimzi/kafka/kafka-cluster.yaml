@@ -20,7 +20,7 @@ spec:
         type: cluster-ip
         tls: false
         authentication:
-          type: oauth2
+          type: oauth
           validIssuerUri: https://iam.local.xuhuisun.com/realms/kafka
           jwksEndpointUri: https://iam.local.xuhuisun.com/realms/kafka/protocol/openid-connect/certs
           userNameClaim: email
