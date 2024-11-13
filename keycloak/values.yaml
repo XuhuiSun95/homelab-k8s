@@ -28,9 +28,6 @@ metrics:
   enabled: true
   serviceMonitor:
     enabled: true
-    endpoints:
-      - path: '{{ include "keycloak.httpPath" . }}metrics'
-      # - path: '{{ include "keycloak.httpPath" . }}realms/{{ .Values.adminRealm }}/metrics'
   prometheusRule:
     enabled: true
 
