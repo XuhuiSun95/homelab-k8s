@@ -45,6 +45,6 @@ cr:
         url: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
       tracing:
         enabled: true
-        external_url: "http://streaming-query.observability.svc.cluster.local:16685"
+        internal_url: "http://streaming-query.observability.svc.cluster.local:16685"
         use_grpc: true
         external_url: "https://jaeger.local.xuhuisun.com"
