@@ -15,7 +15,6 @@ cr:
         username_claim: "email"
     deployment:
       hpa:
-        api_version: ""
         spec:
           maxReplicas: 2
           minReplicas: 1
@@ -25,13 +24,13 @@ cr:
               name: cpu
               target:
                 type: Utilization
-                averageUtilization: 75
+                averageUtilization: 80
       pod_labels:
         istio.io/dataplane-mode: ambient
     external_services:
       grafana:
-        in_cluster_url: "http://prometheus-grafana.monitoring.svc.cluster.local:80"
-        url: "https://grafana.local.xuhuisun.com"
+        internal_url: "http://prometheus-grafana.monitoring.svc.cluster.local:80"
+        external_url: "https://grafana.local.xuhuisun.com"
       istio:
         component_status:
           components:
@@ -46,6 +45,6 @@ cr:
         url: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
       tracing:
         enabled: true
-        in_cluster_url: "http://streaming-query.observability.svc.cluster.local:16685"
+        external_url: "http://streaming-query.observability.svc.cluster.local:16685"
         use_grpc: true
-        url: "https://jaeger.local.xuhuisun.com"
+        external_url: "https://jaeger.local.xuhuisun.com"
