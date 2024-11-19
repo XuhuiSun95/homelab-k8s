@@ -1,6 +1,9 @@
 global:
   storageClass: cstor-csi
 
+diagnosticMode:
+  enabled: true
+
 auth:
   adminPassword: nIskQiijss
 
@@ -32,8 +35,6 @@ metrics:
     enabled: true
 
 postgresql:
-  image:
-    tag: 15.5.0-debian-11-r15
   auth:
     postgresPassword: iPdaWcbKq5
     password: u4rmKA7w0q
