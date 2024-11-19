@@ -35,6 +35,8 @@ metrics:
     enabled: true
 
 postgresql:
+  diagnosticMode:
+    enabled: true
   auth:
     postgresPassword: iPdaWcbKq5
     password: u4rmKA7w0q
