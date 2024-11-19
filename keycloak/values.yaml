@@ -1,9 +1,6 @@
 global:
   storageClass: cstor-csi
 
-diagnosticMode:
-  enabled: true
-
 auth:
   adminPassword: nIskQiijss
 
@@ -35,8 +32,6 @@ metrics:
     enabled: true
 
 postgresql:
-  diagnosticMode:
-    enabled: true
   auth:
     postgresPassword: iPdaWcbKq5
     password: u4rmKA7w0q
