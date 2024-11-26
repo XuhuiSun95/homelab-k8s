@@ -9,7 +9,6 @@ bin_dir: /usr/local/bin
 ## but don't know about that address themselves.
 # access_ip: 1.1.1.1
 
-
 ## Etcd metrics
 etcd_metrics_port: 2381
 etcd_metrics_service_labels:
