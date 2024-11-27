@@ -38,63 +38,72 @@ config:
             icon: unifi-controller.png
             href: https://unifi.ui.com/consoles
             description: network
-        - UniFi UID:
-            icon: unifi-controller.png
-            href: https://xuhuisun.ui.com
-            description: network uid
+            siteMonitor: https://unifi.ui.com/consoles
     - Hypervisor:
         - Proxmox:
             icon: proxmox.png
             href: https://pve2.local.xuhuisun.com
             description: pve2
+            siteMonitor: https://192.168.60.3:8006
         - Proxmox Backup Server:
             icon: proxmox.png
             href: https://pbs.local.xuhuisun.com
             description: pbs
+            siteMonitor: https://192.168.60.2:8007
     - Remote Access:
         - IPMI:
             icon: supermicro.png
             href: https://192.168.10.201
             description: supermicro ipmi
+            siteMonitor: https://192.168.10.201
     - Storage:
         - MinIO:
             icon: minio.png
             href: https://minio-console.local.xuhuisun.com
             description: object storage
+            siteMonitor: http://myminio-console.minio.svc.cluster.local:9090
         - Kibana:
             icon: kibana.png
             href: https://kibana.local.xuhuisun.com
             description: elasticsearch stack
+            siteMonitor: http://kibana-kb-http.elastic.svc.cluster.local:5601
     - Home Automation:
         - Scrypted:
             icon: scrypted.png
             href: https://scrypted.local.xuhuisun.com
             description: mgmt console
+            siteMonitor: https://192.168.20.221:10443
     - Management:
         - Keycloak:
             icon: keycloak.png
             href: https://keycloak.local.xuhuisun.com
             description: iam
+            siteMonitor: http://keycloak.keycloak.svc.cluster.local
         - Argo CD:
             icon: argocd.png
             href: https://argocd.local.xuhuisun.com
             description: in-cluster cd
+            siteMonitor: https://argocd-server.argocd.svc.cluster.local
     - Monitoring:
         - Grafana:
             icon: grafana.png
             href: https://grafana.local.xuhuisun.com
             description: dashboard
+            siteMonitor: http://prometheus-grafana.monitoring.svc.cluster.local
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local.xuhuisun.com
             description: tsdb
+            siteMonitor: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
         - Kiali:
             href: https://kiali.local.xuhuisun.com
             description: istio mgmt console
+            siteMonitor: http://kiali.istio-system.svc.cluster.local:20001
         - Jaeger:
             icon: jaeger.png
             href: https://jaeger.local.xuhuisun.com
             description: tracing
+            siteMonitor: http://streaming-query.observability.svc.cluster.local:16686
   widgets:
     - kubernetes:
         cluster:
