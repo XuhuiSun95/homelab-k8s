@@ -55,7 +55,6 @@ config:
             icon: supermicro.png
             href: https://192.168.10.201
             description: supermicro ipmi
-            siteMonitor: https://192.168.10.201
     - Storage:
         - MinIO:
             icon: minio.png
