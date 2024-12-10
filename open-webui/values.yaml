@@ -10,10 +10,10 @@ ollama:
   resources:
     requests:
       memory: 16Gi
-      cpu: 2000m
+      cpu: 5000m
     limits:
       memory: 24Gi
-      cpu: 4000m
+      cpu: 10000m
   persistentVolume:
     enabled: true
     size: 30Gi
