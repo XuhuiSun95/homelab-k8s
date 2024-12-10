@@ -21,7 +21,7 @@ ollama:
 
 pipelines:
   enabled: true
-  persistentVolume:
+  persistence:
     enabled: true
     size: 2Gi
     storageClass: cstor-csi
