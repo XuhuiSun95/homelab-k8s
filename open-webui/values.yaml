@@ -1,0 +1,33 @@
+ollama:
+  enabled: true
+  ollama:
+    gpu:
+      enabled: false
+      type: 'nvidia'
+      number: 1
+  podLabels:
+    istio.io/dataplane-mode: ambient
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 2000m
+    limits:
+      memory: 24Gi
+      cpu: 4000m
+  persistentVolume:
+    enabled: true
+    size: 30Gi
+    storageClass: cstor-csi
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 500Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+persistence:
+  enabled: true
+  size: 2Gi
+  storageClass: cstor-csi
