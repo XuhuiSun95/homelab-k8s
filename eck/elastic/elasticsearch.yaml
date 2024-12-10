@@ -48,9 +48,10 @@ spec:
           resources:
             requests:
               memory: 4Gi
-              cpu: 1
+              cpu: 1000m
             limits:
               memory: 4Gi
+              cpu: 1500m
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -95,9 +96,10 @@ spec:
           resources:
             requests:
               memory: 8Gi
-              cpu: 2
+              cpu: 2000m
             limits:
               memory: 8Gi
+              cpu: 3000m
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

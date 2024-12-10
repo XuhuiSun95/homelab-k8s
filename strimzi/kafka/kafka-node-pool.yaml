@@ -12,13 +12,10 @@ spec:
   resources:
     requests:
       memory: 4Gi
-      cpu: "1"
+      cpu: 1000m
     limits:
       memory: 4Gi
-      cpu: "1"
-  jvmOptions:
-    -Xms: 1g
-    -Xmx: 2g
+      cpu: 1000m
   storage:
     type: persistent-claim
     size: 30Gi
@@ -50,13 +47,10 @@ spec:
   resources:
     requests:
       memory: 8Gi
-      cpu: "2"
+      cpu: 2000m
     limits:
       memory: 16Gi
-      cpu: "4"
-  jvmOptions:
-    -Xms: 6g
-    -Xmx: 6g
+      cpu: 4000m
   storage:
     type: persistent-claim
     size: 90Gi
