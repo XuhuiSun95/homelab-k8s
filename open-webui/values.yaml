@@ -9,10 +9,10 @@ ollama:
     istio.io/dataplane-mode: ambient
   resources:
     requests:
-      memory: 16Gi
-      cpu: 5000m
+      memory: 8Gi
+      cpu: 4000m
     limits:
-      memory: 24Gi
+      memory: 16Gi
       cpu: 10000m
   persistentVolume:
     enabled: true
