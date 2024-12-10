@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: open-webui-vs
+  namespace: open-webui
+spec:
+  hosts:
+  - "open-webui.local.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: open-webui
+        port:
+          number: 80

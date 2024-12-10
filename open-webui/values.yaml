@@ -19,6 +19,13 @@ ollama:
     size: 30Gi
     storageClass: cstor-csi
 
+pipelines:
+  enabled: true
+  persistentVolume:
+    enabled: true
+    size: 2Gi
+    storageClass: cstor-csi
+
 resources:
   requests:
     cpu: 500m

@@ -32,6 +32,10 @@ config:
         - Gitlab:
             - abbr: GL
               href: https://gitlab.com/
+        - Open-WebUI:
+            - abbr: OI
+              href: https://open-webui.local.xuhuisun.com
+              siteMonitor: http://open-webui.open-webui.svc.cluster.local
   services:
     - Network:
         - UniFi:
