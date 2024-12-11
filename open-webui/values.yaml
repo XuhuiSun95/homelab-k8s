@@ -27,10 +27,9 @@ pipelines:
 
 resources:
   requests:
-    cpu: 500m
-    memory: 500Mi
+    cpu: 10m
+    memory: 800Mi
   limits:
-    cpu: 1000m
     memory: 1Gi
 
 persistence:
