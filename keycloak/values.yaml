@@ -40,16 +40,14 @@ postgresql:
   primary:
     resources:
       requests:
-        cpu: 1.5
-        memory: 512Mi
+        cpu: 100m
+        memory: 100Mi
       limits:
-        cpu: 3
-        memory: 1024Mi
+        memory: 100Mi
   readReplicas:
     resources:
       requests:
-        cpu: 1.5
-        memory: 512Mi
+        cpu: 100m
+        memory: 100Mi
       limits:
-        cpu: 3
-        memory: 1024Mi
+        memory: 100Mi
