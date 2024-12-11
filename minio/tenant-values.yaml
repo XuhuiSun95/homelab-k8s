@@ -42,7 +42,12 @@ tenant:
                 values:
                 - ssd
       ## Configure resource requests and limits for MinIO containers
-      resources: { }
+      resources:
+        requests:
+          cpu: 100m
+          memory: 3Gi
+        limits:
+          memory: 3Gi
       ## Configure security context
       securityContext:
         runAsUser: 1000
