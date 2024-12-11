@@ -47,11 +47,10 @@ spec:
         - name: elasticsearch
           resources:
             requests:
-              memory: 4Gi
               cpu: 1000m
+              memory: 4Gi
             limits:
               memory: 4Gi
-              cpu: 1500m
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -95,11 +94,10 @@ spec:
         - name: elasticsearch
           resources:
             requests:
-              memory: 8Gi
               cpu: 2000m
+              memory: 8Gi
             limits:
               memory: 8Gi
-              cpu: 3000m
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
