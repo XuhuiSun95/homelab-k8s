@@ -133,8 +133,7 @@ config:
 
 resources:
   requests:
-    memory: 10Mi
+    memory: 180Mi
     cpu: 10m
   limits:
-    memory: 200Mi
-    cpu: 500m
+    memory: 180Mi
