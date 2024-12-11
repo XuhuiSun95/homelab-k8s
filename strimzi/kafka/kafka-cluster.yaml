@@ -61,28 +61,25 @@ spec:
   kafkaExporter:
     resources:
       requests:
-        cpu: 1000m
-        memory: 64Mi
+        cpu: 15m
+        memory: 128Mi
       limits:
-        cpu: 1000m
         memory: 128Mi
   entityOperator:
     topicOperator:
       resources:
         requests:
-          memory: 512Mi
-          cpu: 1000m
+          cpu: 10m
+          memory: 256Mi
         limits:
-          memory: 512Mi
-          cpu: 1000m
+          memory: 256Mi
     userOperator:
       resources:
         requests:
-          memory: 512Mi
-          cpu: 1000m
+          cpu: 10m
+          memory: 256Mi
         limits:
-          memory: 512Mi
-          cpu: 1000m
+          memory: 256Mi
   cruiseControl:
     config:
       goals: >
