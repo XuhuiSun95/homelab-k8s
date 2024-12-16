@@ -28,14 +28,22 @@ alertmanager:
           resources:
             requests:
               storage: 80Gi
-
-kubeEtcd:
-  service:
-    enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
 
 grafana:
   podLabels:
     istio.io/dataplane-mode: ambient
+  resources:
+    requests:
+      cpu: 76m
+      memory: 128Mi
+    limits:
+      memory: 128Mi
   defaultDashboardsTimezone: America/Los_Angeles
   dashboardProviders:
     dashboardproviders.yaml:
@@ -119,6 +127,44 @@ grafana:
       defaultMode: 0440
       mountPath: /etc/secrets/auth_generic_oauth
       readOnly: true
+  sidecar:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 118Mi
+      limits:
+        memory: 118Mi
+
+kube-state-metrics:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
+prometheus-node-exporter:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+  prometheusConfigReloader:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
 
 prometheus:
   prometheusSpec:
@@ -154,3 +200,9 @@ prometheus:
           resources:
             requests:
               storage: 80Gi
+    resources:
+      requests:
+        cpu: 352m
+        memory: 2365Mi
+      limits:
+        memory: 2365Mi
