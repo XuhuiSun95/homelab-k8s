@@ -8,7 +8,7 @@ metadata:
     strimzi.io/kraft: enabled
 spec:
   kafka:
-    version: 3.8.0
+    version: 3.9.0
     metadataVersion: 3.8-IV0
     listeners:
       - name: plain
@@ -61,53 +61,35 @@ spec:
   kafkaExporter:
     resources:
       requests:
-        cpu: 15m
-        memory: 128Mi
+        cpu: 14m
+        memory: 100Mi
       limits:
-        memory: 128Mi
+        memory: 100Mi
   entityOperator:
     topicOperator:
       resources:
         requests:
           cpu: 10m
-          memory: 256Mi
+          memory: 236Mi
         limits:
-          memory: 256Mi
+          memory: 236Mi
     userOperator:
       resources:
         requests:
           cpu: 10m
-          memory: 256Mi
+          memory: 231Mi
         limits:
-          memory: 256Mi
+          memory: 231Mi
   cruiseControl:
-    config:
-      goals: >
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.RackAwareGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.MinTopicLeadersPerBrokerGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.PotentialNwOutGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskUsageDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundUsageDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundUsageDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuUsageDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.TopicReplicaDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.LeaderReplicaDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.LeaderBytesInDistributionGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.PreferredLeaderElectionGoal
-      default.goals: >
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.RackAwareGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal
-      hard.goals: >
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.RackAwareGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,
-        com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal
+    autoRebalance:
+      - mode: add-brokers
+      - mode: remove-brokers
+    resources:
+      requests:
+        cpu: 24m
+        memory: 1701Mi
+      limits:
+        memory: 1701Mi
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
