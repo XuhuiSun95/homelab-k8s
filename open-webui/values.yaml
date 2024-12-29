@@ -31,6 +31,10 @@ pipelines:
     limits:
       memory: 100Mi
 
+
+podLabels:
+  istio.io/dataplane-mode: ambient
+
 resources:
   requests:
     cpu: 10m
