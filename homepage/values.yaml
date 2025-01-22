@@ -27,13 +27,13 @@ config:
   bookmarks:
     - Developer:
         - Github:
-            - abbr: GH
+            - icon: github-light.png
               href: https://github.com/
         - Gitlab:
-            - abbr: GL
+            - icon: gitlab.png
               href: https://gitlab.com/
         - Open-WebUI:
-            - abbr: OI
+            - icon: open-webui.png
               href: https://open-webui.local.xuhuisun.com
               siteMonitor: http://open-webui.open-webui.svc.cluster.local
   services:
@@ -42,7 +42,6 @@ config:
             icon: unifi-controller.png
             href: https://unifi.ui.com/consoles
             description: network
-            siteMonitor: https://unifi.ui.com/consoles
     - Hypervisor:
         - Proxmox:
             icon: proxmox.png
@@ -83,7 +82,7 @@ config:
             description: iam
             siteMonitor: http://keycloak.keycloak.svc.cluster.local
         - Argo CD:
-            icon: argocd.png
+            icon: argo-cd.png
             href: https://argocd.local.xuhuisun.com
             description: in-cluster cd
             siteMonitor: https://argocd-server.argocd.svc.cluster.local
