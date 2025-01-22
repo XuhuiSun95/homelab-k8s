@@ -72,7 +72,7 @@ grafana:
       7630-istio-workload-dashboard:
         # renovate: depName="Istio Workload Dashboard"
         gnetId: 7630
-        revision: 240
+        revision: 241
         datasource: Prometheus
       11829-istio-performance-dashboard:
         # renovate: depName="Istio Performance Dashboard"
