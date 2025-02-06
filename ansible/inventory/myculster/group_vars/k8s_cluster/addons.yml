@@ -274,7 +274,8 @@ kube_vip_address: 192.168.60.21
 loadbalancer_apiserver:
   address: "{{ kube_vip_address }}"
   port: 6443
-# kube_vip_interface: eth0
+kube_vip_lb_enable: true
+kube_vip_interface: lo
 # kube_vip_services_enabled: false
 # kube_vip_dns_mode: first
 # kube_vip_cp_detect: false
