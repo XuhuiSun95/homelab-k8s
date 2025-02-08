@@ -15,6 +15,12 @@ docker run --rm -it --mount type=bind,source="$(pwd)"/ansible/inventory/myculste
 
 ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml -u esun-local -b
 ```
+#### Seed ArgoCD
+We need manually deploy ArgoCD for the very first time, then later it can be
+managed by the ArgoCD application to achieve self-managed state.
+```bash
+helm upgrade --install argocd argo/argo-cd --values=argocd/values.yaml --namespace=argocd --create-namespace
+```
 #### Setup node label(application deployment and node selection)
 ```bash
 kubectl label nodes worker-01 disktype=ssd
