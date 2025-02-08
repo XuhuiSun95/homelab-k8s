@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
-  name: jaeger-operator
+    argocd.argoproj.io/sync-wave: "0"
+  name: cert-manager
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: observability
+    namespace: cert-manager
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: jaeger-operator
-      repoURL: 'https://jaegertracing.github.io/helm-charts'
-      targetRevision: 2.57.0
+    - chart: cert-manager
+      repoURL: 'https://charts.jetstack.io'
+      targetRevision: v1.17.0
       helm:
         valueFiles:
-        - $values/jaeger/values.yaml
+        - $values/cert-manager/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values

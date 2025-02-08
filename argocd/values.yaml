@@ -1,3 +1,9 @@
+global:
+  domain: argocd.local.xuhuisun.com
+  dualStack:
+    ipFamilyPolicy: "PreferDualStack"
+    ipFamilies: ["IPv6","IPv4"]
+
 redis-ha:
   enabled: true
 
