@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wave-20
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: argocd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: argocd/applications/wave-20
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
