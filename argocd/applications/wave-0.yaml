@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  name: argocd
+  name: wave-0
   namespace: argocd
 spec:
   project: default
@@ -11,15 +11,9 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: argo-cd
-      repoURL: 'https://argoproj.github.io/argo-helm'
-      targetRevision: 7.8.2
-      helm:
-        valueFiles:
-        - $values/argocd/values.yaml
-    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-      targetRevision: main
-      ref: values
+    path: argocd/applications/wave-0
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
