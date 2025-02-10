@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wave-0
+  name: wave-10
   namespace: argocd
 spec:
   project: default
@@ -9,7 +9,7 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: argocd/applications/wave-0
+    path: argocd/applications/wave-10
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
   syncPolicy:
