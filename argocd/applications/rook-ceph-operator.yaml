@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: rook-ceph-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: rook-ceph
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: rook-ceph
+      repoURL: 'https://charts.rook.io/release'
+      targetRevision: 3.10.0
+      helm:
+        valueFiles:
+        - $values/rook-ceph/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
