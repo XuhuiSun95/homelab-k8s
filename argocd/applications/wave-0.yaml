@@ -10,7 +10,7 @@ spec:
   destination:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
-  sources:
+  source:
     path: argocd/applications/wave-0
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
