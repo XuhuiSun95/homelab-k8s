@@ -1,15 +1,11 @@
 profile: ambient
 
-pilot:
-  autoscaleEnabled: true
-  autoscaleMin: 2
-  autoscaleMax: 5
-  replicaCount: 2
-  rollingMaxSurge: 100%
-  rollingMaxUnavailable: 25%
-  env:
-    PILOT_ENABLE_QUIC_LISTENERS: true
-
+autoscaleMin: 2
+replicaCount: 2
+env:
+  PILOT_ENABLE_QUIC_LISTENERS: true
+ipFamilyPolicy: "PreferDualStack"
+ipFamilies: ["IPv6", "IPv4"]
 meshConfig:
   enableTracing: true
   defaultConfig:
