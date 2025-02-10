@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
-  name: strimzi-kafka-operator
+    argocd.argoproj.io/sync-wave: "0"
+  name: rook-ceph-operator
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: strimzi
+    namespace: rook-ceph
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: strimzi-kafka-operator
-      repoURL: 'https://strimzi.io/charts'
-      targetRevision: 0.45.0
+    - chart: rook-ceph
+      repoURL: 'https://charts.rook.io/release'
+      targetRevision: 3.10.0
       helm:
         valueFiles:
-        - $values/strimzi/values.yaml
+        - $values/rook-ceph/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
