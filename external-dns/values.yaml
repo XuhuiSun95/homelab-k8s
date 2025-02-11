@@ -1,0 +1,37 @@
+service:
+  ipFamilies: ["IPv6","IPv4"]
+  ipFamilyPolicy: "PreferDualStack"
+
+policy: sync
+txtOwnerId: default
+txtPrefix: k8s.
+domainFilters: ["local-v2.xuhuisun.com"]
+
+provider:
+  name: webhook
+  webhook:
+    image:
+      repository: ghcr.io/kashalls/external-dns-unifi-webhook
+      tag: v4.0.1
+    env:
+      - name: UNIFI_HOST
+        value: https://192.168.60.1
+      - name: UNIFI_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-unifi-secret
+            key: api-key
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: http-webhook
+      initialDelaySeconds: 10
+      timeoutSeconds: 5
+    readinessProbe:
+      httpGet:
+        path: /readyz
+        port: http-webhook
+      initialDelaySeconds: 10
+      timeoutSeconds: 5
+extraArgs:
+  - --ignore-ingress-tls-spec

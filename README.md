@@ -21,6 +21,11 @@ managed by the ArgoCD application to achieve self-managed state.
 ```bash
 helm upgrade --install argocd argo/argo-cd --values=argocd/values.yaml --namespace=argocd --create-namespace
 ```
+#### Setup secret for external-dns unifi webhook
+```bash
+  export api_key=<supersecretsupersecretsupersecret>
+kubectl create secret generic external-dns-unifi-secret --from-literal="api-key=$api_key" --namespace external-dns
+```
 #### Setup secret for cert-manager cluster issuer
 ```bash
   export aws_secret=<supersecretsupersecretsupersecret>
