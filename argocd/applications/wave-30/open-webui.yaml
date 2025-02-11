@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
-  name: keycloak
+    argocd.argoproj.io/sync-wave: "30"
+  name: open-webui
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: keycloak
+    namespace: open-webui
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: keycloak
-      repoURL: 'registry-1.docker.io/bitnamicharts'
-      targetRevision: 24.4.8
+    - chart: open-webui
+      repoURL: 'https://helm.openwebui.com'
+      targetRevision: 5.4.0
       helm:
         valueFiles:
-        - $values/keycloak/values.yaml
+        - $values/open-webui/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values

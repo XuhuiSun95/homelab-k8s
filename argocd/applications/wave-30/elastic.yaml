@@ -2,16 +2,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
-  name: ingress
+    argocd.argoproj.io/sync-wave: "30"
+  name: elastic
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: istio-ingress
+    namespace: elastic
     server: 'https://kubernetes.default.svc'
   source:
-    path: istio/ingress
+    path: eck/elastic
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
   syncPolicy:

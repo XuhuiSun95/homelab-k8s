@@ -2,16 +2,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
-  name: kafka
+    argocd.argoproj.io/sync-wave: "30"
+  name: prometheus-monitor
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: kafka
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    path: strimzi/kafka
+    path: kube-prometheus-stack/monitors
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
   syncPolicy:
