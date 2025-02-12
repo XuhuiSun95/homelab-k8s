@@ -1,7 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wave-20
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+  name: security-compliance
   namespace: argocd
 spec:
   project: default
@@ -9,7 +11,7 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: argocd/applications/wave-20
+    path: argocd/applications/security-compliance
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
   syncPolicy:
