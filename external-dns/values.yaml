@@ -2,6 +2,10 @@ service:
   ipFamilies: ["IPv6","IPv4"]
   ipFamilyPolicy: "PreferDualStack"
 
+sources:
+  - service
+  - ingress
+  - istio-gateway
 policy: sync
 txtOwnerId: default
 txtPrefix: k8s.
