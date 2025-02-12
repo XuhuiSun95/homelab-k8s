@@ -30,8 +30,8 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 10Gi
-        storageClassName: cstor-csi
+            storage: 1Gi
+        storageClassName: ceph-block
     podTemplate:
       metadata:
         labels:
@@ -51,15 +51,6 @@ spec:
               memory: 4Gi
             limits:
               memory: 4Gi
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: disktype
-                  operator: In
-                  values:
-                  - ssd
   - name: data
     count: 5
     config:
@@ -77,8 +68,8 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 60Gi
-        storageClassName: local-device-elasticsearch
+            storage: 10Gi
+        storageClassName: ceph-block
     podTemplate:
       metadata:
         labels:
@@ -98,12 +89,3 @@ spec:
               memory: 6Gi
             limits:
               memory: 6Gi
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: disktype
-                  operator: In
-                  values:
-                  - ssd

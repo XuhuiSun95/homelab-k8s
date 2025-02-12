@@ -15,15 +15,15 @@ ollama:
       memory: 9Gi
   persistentVolume:
     enabled: true
-    size: 30Gi
-    storageClass: cstor-csi
+    size: 10Gi
+    storageClass: ceph-block
 
 pipelines:
   enabled: true
   persistence:
     enabled: true
-    size: 2Gi
-    storageClass: cstor-csi
+    size: 1Gi
+    storageClass: ceph-block
   resources:
     requests:
       cpu: 10m
@@ -45,4 +45,4 @@ resources:
 persistence:
   enabled: true
   size: 2Gi
-  storageClass: cstor-csi
+  storageClass: ceph-block
