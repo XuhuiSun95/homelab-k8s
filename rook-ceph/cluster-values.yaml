@@ -1,3 +1,8 @@
+cephClusterSpec:
+  network:
+    ipFamily: "IPv6"
+    dualStack: true
+
 cephFileSystems: {}
 
 cephObjectStores: {}

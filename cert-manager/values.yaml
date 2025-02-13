@@ -99,6 +99,8 @@ webhook:
   tolerations:
   - key: node-role.kubernetes.io/control-plane
     effect: NoSchedule
+  serviceIPFamilyPolicy: "PreferDualStack"
+  serviceIPFamilies: ["IPv6","IPv4"]
 
 cainjector:
   extraArgs:

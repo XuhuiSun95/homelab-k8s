@@ -45,6 +45,8 @@ spec:
             - advertisedHost: kafka-broker-4.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 4
+          ipFamilyPolicy: "PreferDualStack"
+          ipFamilies: ["IPv6","IPv4"]
     config:
       auto.create.topics.enable: "false"
       offsets.topic.replication.factor: 3

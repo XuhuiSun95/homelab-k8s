@@ -148,6 +148,9 @@ kubeProxy:
   enabled: false
 
 kube-state-metrics:
+  service:
+    ipDualStack:
+      enabled: true
   resources:
     requests:
       cpu: 10m
