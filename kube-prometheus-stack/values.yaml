@@ -1,33 +1,16 @@
 alertmanager:
+  service:
+    ipDualStack:
+      enabled: true
   alertmanagerSpec:
-    replicas: 3
-    podAntiAffinity: hard
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: disktype
-              operator: In
-              values:
-              - ssd
-    tolerations:
-      - key: "node-role.kubernetes.io/master"
-        operator: "Equal"
-        value: ""
-        effect: "NoSchedule"
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Equal"
-        value: ""
-        effect: "NoSchedule"
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-device-prometheus
+          storageClassName: ceph-block
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 80Gi
+              storage: 1Gi
     resources:
       requests:
         cpu: 10m
@@ -36,6 +19,9 @@ alertmanager:
         memory: 100Mi
 
 grafana:
+  service:
+    ipFamilyPolicy: "PreferDualStack"
+    ipFamilies: ["IPv6","IPv4"]
   podLabels:
     istio.io/dataplane-mode: ambient
   resources:
@@ -135,6 +121,29 @@ grafana:
       limits:
         memory: 118Mi
 
+kubeControllerManager:
+  service:
+    ipDualStack:
+      enabled: true
+
+coreDns:
+  service:
+    ipDualStack:
+      enabled: true
+
+kubeEtcd:
+  service:
+    ipDualStack:
+      enabled: true
+
+kubeScheduler:
+  service:
+    ipDualStack:
+      enabled: true
+
+kubeProxy:
+  enabled: false
+
 kube-state-metrics:
   resources:
     requests:
@@ -144,6 +153,9 @@ kube-state-metrics:
       memory: 100Mi
 
 prometheus-node-exporter:
+  service:
+    ipDualStack:
+      enabled: true
   resources:
     requests:
       cpu: 10m
@@ -152,6 +164,9 @@ prometheus-node-exporter:
       memory: 100Mi
 
 prometheusOperator:
+  service:
+    ipDualStack:
+      enabled: true
   resources:
     requests:
       cpu: 10m
@@ -167,39 +182,22 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
+  service:
+    ipDualStack:
+      enabled: true
   prometheusSpec:
-    replicas: 3
     podMonitorSelectorNilUsesHelmValues: false
     probeSelectorNilUsesHelmValues: false
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
-    podAntiAffinity: hard
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: disktype
-              operator: In
-              values:
-              - ssd
-    tolerations:
-      - key: "node-role.kubernetes.io/master"
-        operator: "Equal"
-        value: ""
-        effect: "NoSchedule"
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Equal"
-        value: ""
-        effect: "NoSchedule"
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-device-prometheus
+          storageClassName: ceph-block
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 80Gi
+              storage: 10Gi
     resources:
       requests:
         cpu: 352m
