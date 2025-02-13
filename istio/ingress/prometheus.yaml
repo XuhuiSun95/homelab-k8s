@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   hosts:
-  - "prometheus.local.xuhuisun.com"
+  - "prometheus.local-v2.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:

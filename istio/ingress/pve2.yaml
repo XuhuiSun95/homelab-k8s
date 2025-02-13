@@ -24,7 +24,7 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve2.local.xuhuisun.com"
+  - "pve2.local-v2.xuhuisun.com"
   gateways:
   - gateway
   http:

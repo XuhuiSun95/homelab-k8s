@@ -5,7 +5,7 @@ metadata:
   namespace: observability
 spec:
   hosts:
-  - "jaeger.local.xuhuisun.com"
+  - "jaeger.local-v2.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:
