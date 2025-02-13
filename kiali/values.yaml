@@ -10,7 +10,7 @@ cr:
       openid:
         client_id: "kiali"
         disable_rbac: true
-        issuer_uri: "https://iam.local.xuhuisun.com/realms/kiali"
+        issuer_uri: "https://iam.local-v2.xuhuisun.com/realms/kiali"
         scopes: ["openid", "email"]
         username_claim: "email"
     deployment:
@@ -30,7 +30,7 @@ cr:
     external_services:
       grafana:
         internal_url: "http://prometheus-grafana.monitoring.svc.cluster.local:80"
-        external_url: "https://grafana.local.xuhuisun.com"
+        external_url: "https://grafana.local-v2.xuhuisun.com"
       istio:
         component_status:
           components:
@@ -47,4 +47,4 @@ cr:
         enabled: true
         internal_url: "http://streaming-query.observability.svc.cluster.local:16685"
         use_grpc: true
-        external_url: "https://jaeger.local.xuhuisun.com"
+        external_url: "https://jaeger.local-v2.xuhuisun.com"

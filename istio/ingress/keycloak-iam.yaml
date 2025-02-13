@@ -5,7 +5,7 @@ metadata:
   namespace: keycloak
 spec:
   hosts:
-  - "iam.local.xuhuisun.com"
+  - "iam.local-v2.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:

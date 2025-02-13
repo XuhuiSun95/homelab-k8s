@@ -1,5 +1,5 @@
 global:
-  domain: argocd.local.xuhuisun.com
+  domain: argocd.local-v2.xuhuisun.com
   dualStack:
     ipFamilyPolicy: "PreferDualStack"
     ipFamilies: ["IPv6","IPv4"]

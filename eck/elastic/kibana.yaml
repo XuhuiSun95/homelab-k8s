@@ -14,7 +14,7 @@ spec:
       selfSignedCertificate:
         disabled: true
   config:
-    server.publicBaseUrl: "https://kibana.local.xuhuisun.com"
+    server.publicBaseUrl: "https://kibana.local-v2.xuhuisun.com"
   podTemplate:
     metadata:
       labels:

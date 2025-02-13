@@ -12,8 +12,8 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "local.xuhuisun.com"
-    - "*.local.xuhuisun.com"
+    - "local-v2.xuhuisun.com"
+    - "*.local-v2.xuhuisun.com"
     tls:
       httpsRedirect: true
   - port:
@@ -21,8 +21,8 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "local.xuhuisun.com"
-    - "*.local.xuhuisun.com"
+    - "local-v2.xuhuisun.com"
+    - "*.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
@@ -31,7 +31,7 @@ spec:
       name: kafka-bootstrap
       protocol: TLS
     hosts:
-    - "kafka-bootstrap.local.xuhuisun.com"
+    - "kafka-bootstrap.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
@@ -40,7 +40,7 @@ spec:
       name: kafka-broker-0
       protocol: TLS
     hosts:
-    - "kafka-broker-0.local.xuhuisun.com"
+    - "kafka-broker-0.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
@@ -49,7 +49,7 @@ spec:
       name: kafka-broker-1
       protocol: TLS
     hosts:
-    - "kafka-broker-1.local.xuhuisun.com"
+    - "kafka-broker-1.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
@@ -58,7 +58,7 @@ spec:
       name: kafka-broker-2
       protocol: TLS
     hosts:
-    - "kafka-broker-2.local.xuhuisun.com"
+    - "kafka-broker-2.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
@@ -67,7 +67,7 @@ spec:
       name: kafka-broker-3
       protocol: TLS
     hosts:
-    - "kafka-broker-3.local.xuhuisun.com"
+    - "kafka-broker-3.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
@@ -76,7 +76,7 @@ spec:
       name: kafka-broker-4
       protocol: TLS
     hosts:
-    - "kafka-broker-4.local.xuhuisun.com"
+    - "kafka-broker-4.local-v2.xuhuisun.com"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls

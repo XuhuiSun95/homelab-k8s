@@ -24,7 +24,7 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "pbs.local.xuhuisun.com"
+  - "pbs.local-v2.xuhuisun.com"
   gateways:
   - gateway
   http:

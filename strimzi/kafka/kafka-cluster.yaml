@@ -21,8 +21,8 @@ spec:
         tls: false
         authentication:
           type: oauth
-          validIssuerUri: https://iam.local.xuhuisun.com/realms/kafka
-          jwksEndpointUri: https://iam.local.xuhuisun.com/realms/kafka/protocol/openid-connect/certs
+          validIssuerUri: https://iam.local-v2.xuhuisun.com/realms/kafka
+          jwksEndpointUri: https://iam.local-v2.xuhuisun.com/realms/kafka/protocol/openid-connect/certs
           userNameClaim: sub
           maxSecondsWithoutReauthentication: 3600
           jwksExpirySeconds: 360
@@ -30,19 +30,19 @@ spec:
           jwksMinRefreshPauseSeconds: 1
         configuration:
           brokers:
-            - advertisedHost: kafka-broker-0.local.xuhuisun.com
+            - advertisedHost: kafka-broker-0.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 0
-            - advertisedHost: kafka-broker-1.local.xuhuisun.com
+            - advertisedHost: kafka-broker-1.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 1
-            - advertisedHost: kafka-broker-2.local.xuhuisun.com
+            - advertisedHost: kafka-broker-2.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 2
-            - advertisedHost: kafka-broker-3.local.xuhuisun.com
+            - advertisedHost: kafka-broker-3.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 3
-            - advertisedHost: kafka-broker-4.local.xuhuisun.com
+            - advertisedHost: kafka-broker-4.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 4
     config:

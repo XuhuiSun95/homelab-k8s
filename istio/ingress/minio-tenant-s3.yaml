@@ -5,7 +5,7 @@ metadata:
   namespace: minio
 spec:
   hosts:
-  - "s3.local.xuhuisun.com"
+  - "s3.local-v2.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:
