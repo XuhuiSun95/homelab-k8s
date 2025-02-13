@@ -254,8 +254,8 @@ cilium_enable_bgp_control_plane: true
 cilium_loadbalancer_ip_pools:
   - name: "dmz-lb-pool"
     cidrs:
-      - "172.16.10.2/24"
-      - "2600:8801:2aa0:b306::2/64"
+      - "172.16.10.64/26"
+      - "2600:8801:2aa0:b306:1::/122"
 
 # -- Configure BGP Instances (New bgpv2 API v1.16+)
 cilium_bgp_cluster_configs:
