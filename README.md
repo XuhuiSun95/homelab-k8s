@@ -45,21 +45,6 @@ kubectl create secret generic snapshot-settings \
    --from-literal=s3.client.default.secret_key=$YOUR_SECRET_ACCESS_KEY \
    --namespace elastic
 ```
-#### Setup openebs block device tags
-```bash
-# setup openebs block device tag
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=prometheus
-
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=minio
-
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=kraft
-
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=kafka
-
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=cstor
-
-kubectl label bd -n openebs <bd> openebs.io/block-device-tag=elasticsearch
-```
 
 ### All in one deployment
 ```bash
@@ -87,21 +72,5 @@ kubectl -n elastic get secret elasticsearch-es-elastic-user -o jsonpath="{.data.
 ```bash
 ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa upgrade-cluster.yml -u esun-local -b
 ```
-#### OpenEBS cstor cspc and volume
-```bash
-kubectl apply -f jobs/cstor-cspc-upgrade-<version>.yaml
-kubectl apply -f jobs/cstor-volume-upgrade-<version>.yaml
-```
-
-<!-- ### Rook (HCI ceph only) -->
-<!-- #### Setup apps -->
-<!-- ```bash -->
-<!-- helm repo add rook-release https://charts.rook.io/release -->
-<!-- helm repo update -->
-<!-- helm upgrade --install rook-ceph rook-release/rook-ceph --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
-<!-- helm upgrade --install rook-ceph-cluster --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster --values=rook/values.yaml --namespace=rook-ceph --create-namespace -->
-<!-- kubectl create -f rook/storageclass.yaml -->
-<!-- ``` -->
-
 
 loki
