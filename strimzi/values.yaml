@@ -1,4 +1,5 @@
 replicas: 2
+watchAnyNamespace: true
 
 dashboards:
   enabled: true
