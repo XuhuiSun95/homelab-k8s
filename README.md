@@ -36,6 +36,11 @@ kubectl create secret generic route53-credentials-secret --from-literal="secret-
   export client_secret=<supersecretsupersecretsupersecret>
 kubectl create secret generic auth-generic-oauth-secret --from-literal="client_secret=$client_secret" --namespace monitoring
 ```
+#### Setup secret for kiali oidc secret (TODO)
+```bash
+  export client_secret=<supersecretsupersecretsupersecret>
+kubectl create secret generic kiali --from-literal="client_secret=$client_secret" --namespace istio-system
+```
 #### Setup secret for elasticsearch snapshot minio secret
 ```bash
   export YOUR_ACCESS_KEY=<supersecretsupersecretsupersecret>
