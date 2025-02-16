@@ -4,6 +4,18 @@ global:
     ipFamilyPolicy: "PreferDualStack"
     ipFamilies: ["IPv6","IPv4"]
 
+configs:
+  cm:
+    oidc.config: |
+      name: Keycloak
+      issuer: https://iam.local-v2.xuhuisun.com/realms/argocd
+      clientID: argocd
+      enablePKCEAuthentication: true
+      requestedScopes: ["openid", "profile", "email", "groups"]
+  rbac:
+    policy.csv: |
+      g, ArgoCDAdmins, role:admin
+
 redis-ha:
   enabled: true
 
