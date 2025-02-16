@@ -259,7 +259,7 @@ cilium_loadbalancer_ip_pools:
 
 # -- Configure BGP Instances (New bgpv2 API v1.16+)
 cilium_bgp_cluster_configs:
-  - name: "cilium-bgp"
+  - name: "cilium-bgp-master"
     spec:
       bgpInstances:
       - name: "65011"
@@ -272,7 +272,26 @@ cilium_bgp_cluster_configs:
             name: "cilium-peer"
       nodeSelector:
         matchExpressions:
-          - {key: somekey, operator: NotIn, values: ['never-used-value']}
+          - {key: kubernetes.io/hostname, operator: In, values: ['master-01', 'master-02','master-03']}
+  - name: "cilium-bgp-worker"
+    spec:
+      bgpInstances:
+      - name: "65012"
+        localASN: 65012
+        peers:
+        - name: "65000-ipv4"
+          peerASN: 65000
+          peerAddress: '192.168.60.1'
+          peerConfigRef:
+            name: "cilium-peer"
+        - name: "65000-ipv6"
+          peerASN: 65000
+          peerAddress: '2600:8801:2aa0:b305::1'
+          peerConfigRef:
+            name: "cilium-peer"
+      nodeSelector:
+        matchExpressions:
+          - {key: kubernetes.io/hostname, operator: In, values: ['worker-01', 'worker-02','worker-03','worker-04','worker-05','worker-06']}
 
 # -- Configure BGP Peers (New bgpv2 API v1.16+)
 cilium_bgp_peer_configs:
