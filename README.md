@@ -31,11 +31,6 @@ kubectl create secret generic external-dns-unifi-secret --from-literal="api-key=
   export aws_secret=<supersecretsupersecretsupersecret>
 kubectl create secret generic route53-credentials-secret --from-literal="secret-access-key=$aws_secret" --namespace cert-manager
 ```
-#### Setup secret for grafana generic oauth client secret
-```bash
-  export client_secret=<supersecretsupersecretsupersecret>
-kubectl create secret generic auth-generic-oauth-secret --from-literal="client_secret=$client_secret" --namespace monitoring
-```
 #### Setup secret for kiali oidc secret (TODO)
 ```bash
   export client_secret=<supersecretsupersecretsupersecret>
