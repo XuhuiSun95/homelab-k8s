@@ -32,10 +32,6 @@ config:
         - Gitlab:
             - icon: gitlab.png
               href: https://gitlab.com/
-        - Open-WebUI:
-            - icon: open-webui.png
-              href: https://open-webui.local-v2.xuhuisun.com
-              siteMonitor: http://open-webui.open-webui.svc.cluster.local
   services:
     - Network:
         - UniFi:
@@ -63,17 +59,12 @@ config:
             icon: rook.png
             href: https://rook-ceph.local-v2.xuhuisun.com
             description: rook ceph storage orchestration
-            siteMonitor: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:8443
+            siteMonitor: https://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:8443
         - MinIO:
             icon: minio.png
             href: https://minio-console.local-v2.xuhuisun.com
             description: object storage
             siteMonitor: http://minio-console.minio.svc.cluster.local:9090
-        - Kibana:
-            icon: kibana.png
-            href: https://kibana.local-v2.xuhuisun.com
-            description: elasticsearch stack
-            siteMonitor: http://kibana-kb-http.elastic.svc.cluster.local:5601
     - Home Automation:
         - Scrypted:
             icon: scrypted.png
@@ -95,12 +86,12 @@ config:
         - Grafana:
             icon: grafana.png
             href: https://grafana.local-v2.xuhuisun.com
-            description: dashboard
+            description: metrics visualization
             siteMonitor: http://prometheus-grafana.monitoring.svc.cluster.local
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local-v2.xuhuisun.com
-            description: tsdb
+            description: metrics tsdb
             siteMonitor: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
         - Kiali:
             href: https://kiali.local-v2.xuhuisun.com
@@ -109,8 +100,19 @@ config:
         - Jaeger:
             icon: jaeger.png
             href: https://jaeger.local-v2.xuhuisun.com
-            description: tracing
+            description: distributed tracing
             siteMonitor: http://streaming-query.observability.svc.cluster.local:16686
+        - Kibana:
+            icon: kibana.png
+            href: https://kibana.local-v2.xuhuisun.com
+            description: elasticsearch visualization
+            siteMonitor: http://kibana-kb-http.elastic.svc.cluster.local:5601
+    - Productivity:
+        - Open-WebUI:
+            icon: open-webui.png
+            href: https://open-webui.local-v2.xuhuisun.com
+            description: ai interface
+            siteMonitor: http://open-webui.open-webui.svc.cluster.local
   widgets:
     - kubernetes:
         cluster:
