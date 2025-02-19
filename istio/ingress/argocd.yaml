@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: argocd-vs
@@ -15,7 +15,7 @@ spec:
         port:
           number: 443
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
   name: argocd-dr
