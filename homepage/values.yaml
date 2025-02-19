@@ -59,11 +59,16 @@ config:
             href: https://192.168.10.201
             description: supermicro ipmi
     - Storage:
+        - Rook Ceph:
+            icon: rook.png
+            href: https://rook-ceph.local-v2.xuhuisun.com
+            description: rook ceph storage orchestration
+            siteMonitor: http://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:8443
         - MinIO:
             icon: minio.png
             href: https://minio-console.local-v2.xuhuisun.com
             description: object storage
-            siteMonitor: http://myminio-console.minio.svc.cluster.local:9090
+            siteMonitor: http://minio-console.minio.svc.cluster.local:9090
         - Kibana:
             icon: kibana.png
             href: https://kibana.local-v2.xuhuisun.com
