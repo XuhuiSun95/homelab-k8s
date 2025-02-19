@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: gateway
@@ -12,8 +12,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "local-v2.xuhuisun.com"
-    - "*.local-v2.xuhuisun.com"
+    - "*"
     tls:
       httpsRedirect: true
   - port:
@@ -21,62 +20,16 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "local-v2.xuhuisun.com"
-    - "*.local-v2.xuhuisun.com"
+    - "*"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls
   - port:
       number: 9092
-      name: kafka-bootstrap
+      name: kafka
       protocol: TLS
     hosts:
-    - "kafka-bootstrap.local-v2.xuhuisun.com"
-    tls:
-      mode: SIMPLE
-      credentialName: local-xuhuisun-com-tls
-  - port:
-      number: 9092
-      name: kafka-broker-0
-      protocol: TLS
-    hosts:
-    - "kafka-broker-0.local-v2.xuhuisun.com"
-    tls:
-      mode: SIMPLE
-      credentialName: local-xuhuisun-com-tls
-  - port:
-      number: 9092
-      name: kafka-broker-1
-      protocol: TLS
-    hosts:
-    - "kafka-broker-1.local-v2.xuhuisun.com"
-    tls:
-      mode: SIMPLE
-      credentialName: local-xuhuisun-com-tls
-  - port:
-      number: 9092
-      name: kafka-broker-2
-      protocol: TLS
-    hosts:
-    - "kafka-broker-2.local-v2.xuhuisun.com"
-    tls:
-      mode: SIMPLE
-      credentialName: local-xuhuisun-com-tls
-  - port:
-      number: 9092
-      name: kafka-broker-3
-      protocol: TLS
-    hosts:
-    - "kafka-broker-3.local-v2.xuhuisun.com"
-    tls:
-      mode: SIMPLE
-      credentialName: local-xuhuisun-com-tls
-  - port:
-      number: 9092
-      name: kafka-broker-4
-      protocol: TLS
-    hosts:
-    - "kafka-broker-4.local-v2.xuhuisun.com"
+    - "*"
     tls:
       mode: SIMPLE
       credentialName: local-xuhuisun-com-tls

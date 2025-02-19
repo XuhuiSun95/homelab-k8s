@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: kafka-bootstrap-vs
@@ -18,7 +18,7 @@ spec:
           number: 9093
       weight: 100
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: kafka-broker-0-vs
@@ -38,7 +38,7 @@ spec:
           number: 9093
       weight: 100
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: kafka-broker-1-vs
@@ -58,7 +58,7 @@ spec:
           number: 9093
       weight: 100
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: kafka-broker-2-vs
@@ -78,7 +78,7 @@ spec:
           number: 9093
       weight: 100
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: kafka-broker-3-vs
@@ -98,7 +98,7 @@ spec:
           number: 9093
       weight: 100
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: kafka-broker-4-vs
