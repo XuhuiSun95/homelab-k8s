@@ -2,16 +2,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "30"
-  name: prometheus-monitor
+    argocd.argoproj.io/sync-wave: "50"
+  name: istio-prometheus-monitor
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: monitoring
+    namespace: istio-system
     server: 'https://kubernetes.default.svc'
   source:
-    path: kube-prometheus-stack/monitors
+    path: istio/monitors
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
   syncPolicy:
