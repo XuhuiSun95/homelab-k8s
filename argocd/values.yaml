@@ -26,6 +26,8 @@ server:
   autoscaling:
     enabled: true
     minReplicas: 2
+  podLabels:
+    istio.io/dataplane-mode: ambient
 
 repoServer:
   autoscaling:

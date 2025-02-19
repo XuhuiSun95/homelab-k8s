@@ -7,8 +7,6 @@ tenant:
       size: 10Gi
       storageClassName: ceph-block
       labels: { }
-      # labels:
-      #   istio.io/dataplane-mode: ambient
       resources:
         requests:
           cpu: 100m
