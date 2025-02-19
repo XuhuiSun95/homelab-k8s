@@ -26,7 +26,7 @@ spec:
   hosts:
   - "pbs.local-v2.xuhuisun.com"
   gateways:
-  - gateway
+  - istio-ingress/gateway
   http:
   - route:
     - destination:
@@ -37,7 +37,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: pbs
+  name: pbs-dr
   namespace: istio-ingress
 spec:
   host: "pbs.com"

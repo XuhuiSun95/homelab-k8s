@@ -26,7 +26,7 @@ spec:
   hosts:
   - "scrypted.local-v2.xuhuisun.com"
   gateways:
-  - gateway
+  - istio-ingress/gateway
   http:
   - route:
     - destination:
@@ -37,7 +37,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: scrypted
+  name: scrypted-dr
   namespace: istio-ingress
 spec:
   host: "scrypted.com"

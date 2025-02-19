@@ -26,7 +26,7 @@ spec:
   hosts:
   - "pve2.local-v2.xuhuisun.com"
   gateways:
-  - gateway
+  - istio-ingress/gateway
   http:
   - route:
     - destination:
@@ -37,7 +37,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: pve2
+  name: pve2-dr
   namespace: istio-ingress
 spec:
   host: "pve2.com"

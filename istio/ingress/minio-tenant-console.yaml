@@ -11,6 +11,6 @@ spec:
   http:
   - route:
     - destination:
-        host: myminio-console
+        host: minio-console
         port:
           number: 9090

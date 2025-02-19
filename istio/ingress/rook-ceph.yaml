@@ -1,27 +1,27 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: argocd-vs
-  namespace: argocd
+  name: rook-ceph-vs
+  namespace: rook-ceph
 spec:
   hosts:
-  - "argocd.local-v2.xuhuisun.com"
+  - "rook-ceph.local-v2.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:
   - route:
     - destination:
-        host: argocd-server
+        host: rook-ceph-mgr-dashboard
         port:
-          number: 443
+          number: 8443
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: argocd-dr
-  namespace: argocd
+  name: rook-ceph-dr
+  namespace: rook-ceph
 spec:
-  host: argocd-server
+  host: rook-ceph-mgr-dashboard
   trafficPolicy:
     tls:
       mode: SIMPLE
