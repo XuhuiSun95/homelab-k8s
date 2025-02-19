@@ -33,9 +33,6 @@ spec:
             storage: 1Gi
         storageClassName: ceph-block
     podTemplate:
-      metadata:
-        labels:
-          istio.io/dataplane-mode: ambient
       spec:
         initContainers:
         - name: sysctl
@@ -71,9 +68,6 @@ spec:
             storage: 10Gi
         storageClassName: ceph-block
     podTemplate:
-      metadata:
-        labels:
-          istio.io/dataplane-mode: ambient
       spec:
         initContainers:
         - name: sysctl
