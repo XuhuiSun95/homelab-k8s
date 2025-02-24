@@ -1,3 +1,35 @@
+cephClusterSpec:
+  placement:
+    mon:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+      tolerations:
+      - key: "node-role.kubernetes.io/system"
+        operator: "Exists"
+        effect: "NoSchedule"
+    osd:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/user"
+                operator: "Exists"
+    mgr:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+      tolerations:
+      - key: "node-role.kubernetes.io/system"
+        operator: "Exists"
+        effect: "NoSchedule"
+
 cephFileSystems: {}
 
 cephObjectStores: {}
