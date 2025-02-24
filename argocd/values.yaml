@@ -10,8 +10,8 @@ global:
   affinity:
     nodeAffinity:
       matchExpressions:
-      - key: node-role.kubernetes.io/system
-        operator: Exists
+      - key: "node-role.kubernetes.io/system"
+        operator: "Exists"
 
 configs:
   cm:
