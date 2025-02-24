@@ -45,15 +45,16 @@ podDnsConfig:
     - "8.8.8.8"
 affinity:
   nodeAffinity:
-   requiredDuringSchedulingIgnoredDuringExecution:
-     nodeSelectorTerms:
-     - matchExpressions:
-       - key: node-role.kubernetes.io/control-plane
-         operator: In
-         values:
-         - ""
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      preference:
+        matchExpressions:
+        - key: node-role.kubernetes.io/system
+          operator: In
+          values:
+          - ""
 tolerations:
-- key: node-role.kubernetes.io/control-plane
+- key: node-role.kubernetes.io/system
   effect: NoSchedule
 
 webhook:
@@ -89,15 +90,16 @@ webhook:
     readOnly: true
   affinity:
     nodeAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-       nodeSelectorTerms:
-       - matchExpressions:
-         - key: node-role.kubernetes.io/control-plane
-           operator: In
-           values:
-           - ""
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+          - key: node-role.kubernetes.io/system
+            operator: In
+            values:
+            - ""
   tolerations:
-  - key: node-role.kubernetes.io/control-plane
+  - key: node-role.kubernetes.io/system
     effect: NoSchedule
   serviceIPFamilyPolicy: "PreferDualStack"
   serviceIPFamilies: ["IPv6","IPv4"]
@@ -138,15 +140,16 @@ cainjector:
     readOnly: true
   affinity:
     nodeAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-       nodeSelectorTerms:
-       - matchExpressions:
-         - key: node-role.kubernetes.io/control-plane
-           operator: In
-           values:
-           - ""
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+          - key: node-role.kubernetes.io/system
+            operator: In
+            values:
+            - ""
   tolerations:
-  - key: node-role.kubernetes.io/control-plane
+  - key: node-role.kubernetes.io/system
     effect: NoSchedule
 
 startupapicheck:
@@ -178,13 +181,14 @@ startupapicheck:
     readOnly: true
   affinity:
     nodeAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-       nodeSelectorTerms:
-       - matchExpressions:
-         - key: node-role.kubernetes.io/control-plane
-           operator: In
-           values:
-           - ""
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+          - key: node-role.kubernetes.io/system
+            operator: In
+            values:
+            - ""
   tolerations:
-  - key: node-role.kubernetes.io/control-plane
+  - key: node-role.kubernetes.io/system
     effect: NoSchedule
