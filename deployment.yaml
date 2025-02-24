@@ -12,6 +12,8 @@ spec:
     path: argocd/applications
     repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
     targetRevision: main
+    directory:
+      recurse: true
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

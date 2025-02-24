@@ -20,15 +20,19 @@ metrics_server_metric_resolution: 15s
 metrics_server_kubelet_preferred_address_types: "InternalIP,ExternalIP,Hostname"
 metrics_server_host_network: false
 metrics_server_replicas: 2
+metrics_server_extra_tolerations:
+- key: node-role.kubernetes.io/system
+  effect: NoSchedule
 metrics_server_extra_affinity:
   nodeAffinity:
-   requiredDuringSchedulingIgnoredDuringExecution:
-     nodeSelectorTerms:
-     - matchExpressions:
-       - key: node-role.kubernetes.io/control-plane
-         operator: In
-         values:
-         - ""
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      preference:
+        matchExpressions:
+        - key: node-role.kubernetes.io/system
+          operator: In
+          values:
+          - ""
 
 
 # Rancher Local Path Provisioner
