@@ -1,0 +1,21 @@
+nodeSelector:
+  node-role.kubernetes.io/system: ""
+
+tolerations:
+- key: "node-role.kubernetes.io/system"
+  operator: "Exists"
+  effect: "NoSchedule"
+
+csi:
+  enableRbdDriver: true
+  enableCephfsDriver: false
+  provisionerTolerations:
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
+  provisionerNodeAffinity: "node-role.kubernetes.io/system="
+  pluginTolerations:
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
+  pluginNodeAffinity: "node-role.kubernetes.io/system="
