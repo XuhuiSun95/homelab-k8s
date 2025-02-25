@@ -6,6 +6,8 @@ tolerations:
   operator: "Exists"
   effect: "NoSchedule"
 
+priorityClassName: "system-cluster-critical"
+
 csi:
   enableRbdDriver: true
   enableCephfsDriver: false
