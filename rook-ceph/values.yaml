@@ -20,4 +20,3 @@ csi:
   - key: "node-role.kubernetes.io/system"
     operator: "Exists"
     effect: "NoSchedule"
-  pluginNodeAffinity: "node-role.kubernetes.io/system="
