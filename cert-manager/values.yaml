@@ -45,17 +45,15 @@ podDnsConfig:
     - "8.8.8.8"
 affinity:
   nodeAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 100
-      preference:
-        matchExpressions:
-        - key: node-role.kubernetes.io/system
-          operator: In
-          values:
-          - ""
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: "node-role.kubernetes.io/system"
+              operator: "Exists"
 tolerations:
-- key: node-role.kubernetes.io/system
-  effect: NoSchedule
+- key: "node-role.kubernetes.io/system"
+  operator: "Exists"
+  effect: "NoSchedule"
 
 webhook:
   replicaCount: 3
@@ -90,17 +88,15 @@ webhook:
     readOnly: true
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        preference:
-          matchExpressions:
-          - key: node-role.kubernetes.io/system
-            operator: In
-            values:
-            - ""
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
-  - key: node-role.kubernetes.io/system
-    effect: NoSchedule
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
   serviceIPFamilyPolicy: "PreferDualStack"
   serviceIPFamilies: ["IPv6","IPv4"]
 
@@ -140,17 +136,15 @@ cainjector:
     readOnly: true
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        preference:
-          matchExpressions:
-          - key: node-role.kubernetes.io/system
-            operator: In
-            values:
-            - ""
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
-  - key: node-role.kubernetes.io/system
-    effect: NoSchedule
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
 
 startupapicheck:
   automountServiceAccountToken: false
@@ -181,14 +175,12 @@ startupapicheck:
     readOnly: true
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        preference:
-          matchExpressions:
-          - key: node-role.kubernetes.io/system
-            operator: In
-            values:
-            - ""
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
-  - key: node-role.kubernetes.io/system
-    effect: NoSchedule
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
