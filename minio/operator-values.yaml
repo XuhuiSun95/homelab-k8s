@@ -1,4 +1,18 @@
 operator:
   env:
+    - name: OPERATOR_STS_ENABLED
+      value: "on"
     - name: PROMETHEUS_NAMESPACE
       value: "monitoring"
+  priorityClassName: "system-cluster-critical"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: "node-role.kubernetes.io/system"
+              operator: "Exists"
+  tolerations:
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
