@@ -6,7 +6,6 @@ tenant:
       volumesPerServer: 4
       size: 10Gi
       storageClassName: ceph-block
-      labels: { }
       resources:
         requests:
           cpu: 100m
