@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "50"
-  name: jaeger-operator
+    argocd.argoproj.io/sync-wave: "40"
+  name: keda
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: observability
+    namespace: keda
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: jaeger-operator
-      repoURL: 'https://jaegertracing.github.io/helm-charts'
-      targetRevision: 2.57.0
+    - chart: keda
+      repoURL: 'https://kedacore.github.io/charts'
+      targetRevision: 2.16.1
       helm:
         valueFiles:
-        - $values/jaeger/values.yaml
+        - $values/keda/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
