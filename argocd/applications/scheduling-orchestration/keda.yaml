@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "40"
+  name: keda
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: keda
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: keda
+      repoURL: 'https://kedacore.github.io/charts'
+      targetRevision: 2.16.1
+      helm:
+        valueFiles:
+        - $values/keda/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
