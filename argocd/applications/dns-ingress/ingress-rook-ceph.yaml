@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "46"
+  name: ingress-rook-ceph
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: rook-ceph
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      path: rook-ceph/ingress
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
