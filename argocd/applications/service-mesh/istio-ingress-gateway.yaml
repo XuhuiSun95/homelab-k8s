@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "42"
-  name: istio-ingress
+  name: istio-ingress-gateway
   namespace: argocd
 spec:
   project: default
