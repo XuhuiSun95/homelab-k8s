@@ -1,6 +1,17 @@
 service:
   ipFamilies: ["IPv6","IPv4"]
   ipFamilyPolicy: "PreferDualStack"
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: "node-role.kubernetes.io/system"
+              operator: "Exists"
+tolerations:
+- key: "node-role.kubernetes.io/system"
+  operator: "Exists"
+  effect: "NoSchedule"
 
 sources:
   - service
