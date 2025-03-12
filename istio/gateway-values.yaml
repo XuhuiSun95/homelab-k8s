@@ -20,7 +20,7 @@ service:
     port: 9092
     protocol: TCP
     targetPort: 9092
-  externalTrafficPolicy: "Local"
+  # externalTrafficPolicy: "Local"
   # ipFamilyPolicy: "PreferDualStack"
   # ipFamilies: ["IPv6", "IPv4"]
 
