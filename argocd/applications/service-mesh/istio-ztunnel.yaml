@@ -14,6 +14,12 @@ spec:
     - chart: ztunnel
       repoURL: 'https://istio-release.storage.googleapis.com/charts'
       targetRevision: 1.24.3
+      helm:
+        valueFiles:
+        - $values/istio/istio-ztunnel-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
