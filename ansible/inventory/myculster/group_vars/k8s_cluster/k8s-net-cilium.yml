@@ -269,19 +269,19 @@ cilium_bgp_cluster_configs:
           peerASN: 65000
           peerAddress: '192.168.60.1'
           peerConfigRef:
-            name: "cilium-peer"
-        # - name: "65000-ipv6"
-        #   peerASN: 65000
-        #   peerAddress: '2600:8801:2aa0:b305::1'
-        #   peerConfigRef:
-        #     name: "cilium-peer"
+            name: "cilium-peer-ipv4"
+        - name: "65000-ipv6"
+          peerASN: 65000
+          peerAddress: '2600:8801:2aa0:b305::1'
+          peerConfigRef:
+            name: "cilium-peer-ipv6"
       nodeSelector:
         matchExpressions:
           - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
 
 # -- Configure BGP Peers (New bgpv2 API v1.16+)
 cilium_bgp_peer_configs:
-  - name: cilium-peer
+  - name: cilium-peer-ipv4
     spec:
       timers:
         connectRetryTimeSeconds: 12
@@ -297,6 +297,17 @@ cilium_bgp_peer_configs:
           advertisements:
             matchLabels:
               advertise: "bgp"
+  - name: cilium-peer-ipv6
+    spec:
+      timers:
+        connectRetryTimeSeconds: 12
+        holdTimeSeconds: 9
+        keepAliveTimeSeconds: 3
+      # authSecretRef: bgp-auth-secret
+      gracefulRestart:
+        enabled: true
+        restartTimeSeconds: 15
+      families:
         - afi: ipv6
           safi: unicast
           advertisements:
@@ -317,8 +328,8 @@ cilium_bgp_advertisements:
         - advertisementType: "Service"
           service:
             addresses:
-              - ClusterIP
-              - ExternalIP
+              # - ClusterIP
+              # - ExternalIP
               - LoadBalancerIP
           selector:
             matchExpressions:
