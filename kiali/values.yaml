@@ -37,7 +37,7 @@ cr:
           - app_label: "istiod"
             is_core: true
             is_proxy: false
-          - app_label: "istio-ingress"
+          - app_label: "istio-ingress-gateway"
             is_core: true
             is_proxy: true
             namespace: istio-ingress
