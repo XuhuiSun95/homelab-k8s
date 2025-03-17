@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: homepage
       repoURL: 'https://jameswynn.github.io/helm-charts'
-      targetRevision: 2.0.1
+      targetRevision: 2.0.2
       helm:
         valueFiles:
         - $values/homepage/values.yaml
