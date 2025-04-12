@@ -278,6 +278,7 @@ cilium_bgp_cluster_configs:
       nodeSelector:
         matchExpressions:
           - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
+          - {key: node-role.kubernetes.io/system, operator: DoesNotExist}
 
 # -- Configure BGP Peers (New bgpv2 API v1.16+)
 cilium_bgp_peer_configs:
