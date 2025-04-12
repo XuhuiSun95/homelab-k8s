@@ -11,6 +11,17 @@ alertmanager:
           resources:
             requests:
               storage: 1Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "node-role.kubernetes.io/system"
+                  operator: "Exists"
+    tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
     resources:
       requests:
         cpu: 10m
@@ -111,6 +122,10 @@ grafana:
       use_pkce: true
       use_refresh_token: true
   sidecar:
+    dashboards:
+      multicluster:
+        global:
+          enabled: true
     resources:
       requests:
         cpu: 10m
@@ -190,6 +205,8 @@ prometheus:
     probeSelectorNilUsesHelmValues: false
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
+    disableCompaction: true
+    retention: 6h
     storageSpec:
       volumeClaimTemplate:
         spec:
@@ -198,6 +215,17 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "node-role.kubernetes.io/system"
+                  operator: "Exists"
+    tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
     resources:
       requests:
         cpu: 352m
