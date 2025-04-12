@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "90"
+    argocd.argoproj.io/sync-wave: "40"
   name: prometheus
   namespace: argocd
 spec:
@@ -24,3 +24,5 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+    automated:
+      selfHeal: true

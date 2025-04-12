@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "46"
+    argocd.argoproj.io/sync-wave: "59"
   name: ingress-rook-ceph
   namespace: argocd
 spec:
@@ -17,3 +17,5 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      selfHeal: true
