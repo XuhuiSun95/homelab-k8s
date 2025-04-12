@@ -2,24 +2,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "41"
-  name: external-dns
+    argocd.argoproj.io/sync-wave: "43"
+  name: ingress-gateway-certificates
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: external-dns
+    namespace: istio-ingress
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: external-dns
-      repoURL: 'https://kubernetes-sigs.github.io/external-dns/'
-      targetRevision: 1.16.1
-      helm:
-        valueFiles:
-        - $values/external-dns/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      ref: values
+      path: istio/certificates/production
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      selfHeal: true
