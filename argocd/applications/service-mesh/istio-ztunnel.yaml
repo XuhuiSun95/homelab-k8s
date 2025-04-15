@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: ztunnel
       repoURL: 'https://istio-release.storage.googleapis.com/charts'
-      targetRevision: 1.25.1
+      targetRevision: 1.25.2
       helm:
         valueFiles:
         - $values/istio/istio-ztunnel-values.yaml
