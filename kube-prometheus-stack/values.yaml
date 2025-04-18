@@ -160,6 +160,17 @@ kube-state-metrics:
   service:
     ipDualStack:
       enabled: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
   resources:
     requests:
       cpu: 10m
@@ -182,6 +193,17 @@ prometheusOperator:
   service:
     ipDualStack:
       enabled: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+  - key: "node-role.kubernetes.io/system"
+    operator: "Exists"
+    effect: "NoSchedule"
   resources:
     requests:
       cpu: 10m
