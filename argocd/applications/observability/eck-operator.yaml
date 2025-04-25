@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "70"
+    argocd.argoproj.io/sync-wave: "60"
   name: eck-operator
   namespace: argocd
 spec:
@@ -23,3 +23,5 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      selfHeal: true
