@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "70"
-  name: tenant
+  name: minio-tenant
   namespace: argocd
 spec:
   project: default
