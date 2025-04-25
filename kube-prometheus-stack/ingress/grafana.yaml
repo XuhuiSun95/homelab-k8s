@@ -11,6 +11,6 @@ spec:
   http:
   - route:
     - destination:
-        host: prometheus-grafana
+        host: kube-prometheus-stack-grafana
         port:
           number: 80
