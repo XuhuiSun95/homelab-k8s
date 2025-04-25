@@ -1,5 +1,17 @@
 replicas: 2
 watchAnyNamespace: true
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: "node-role.kubernetes.io/system"
+              operator: "Exists"
+tolerations:
+- key: "node-role.kubernetes.io/system"
+  operator: "Exists"
+  effect: "NoSchedule"
+
 dashboards:
   enabled: true
