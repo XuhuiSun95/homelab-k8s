@@ -1,4 +1,5 @@
 replicaCount: 2
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
