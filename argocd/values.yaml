@@ -17,7 +17,7 @@ configs:
   cm:
     oidc.config: |
       name: Keycloak
-      issuer: https://iam.local-v2.xuhuisun.com/realms/argocd
+      issuer: https://iam.local-v2.xuhuisun.com/realms/local-v2
       clientID: argocd
       enablePKCEAuthentication: true
       requestedScopes: ["openid", "profile", "email", "groups"]

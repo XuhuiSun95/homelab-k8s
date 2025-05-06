@@ -22,7 +22,7 @@ cr:
       openid:
         client_id: "kiali"
         disable_rbac: true
-        issuer_uri: "https://iam.local-v2.xuhuisun.com/realms/kiali"
+        issuer_uri: "https://iam.local-v2.xuhuisun.com/realms/local-v2"
         scopes: ["openid", "email"]
         username_claim: "email"
     deployment:
