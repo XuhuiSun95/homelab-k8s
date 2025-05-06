@@ -21,8 +21,8 @@ spec:
         tls: false
         authentication:
           type: oauth
-          validIssuerUri: https://iam.local-v2.xuhuisun.com/realms/kafka
-          jwksEndpointUri: https://iam.local-v2.xuhuisun.com/realms/kafka/protocol/openid-connect/certs
+          validIssuerUri: https://iam.local-v2.xuhuisun.com/realms/local-v2
+          jwksEndpointUri: https://iam.local-v2.xuhuisun.com/realms/local-v2/protocol/openid-connect/certs
           userNameClaim: sub
           maxSecondsWithoutReauthentication: 3600
           jwksExpirySeconds: 360
