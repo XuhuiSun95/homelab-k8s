@@ -31,11 +31,6 @@ kubectl create secret generic route53-credentials-secret --from-literal="secret-
   export api_key=<supersecretsupersecretsupersecret>
 kubectl create secret generic external-dns-unifi-secret --from-literal="api-key=$api_key" --namespace external-dns
 ```
-#### Setup secret for kiali oidc secret
-```bash
-  export client_secret=<supersecretsupersecretsupersecret>
-kubectl create secret generic kiali --from-literal="oidc-secret=$client_secret" --namespace istio-system
-```
 #### Setup secret for elasticsearch snapshot minio secret
 ```bash
   export YOUR_ACCESS_KEY=<supersecretsupersecretsupersecret>
