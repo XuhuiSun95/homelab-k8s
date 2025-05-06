@@ -39,12 +39,6 @@ spec:
             - advertisedHost: kafka-broker-2.local-v2.xuhuisun.com
               advertisedPort: 9092
               broker: 2
-            - advertisedHost: kafka-broker-3.local-v2.xuhuisun.com
-              advertisedPort: 9092
-              broker: 3
-            - advertisedHost: kafka-broker-4.local-v2.xuhuisun.com
-              advertisedPort: 9092
-              broker: 4
           ipFamilyPolicy: "PreferDualStack"
           ipFamilies: ["IPv6","IPv4"]
     config:
