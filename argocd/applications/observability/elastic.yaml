@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "71"
+    argocd.argoproj.io/sync-wave: "70"
   name: elastic
   namespace: argocd
 spec:
@@ -17,3 +17,5 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      selfHeal: true
