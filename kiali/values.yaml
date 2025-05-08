@@ -41,7 +41,7 @@ cr:
         istio.io/dataplane-mode: ambient
     external_services:
       grafana:
-        internal_url: "http://prometheus-grafana.monitoring.svc.cluster.local:80"
+        internal_url: "http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local:80"
         external_url: "https://grafana.local-v2.xuhuisun.com"
       istio:
         component_status:
@@ -54,7 +54,7 @@ cr:
             is_proxy: true
             namespace: istio-ingress
       prometheus:
-        url: "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
+        url: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
       tracing:
         enabled: true
         internal_url: "http://streaming-query.observability.svc.cluster.local:16685"
