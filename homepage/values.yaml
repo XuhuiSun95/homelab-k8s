@@ -87,12 +87,12 @@ config:
             icon: grafana.png
             href: https://grafana.local-v2.xuhuisun.com
             description: metrics visualization
-            siteMonitor: http://prometheus-grafana.monitoring.svc.cluster.local
+            siteMonitor: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local-v2.xuhuisun.com
             description: metrics tsdb
-            siteMonitor: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+            siteMonitor: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         - Kiali:
             href: https://kiali.local-v2.xuhuisun.com
             description: istio mgmt console
