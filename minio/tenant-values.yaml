@@ -32,7 +32,7 @@ tenant:
     - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
       value: "minio"
     - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET_KEYCLOAK_PRIMARY
-      value: "RaiL7sSioQ7TbgukDzEzOdl7mCqOwAPf"
+      value: "cCQGi0mAQdAHbliSwW8pCpcdW6pktFqj"
     - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
       value: "MinIO OpenID Login - Keycloak"
     - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
