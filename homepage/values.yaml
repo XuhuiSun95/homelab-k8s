@@ -137,6 +137,10 @@ config:
   kubernetes:
     mode: cluster
 
+env:
+  - name: HOMEPAGE_ALLOWED_HOSTS
+    value: "local-v2.xuhuisun.com,homepage.local-v2.xuhuisun.com"
+
 resources:
   requests:
     memory: 180Mi
