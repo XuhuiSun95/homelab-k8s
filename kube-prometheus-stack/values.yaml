@@ -38,9 +38,9 @@ grafana:
   resources:
     requests:
       cpu: 76m
-      memory: 128Mi
+      memory: 256Mi
     limits:
-      memory: 128Mi
+      memory: 256Mi
   defaultDashboardsTimezone: America/Los_Angeles
   dashboardProviders:
     dashboardproviders.yaml:
