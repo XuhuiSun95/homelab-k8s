@@ -29,10 +29,10 @@ applicationSet:
   replicas: 2
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 12m
+      memory: 105Mi
     limits:
-      memory: 100Mi
+      memory: 105Mi
 
 dex:
   resources:
@@ -118,10 +118,10 @@ server:
     minReplicas: 2
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 100m
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
 
 repoServer:
   autoscaling:
@@ -129,7 +129,7 @@ repoServer:
     minReplicas: 2
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
