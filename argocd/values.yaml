@@ -25,9 +25,40 @@ configs:
     policy.csv: |
       g, ArgoCDAdmins, role:admin
 
+applicationSet:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
+dex:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
+notifications:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
 redis-ha:
   enabled: true
   haproxy:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
     additionalAffinities:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -39,6 +70,27 @@ redis-ha:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
       effect: "NoSchedule"
+  redis:
+    resources:
+      requests:
+        cpu: 14m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+  sentinel:
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+  splitBrainDetection:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
   additionalAffinities:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -53,16 +105,31 @@ redis-ha:
 
 controller:
   replicas: 1
+  resources:
+    requests:
+      cpu: 165m
+      memory: 809Mi
+    limits:
+      memory: 809Mi
 
 server:
   autoscaling:
     enabled: true
     minReplicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 
 repoServer:
   autoscaling:
     enabled: true
     minReplicas: 2
-
-applicationSet:
-  replicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
