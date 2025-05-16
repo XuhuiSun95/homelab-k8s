@@ -26,7 +26,7 @@ spec:
   hosts:
   - "pve2.local-v2.xuhuisun.com"
   gateways:
-  - istio-ingress/gateway
+  - istio-ingress/gateway-http2
   http:
   - route:
     - destination:
