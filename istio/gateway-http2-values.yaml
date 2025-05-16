@@ -13,8 +13,8 @@ service:
     protocol: TCP
     targetPort: 443
   externalTrafficPolicy: "Local"
-  # ipFamilyPolicy: "PreferDualStack"
-  # ipFamilies: ["IPv6", "IPv4"]
+  ipFamilyPolicy: "PreferDualStack"
+  ipFamilies: ["IPv6", "IPv4"]
 
 autoscaling:
   minReplicas: 2
