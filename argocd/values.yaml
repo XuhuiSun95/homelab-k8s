@@ -113,9 +113,7 @@ controller:
       memory: 809Mi
 
 server:
-  autoscaling:
-    enabled: true
-    minReplicas: 2
+  replicas: 2
   resources:
     requests:
       cpu: 100m
@@ -124,9 +122,7 @@ server:
       memory: 128Mi
 
 repoServer:
-  autoscaling:
-    enabled: true
-    minReplicas: 2
+  replicas: 2
   resources:
     requests:
       cpu: 50m
