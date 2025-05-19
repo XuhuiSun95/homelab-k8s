@@ -15,9 +15,6 @@ spec:
         port: 9092
         type: internal
         tls: false
-        configuration:
-          ipFamilyPolicy: "PreferDualStack"
-          ipFamilies: ["IPv6","IPv4"]
       - name: external
         port: 9093
         type: cluster-ip
@@ -32,16 +29,14 @@ spec:
           jwksRefreshSeconds: 300
           jwksMinRefreshPauseSeconds: 1
         configuration:
+          advertisedHostTemplate: kafka-broker-{nodeId}.local-v2.xuhuisun.com
           brokers:
-            - advertisedHost: kafka-broker-0.local-v2.xuhuisun.com
+            - broker: 0
               advertisedPort: 9092
-              broker: 0
-            - advertisedHost: kafka-broker-1.local-v2.xuhuisun.com
+            - broker: 1
               advertisedPort: 9092
-              broker: 1
-            - advertisedHost: kafka-broker-2.local-v2.xuhuisun.com
+            - broker: 2
               advertisedPort: 9092
-              broker: 2
           ipFamilyPolicy: "PreferDualStack"
           ipFamilies: ["IPv6","IPv4"]
     config:
