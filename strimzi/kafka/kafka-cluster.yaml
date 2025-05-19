@@ -15,6 +15,9 @@ spec:
         port: 9092
         type: internal
         tls: false
+        configuration:
+          ipFamilyPolicy: "PreferDualStack"
+          ipFamilies: ["IPv6","IPv4"]
       - name: external
         port: 9093
         type: cluster-ip
@@ -80,6 +83,10 @@ spec:
     autoRebalance:
       - mode: add-brokers
       - mode: remove-brokers
+    template:
+      apiService:
+        ipFamilyPolicy: "PreferDualStack"
+        ipFamilies: ["IPv6","IPv4"]
     resources:
       requests:
         cpu: 24m
