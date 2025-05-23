@@ -29,10 +29,10 @@ applicationSet:
   replicas: 2
   resources:
     requests:
-      cpu: 12m
-      memory: 105Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      memory: 105Mi
+      memory: 100Mi
 
 dex:
   resources:
@@ -108,9 +108,9 @@ controller:
   resources:
     requests:
       cpu: 165m
-      memory: 809Mi
+      memory: 1024Mi
     limits:
-      memory: 809Mi
+      memory: 1024Mi
 
 server:
   replicas: 2
@@ -126,6 +126,6 @@ repoServer:
   resources:
     requests:
       cpu: 50m
-      memory: 128Mi
+      memory: 256Mi
     limits:
-      memory: 128Mi
+      memory: 256Mi
