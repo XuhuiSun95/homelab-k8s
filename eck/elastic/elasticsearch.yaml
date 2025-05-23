@@ -4,7 +4,7 @@ metadata:
   name: elasticsearch
   namespace: elastic
 spec:
-  version: 8.18.1
+  version: 9.0.1
   secureSettings:
   - secretName: snapshot-settings
   http:
