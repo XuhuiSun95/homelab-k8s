@@ -1,6 +1,7 @@
 service:
   ipFamilies: ["IPv6","IPv4"]
   ipFamilyPolicy: "PreferDualStack"
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -8,18 +9,30 @@ affinity:
         - matchExpressions:
             - key: "node-role.kubernetes.io/system"
               operator: "Exists"
+
 tolerations:
 - key: "node-role.kubernetes.io/system"
   operator: "Exists"
   effect: "NoSchedule"
 
+resources:
+  requests:
+    cpu: 10m
+    memory: 100Mi
+  limits:
+    memory: 100Mi
+
 sources:
   - service
   - ingress
   - istio-virtualservice
+
 policy: sync
+
 txtOwnerId: default
+
 txtPrefix: k8s.
+
 domainFilters: ["local-v2.xuhuisun.com"]
 
 provider:
@@ -36,6 +49,12 @@ provider:
           secretKeyRef:
             name: external-dns-unifi-secret
             key: api-key
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
     livenessProbe:
       httpGet:
         path: /healthz
@@ -48,5 +67,6 @@ provider:
         port: http-webhook
       initialDelaySeconds: 10
       timeoutSeconds: 5
+
 extraArgs:
   - --ignore-ingress-tls-spec
