@@ -106,7 +106,7 @@ config:
             icon: kibana.png
             href: https://kibana.local-v2.xuhuisun.com
             description: elasticsearch visualization
-            siteMonitor: http://kibana-kb-http.elastic.svc.cluster.local:5601
+            siteMonitor: https://kibana-kb-http.elastic.svc.cluster.local:5601
     - Productivity:
         - Open-WebUI:
             icon: open-webui.png

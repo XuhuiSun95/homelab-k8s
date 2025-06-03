@@ -14,3 +14,15 @@ spec:
         host: kibana-kb-http
         port:
           number: 5601
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: kibana-dr
+  namespace: elastic
+spec:
+  host: kibana-kb-http
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      insecureSkipVerify: true
