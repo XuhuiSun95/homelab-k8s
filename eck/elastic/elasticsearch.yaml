@@ -7,10 +7,6 @@ spec:
   version: 9.0.1
   secureSettings:
   - secretName: snapshot-settings
-  http:
-    tls:
-      selfSignedCertificate:
-        disabled: true
   nodeSets:
   - name: masters
     count: 3
