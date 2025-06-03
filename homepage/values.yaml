@@ -134,6 +134,9 @@ config:
     - search:
         provider: [google, baidu]
         target: _blank
+    - openmeteo:
+        units: imperial
+        cache: 5
   kubernetes:
     mode: cluster
 
