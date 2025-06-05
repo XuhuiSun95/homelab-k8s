@@ -127,6 +127,11 @@ loki:
 mimir:
   mimir:
     structuredConfig:
+      limits:
+        max_global_series_per_user: 2000000
+        max_label_names_per_series: 40
+        ingestion_rate: 150000
+        ingestion_burst_size: 300000
       common:
         storage:
           backend: s3
