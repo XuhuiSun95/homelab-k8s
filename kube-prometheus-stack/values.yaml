@@ -231,6 +231,10 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
     disableCompaction: true
     retention: 6h
+    remoteWrite:
+    - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
+    externalLabels:
+       environment: mimir
     storageSpec:
       volumeClaimTemplate:
         spec:

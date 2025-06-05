@@ -64,7 +64,7 @@ config:
             icon: minio.png
             href: https://minio-console.local-v2.xuhuisun.com
             description: object storage
-            siteMonitor: http://minio-console.minio.svc.cluster.local:9090
+            siteMonitor: https://minio-console.minio.svc.cluster.local:9443
     - Home Automation:
         - Scrypted:
             icon: scrypted.png
@@ -97,11 +97,6 @@ config:
             href: https://kiali.local-v2.xuhuisun.com
             description: istio mgmt console
             siteMonitor: http://kiali.istio-system.svc.cluster.local:20001
-        - Jaeger:
-            icon: jaeger.png
-            href: https://jaeger.local-v2.xuhuisun.com
-            description: distributed tracing
-            siteMonitor: http://streaming-query.observability.svc.cluster.local:16686
         - Kibana:
             icon: kibana.png
             href: https://kibana.local-v2.xuhuisun.com
