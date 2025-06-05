@@ -106,7 +106,7 @@ loki:
   loki:
     schema_config:
       configs:
-      - from: 2020-05-15
+      - from: 2020-09-07
         store: tsdb
         object_store: aws
         schema: v13
@@ -162,7 +162,7 @@ tempo:
         bucket: tempo
         prefix: traces
         endpoint: minio.minio.svc.cluster.local
-        insecure: true
+        tls_insecure_skip_verify: true
         forcepathstyle: true
         access_key: hU2WB7hZSnLeqP3TU5pm
         secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
