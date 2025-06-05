@@ -161,8 +161,9 @@ tempo:
       s3:
         bucket: tempo
         prefix: traces
-        endpoint: https://minio.minio.svc.cluster.local
+        endpoint: minio.minio.svc.cluster.local
         insecure: true
+        forcepathstyle: true
         access_key: hU2WB7hZSnLeqP3TU5pm
         secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
   # overrides:
