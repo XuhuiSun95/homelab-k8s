@@ -14,8 +14,6 @@ tenant:
           memory: 3Gi
   metrics:
     enabled: true
-  certificate:
-    requestAutoCert: false
   features:
     domains:
       minio:
@@ -23,6 +21,10 @@ tenant:
       console: https://minio-console.local-v2.xuhuisun.com
   buckets:
     - name: "elasticsearch-backup"
+    - name: "mimir-tsdb"
+    - name: "mimir-ruler"
+    - name: "loki"
+    - name: "tempo"
   prometheusOperator: true
   env:
     - name: MINIO_PROMETHEUS_URL
