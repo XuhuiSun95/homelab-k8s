@@ -87,7 +87,7 @@ config:
             icon: grafana.png
             href: https://grafana.local-v2.xuhuisun.com
             description: metrics visualization
-            siteMonitor: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local
+            siteMonitor: http://lgtm-distributed-grafana.monitoring.svc.cluster.local
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.local-v2.xuhuisun.com

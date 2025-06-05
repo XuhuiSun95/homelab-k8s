@@ -114,6 +114,10 @@ loki:
           prefix: loki_index_
           period: 24h
     storageConfig:
+      tsdb_shipper:
+        active_index_directory: /var/loki/index
+        cache_location: /var/loki/cache
+        cache_ttl: 24h
       aws:
         s3: https://hU2WB7hZSnLeqP3TU5pm:qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q@minio.minio.svc.cluster.local/loki
         s3forcepathstyle: true
