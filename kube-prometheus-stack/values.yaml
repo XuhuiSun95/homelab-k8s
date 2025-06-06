@@ -5,17 +5,41 @@ grafana:
   enabled: false
   forceDeployDashboards: true
 
+kubelet:
+  serviceMonitor:
+    relabelings:
+      - action: replace
+        sourceLabels: [__metrics_path__]
+        targetLabel: metrics_path
+      - sourceLabels: [__meta_kubernetes_endpoint_node_name]
+        targetLabel: instance
+        action: replace
+
 kubeControllerManager:
   service:
     ipDualStack:
       enabled: true
+  serviceMonitor:
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_pod_node_name]
+      targetLabel: instance
+      action: replace
 
 coreDns:
   service:
     ipDualStack:
       enabled: true
+  serviceMonitor:
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_pod_node_name]
+      targetLabel: instance
+      action: replace
 
 kubeEtcd:
+  endpoints:
+  - 192.168.60.150
+  - 192.168.60.151
+  - 192.168.60.152
   service:
     ipDualStack:
       enabled: true
@@ -24,6 +48,11 @@ kubeScheduler:
   service:
     ipDualStack:
       enabled: true
+  serviceMonitor:
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_pod_node_name]
+      targetLabel: instance
+      action: replace
 
 kubeProxy:
   enabled: false
@@ -59,6 +88,7 @@ prometheus-node-exporter:
       relabelings:
       - sourceLabels: [__meta_kubernetes_pod_node_name]
         targetLabel: instance
+        action: replace
   resources:
     requests:
       cpu: 10m
