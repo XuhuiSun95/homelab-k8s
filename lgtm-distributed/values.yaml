@@ -92,9 +92,16 @@ grafana:
       use_refresh_token: true
   sidecar:
     dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      searchNamespace: ALL
+      enableNewTablePanelSyntax: false
       multicluster:
         global:
           enabled: true
+      provider:
+        allowUiUpdates: false
     resources:
       requests:
         cpu: 10m
@@ -104,6 +111,9 @@ grafana:
 
 loki:
   loki:
+    structuredConfig:
+      limits_config:
+        retention_period: 30d
     schemaConfig:
       configs:
       - from: 2020-09-07
@@ -128,10 +138,11 @@ mimir:
   mimir:
     structuredConfig:
       limits:
-        max_global_series_per_user: 2000000
+        max_global_series_per_user: 10000000
         max_label_names_per_series: 40
         ingestion_rate: 150000
         ingestion_burst_size: 300000
+        compactor_blocks_retention_period: 30d
       common:
         storage:
           backend: s3
@@ -150,6 +161,36 @@ mimir:
       ruler_storage:
         s3:
           bucket_name: mimir-ruler
+  alertmanager:
+    replicas: 2
+  compactor:
+    persistentVolume:
+      size: 10Gi
+  distributor:
+    replicas: 2
+  ingester:
+    persistentVolume:
+      size: 25Gi
+    replicas: 3
+  admin-cache:
+    enabled: true
+    replicas: 3
+  chunks-cache:
+    enabled: true
+    replicas: 3
+  index-cache:
+    enabled: true
+    replicas: 3
+  metadata-cache:
+    enabled: true
+    replicas: 3
+  results-cache:
+    enabled: true
+    replicas: 3
+  store_gateway:
+    persistentVolume:
+      size: 5Gi
+    replicas: 3
   minio:
     enabled: false
 
