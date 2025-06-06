@@ -104,6 +104,9 @@ grafana:
 
 loki:
   loki:
+    structuredConfig:
+      limits_config:
+        retention_period: 30d
     schemaConfig:
       configs:
       - from: 2020-09-07
@@ -128,10 +131,11 @@ mimir:
   mimir:
     structuredConfig:
       limits:
-        max_global_series_per_user: 2000000
+        max_global_series_per_user: 10000000
         max_label_names_per_series: 40
         ingestion_rate: 150000
         ingestion_burst_size: 300000
+        compactor_blocks_retention_period: 30d
       common:
         storage:
           backend: s3
@@ -150,6 +154,30 @@ mimir:
       ruler_storage:
         s3:
           bucket_name: mimir-ruler
+  ingester:
+    persistentVolume:
+      size: 50Gi
+    replicas: 3
+    topologySpreadConstraints: {}
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: target
+                  operator: In
+                  values:
+                    - ingester
+            topologyKey: 'kubernetes.io/hostname'
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - ingester
+            topologyKey: 'kubernetes.io/hostname'
+    zoneAwareReplication:
+      topologyKey: 'kubernetes.io/hostname'
   minio:
     enabled: false
 
