@@ -3,6 +3,7 @@ alertmanager:
 
 grafana:
   enabled: false
+  forceDeployDashboards: true
 
 kubeControllerManager:
   service:

@@ -92,9 +92,16 @@ grafana:
       use_refresh_token: true
   sidecar:
     dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      searchNamespace: ALL
+      enableNewTablePanelSyntax: false
       multicluster:
         global:
           enabled: true
+      provider:
+        allowUiUpdates: false
     resources:
       requests:
         cpu: 10m
