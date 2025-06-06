@@ -172,21 +172,6 @@ mimir:
     persistentVolume:
       size: 25Gi
     replicas: 3
-  admin-cache:
-    enabled: true
-    replicas: 3
-  chunks-cache:
-    enabled: true
-    replicas: 3
-  index-cache:
-    enabled: true
-    replicas: 3
-  metadata-cache:
-    enabled: true
-    replicas: 3
-  results-cache:
-    enabled: true
-    replicas: 3
   store_gateway:
     persistentVolume:
       size: 5Gi
