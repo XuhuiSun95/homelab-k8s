@@ -21,9 +21,9 @@ kubeControllerManager:
       enabled: true
   serviceMonitor:
     relabelings:
-    - sourceLabels: [__meta_kubernetes_pod_node_name]
-      targetLabel: instance
-      action: replace
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
 
 coreDns:
   service:
@@ -31,15 +31,15 @@ coreDns:
       enabled: true
   serviceMonitor:
     relabelings:
-    - sourceLabels: [__meta_kubernetes_pod_node_name]
-      targetLabel: instance
-      action: replace
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
 
 kubeEtcd:
   endpoints:
-  - 192.168.60.150
-  - 192.168.60.151
-  - 192.168.60.152
+    - 192.168.60.150
+    - 192.168.60.151
+    - 192.168.60.152
   service:
     ipDualStack:
       enabled: true
@@ -50,9 +50,9 @@ kubeScheduler:
       enabled: true
   serviceMonitor:
     relabelings:
-    - sourceLabels: [__meta_kubernetes_pod_node_name]
-      targetLabel: instance
-      action: replace
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
 
 kubeProxy:
   enabled: false
@@ -69,9 +69,9 @@ kube-state-metrics:
               - key: "node-role.kubernetes.io/system"
                 operator: "Exists"
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     requests:
       cpu: 10m
@@ -86,9 +86,9 @@ prometheus-node-exporter:
   prometheus:
     monitor:
       relabelings:
-      - sourceLabels: [__meta_kubernetes_pod_node_name]
-        targetLabel: instance
-        action: replace
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: instance
+          action: replace
   resources:
     requests:
       cpu: 10m
@@ -108,9 +108,9 @@ prometheusOperator:
               - key: "node-role.kubernetes.io/system"
                 operator: "Exists"
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
   resources:
     requests:
       cpu: 10m
@@ -137,7 +137,7 @@ prometheus:
     disableCompaction: true
     retention: 6h
     remoteWrite:
-    - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
+      - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
     externalLabels:
        environment: mimir
     storageSpec:
@@ -156,9 +156,9 @@ prometheus:
                 - key: "node-role.kubernetes.io/system"
                   operator: "Exists"
     tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/system"
+        operator: "Exists"
+        effect: "NoSchedule"
     resources:
       requests:
         cpu: 352m
