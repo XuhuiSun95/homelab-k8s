@@ -54,6 +54,11 @@ prometheus-node-exporter:
   service:
     ipDualStack:
       enabled: true
+  prometheus:
+    monitor:
+      relabelings:
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        target_label: instance
   resources:
     requests:
       cpu: 10m
