@@ -93,6 +93,11 @@ config:
             href: https://prometheus.local-v2.xuhuisun.com
             description: metrics tsdb
             siteMonitor: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        - Mimir:
+            icon: prometheus.png
+            href: https://mimir.local-v2.xuhuisun.com
+            description: tsdb backend
+            siteMonitor: http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local
         - Kiali:
             href: https://kiali.local-v2.xuhuisun.com
             description: istio mgmt console
