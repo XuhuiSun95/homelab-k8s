@@ -154,9 +154,20 @@ mimir:
       ruler_storage:
         s3:
           bucket_name: mimir-ruler
+  alertmanager:
+    replicas: 2
+  compactor:
+    persistentVolume:
+      size: 10Gi
+  distributor:
+    replicas: 2
   ingester:
     persistentVolume:
       size: 25Gi
+    replicas: 3
+  store_gateway:
+    persistentVolume:
+      size: 5Gi
     replicas: 3
   minio:
     enabled: false
