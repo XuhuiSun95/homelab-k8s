@@ -57,8 +57,8 @@ prometheus-node-exporter:
   prometheus:
     monitor:
       relabelings:
-      - source_labels: [__meta_kubernetes_pod_node_name]
-        target_label: instance
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
   resources:
     requests:
       cpu: 10m
