@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: mimir-vs
+  namespace: monitoring
+spec:
+  hosts:
+  - "mimir.local-v2.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: lgtm-distributed-mimir-nginx
+        port:
+          number: 80
