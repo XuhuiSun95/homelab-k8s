@@ -156,28 +156,8 @@ mimir:
           bucket_name: mimir-ruler
   ingester:
     persistentVolume:
-      size: 50Gi
+      size: 25Gi
     replicas: 3
-    topologySpreadConstraints: {}
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: target
-                  operator: In
-                  values:
-                    - ingester
-            topologyKey: 'kubernetes.io/hostname'
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/component
-                  operator: In
-                  values:
-                    - ingester
-            topologyKey: 'kubernetes.io/hostname'
-    zoneAwareReplication:
-      topologyKey: 'kubernetes.io/hostname'
   minio:
     enabled: false
 
