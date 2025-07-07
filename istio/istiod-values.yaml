@@ -22,8 +22,10 @@ meshConfig:
   extensionProviders:
   - name: otel-tracing
     opentelemetry:
-      port: 9095
+      port: 4317
       service: lgtm-distributed-tempo-distributor.monitoring.svc.cluster.local
+      resource_detectors:
+        environment: {}
 
 global:
   priorityClassName: "system-cluster-critical"
