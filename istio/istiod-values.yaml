@@ -19,11 +19,13 @@ ipFamilyPolicy: "PreferDualStack"
 ipFamilies: ["IPv6", "IPv4"]
 meshConfig:
   enableTracing: true
-  defaultConfig:
-    tracing:
-      sampling: 10.0
-      zipkin:
-        address: streaming-collector.observability.svc.cluster.local:9411
+  extensionProviders:
+  - name: otel-tracing
+    opentelemetry:
+      port: 9095
+      service: lgtm-distributed-tempo-distributor.monitoring.svc.cluster.local
+      resource_detectors:
+        environment: {}
 
 global:
   priorityClassName: "system-cluster-critical"
