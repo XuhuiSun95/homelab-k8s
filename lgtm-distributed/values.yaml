@@ -204,7 +204,7 @@ tempo:
         enabled: true
       http:
         enabled: true
-  overrides:
+  global_overrides:
     defaults:
       metrics_generator:
         processors:
