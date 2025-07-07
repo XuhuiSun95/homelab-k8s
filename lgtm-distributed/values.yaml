@@ -198,6 +198,10 @@ tempo:
         forcepathstyle: true
         access_key: hU2WB7hZSnLeqP3TU5pm
         secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
+  ingester:
+    replicas: 1
+    config:
+      replication_factor: 1
   traces:
     otlp:
       grpc:
