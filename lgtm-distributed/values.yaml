@@ -198,9 +198,15 @@ tempo:
         forcepathstyle: true
         access_key: hU2WB7hZSnLeqP3TU5pm
         secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
-  # overrides:
-  #   defaults:
-  #     metrics_generator:
-  #       processors:
-  #         - service-graphs
-  #         - span-metrics
+  traces:
+    otlp:
+      grpc:
+        enabled: true
+      http:
+        enabled: true
+  overrides:
+    defaults:
+      metrics_generator:
+        processors:
+        - service-graphs
+        - span-metrics
