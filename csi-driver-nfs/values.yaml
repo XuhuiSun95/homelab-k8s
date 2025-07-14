@@ -1,0 +1,20 @@
+controller:
+  replicas: 2
+  runOnControlPlane: true
+
+node:
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+
+storageClass:
+  create: true
+  name: "nfs-csi"
+  parameters:
+    server: 192.168.10.200
+    share: /var/nfs/shared/KubernetesCluster
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
