@@ -21,6 +21,10 @@ managed by the ArgoCD application to achieve self-managed state.
 ```bash
 helm upgrade --install argocd argo/argo-cd --values=argocd/values.yaml --namespace=argocd --create-namespace
 ```
+#### Setup NFS CSI Driver DeleteVolume mount options
+```bash
+kubectl create secret generic nfs-mount-options --from-literal mountOptions="nolock" --namespace kube-system
+```
 #### Setup secret for cert-manager cluster issuer
 ```bash
   export aws_secret=<supersecretsupersecretsupersecret>
