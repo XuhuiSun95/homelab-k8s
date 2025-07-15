@@ -3,8 +3,16 @@ controller:
   runOnControlPlane: true
 
 node:
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/user"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -18,3 +26,6 @@ storageClass:
     share: /var/nfs/shared/KubernetesCluster
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
+  mountOptions:
+  - nfsvers=3
+  - nolock
