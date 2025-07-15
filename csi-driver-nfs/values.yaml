@@ -8,6 +8,10 @@ node:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
+              - key: "node-role.kubernetes.io/control-plane"
+                operator: "Exists"
+                effect: "NoSchedule"
+          - matchExpressions:
               - key: "node-role.kubernetes.io/system"
                 operator: "Exists"
           - matchExpressions:
