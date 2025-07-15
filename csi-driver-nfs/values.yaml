@@ -8,18 +8,12 @@ node:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/control-plane"
-                operator: "Exists"
-          - matchExpressions:
               - key: "node-role.kubernetes.io/system"
                 operator: "Exists"
           - matchExpressions:
               - key: "node-role.kubernetes.io/user"
                 operator: "Exists"
   tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
       effect: "NoSchedule"
@@ -30,8 +24,9 @@ storageClass:
   parameters:
     server: 192.168.10.200
     share: /var/nfs/shared/KubernetesCluster
+    csi.storage.k8s.io/provisioner-secret-name: "nfs-mount-options"
+    csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
   mountOptions:
-  - nfsvers=3
   - nolock
