@@ -1,0 +1,28 @@
+priorityClassName: "system-cluster-critical"
+
+nodeSelector:
+  node-role.kubernetes.io/system: ""
+
+tolerations:
+- key: "node-role.kubernetes.io/system"
+  operator: "Exists"
+  effect: "NoSchedule"
+
+
+# CloudNativePG operator specific configurations
+operator:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# Enable monitoring
+monitoring:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 30s 
