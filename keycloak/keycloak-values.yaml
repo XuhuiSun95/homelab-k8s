@@ -30,10 +30,11 @@ metrics:
 
 postgresql:
   enabled: false
-  externalDatabase:
-    existingSecret: "keycloak-cnpg-cluster-app"
-    existingSecretHostKey: "host"
-    existingSecretPortKey: "port"
-    existingSecretUserKey: "user"
-    existingSecretDatabaseKey: "dbname"
-    existingSecretPasswordKey: "password"
+
+externalDatabase:
+  existingSecret: "keycloak-cnpg-cluster-app"
+  existingSecretHostKey: "host"
+  existingSecretPortKey: "port"
+  existingSecretUserKey: "user"
+  existingSecretDatabaseKey: "dbname"
+  existingSecretPasswordKey: "password"
