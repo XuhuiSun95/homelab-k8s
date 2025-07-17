@@ -1,0 +1,14 @@
+priorityClassName: "system-cluster-critical"
+
+nodeSelector:
+  node-role.kubernetes.io/system: ""
+
+tolerations:
+- key: "node-role.kubernetes.io/system"
+  operator: "Exists"
+  effect: "NoSchedule"
+
+monitoring:
+  podMonitorEnabled: true
+  grafanaDashboard:
+    create: true
