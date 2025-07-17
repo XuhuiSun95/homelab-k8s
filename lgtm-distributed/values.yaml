@@ -1,4 +1,5 @@
 grafana:
+  replicas: 2
   service:
     ipFamilyPolicy: "PreferDualStack"
     ipFamilies: ["IPv6","IPv4"]
