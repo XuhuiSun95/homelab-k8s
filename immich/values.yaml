@@ -1,0 +1,103 @@
+# Immich Helm Chart Values
+# https://github.com/immich-app/immich-charts
+
+# Global settings
+global:
+  # Enable or disable the application
+  enabled: true
+
+# Database configuration - using CNPG cluster
+database:
+  # Use external database (CNPG cluster)
+  type: "external"
+  
+  # External database configuration - CNPG cluster
+  external:
+    host: "immich-cluster-rw.immich.svc.cluster.local"
+    port: 5432
+    database: "immich"
+    username: "immich"
+    password: "immich"
+    ssl: false
+
+# Redis configuration - using built-in for now
+redis:
+  # Use built-in Redis
+  type: "built-in"
+
+# Storage configuration - using built-in for now
+storage:
+  # Use built-in storage
+  type: "built-in"
+
+# Application settings
+immich:
+  # Server configuration
+  server:
+    replicas: 1
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+  
+  # Microservices configuration
+  microservices:
+    replicas: 1
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "200m"
+  
+  # Machine learning configuration
+  machineLearning:
+    replicas: 1
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1000m"
+  
+  # Web configuration
+  web:
+    replicas: 1
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "50m"
+      limits:
+        memory: "256Mi"
+        cpu: "100m"
+
+# Ingress configuration
+ingress:
+  enabled: false
+  # Configure ingress settings if needed
+  # className: "nginx"
+  # annotations: {}
+  # hosts: []
+
+# Service configuration
+service:
+  type: ClusterIP
+
+# Persistence configuration
+persistence:
+  enabled: true
+  storageClass: "ceph-block"
+  size: 10Gi
+
+# Security configuration
+security:
+  # JWT secret (generate a secure random string)
+  jwtSecret: "your-jwt-secret-here"
+  
+  # Admin email for initial setup
+  adminEmail: "admin@example.com" 
