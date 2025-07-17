@@ -8,10 +8,6 @@ cluster:
   storage:
     size: 1Gi
     storageClass: "ceph-block"
-  walStorage:
-    enabled: true
-    size: 1Gi
-    storageClass: "ceph-block"
   resources:
     requests:
       cpu: 100m
