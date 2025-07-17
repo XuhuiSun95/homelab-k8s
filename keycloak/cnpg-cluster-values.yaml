@@ -1,0 +1,36 @@
+type: postgresql
+version:
+  postgresql: "17"
+mode: standalone
+
+cluster:
+  instances: 3
+  storage:
+    size: 1Gi
+    storageClass: "ceph-block"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 128Mi
+  monitoring:
+    enabled: true
+
+initdb:
+  database: keycloak
+
+backups:
+  enabled: true
+  endpointURL: "https://s3.local-v2.xuhuisun.com"
+  provider: s3
+  s3:
+    bucket: "cloudnative-pg-backups"
+    path: "/keycloak-cnpg-cluster"
+    accessKey: "om9WSI45aMEZxBqASwSy"
+    secretKey: "f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ"
+  scheduledBackups:
+    - name: daily-backup
+      schedule: "0 0 0 * * *"
+      backupOwnerReference: self
+  retentionPolicy: "30d"
