@@ -86,7 +86,7 @@ config:
             icon: keycloak.png
             href: https://keycloak.local-v2.xuhuisun.com
             description: iam
-            siteMonitor: http://keycloak.keycloak.svc.cluster.local
+            siteMonitor: http://keycloak-keycloak.keycloak.svc.cluster.local
         - Argo CD:
             icon: argo-cd.png
             href: https://argocd.local-v2.xuhuisun.com
