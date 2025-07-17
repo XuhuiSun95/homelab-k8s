@@ -25,7 +25,6 @@ backups:
   provider: s3
   s3:
     bucket: "cloudnative-pg-backups"
-    path: "/keycloak-cnpg-cluster"
     accessKey: "om9WSI45aMEZxBqASwSy"
     secretKey: "f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ"
   wal:

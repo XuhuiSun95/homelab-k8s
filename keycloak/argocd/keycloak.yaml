@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  name: keycloak-keycloak
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: keycloak
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: keycloak
+      repoURL: 'registry-1.docker.io/bitnamicharts'
+      targetRevision: 24.7.7
+      helm:
+        valueFiles:
+        - $values/keycloak/keycloak-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true

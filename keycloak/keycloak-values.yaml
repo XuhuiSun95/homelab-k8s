@@ -1,0 +1,39 @@
+auth:
+  adminPassword: nIskQiijss
+
+production: true
+
+proxyHeaders: xforwarded
+
+replicaCount: 2
+
+podLabels:
+  istio.io/dataplane-mode: ambient
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 8
+  targetCPU: 80
+
+networkPolicy:
+  extraIngress:
+    - ports:
+      - port: 15008
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
+
+postgresql:
+  enabled: false
+  externalDatabase:
+    existingSecret: "keycloak-cnpg-cluster-app"
+    existingSecretHostKey: "host"
+    existingSecretPortKey: "port"
+    existingSecretUserKey: "user"
+    existingSecretDatabaseKey: "dbname"
+    existingSecretPasswordKey: "password"
