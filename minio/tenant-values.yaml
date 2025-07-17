@@ -33,8 +33,6 @@ tenant:
       value: "https://iam.local-v2.xuhuisun.com/realms/local-v2/.well-known/openid-configuration"
     - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
       value: "minio"
-    - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET_KEYCLOAK_PRIMARY
-      value: "cCQGi0mAQdAHbliSwW8pCpcdW6pktFqj"
     - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
       value: "MinIO OpenID Login - Keycloak"
     - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
