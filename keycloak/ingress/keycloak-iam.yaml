@@ -20,6 +20,6 @@ spec:
         prefix: "/robots.txt"
     route:
     - destination:
-        host: keycloak
+        host: keycloak-keycloak
         port:
           number: 80
