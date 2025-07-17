@@ -1,14 +1,17 @@
-# The service account is necessary to allow discovery of other services
-serviceAccount:
-  create: true
-  name: homepage
-
-# This enables the service account to access the necessary resources
-enableRbac: true
+controller:
+  replicas: 2
 
 image:
   repository: ghcr.io/gethomepage/homepage
   tag: v1.4.0
+
+# This enables the service account to access the necessary resources
+enableRbac: true
+
+# The service account is necessary to allow discovery of other services
+serviceAccount:
+  create: true
+  name: homepage
 
 podLabels:
   istio.io/dataplane-mode: ambient
@@ -32,6 +35,13 @@ config:
         - Gitlab:
             - icon: gitlab.png
               href: https://gitlab.com/
+        - Cursor:
+            - icon: vscode.png
+              href: https://cursor.com/
+    - Entertainment:
+        - Youtube:
+            - icon: youtube.png
+              href: https://www.youtube.com/
   services:
     - Network:
         - UniFi:
@@ -132,7 +142,7 @@ config:
           timeStyle: short
           hour12: true
     - search:
-        provider: [google, baidu]
+        provider: [google]
         target: _blank
     - openmeteo:
         units: imperial
