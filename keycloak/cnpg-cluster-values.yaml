@@ -8,10 +8,6 @@ cluster:
   storage:
     size: 1Gi
     storageClass: "ceph-block"
-  walStorage:
-    enabled: true
-    size: 1Gi
-    storageClass: "ceph-block"
   resources:
     requests:
       cpu: 100m
@@ -20,9 +16,8 @@ cluster:
       memory: 128Mi
   monitoring:
     enabled: true
-
-initdb:
-  database: keycloak
+  initdb:
+    database: keycloak
 
 backups:
   enabled: true
@@ -33,6 +28,10 @@ backups:
     path: "/keycloak-cnpg-cluster"
     accessKey: "om9WSI45aMEZxBqASwSy"
     secretKey: "f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ"
+  wal:
+    encryption: ""
+  data:
+    encryption: ""
   scheduledBackups:
     - name: daily-backup
       schedule: "0 0 0 * * *"
