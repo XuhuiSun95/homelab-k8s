@@ -15,3 +15,17 @@ spec:
         host: homepage
         port:
           number: 3000
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: homepage-dr
+  namespace: homepage
+spec:
+  host: homepage
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpCookie:
+          name: User
+          ttl: 0s
