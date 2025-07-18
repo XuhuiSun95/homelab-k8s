@@ -16,7 +16,7 @@ spec:
       targetRevision: 0.9.3
       helm:
         valueFiles:
-        - $values/immich/values.yaml
+        - $values/immich/immich-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
