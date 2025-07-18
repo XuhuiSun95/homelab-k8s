@@ -11,7 +11,7 @@ spec:
     namespace: immich
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: immich
+    - path: . 
       repoURL: 'oci://ghcr.io/immich-app/immich-charts/immich'
       targetRevision: 0.9.3
       helm:
