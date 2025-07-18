@@ -1,0 +1,46 @@
+type: postgresql
+version:
+  postgresql: "17"
+mode: standalone
+
+cluster:
+  instances: 3
+  imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:17.5-v0.4.0"
+  storage:
+    size: 4Gi
+    storageClass: "ceph-block"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 128Mi
+  monitoring:
+    enabled: true
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+  initdb:
+    database: immich
+    postInitSQL:
+      - CREATE EXTENSION IF NOT EXISTS "vectors";
+      - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
+      - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
+
+backups:
+  enabled: true
+  endpointURL: "https://s3.local-v2.xuhuisun.com"
+  provider: s3
+  s3:
+    bucket: "cloudnative-pg-backups"
+    accessKey: "om9WSI45aMEZxBqASwSy"
+    secretKey: "f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ"
+  wal:
+    encryption: ""
+  data:
+    encryption: ""
+  scheduledBackups:
+    - name: daily-backup
+      schedule: "0 0 0 * * *"
+      backupOwnerReference: self
+  retentionPolicy: "30d" 
