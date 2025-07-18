@@ -44,6 +44,7 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **Open-WebUI** | https://open-webui.local-v2.xuhuisun.com | AI interface (LLM frontend) |
+| **Immich** | https://immich.local-v2.xuhuisun.com | Photo management & backup |
 
 ### 🏠 Infrastructure
 | Service | URL | Purpose |
