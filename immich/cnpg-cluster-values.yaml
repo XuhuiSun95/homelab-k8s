@@ -5,7 +5,7 @@ mode: standalone
 
 cluster:
   instances: 3
-  imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:17.5-v0.4.0"
+  imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0"
   storage:
     size: 4Gi
     storageClass: "ceph-block"
