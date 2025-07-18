@@ -6,10 +6,10 @@ grafana:
     istio.io/dataplane-mode: ambient
   resources:
     requests:
-      cpu: 76m
-      memory: 256Mi
+      cpu: 109m
+      memory: 235Mi
     limits:
-      memory: 256Mi
+      memory: 235Mi
   defaultDashboardsTimezone: America/Los_Angeles
   dashboardProviders:
     dashboardproviders.yaml:
@@ -104,10 +104,10 @@ grafana:
         allowUiUpdates: false
     resources:
       requests:
-        cpu: 10m
-        memory: 118Mi
+        cpu: 56m
+        memory: 100Mi
       limits:
-        memory: 118Mi
+        memory: 100Mi
 
 loki:
   loki:
@@ -168,6 +168,12 @@ loki:
       - key: "node-role.kubernetes.io/system"
         operator: "Exists"
         effect: "NoSchedule"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
 
 mimir:
   mimir:

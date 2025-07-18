@@ -40,10 +40,10 @@ spec:
         - name: elasticsearch
           resources:
             requests:
-              cpu: 26m
-              memory: 4Gi
+              cpu: 42m
+              memory: 4018Mi
             limits:
-              memory: 4Gi
+              memory: 4018Mi
   - name: data
     count: 3
     config:
@@ -75,7 +75,7 @@ spec:
         - name: elasticsearch
           resources:
             requests:
-              cpu: 36m
-              memory: 6Gi
+              cpu: 66m
+              memory: 7064Mi
             limits:
-              memory: 6Gi
+              memory: 7064Mi

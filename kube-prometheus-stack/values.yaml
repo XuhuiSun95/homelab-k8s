@@ -161,7 +161,7 @@ prometheus:
         effect: "NoSchedule"
     resources:
       requests:
-        cpu: 352m
-        memory: 2365Mi
+        cpu: 293m
+        memory: 2640Mi
       limits:
-        memory: 2365Mi
+        memory: 2640Mi
