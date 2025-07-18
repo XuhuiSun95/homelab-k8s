@@ -12,7 +12,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   sources:
     - chart: immich
-      repoURL: 'oci://ghcr.io/immich-app/immich-charts'
+      repoURL: 'oci://ghcr.io/immich-app/immich-charts/immich'
       targetRevision: 0.9.3
       helm:
         valueFiles:
