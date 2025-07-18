@@ -20,6 +20,9 @@ env:
         name: immich-cnpg-cluster-app
         key: password
 
+image:
+  tag: v1.135.3
+
 immich:
   metrics:
     enabled: true
