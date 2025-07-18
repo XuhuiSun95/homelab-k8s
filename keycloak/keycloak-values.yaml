@@ -10,12 +10,6 @@ replicaCount: 2
 podLabels:
   istio.io/dataplane-mode: ambient
 
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 8
-  targetCPU: 80
-
 networkPolicy:
   extraIngress:
     - ports:
