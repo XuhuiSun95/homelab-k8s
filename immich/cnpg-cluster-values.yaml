@@ -15,6 +15,10 @@ cluster:
       memory: 128Mi
     limits:
       memory: 128Mi
+  roles:
+    - name: immich
+      superuser: true
+      login: true 
   monitoring:
     enabled: true
   postgresql:
@@ -23,7 +27,7 @@ cluster:
   initdb:
     database: immich
     postInitSQL:
-      - CREATE EXTENSION IF NOT EXISTS "vectors";
+      - CREATE EXTENSION IF NOT EXISTS "vectors" CASCADE;
       - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
       - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
 
