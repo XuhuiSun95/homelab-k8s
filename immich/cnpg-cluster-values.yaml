@@ -12,9 +12,9 @@ cluster:
   resources:
     requests:
       cpu: 100m
-      memory: 128Mi
+      memory: 1Gi
     limits:
-      memory: 128Mi
+      memory: 1Gi
   roles:
     - name: immich
       superuser: true
