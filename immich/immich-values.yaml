@@ -1,4 +1,6 @@
 env:
+  - name: REDIS_HOSTNAME
+    value: "immich-immich-redis-master"
   - name: DB_HOSTNAME
     valueFrom: 
       secretKeyRef:
@@ -19,6 +21,8 @@ env:
       secretKeyRef:
         name: immich-cnpg-cluster-app
         key: password
+  - name: IMMICH_MACHINE_LEARNING_URL
+    value: "http://immich-immich-machine-learning:3003"
 
 image:
   tag: v1.135.3
