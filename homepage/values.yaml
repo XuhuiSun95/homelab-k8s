@@ -123,6 +123,11 @@ config:
             href: https://open-webui.local-v2.xuhuisun.com
             description: ai interface
             siteMonitor: http://open-webui.open-webui.svc.cluster.local
+        - Immich:
+            icon: immich.png
+            href: https://immich.local-v2.xuhuisun.com
+            description: photo management/backup
+            siteMonitor: http://immich-immich-server.immich.svc.cluster.local:2283
   widgets:
     - kubernetes:
         cluster:
