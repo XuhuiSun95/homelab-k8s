@@ -15,3 +15,10 @@ tolerations:
 
 dashboards:
   enabled: true
+
+resources:
+  requests:
+    cpu: 27m
+    memory: 411Mi
+  limits:
+    memory: 411Mi

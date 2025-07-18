@@ -12,3 +12,23 @@ affinity:
               operator: "Exists"
 
 priorityClassName: "system-cluster-critical"
+
+resources:
+  operator:
+    requests:
+      cpu: 10m
+      memory: 139Mi
+    limits:
+      memory: 139Mi
+  metricServer:
+    requests:
+      cpu: 10m
+      memory: 130Mi
+    limits:
+      memory: 130Mi
+  webhooks:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi

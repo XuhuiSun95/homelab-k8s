@@ -1,5 +1,12 @@
 priorityClassName: "system-cluster-critical"
 
+resources:
+  requests:
+    cpu: 12m
+    memory: 100Mi
+  limits:
+    memory: 100Mi
+
 nodeSelector:
   node-role.kubernetes.io/system: ""
 

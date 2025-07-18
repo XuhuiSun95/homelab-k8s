@@ -8,10 +8,10 @@ tenant:
       storageClassName: ceph-block
       resources:
         requests:
-          cpu: 100m
-          memory: 3Gi
+          cpu: 23m
+          memory: 2355Mi
         limits:
-          memory: 3Gi
+          memory: 2355Mi
   metrics:
     enabled: true
   features:

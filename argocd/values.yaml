@@ -73,14 +73,14 @@ redis-ha:
   redis:
     resources:
       requests:
-        cpu: 14m
+        cpu: 13m
         memory: 100Mi
       limits:
         memory: 100Mi
   sentinel:
     resources:
       requests:
-        cpu: 15m
+        cpu: 14m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -107,25 +107,25 @@ controller:
   replicas: 1
   resources:
     requests:
-      cpu: 165m
-      memory: 2048Mi
+      cpu: 163m
+      memory: 1591Mi
     limits:
-      memory: 2048Mi
+      memory: 1591Mi
 
 server:
   replicas: 2
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 40m
+      memory: 264Mi
     limits:
-      memory: 256Mi
+      memory: 264Mi
 
 repoServer:
   replicas: 2
   resources:
     requests:
-      cpu: 50m
-      memory: 256Mi
+      cpu: 10m
+      memory: 173Mi
     limits:
-      memory: 256Mi
+      memory: 173Mi

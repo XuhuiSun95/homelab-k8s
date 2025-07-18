@@ -16,3 +16,10 @@ operator:
   - key: "node-role.kubernetes.io/system"
     operator: "Exists"
     effect: "NoSchedule"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+      ephemeral-storage: 500Mi
+    limits:
+      memory: 100Mi

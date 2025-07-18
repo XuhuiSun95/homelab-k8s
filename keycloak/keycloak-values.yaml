@@ -28,6 +28,13 @@ metrics:
   prometheusRule:
     enabled: true
 
+resources:
+  requests:
+    cpu: 25m
+    memory: 701Mi
+  limits:
+    memory: 701Mi
+
 postgresql:
   enabled: false
 

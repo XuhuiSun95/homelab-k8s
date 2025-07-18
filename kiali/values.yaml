@@ -1,5 +1,12 @@
 replicaCount: 2
 
+resources:
+  requests:
+    cpu: 10m
+    memory: 334Mi
+  limits:
+    memory: 334Mi
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
