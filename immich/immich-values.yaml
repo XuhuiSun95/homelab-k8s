@@ -1,6 +1,19 @@
+env:
+  DB_HOST: "immich-cnpg-cluster-rw"
+
 immich:
   metrics:
     enabled: true
   persistence:
     library:
       existingClaim: "immich-library-pvc"
+
+postgresql:
+  global:
+    postgresql:
+      auth:
+        username: "immich"
+        database: "immich"
+        existingSecret: "immich-cnpg-cluster-app"
+        secretKeys:
+          userPasswordKey: "password"
