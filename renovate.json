@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":dependencyDashboard"],
   "argocd": {
-    "fileMatch": ["argocd/applications/.+\\.yaml$", "^deployment\\.yaml$"]
+    "fileMatch": ["argocd/applications/.+\\.yaml$", ".+\\/argocd\\/.+\\.yaml$", "^deployment\\.yaml$"]
   },
   "customManagers": [
     {

@@ -3,23 +3,17 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "60"
-  name: strimzi-kafka-operator
+  name: strimzi
   namespace: argocd
 spec:
   project: default
   destination:
     namespace: strimzi
     server: 'https://kubernetes.default.svc'
-  sources:
-    - chart: strimzi-kafka-operator
-      repoURL: 'https://strimzi.io/charts'
-      targetRevision: 0.47.0
-      helm:
-        valueFiles:
-        - $values/strimzi/values.yaml
-    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-      targetRevision: main
-      ref: values
+  source:
+    path: strimzi/argocd
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
