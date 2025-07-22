@@ -122,7 +122,7 @@ config:
             icon: open-webui.png
             href: https://open-webui.local-v2.xuhuisun.com
             description: ai interface
-            siteMonitor: http://open-webui.open-webui.svc.cluster.local
+            siteMonitor: http://open-webui-open-webui.open-webui.svc.cluster.local
         - Immich:
             icon: immich.png
             href: https://immich.local-v2.xuhuisun.com

@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
-  name: cert-manager
+    argocd.argoproj.io/sync-wave: "10"
+  name: ingress-open-webui
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: cert-manager
+    namespace: open-webui
     server: 'https://kubernetes.default.svc'
-  source:
-    path: cert-manager/argocd
-    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-    targetRevision: main
+  sources:
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      path: open-webui/ingress
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

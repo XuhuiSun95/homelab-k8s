@@ -12,7 +12,7 @@ spec:
   http:
   - route:
     - destination:
-        host: homepage
+        host: homepage-homepage
         port:
           number: 3000
 ---
@@ -22,7 +22,7 @@ metadata:
   name: homepage-dr
   namespace: homepage
 spec:
-  host: homepage
+  host: homepage-homepage
   trafficPolicy:
     loadBalancer:
       consistentHash:
