@@ -10,16 +10,10 @@ spec:
   destination:
     namespace: cert-manager
     server: 'https://kubernetes.default.svc'
-  sources:
-    - chart: cert-manager
-      repoURL: 'https://charts.jetstack.io'
-      targetRevision: v1.18.2
-      helm:
-        valueFiles:
-        - $values/cert-manager/values.yaml
-    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-      targetRevision: main
-      ref: values
+  source:
+    path: cert-manager/argocd
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
