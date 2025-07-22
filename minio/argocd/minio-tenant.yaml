@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "60"
-  name: minio-operator
+    argocd.argoproj.io/sync-wave: "10"
+  name: minio-tenant
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: minio-operator
+    namespace: minio
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: operator
+    - chart: tenant
       repoURL: 'https://operator.min.io/'
       targetRevision: 7.1.1
       helm:
         valueFiles:
-        - $values/minio/operator-values.yaml
+        - $values/minio/tenant-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
