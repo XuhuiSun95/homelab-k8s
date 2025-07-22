@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: open-webui-open-webui
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: open-webui
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: open-webui
+      repoURL: 'https://helm.openwebui.com'
+      targetRevision: 6.21.0
+      helm:
+        valueFiles:
+        - $values/open-webui/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
