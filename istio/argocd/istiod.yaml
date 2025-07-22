@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "33"
-  name: istio-ztunnel
+    argocd.argoproj.io/sync-wave: "1"
+  name: istiod
   namespace: argocd
 spec:
   project: default
@@ -11,12 +11,12 @@ spec:
     namespace: istio-system
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: ztunnel
+    - chart: istiod
       repoURL: 'https://istio-release.storage.googleapis.com/charts'
       targetRevision: 1.26.2
       helm:
         valueFiles:
-        - $values/istio/istio-ztunnel-values.yaml
+        - $values/istio/istiod-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
@@ -25,3 +25,9 @@ spec:
       - CreateNamespace=true
     automated:
       selfHeal: true
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: istio-validator-istio-system
+      jqPathExpressions:
+        - .webhooks[] | select(.name == "rev.validation.istio.io") | .failurePolicy

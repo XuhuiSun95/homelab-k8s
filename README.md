@@ -246,26 +246,78 @@ ansible-playbook -i /inventory/inventory.ini \
 ## 📁 Repository Structure
 
 ```
-├── argocd/                    # ArgoCD configuration and applications
-│   ├── applications/          # Application definitions by category
-│   │   ├── api-gateway/       # Istio ingress gateways
+├── ansible/                    # Kubespray inventory and configuration
+│   └── inventory/myculster/    # Cluster inventory and group vars
+├── argocd/                     # ArgoCD configuration and applications
+│   ├── applications/           # Application definitions by category
+│   │   ├── api-gateway/        # Istio ingress gateways
 │   │   ├── cloud-native-storage/ # Storage solutions
 │   │   ├── continuous-integration-delivery/ # CI/CD tools
-│   │   ├── dns/               # DNS management
-│   │   ├── ingress-egress/    # Ingress configurations
-│   │   ├── observability/     # Monitoring and logging
+│   │   ├── dns/                # DNS management
+│   │   ├── ingress-egress/     # Ingress configurations
+│   │   ├── observability/      # Monitoring and logging
 │   │   ├── scheduling-orchestration/ # Auto-scaling
 │   │   ├── security-compliance/ # Security tools
-│   │   ├── service-mesh/      # Istio components
+│   │   ├── service-mesh/       # Istio components
 │   │   ├── streaming-messaging/ # Kafka
-│   │   └── user-defined-apps/ # Custom applications
-│   └── values.yaml           # ArgoCD Helm values
-├── cert-manager/             # Certificate management
-├── homepage/                 # Service dashboard
-├── istio/                    # Service mesh configuration
-├── kubespray/               # Kubernetes cluster deployment
-└── */values.yaml            # Helm values for each service
+│   │   └── user-defined-apps/  # Custom applications
+│   └── values.yaml            # ArgoCD Helm values
+├── cert-manager/              # Certificate management
+├── homepage/                  # Service dashboard
+├── immich/                    # Photo management application
+├── istio/                     # Service mesh configuration
+├── keycloak/                  # Identity and access management
+├── kubespray/                # Kubernetes cluster deployment
+├── open-webui/               # AI interface application
+└── */values.yaml             # Helm values for each service
 ```
+
+## 📋 Current Application Versions
+
+| Application | Version | Chart Repository |
+|-------------|---------|------------------|
+| ArgoCD | 8.1.3 | argo/argo-cd |
+| Cert-Manager | v1.18.2 | jetstack/cert-manager |
+| Istio | 1.26.2 | istio-release |
+| Kube-Prometheus-Stack | 75.11.0 | prometheus-community |
+| LGTM Distributed | 2.1.0 | grafana |
+| Keycloak | 24.7.7 | bitnami/keycloak |
+| Open-WebUI | 6.21.0 | openwebui |
+| Homepage | 2.1.0 | jameswynn/helm-charts |
+| Immich | 0.9.3 | immich |
+| Rook-Ceph | v1.17.6 | rook-release |
+| MinIO Operator | 7.1.1 | minio/operator |
+| CloudNativePG | 0.24.0 | cnpg-system |
+| Strimzi Kafka | 0.47.0 | strimzi |
+| KEDA | 2.17.2 | kedacore |
+| External DNS | 1.18.0 | external-dns |
+
+## 🔧 Configuration Highlights
+
+### Cluster Architecture
+- **Control Plane**: 3 nodes with stacked etcd
+- **System Pool**: 3 dedicated nodes for system workloads
+- **User Pool**: 6 nodes for user applications
+- **Dual Stack**: IPv6/IPv4 support throughout
+- **Node Affinity**: Proper workload placement with taints/tolerations
+
+### Storage Strategy
+- **Rook-Ceph**: Primary distributed storage
+- **MinIO**: S3-compatible object storage
+- **CloudNativePG**: PostgreSQL databases
+- **NFS CSI**: Network file system support
+
+### Security Features
+- **mTLS**: Service-to-service encryption via Istio
+- **OIDC**: Single sign-on with Keycloak
+- **Certificate Automation**: Let's Encrypt with Route53
+- **RBAC**: Role-based access control
+
+### Observability Stack
+- **LGTM**: Loki (logs), Grafana (visualization), Tempo (traces), Mimir (metrics)
+- **ELK**: Elasticsearch, Kibana for advanced log analytics
+- **Prometheus**: Metrics collection and alerting
+- **Kiali**: Service mesh visualization
 
 ## 🤝 Contributing
 
@@ -280,6 +332,25 @@ ansible-playbook -i /inventory/inventory.ini \
 - [Istio Service Mesh Guide](https://istio.io/latest/docs/)
 - [ArgoCD User Guide](https://argo-cd.readthedocs.io/)
 - [CNCF Landscape](https://landscape.cncf.io/) for technology choices
+
+## 🚨 Important Notes
+
+### Backup Strategy
+- **Rook-Ceph**: Built-in replication and snapshots
+- **MinIO**: Object versioning and lifecycle policies
+- **CloudNativePG**: Automated backups to MinIO
+- **Elasticsearch**: Snapshot backups to MinIO
+
+### Monitoring Alerts
+- **Prometheus**: Cluster and application metrics
+- **Grafana**: Custom dashboards and alerting
+- **Kiali**: Service mesh health monitoring
+
+### Disaster Recovery
+- **GitOps**: All configuration in version control
+- **ArgoCD**: Self-healing and drift detection
+- **Storage**: Distributed and replicated storage
+- **Backups**: Automated backup strategies
 
 ---
 
