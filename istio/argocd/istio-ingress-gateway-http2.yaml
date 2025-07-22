@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "51"
-  name: istio-ingress-gateway
+    argocd.argoproj.io/sync-wave: "11"
+  name: istio-ingress-gateway-http2
   namespace: argocd
 spec:
   project: default
@@ -16,7 +16,7 @@ spec:
       targetRevision: 1.26.2
       helm:
         valueFiles:
-        - $values/istio/gateway-values.yaml
+        - $values/istio/gateway-http2-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values

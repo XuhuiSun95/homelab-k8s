@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "51"
-  name: istio-ingress-gateway-http2
+    argocd.argoproj.io/sync-wave: "12"
+  name: ingress-gateway-certificates
   namespace: argocd
 spec:
   project: default
@@ -11,15 +11,9 @@ spec:
     namespace: istio-ingress
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: gateway
-      repoURL: 'https://istio-release.storage.googleapis.com/charts'
-      targetRevision: 1.26.2
-      helm:
-        valueFiles:
-        - $values/istio/gateway-http2-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      ref: values
+      path: istio/certificates/production
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
