@@ -2,24 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "51"
-  name: istio-ingress-gateway
+    argocd.argoproj.io/sync-wave: "20"
+  name: ingress-keycloak
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: istio-ingress
+    namespace: keycloak
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: gateway
-      repoURL: 'https://istio-release.storage.googleapis.com/charts'
-      targetRevision: 1.26.2
-      helm:
-        valueFiles:
-        - $values/istio/gateway-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      ref: values
+      path: keycloak/ingress
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

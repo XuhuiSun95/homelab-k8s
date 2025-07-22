@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "53"
-  name: ingress-gateway
+    argocd.argoproj.io/sync-wave: "12"
+  name: ingress-gateway-certificates
   namespace: argocd
 spec:
   project: default
@@ -13,7 +13,7 @@ spec:
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: istio/gateways
+      path: istio/certificates/production
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

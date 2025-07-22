@@ -2,18 +2,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "209"
-  name: ingress-immich
+    argocd.argoproj.io/sync-wave: "11"
+  name: istio-ingress-gateway
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: immich
+    namespace: istio-ingress
     server: 'https://kubernetes.default.svc'
   sources:
+    - chart: gateway
+      repoURL: 'https://istio-release.storage.googleapis.com/charts'
+      targetRevision: 1.26.2
+      helm:
+        valueFiles:
+        - $values/istio/gateway-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: immich/ingress
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

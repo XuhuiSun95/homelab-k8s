@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "79"
-  name: ingress-strimzi
+    argocd.argoproj.io/sync-wave: "13"
+  name: ingress-gateway
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: kafka
+    namespace: istio-ingress
     server: 'https://kubernetes.default.svc'
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: strimzi/ingress
+      path: istio/gateways
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

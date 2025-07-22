@@ -10,16 +10,10 @@ spec:
   destination:
     namespace: homepage
     server: 'https://kubernetes.default.svc'
-  sources:
-    - chart: homepage
-      repoURL: 'https://jameswynn.github.io/helm-charts'
-      targetRevision: 2.1.0
-      helm:
-        valueFiles:
-        - $values/homepage/values.yaml
-    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-      targetRevision: main
-      ref: values
+  source:
+    path: homepage/argocd
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

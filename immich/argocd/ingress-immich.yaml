@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "52"
-  name: ingress-gateway-certificates
+    argocd.argoproj.io/sync-wave: "20"
+  name: ingress-immich
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: istio-ingress
+    namespace: immich
     server: 'https://kubernetes.default.svc'
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: istio/certificates/production
+      path: immich/ingress
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
