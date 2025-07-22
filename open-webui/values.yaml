@@ -38,9 +38,9 @@ podLabels:
 resources:
   requests:
     cpu: 10m
-    memory: 800Mi
+    memory: 1.5Gi
   limits:
-    memory: 800Mi
+    memory: 1.5Gi
 
 persistence:
   enabled: true
