@@ -2,24 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "60"
-  name: kiali-operator
+    argocd.argoproj.io/sync-wave: "10"
+  name: ingress-kiali
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: kiali-operator
+    namespace: istio-system
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: kiali-operator
-      repoURL: 'https://kiali.org/helm-charts'
-      targetRevision: 2.13.0
-      helm:
-        valueFiles:
-        - $values/kiali/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      ref: values
+      path: kiali/ingress
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
