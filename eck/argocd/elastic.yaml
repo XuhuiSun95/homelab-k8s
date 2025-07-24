@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "79"
-  name: ingress-eck
+    argocd.argoproj.io/sync-wave: "10"
+  name: elastic
   namespace: argocd
 spec:
   project: default
   destination:
     namespace: elastic
     server: 'https://kubernetes.default.svc'
-  sources:
-    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-      targetRevision: main
-      path: eck/ingress
+  source:
+    path: eck/elastic
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

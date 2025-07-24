@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "59"
-  name: ingress-rook-ceph
+    argocd.argoproj.io/sync-wave: "60"
+  name: eck
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: rook-ceph
+    namespace: elastic-system
     server: 'https://kubernetes.default.svc'
-  sources:
-    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
-      targetRevision: main
-      path: rook-ceph/ingress
+  source:
+    path: eck/argocd
+    repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

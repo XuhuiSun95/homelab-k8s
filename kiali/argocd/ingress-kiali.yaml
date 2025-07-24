@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "59"
-  name: ingress-argocd
+    argocd.argoproj.io/sync-wave: "10"
+  name: ingress-kiali
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: argocd
+    namespace: istio-system
     server: 'https://kubernetes.default.svc'
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: argocd/ingress
+      path: kiali/ingress
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
