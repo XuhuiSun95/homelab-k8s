@@ -36,10 +36,3 @@
 
 ## The interval for etcd watch progress notify events
 # etcd_experimental_watch_progress_notify_interval: 5s
-
-etcd_metrics_port: 2381
-etcd_metrics_service_labels:
-  k8s-app: etcd
-  app.kubernetes.io/managed-by: Kubespray
-  app: kube-prometheus-stack-kube-etcd
-  release: prometheus-stack

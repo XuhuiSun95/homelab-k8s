@@ -104,13 +104,13 @@ Deploy Kubernetes using Kubespray:
 
 ```bash
 # Pull Kubespray container
-docker pull quay.io/kubespray/kubespray:v2.27.0
+docker pull quay.io/kubespray/kubespray:v2.28.0
 
 # Run Kubespray deployment
 docker run --rm -it \
   --mount type=bind,source="$(pwd)"/ansible/inventory/myculster,dst=/inventory \
   --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
-  quay.io/kubespray/kubespray:v2.27.0 bash
+  quay.io/kubespray/kubespray:v2.28.0 bash
 
 # Deploy cluster
 ansible-playbook -i /inventory/inventory.ini \
