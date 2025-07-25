@@ -24,9 +24,6 @@ env:
   - name: IMMICH_MACHINE_LEARNING_URL
     value: "http://immich-immich-machine-learning:3003"
 
-image:
-  tag: v1.135.3
-
 immich:
   metrics:
     enabled: true
@@ -36,3 +33,13 @@ immich:
 
 redis:
   enabled: true 
+
+server:
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    tag: v1.136.0
+
+machine-learning:
+  image:
+    repository: ghcr.io/immich-app/immich-machine-learning
+    tag: v1.136.0
