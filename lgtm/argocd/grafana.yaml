@@ -2,24 +2,26 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "70"
-  name: lgtm-distributed
+    argocd.argoproj.io/sync-wave: "0"
+  name: lgtm-grafana
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: monitoring
+    namespace: monitoring 
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: lgtm-distributed
+    - chart: grafana
       repoURL: 'https://grafana.github.io/helm-charts'
-      targetRevision: 2.1.0
+      targetRevision: 9.3.0
       helm:
         valueFiles:
-        - $values/lgtm-distributed/values.yaml
+        - $values/lgtm/grafana-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      selfHeal: true
