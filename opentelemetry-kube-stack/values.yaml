@@ -6,6 +6,15 @@ opentelemetry-operator:
     collectorImage:
       repository: otel/opentelemetry-collector-contrib
 
+defaultCRConfig:
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+
 collectors:
   daemon:
     config:
