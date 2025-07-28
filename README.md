@@ -201,6 +201,8 @@ kubectl -n elastic get secret elasticsearch-es-elastic-user \
 
 ### Rook Ceph Dashboard Password
 ```bash
+kubectl -n rook-ceph get secret rook-ceph-dashboard-password \
+  -o jsonpath="{.data.password}" | base64 --decode | xclip
 ```
 
 ## 🔄 Maintenance & Upgrades
