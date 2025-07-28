@@ -34,6 +34,8 @@ collectors:
           endpoint: http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/api/v1/push
           tls:
             insecure: true
+        loki:
+          endpoint: http://lgtm-distributed-loki-distributor.monitoring.svc:3100/loki/api/v1/push
       service:
         pipelines:
           traces:
@@ -42,4 +44,6 @@ collectors:
           metrics:
             exporters:
               - prometheusremotewrite/mimir
-  
+          logs:
+            exporters:
+              - loki
