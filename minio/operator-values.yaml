@@ -1,4 +1,9 @@
 operator:
+  env:
+    - name: OPERATOR_STS_ENABLED
+      value: "on"
+    - name: PROMETHEUS_NAMESPACE
+      value: "monitoring"
   priorityClassName: "system-cluster-critical"
   affinity:
     nodeAffinity:
