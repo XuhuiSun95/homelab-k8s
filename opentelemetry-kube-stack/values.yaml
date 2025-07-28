@@ -24,6 +24,8 @@ defaultCRConfig:
 
 collectors:
   daemon:
+    targetAllocator:
+      enabled: true
     config:
       exporters:
         otlp/tempo:
