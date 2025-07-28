@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  name: ingress-lgtm
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: monitoring 
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      path: lgtm/ingress
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true

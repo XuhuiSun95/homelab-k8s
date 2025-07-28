@@ -1,0 +1,16 @@
+# apiVersion: networking.istio.io/v1
+# kind: VirtualService
+# metadata:
+#   name: grafana-vs
+#   namespace: monitoring
+# spec:
+#   hosts:
+#   - "grafana.local-v2.xuhuisun.com"
+#   gateways:
+#   - istio-ingress/gateway
+#   http:
+#   - route:
+#     - destination:
+#         host: lgtm-grafana-grafana
+#         port:
+#           number: 80
