@@ -97,7 +97,6 @@ prometheus-node-exporter:
       memory: 100Mi
 
 prometheusOperator:
-  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -128,42 +127,3 @@ prometheusOperator:
 
 prometheus:
   enabled: false
-  service:
-    ipDualStack:
-      enabled: true
-  prometheusSpec:
-    podMonitorSelectorNilUsesHelmValues: false
-    probeSelectorNilUsesHelmValues: false
-    ruleSelectorNilUsesHelmValues: false
-    serviceMonitorSelectorNilUsesHelmValues: false
-    disableCompaction: true
-    retention: 6h
-    remoteWrite:
-      - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
-    externalLabels:
-       environment: mimir
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: ceph-block
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 10Gi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: "node-role.kubernetes.io/system"
-                  operator: "Exists"
-    tolerations:
-      - key: "node-role.kubernetes.io/system"
-        operator: "Exists"
-        effect: "NoSchedule"
-    resources:
-      requests:
-        cpu: 293m
-        memory: 2640Mi
-      limits:
-        memory: 2640Mi
