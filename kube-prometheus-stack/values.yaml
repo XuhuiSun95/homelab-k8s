@@ -5,6 +5,9 @@ grafana:
   enabled: false
   forceDeployDashboards: true
 
+kubeApiServer:
+  enabled: false
+
 kubelet:
   enabled: false
   serviceMonitor:
@@ -62,6 +65,9 @@ kubeScheduler:
 kubeProxy:
   enabled: false
 
+kubeStateMetrics:
+  enabled: false 
+
 kube-state-metrics:
   enabled: false
   service:
@@ -102,6 +108,9 @@ prometheus-node-exporter:
       memory: 100Mi
     limits:
       memory: 100Mi
+
+nodeExporter:
+  enabled: false 
 
 prometheusOperator:
   enabled: false
