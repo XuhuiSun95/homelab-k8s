@@ -2,6 +2,13 @@ crds:
   installPrometheus: false
 
 opentelemetry-operator:
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+  nodeSelector:
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/system: ""
   manager:
     collectorImage:
       repository: otel/opentelemetry-collector-contrib
