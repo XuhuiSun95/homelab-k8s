@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "30"
+  name: opentelemetry-kube-stack
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: opentelemetry-operator-system
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: opentelemetry-kube-stack
+      repoURL: 'https://open-telemetry.github.io/opentelemetry-helm-charts'
+      targetRevision: 0.7.0
+      helm:
+        valueFiles:
+        - $values/opentelemetry-kube-stack/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
