@@ -32,6 +32,14 @@ collectors:
         podMonitorSelector: {}
         scrapeInterval: "30s"
         serviceMonitorSelector: {}
+      ipFamilyPolicy: "PreferDualStack"
+      ipFamilies: ["IPv6","IPv4"]
+      nodeSelector:
+        node-role.kubernetes.io/system: ""
+      tolerations:
+        - key: "node-role.kubernetes.io/system"
+          operator: "Exists"
+          effect: "NoSchedule"
     config:
       exporters:
         otlp/tempo:
