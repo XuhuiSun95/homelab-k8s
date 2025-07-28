@@ -97,7 +97,7 @@ config:
             icon: grafana.png
             href: https://grafana.local-v2.xuhuisun.com
             description: metrics visualization
-            siteMonitor: http://lgtm-distributed-grafana.monitoring.svc.cluster.local
+            siteMonitor: http://lgtm-grafana.monitoring.svc.cluster.local
         - Mimir:
             icon: prometheus.png
             href: https://mimir.local-v2.xuhuisun.com
