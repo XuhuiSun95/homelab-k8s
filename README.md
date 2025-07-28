@@ -199,6 +199,10 @@ kubectl -n elastic get secret elasticsearch-es-elastic-user \
   -o jsonpath="{.data.elastic}" | base64 --decode | xclip
 ```
 
+### Rook Ceph Dashboard Password
+```bash
+```
+
 ## 🔄 Maintenance & Upgrades
 
 ### Kubernetes Cluster Upgrade
