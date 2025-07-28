@@ -1,3 +1,6 @@
+crds:
+  installPrometheus: false
+
 defaultCRConfig:
   image:
     repository: otel/opentelemetry-collector-contrib
