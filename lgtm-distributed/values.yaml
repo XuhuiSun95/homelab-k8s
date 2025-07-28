@@ -114,6 +114,7 @@ loki:
     structuredConfig:
       limits_config:
         retention_period: 30d
+        allow_structured_metadata: true
     schemaConfig:
       configs:
       - from: 2020-09-07
@@ -212,7 +213,7 @@ mimir:
         effect: "NoSchedule"
   compactor:
     persistentVolume:
-      size: 10Gi
+      size: 5Gi
     nodeSelector:
       node-role.kubernetes.io/system: ""
     tolerations:
@@ -229,7 +230,7 @@ mimir:
         effect: "NoSchedule"
   ingester:
     persistentVolume:
-      size: 25Gi
+      size: 10Gi
     replicas: 3
     nodeSelector:
       node-role.kubernetes.io/system: ""
@@ -274,7 +275,7 @@ mimir:
         effect: "NoSchedule"
   store_gateway:
     persistentVolume:
-      size: 5Gi
+      size: 2Gi
     replicas: 3
     nodeSelector:
       node-role.kubernetes.io/system: ""
