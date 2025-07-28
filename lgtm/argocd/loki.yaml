@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: lgtm-loki
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: monitoring 
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: loki
+      repoURL: 'https://grafana.github.io/helm-charts'
+      targetRevision: 6.33.0
+      helm:
+        valueFiles:
+        - $values/lgtm/loki-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
