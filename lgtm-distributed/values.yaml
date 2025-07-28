@@ -2,6 +2,7 @@ grafana:
   enabled: false
 
 loki:
+  enabled: false
   loki:
     image:
       tag: 3.5.3
