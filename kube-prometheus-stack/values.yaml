@@ -6,6 +6,7 @@ grafana:
   forceDeployDashboards: true
 
 kubelet:
+  enabled: false
   serviceMonitor:
     relabelings:
       - action: replace
@@ -16,6 +17,7 @@ kubelet:
         action: replace
 
 kubeControllerManager:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -26,6 +28,7 @@ kubeControllerManager:
         action: replace
 
 coreDns:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -36,6 +39,7 @@ coreDns:
         action: replace
 
 kubeEtcd:
+  enabled: false
   endpoints:
     - 192.168.60.150
     - 192.168.60.151
@@ -45,6 +49,7 @@ kubeEtcd:
       enabled: true
 
 kubeScheduler:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -58,6 +63,7 @@ kubeProxy:
   enabled: false
 
 kube-state-metrics:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -80,6 +86,7 @@ kube-state-metrics:
       memory: 100Mi
 
 prometheus-node-exporter:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -97,6 +104,7 @@ prometheus-node-exporter:
       memory: 100Mi
 
 prometheusOperator:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -126,6 +134,7 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
