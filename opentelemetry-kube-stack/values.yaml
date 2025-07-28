@@ -1,0 +1,21 @@
+collectors:
+  daemon:
+    config:
+      exporters:
+        otlp/tempo:
+          endpoint: lgtm-distributed-tempo-distributor.monitoring.svc.cluster.local:4317
+          tls:
+            insecure: true
+        prometheusremotewrite/mimir:
+          endpoint: http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/api/v1/push
+          tls:
+            insecure: true
+      service:
+        pipelines:
+          traces:
+            exporters:
+              - otlp/tempo
+          metrics:
+            exporters:
+              - prometheusremotewrite/mimir
+  
