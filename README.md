@@ -29,7 +29,6 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **Grafana** | https://grafana.local-v2.xuhuisun.com | Metrics visualization |
-| **Prometheus** | https://prometheus.local-v2.xuhuisun.com | Metrics collection |
 | **Mimir** | https://mimir.local-v2.xuhuisun.com | Long-term metrics storage |
 | **Kiali** | https://kiali.local-v2.xuhuisun.com | Istio service mesh console |
 | **Kibana** | https://kibana.local-v2.xuhuisun.com | Elasticsearch visualization |
