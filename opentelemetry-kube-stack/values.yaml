@@ -1,9 +1,10 @@
 crds:
   installPrometheus: false
 
-defaultCRConfig:
-  image:
-    repository: otel/opentelemetry-collector-contrib
+opentelemetry-operator:
+  manager:
+    collectorImage:
+      repository: otel/opentelemetry-collector-contrib
 
 collectors:
   daemon:
