@@ -26,6 +26,12 @@ collectors:
   daemon:
     targetAllocator:
       enabled: true
+      allocationStrategy: per-node
+      prometheusCR:
+        enabled: true
+        podMonitorSelector: {}
+        scrapeInterval: "30s"
+        serviceMonitorSelector: {}
     config:
       exporters:
         otlp/tempo:
