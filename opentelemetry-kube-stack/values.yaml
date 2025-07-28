@@ -32,8 +32,8 @@ collectors:
         podMonitorSelector: {}
         scrapeInterval: "30s"
         serviceMonitorSelector: {}
-      ipFamilyPolicy: "PreferDualStack"
-      ipFamilies: ["IPv6","IPv4"]
+      # ipFamilyPolicy: "PreferDualStack"
+      # ipFamilies: ["IPv6","IPv4"]
       nodeSelector:
         node-role.kubernetes.io/system: ""
       tolerations:
