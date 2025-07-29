@@ -25,9 +25,9 @@ metrics:
 resources:
   requests:
     cpu: 25m
-    memory: 701Mi
+    memory: 1000Mi
   limits:
-    memory: 701Mi
+    memory: 1000Mi
 
 postgresql:
   enabled: false

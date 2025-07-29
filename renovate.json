@@ -7,7 +7,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^lgtm-distributed/values\\.yaml$"],
+      "fileMatch": ["^lgtm/grafana-values\\.yaml$"],
       "matchStrings": [
         "#\\s+renovate:\\s+depName=\"(?<depName>.*)\"\\n\\s+gnetId:\\s+(?<packageName>.*?)\\n\\s+revision:\\s+(?<currentValue>.*)"
       ],
