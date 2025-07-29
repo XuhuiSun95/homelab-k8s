@@ -51,7 +51,7 @@ collectors:
           tls:
             insecure: true
         otlphttp/loki:
-          endpoint: http://lgtm-loki-gateway.monitoring.svc:3100/otlp
+          endpoint: http://lgtm-loki-gateway.monitoring.svc/otlp
           tls:
             insecure: true
       service:
