@@ -52,6 +52,8 @@ collectors:
             insecure: true
         otlphttp/loki:
           endpoint: http://lgtm-loki-gateway.monitoring.svc/otlp
+          headers:
+            X-Scope-OrgID: "homelab-v2"
           tls:
             insecure: true
       service:
