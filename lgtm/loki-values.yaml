@@ -36,21 +36,21 @@ ingester:
   replicas: 3
   zoneAwareReplication:
      enabled: false
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
 querier:
   replicas: 3
   maxUnavailable: 2
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
@@ -71,12 +71,12 @@ queryScheduler:
 distributor:
   replicas: 3 
   maxUnavailable: 2
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
 compactor:
   replicas: 1
   nodeSelector:
