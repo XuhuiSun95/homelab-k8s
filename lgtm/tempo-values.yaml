@@ -52,12 +52,12 @@ querier:
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
 
 traces:
   otlp:
@@ -88,7 +88,7 @@ storage:
 
 gateway:
   enabled: true
-  replicas: 0
+  replicas: 1
 
 global_overrides:
   defaults:
