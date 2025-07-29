@@ -30,7 +30,7 @@ tenant:
   # prometheusOperator: true
   env:
     # - name: MINIO_PROMETHEUS_URL
-    #   value: "http://http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/prometheus"
+    #   value: "http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/prometheus"
     - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
       value: "https://iam.local-v2.xuhuisun.com/realms/local-v2/.well-known/openid-configuration"
     - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY

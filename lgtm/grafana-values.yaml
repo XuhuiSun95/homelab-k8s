@@ -33,7 +33,7 @@ datasources:
       - name: Tempo
         uid: tempo
         type: tempo
-        url: http://lgtm-distributed-tempo-query-frontend:3100
+        url: http://lgtm-tempo-gateway
         isDefault: false
         jsonData:
           tracesToLogsV2:
