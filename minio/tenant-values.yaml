@@ -23,12 +23,11 @@ tenant:
     - name: "elasticsearch-backup"
     - name: "mimir-tsdb"
     - name: "mimir-ruler"
-    - name: "loki"
     - name: "loki-chunks"
     - name: "loki-ruler"
     - name: "loki-admin"
     - name: "tempo"
-  prometheusOperator: true
+  # prometheusOperator: true
   env:
     # - name: MINIO_PROMETHEUS_URL
     #   value: "http://http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/prometheus"

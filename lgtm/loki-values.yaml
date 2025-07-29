@@ -36,22 +36,64 @@ ingester:
   replicas: 3
   zoneAwareReplication:
      enabled: false
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 querier:
   replicas: 3
   maxUnavailable: 2
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 queryScheduler:
   replicas: 2
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 distributor:
   replicas: 3 
   maxUnavailable: 2
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 compactor:
   replicas: 1
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 indexGateway:
   replicas: 2
   maxUnavailable: 1
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 
 bloomPlanner:
   replicas: 0
@@ -69,52 +111,3 @@ write:
 
 singleBinary:
    replicas: 0
-
-# compactor:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
-# querier:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
-# ingester:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
-# distributor:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
-# queryFrontend:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
-# gateway:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
-#   resources:
-#     requests:
-#       cpu: 10m
-#       memory: 100Mi
-#     limits:
-#       memory: 100Mi
