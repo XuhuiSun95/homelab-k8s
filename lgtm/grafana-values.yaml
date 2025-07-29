@@ -23,6 +23,7 @@ datasources:
         isDefault: false
         jsonData:
           httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
           httpHeaderValue1: homelab-v2
       - name: Mimir
         uid: prom
