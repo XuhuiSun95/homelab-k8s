@@ -43,7 +43,7 @@ collectors:
     config:
       exporters:
         otlp/tempo:
-          endpoint: lgtm-distributed-tempo-distributor.monitoring.svc.cluster.local:4317
+          endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
           tls:
             insecure: true
         prometheusremotewrite/mimir:

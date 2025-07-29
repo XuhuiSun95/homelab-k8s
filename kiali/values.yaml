@@ -54,7 +54,7 @@ cr:
         istio.io/dataplane-mode: ambient
     external_services:
       grafana:
-        internal_url: "http://lgtm-distributed-grafana.monitoring.svc.cluster.local"
+        internal_url: "http://lgtm-grafana.monitoring.svc.cluster.local"
         external_url: "https://grafana.local-v2.xuhuisun.com"
       istio:
         component_status:
@@ -67,11 +67,11 @@ cr:
             is_proxy: true
             namespace: istio-ingress
       prometheus:
-        url: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
+        url: "http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/prometheus"
       tracing:
         enabled: true
-        health_check_url: "http://lgtm-distributed-tempo-query-frontend.monitoring.svc.cluster.local:3100"
-        internal_url: "http://lgtm-distributed-tempo-query-frontend.monitoring.svc.cluster.local:3100"
+        health_check_url: "http://lgtm-tempo-gateway.monitoring.svc.cluster.local"
+        internal_url: "http://lgtm-tempo-gateway.monitoring.svc.cluster.local"
         provider: "tempo"
         tempo_config:
           org_id: "1"
