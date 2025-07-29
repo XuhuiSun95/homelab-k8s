@@ -24,6 +24,9 @@ tenant:
     - name: "mimir-tsdb"
     - name: "mimir-ruler"
     - name: "loki"
+    - name: "loki-chunks"
+    - name: "loki-ruler"
+    - name: "loki-admin"
     - name: "tempo"
   prometheusOperator: true
   env:
