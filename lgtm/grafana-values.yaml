@@ -19,7 +19,7 @@ datasources:
       - name: Loki
         uid: loki
         type: loki
-        url: http://lgtm-distributed-loki-gateway
+        url: http://lgtm-loki-gateway
         isDefault: false
       - name: Mimir
         uid: prom
