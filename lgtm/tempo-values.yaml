@@ -1,0 +1,98 @@
+ingester:
+  replicas: 3
+  # config:
+  #   replication_factor: 1
+  zoneAwareReplication:
+     enabled: false
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
+metricsGenerator:
+  enabled: true
+  config:
+    storage:
+      remote_write:
+      - url: http://lgtm-distributed-mimir-nginx/api/v1/push
+        send_exemplars: true
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+distributor:
+  replicas: 3 
+  maxUnavailable: 2
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
+compactor:
+  replicas: 1
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+querier:
+  replicas: 3
+  maxUnavailable: 2
+  # nodeSelector:
+  #   node-role.kubernetes.io/system: ""
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
+queryFrontend:
+  replicas: 2
+  maxUnavailable: 1
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+
+traces:
+  otlp:
+    http:
+      enabled: true
+    grpc:
+      enabled: true
+
+storage:
+  trace:
+    backend: s3
+    s3:
+      bucket: tempo
+      prefix: traces
+      endpoint: minio.minio.svc.cluster.local
+      tls_insecure_skip_verify: true
+      forcepathstyle: true
+      access_key: hU2WB7hZSnLeqP3TU5pm
+      secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
+
+# memcached:
+#   nodeSelector:
+#     node-role.kubernetes.io/system: ""
+#   tolerations:
+#     - key: "node-role.kubernetes.io/system"
+#       operator: "Exists"
+#       effect: "NoSchedule"
+
+gateway:
+  enabled: true
+  replicas: 0
+
+global_overrides:
+  defaults:
+    metrics_generator:
+      processors:
+      - service-graphs
+      - span-metrics
