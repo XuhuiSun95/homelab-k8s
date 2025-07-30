@@ -35,11 +35,15 @@ redis:
   enabled: true 
 
 server:
+  podLabels:
+    istio.io/dataplane-mode: ambient
   image:
     repository: ghcr.io/immich-app/immich-server
     tag: v1.136.0
 
 machine-learning:
+  podLabels:
+    istio.io/dataplane-mode: ambient
   image:
     repository: ghcr.io/immich-app/immich-machine-learning
     tag: v1.136.0
