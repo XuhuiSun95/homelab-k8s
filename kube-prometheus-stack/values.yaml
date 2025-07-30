@@ -5,6 +5,9 @@ grafana:
   enabled: false
   forceDeployDashboards: true
 
+kubernetesServiceMonitors:
+  enabled: false
+
 kubelet:
   serviceMonitor:
     relabelings:
@@ -57,6 +60,9 @@ kubeScheduler:
 kubeProxy:
   enabled: false
 
+kubeStateMetrics:
+  enabled: false
+
 kube-state-metrics:
   service:
     ipDualStack:
@@ -79,6 +85,9 @@ kube-state-metrics:
     limits:
       memory: 100Mi
 
+nodeExporter:
+  enabled: false
+
 prometheus-node-exporter:
   service:
     ipDualStack:
@@ -97,6 +106,7 @@ prometheus-node-exporter:
       memory: 100Mi
 
 prometheusOperator:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
