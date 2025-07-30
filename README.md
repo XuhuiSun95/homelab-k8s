@@ -74,6 +74,8 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 
 ### Observability Stack
 - **LGTM Stack**: Complete observability with Loki, Grafana, Tempo, Mimir
+- **LGTM Distributed**: Production-grade distributed LGTM deployment for scalability
+- **OpenTelemetry Kube Stack**: Unified observability framework with automated instrumentation
 - **Elastic Stack**: Elasticsearch, Kibana for log analytics
 - **Kube-Prometheus**: Comprehensive cluster monitoring
 - **Kiali**: Service mesh visualization
@@ -229,14 +231,12 @@ ansible-playbook -i /inventory/inventory.ini \
 - **TLS Termination**: Istio Ingress Gateway
 
 ### Sync Wave Deployment Order
-1. **Wave 10-11**: Storage operators (Rook-Ceph, NFS CSI)
-2. **Wave 20**: Certificate management (Cert-Manager)
-3. **Wave 40-42**: Core platform (Prometheus, ArgoCD, KEDA)
-4. **Wave 50-53**: Networking (External DNS, Istio Gateway)
-5. **Wave 59-60**: Ingress setup and operators
-6. **Wave 70**: Applications (Keycloak, Kafka, MinIO, Elastic)
-7. **Wave 79**: Application ingress configurations
-8. **Wave 200+**: User applications (Homepage, Open-WebUI)
+1. **Wave 30**: Core monitoring and telemetry (Prometheus, OpenTelemetry)
+2. **Wave 41**: Auto-scaling (KEDA)
+3. **Wave 42**: GitOps (ArgoCD)
+4. **Wave 60**: Storage operators and service mesh (CNPG, Strimzi)
+5. **Wave 70**: Applications and distributed services (LGTM, Keycloak, MinIO, Elastic)
+6. **Wave 200**: User applications (Homepage, Open-WebUI, Immich)
 
 ## 🎯 Key Features
 
@@ -255,11 +255,9 @@ ansible-playbook -i /inventory/inventory.ini \
 │   └── inventory/myculster/    # Cluster inventory and group vars
 ├── argocd/                     # ArgoCD configuration and applications
 │   ├── applications/           # Application definitions by category
-│   │   ├── api-gateway/        # Istio ingress gateways
 │   │   ├── cloud-native-storage/ # Storage solutions
 │   │   ├── continuous-integration-delivery/ # CI/CD tools
 │   │   ├── dns/                # DNS management
-│   │   ├── ingress-egress/     # Ingress configurations
 │   │   ├── observability/      # Monitoring and logging
 │   │   ├── scheduling-orchestration/ # Auto-scaling
 │   │   ├── security-compliance/ # Security tools
@@ -268,13 +266,26 @@ ansible-playbook -i /inventory/inventory.ini \
 │   │   └── user-defined-apps/  # Custom applications
 │   └── values.yaml            # ArgoCD Helm values
 ├── cert-manager/              # Certificate management
+├── cloudnative-pg/            # CloudNativePG operator configuration
+├── csi-driver-nfs/            # NFS CSI driver configuration
+├── eck/                       # Elastic Cloud on Kubernetes
+├── external-dns/              # External DNS configuration
 ├── homepage/                  # Service dashboard
 ├── immich/                    # Photo management application
 ├── istio/                     # Service mesh configuration
+├── keda/                      # Event-driven autoscaling
 ├── keycloak/                  # Identity and access management
-├── kubespray/                # Kubernetes cluster deployment
-├── open-webui/               # AI interface application
-└── */values.yaml             # Helm values for each service
+├── kiali/                     # Istio service mesh visualization
+├── kube-prometheus-stack/     # Prometheus monitoring stack
+├── kubespray/                 # Kubernetes cluster deployment
+├── lgtm/                      # LGTM observability stack
+├── lgtm-distributed/          # Distributed LGTM deployment
+├── minio/                     # Object storage
+├── open-webui/                # AI interface application
+├── opentelemetry-kube-stack/  # OpenTelemetry configuration
+├── rook-ceph/                 # Distributed storage
+├── strimzi/                   # Kafka operator
+└── */values.yaml              # Helm values for each service
 ```
 
 ## 📋 Current Application Versions
@@ -284,8 +295,9 @@ ansible-playbook -i /inventory/inventory.ini \
 | ArgoCD | 8.1.3 | argo/argo-cd |
 | Cert-Manager | v1.18.2 | jetstack/cert-manager |
 | Istio | 1.26.2 | istio-release |
-| Kube-Prometheus-Stack | 75.11.0 | prometheus-community |
+| Kube-Prometheus-Stack | 75.15.1 | prometheus-community |
 | LGTM Distributed | 2.1.0 | grafana |
+| OpenTelemetry Kube Stack | 0.7.0 | open-telemetry |
 | Keycloak | 24.7.7 | bitnami/keycloak |
 | Open-WebUI | 6.21.0 | openwebui |
 | Homepage | 2.1.0 | jameswynn/helm-charts |
@@ -293,6 +305,7 @@ ansible-playbook -i /inventory/inventory.ini \
 | Rook-Ceph | v1.17.6 | rook-release |
 | MinIO Operator | 7.1.1 | minio/operator |
 | CloudNativePG | 0.24.0 | cnpg-system |
+| CSI Driver NFS | 4.11.0 | csi-driver-nfs |
 | Strimzi Kafka | 0.47.0 | strimzi |
 | KEDA | 2.17.2 | kedacore |
 | External DNS | 1.18.0 | external-dns |
@@ -320,6 +333,7 @@ ansible-playbook -i /inventory/inventory.ini \
 
 ### Observability Stack
 - **LGTM**: Loki (logs), Grafana (visualization), Tempo (traces), Mimir (metrics)
+- **OpenTelemetry**: Standardized telemetry collection and export to LGTM stack
 - **ELK**: Elasticsearch, Kibana for advanced log analytics
 - **Prometheus**: Metrics collection and alerting
 - **Kiali**: Service mesh visualization
