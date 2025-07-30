@@ -94,15 +94,71 @@ kubelet:
   enabled: true
 kubeControllerManager:
   enabled: true
-kubeDns:
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
+coreDns:
   enabled: true
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
 kubeEtcd:
   enabled: true
+  endpoints:
+    - 192.168.60.150
+    - 192.168.60.151
+    - 192.168.60.152
 kubeScheduler:
   enabled: true
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
 kubeProxy:
-  enabled: true
+  enabled: false 
 kubeStateMetrics:
   enabled: true
+kube-state-metrics:
+  service:
+    ipDualStack:
+      enabled: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 nodeExporter:
   enabled: true
+prometheus-node-exporter:
+  service:
+    ipDualStack:
+      enabled: true
+  prometheus:
+    monitor:
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: instance
+          action: replace
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
