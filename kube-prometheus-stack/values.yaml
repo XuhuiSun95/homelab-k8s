@@ -29,7 +29,7 @@ nodeExporter:
   forceDeployDashboards: true
 
 prometheusOperator:
-  # enabled: false
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -59,7 +59,7 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
-  # enabled: false
+  enabled: false
   service:
     ipDualStack:
       enabled: true
