@@ -24,7 +24,7 @@ defaultCRConfig:
 
 collectors:
   daemon:
-    scrape_configs_file: "examples/prometheus-otel/kubelet_scrape_configs.yaml"
+    # scrape_configs_file: "examples/prometheus-otel/kubelet_scrape_configs.yaml"
     presets:
       logsCollection:
         enabled: false
