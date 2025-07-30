@@ -7,6 +7,10 @@ controller:
           - matchExpressions:
               - key: node-role.kubernetes.io/system
                 operator: Exists
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 
 node:
   tolerations:
