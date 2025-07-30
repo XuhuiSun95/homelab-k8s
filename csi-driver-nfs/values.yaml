@@ -1,18 +1,14 @@
 controller:
   replicas: 2
-  runOnControlPlane: true
-
-node:
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/user"
-                operator: "Exists"
+              - key: node-role.kubernetes.io/system
+                operator: Exists
+
+node:
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
