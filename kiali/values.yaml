@@ -76,6 +76,5 @@ cr:
         tempo_config:
           org_id: "1"
           datasource_uid: "tempo"
-        grpc_port: 9095
-        use_grpc: true
+        use_grpc: false 
         external_url: "https://grafana.local-v2.xuhuisun.com"
