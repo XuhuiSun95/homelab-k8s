@@ -7,13 +7,18 @@ resources:
   limits:
     memory: 100Mi
 
-nodeSelector:
-  node-role.kubernetes.io/system: ""
-
 tolerations:
 - key: "node-role.kubernetes.io/system"
   operator: "Exists"
   effect: "NoSchedule"
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/system
+              operator: Exists
 
 monitoring:
   podMonitorEnabled: true
