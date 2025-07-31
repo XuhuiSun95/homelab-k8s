@@ -23,6 +23,8 @@ env:
         key: password
   - name: IMMICH_MACHINE_LEARNING_URL
     value: "http://immich-immich-machine-learning:3003"
+  - name: IMMICH_TELEMETRY_INCLUDE
+    value: "all"
 
 immich:
   metrics:
