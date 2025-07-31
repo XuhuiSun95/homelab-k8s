@@ -1,0 +1,43 @@
+tenant:
+  name: minio-cold-tier
+  pools:
+    - servers: 4
+      name: pool-0
+      volumesPerServer: 4
+      size: 100Gi
+      storageClassName: nfs-csi
+      resources:
+        requests:
+          cpu: 23m
+          memory: 2355Mi
+        limits:
+          memory: 2355Mi
+  metrics:
+    enabled: true
+  features:
+    domains:
+      minio:
+        - https://s3-cold-tier.local-v2.xuhuisun.com
+      console: https://minio-console-cold-tier.local-v2.xuhuisun.com
+  buckets:
+    - name: "cold-tier"
+  # prometheusOperator: true
+  env:
+    # - name: MINIO_PROMETHEUS_URL
+    #   value: "http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/prometheus"
+    - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
+      value: "https://iam.local-v2.xuhuisun.com/realms/local-v2/.well-known/openid-configuration"
+    - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
+      value: "minio"
+    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
+      value: "MinIO OpenID Login - Keycloak"
+    - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
+      value: "openid,profile,email"
+    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_KEYCLOAK_PRIMARY
+      value: "on"
+    # - name: MINIO_IDENTITY_OPENID_VENDOR_KEYCLOAK_PRIMARY
+    #   value: "keycloak"
+    # - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL_KEYCLOAK_PRIMARY
+    #   value: "https://keycloak.local-v2.xuhuisun.com/admin"
+    # - name: MINIO_IDENTITY_OPENID_KEYCLOAK_REALM_KEYCLOAK_PRIMARY
+    #   value: "minio"
