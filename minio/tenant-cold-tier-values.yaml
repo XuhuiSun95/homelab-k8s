@@ -1,5 +1,7 @@
 tenant:
   name: minio-cold-tier
+  configSecret:
+    name: minio-cold-tier-env-configuration
   pools:
     - servers: 4
       name: pool-0
