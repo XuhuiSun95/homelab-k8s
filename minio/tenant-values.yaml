@@ -1,5 +1,7 @@
 tenant:
   name: minio
+  configSecret:
+    name: myminio-env-configuration
   pools:
     - servers: 4
       name: pool-0
