@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "30"
-  name: ingress-minio
+    argocd.argoproj.io/sync-wave: "10"
+  name: minio-tenant-cold-tier
   namespace: argocd
 spec:
   project: default
@@ -11,9 +11,15 @@ spec:
     namespace: minio
     server: 'https://kubernetes.default.svc'
   sources:
+    - chart: tenant
+      repoURL: 'https://operator.min.io/'
+      targetRevision: 7.1.1
+      helm:
+        valueFiles:
+        - $values/minio/tenant-cold-tier-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: minio/ingress
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
