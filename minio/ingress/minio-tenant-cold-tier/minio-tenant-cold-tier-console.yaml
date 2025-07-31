@@ -1,27 +1,27 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: minio-tenant-cold-tier-s3-vs
-  namespace: minio
+  name: minio-tenant-cold-tier-console-vs
+  namespace: minio-cold-tier
 spec:
   hosts:
-  - "s3-cold-tier.local-v2.xuhuisun.com"
+  - "minio-console-cold-tier.local-v2.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:
   - route:
     - destination:
-        host: minio-cold-tier
+        host: minio-console-cold-tier
         port:
-          number: 443
+          number: 9443
 ---
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: minio-tenant-cold-tier-s3-dr
-  namespace: minio
+  name: minio-tenant-cold-tier-console-dr
+  namespace: minio-cold-tier
 spec:
-  host: minio-cold-tier
+  host: minio-console-cold-tier
   trafficPolicy:
     tls:
       mode: SIMPLE

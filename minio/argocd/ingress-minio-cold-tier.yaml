@@ -3,17 +3,17 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "30"
-  name: ingress-minio
+  name: ingress-minio-cold-tier
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: minio
+    namespace: minio-cold-tier
     server: 'https://kubernetes.default.svc'
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: minio/ingress/minio-tenant
+      path: minio/ingress/minio-tenant-cold-tier
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
