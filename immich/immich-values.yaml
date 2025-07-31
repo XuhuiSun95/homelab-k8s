@@ -41,11 +41,11 @@ server:
     istio.io/dataplane-mode: ambient
   image:
     repository: ghcr.io/immich-app/immich-server
-    tag: v1.136.0
+    tag: v1.137.0
 
 machine-learning:
   podLabels:
     istio.io/dataplane-mode: ambient
   image:
     repository: ghcr.io/immich-app/immich-machine-learning
-    tag: v1.136.0
+    tag: v1.137.0
