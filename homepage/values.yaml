@@ -79,7 +79,7 @@ config:
             icon: minio.png
             href: https://minio-console-cold-tier.local-v2.xuhuisun.com
             description: object storage
-            siteMonitor: https://minio-console-cold-tier.minio.svc.cluster.local:9443
+            siteMonitor: https://minio-console.minio-cold-tier.svc.cluster.local:9443
     - Home Automation:
         - Scrypted:
             icon: scrypted.png
