@@ -11,7 +11,7 @@ spec:
   http:
   - route:
     - destination:
-        host: minio-cold-tier
+        host: minio
         port:
           number: 443
 ---
@@ -21,7 +21,7 @@ metadata:
   name: minio-tenant-cold-tier-s3-dr
   namespace: minio-cold-tier
 spec:
-  host: minio-cold-tier
+  host: minio
   trafficPolicy:
     tls:
       mode: SIMPLE

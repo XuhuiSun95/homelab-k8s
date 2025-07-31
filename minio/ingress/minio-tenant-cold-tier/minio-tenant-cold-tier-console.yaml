@@ -11,7 +11,7 @@ spec:
   http:
   - route:
     - destination:
-        host: minio-console-cold-tier
+        host: minio-console
         port:
           number: 9443
 ---
@@ -21,7 +21,7 @@ metadata:
   name: minio-tenant-cold-tier-console-dr
   namespace: minio-cold-tier
 spec:
-  host: minio-console-cold-tier
+  host: minio-console
   trafficPolicy:
     tls:
       mode: SIMPLE
