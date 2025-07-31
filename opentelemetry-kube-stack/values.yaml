@@ -24,16 +24,16 @@ defaultCRConfig:
 
 collectors:
   daemon:
-    scrape_configs_file: "examples/prometheus-otel/kubelet_scrape_configs.yaml"
+    # scrape_configs_file: "examples/prometheus-otel/kubelet_scrape_configs.yaml"
     presets:
       logsCollection:
         enabled: false
       kubeletMetrics:
-        enabled: false
+        enabled: true
       hostMetrics:
         enabled: false
       kubernetesAttributes:
-        enabled: false
+        enabled: true
       kubernetesEvents:
         enabled: false
       clusterMetrics:
@@ -93,7 +93,7 @@ kubernetesServiceMonitors:
 kubeApiServer:
   enabled: true
 kubelet:
-  enabled: true
+  enabled: false
 kubeControllerManager:
   enabled: true
   serviceMonitor:
