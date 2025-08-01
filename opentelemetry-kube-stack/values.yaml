@@ -320,6 +320,8 @@ kubernetesServiceMonitors:
   enabled: true
 kubeApiServer:
   enabled: true
+  tlsConfig:
+    insecureSkipVerify: true
 kubelet:
   enabled: true
 kubeControllerManager:
