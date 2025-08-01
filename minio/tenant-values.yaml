@@ -9,9 +9,9 @@ tenant:
       resources:
         requests:
           cpu: 23m
-          memory: 2355Mi
+          memory: 4Gi
         limits:
-          memory: 2355Mi
+          memory: 4Gi
   metrics:
     enabled: true
   features:
@@ -31,6 +31,7 @@ tenant:
   serviceMetadata:
     minioServiceLabels:
       app: minio
+      job-name: minio
   env:
     # - name: MINIO_PROMETHEUS_URL
     #   value: "http://lgtm-distributed-mimir-nginx.monitoring.svc.cluster.local/prometheus"

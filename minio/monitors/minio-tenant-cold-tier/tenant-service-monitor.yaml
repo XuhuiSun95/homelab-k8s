@@ -16,6 +16,7 @@ spec:
     scheme: https
     tlsConfig:
       insecureSkipVerify: true
+  jobLabel: job-name
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -35,3 +36,4 @@ spec:
     scheme: https
     tlsConfig:
       insecureSkipVerify: true
+  jobLabel: job-name
