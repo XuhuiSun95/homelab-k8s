@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: minio
+  name: minio-cluster
   namespace: minio
 spec:
   selector:
@@ -20,7 +20,7 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: minio
+  name: minio-bucket
   namespace: minio
 spec:
   selector:
