@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio-cluster
+  namespace: minio-cold-tier
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  namespaceSelector:
+    matchNames:
+      - minio-cold-tier
+  endpoints:
+  - port: https-minio
+    path: /minio/v2/metrics/cluster
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio-bucket
+  namespace: minio-cold-tier
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  namespaceSelector:
+    matchNames:
+      - minio-cold-tier
+  endpoints:
+  - port: https-minio
+    path: /minio/v2/metrics/bucket
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
