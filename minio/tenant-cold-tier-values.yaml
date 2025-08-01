@@ -12,6 +12,10 @@ tenant:
           memory: 2355Mi
         limits:
           memory: 2355Mi
+      securityContext:
+        runAsUser: 977 
+        runAsGroup: 988
+        fsGroup: 988 
   metrics:
     enabled: true
   features:
