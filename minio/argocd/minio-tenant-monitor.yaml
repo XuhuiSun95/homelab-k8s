@@ -13,7 +13,7 @@ spec:
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: minio/minitors/minio-tenant
+      path: minio/monitors/minio-tenant
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
