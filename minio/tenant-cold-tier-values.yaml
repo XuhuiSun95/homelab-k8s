@@ -16,6 +16,21 @@ tenant:
         runAsUser: 977 
         runAsGroup: 988
         fsGroup: 988 
+    - servers: 1
+      name: pool-1
+      volumesPerServer: 1
+      size: 1Ti
+      storageClassName: nfs-csi
+      resources:
+        requests:
+          cpu: 23m
+          memory: 2355Mi
+        limits:
+          memory: 2355Mi
+      securityContext:
+        runAsUser: 977 
+        runAsGroup: 988
+        fsGroup: 988 
   metrics:
     enabled: true
   features:
