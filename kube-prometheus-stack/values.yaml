@@ -5,9 +5,6 @@ grafana:
   enabled: false
   forceDeployDashboards: true
 
-kubernetesServiceMonitors:
-  enabled: false
-
 kubelet:
   serviceMonitor:
     relabelings:
@@ -18,18 +15,88 @@ kubelet:
         targetLabel: instance
         action: replace
 
+kubeControllerManager:
+  service:
+    ipDualStack:
+      enabled: true
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
+
+coreDns:
+  service:
+    ipDualStack:
+      enabled: true
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
+
+kubeEtcd:
+  endpoints:
+    - 192.168.60.150
+    - 192.168.60.151
+    - 192.168.60.152
+  service:
+    ipDualStack:
+      enabled: true
+
+kubeScheduler:
+  service:
+    ipDualStack:
+      enabled: true
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
+
 kubeProxy:
   enabled: false
 
-kubeStateMetrics:
-  enabled: false
+kube-state-metrics:
+  service:
+    ipDualStack:
+      enabled: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 
-nodeExporter:
-  enabled: false
-  forceDeployDashboards: true
+prometheus-node-exporter:
+  service:
+    ipDualStack:
+      enabled: true
+  prometheus:
+    monitor:
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: instance
+          action: replace
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 
 prometheusOperator:
-  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -59,7 +126,7 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
-  enabled: false
+  enabled: true
   service:
     ipDualStack:
       enabled: true
@@ -68,20 +135,11 @@ prometheus:
     probeSelectorNilUsesHelmValues: false
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
-    disableCompaction: true
-    retention: 6h
-    # remoteWrite:
-    #   - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
-    # externalLabels:
-    #    environment: mimir
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: ceph-block
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 10Gi
+    retention: 1h
+    remoteWrite:
+      - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
+        headers:
+          X-Scope-OrgID: "homelab-v2"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
