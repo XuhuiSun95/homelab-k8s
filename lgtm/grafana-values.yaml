@@ -30,6 +30,10 @@ datasources:
         type: prometheus
         url: http://lgtm-distributed-mimir-nginx/prometheus
         isDefault: true
+        jsonData:
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: homelab-v2
       - name: Tempo
         uid: tempo
         type: tempo
