@@ -306,6 +306,7 @@ collectors:
           metrics:
             receivers:
               - prometheus
+              - otlp
             exporters:
               - prometheusremotewrite/mimir
           logs:
