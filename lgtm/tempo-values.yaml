@@ -1,15 +1,13 @@
 ingester:
   replicas: 3
-  # config:
-  #   replication_factor: 1
   zoneAwareReplication:
      enabled: false
   # nodeSelector:
   #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 metricsGenerator:
   enabled: true
   config:
@@ -28,10 +26,10 @@ distributor:
   maxUnavailable: 2
   # nodeSelector:
   #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 compactor:
   replicas: 1
   nodeSelector:
@@ -45,19 +43,19 @@ querier:
   maxUnavailable: 2
   # nodeSelector:
   #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
   # nodeSelector:
   #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 
 traces:
   otlp:
@@ -78,13 +76,13 @@ storage:
       access_key: hU2WB7hZSnLeqP3TU5pm
       secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
 
-# memcached:
-#   nodeSelector:
-#     node-role.kubernetes.io/system: ""
-#   tolerations:
-#     - key: "node-role.kubernetes.io/system"
-#       operator: "Exists"
-#       effect: "NoSchedule"
+memcached:
+  nodeSelector:
+    node-role.kubernetes.io/system: ""
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 
 gateway:
   enabled: true
