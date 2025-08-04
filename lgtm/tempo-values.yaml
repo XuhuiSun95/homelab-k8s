@@ -2,8 +2,13 @@ ingester:
   replicas: 3
   zoneAwareReplication:
      enabled: false
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -15,8 +20,13 @@ metricsGenerator:
       remote_write:
       - url: http://lgtm-distributed-mimir-nginx/api/v1/push
         send_exemplars: true
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -24,16 +34,26 @@ metricsGenerator:
 distributor:
   replicas: 3 
   maxUnavailable: 2
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
       effect: "NoSchedule"
 compactor:
   replicas: 1
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -41,8 +61,13 @@ compactor:
 querier:
   replicas: 3
   maxUnavailable: 2
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -50,8 +75,13 @@ querier:
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -77,8 +107,13 @@ storage:
       secret_key: qGFWTgcXmb0peNqLDSDEV4h8FrxQrjwQBRQDLW5q
 
 memcached:
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"

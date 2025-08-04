@@ -36,38 +36,61 @@ loki:
   ingester:
     chunk_encoding: snappy
 
+lokiCanary:
+  enabled: false
+
 ingester:
   replicas: 3
   zoneAwareReplication:
      enabled: false
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 querier:
   replicas: 3
   maxUnavailable: 2
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
       effect: "NoSchedule"
 queryScheduler:
   replicas: 2
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -75,16 +98,26 @@ queryScheduler:
 distributor:
   replicas: 3 
   maxUnavailable: 2
-  # nodeSelector:
-  #   node-role.kubernetes.io/system: ""
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
+  tolerations:
+    - key: "node-role.kubernetes.io/system"
+      operator: "Exists"
+      effect: "NoSchedule"
 compactor:
   replicas: 1
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
@@ -92,8 +125,13 @@ compactor:
 indexGateway:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector:
-    node-role.kubernetes.io/system: ""
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"

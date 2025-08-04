@@ -2,13 +2,17 @@ crds:
   installPrometheus: false
 
 opentelemetry-operator:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "node-role.kubernetes.io/system"
+                operator: "Exists"
   tolerations:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
       effect: "NoSchedule"
-  nodeSelector:
-    kubernetes.io/os: linux
-    node-role.kubernetes.io/system: ""
 
 defaultCRConfig:
   tolerations:
