@@ -103,6 +103,11 @@ config:
             href: https://grafana.local-v2.xuhuisun.com
             description: metrics visualization
             siteMonitor: http://lgtm-grafana.monitoring.svc.cluster.local
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.local-v2.xuhuisun.com
+            description: metrics tsdb
+            siteMonitor: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         - Mimir:
             icon: prometheus.png
             href: https://mimir.local-v2.xuhuisun.com
