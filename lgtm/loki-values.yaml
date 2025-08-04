@@ -36,6 +36,9 @@ loki:
   ingester:
     chunk_encoding: snappy
 
+test:
+  enabled: true
+
 lokiCanary:
   enabled: false
 
