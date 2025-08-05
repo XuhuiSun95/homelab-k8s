@@ -60,9 +60,9 @@ config:
             description: pbs
             siteMonitor: https://192.168.60.2:8007
     - Remote Access:
-        - IPMI:
+        - PVE2 IPMI:
             icon: supermicro.png
-            href: https://192.168.10.201
+            href: https://10.101.2.2
             description: supermicro ipmi
     - Storage:
         - Rook Ceph:
