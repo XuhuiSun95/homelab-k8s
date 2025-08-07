@@ -13,7 +13,7 @@ spec:
     protocol: HTTPS
   resolution: DNS
   endpoints:
-  - address: 192.168.20.221
+  - address: 10.101.20.221
     ports:
       https: 10443
 ---

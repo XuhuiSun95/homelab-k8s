@@ -85,7 +85,7 @@ config:
             icon: scrypted.png
             href: https://scrypted.local-v2.xuhuisun.com
             description: mgmt console
-            siteMonitor: https://192.168.20.221:10443
+            siteMonitor: https://10.101.20.221:10443
     - Management:
         - Keycloak:
             icon: keycloak.png
