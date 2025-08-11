@@ -218,30 +218,30 @@ gateway:
       effect: "NoSchedule"
 resultsCache:
   replicas: 1
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #         - matchExpressions:
+  #             - key: "node-role.kubernetes.io/system"
+  #               operator: "Exists"
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
 chunksCache:
   replicas: 1
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #         - matchExpressions:
+  #             - key: "node-role.kubernetes.io/system"
+  #               operator: "Exists"
+  # tolerations:
+  #   - key: "node-role.kubernetes.io/system"
+  #     operator: "Exists"
+  #     effect: "NoSchedule"
 
 bloomPlanner:
   replicas: 0
