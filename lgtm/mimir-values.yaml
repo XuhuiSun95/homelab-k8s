@@ -177,19 +177,6 @@ store_gateway:
     - key: "node-role.kubernetes.io/system"
       operator: "Exists"
       effect: "NoSchedule"
-nginx:
-  replicas: 1
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
 gateway:
   replicas: 1
   affinity:
