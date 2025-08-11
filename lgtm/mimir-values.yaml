@@ -68,6 +68,8 @@ ingester:
   persistentVolume:
     size: 10Gi
   replicas: 3
+  zoneAwareReplication:
+     enabled: false
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -162,6 +164,8 @@ store_gateway:
   persistentVolume:
     size: 2Gi
   replicas: 3
+  zoneAwareReplication:
+     enabled: false
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

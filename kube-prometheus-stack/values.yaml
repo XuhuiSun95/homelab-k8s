@@ -137,7 +137,7 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
     retention: 1h
     remoteWrite:
-      - url:  http://lgtm-distributed-mimir-nginx/api/v1/push
+      - url:  http://lgtm-mimir-nginx/api/v1/push
         headers:
           X-Scope-OrgID: "homelab-v2"
     affinity:
