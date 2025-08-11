@@ -1,6 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":dependencyDashboard"],
+  "helm-values": {
+    "fileMatch": ["^values\\.ya?ml$", "^.*-values\\.ya?ml$"]
+  },
   "argocd": {
     "fileMatch": ["argocd/applications/.+\\.yaml$", ".+\\/argocd\\/.+\\.yaml$", "^deployment\\.yaml$"]
   },
