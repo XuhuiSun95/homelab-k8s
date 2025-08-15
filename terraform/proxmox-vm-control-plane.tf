@@ -27,12 +27,9 @@ locals {
   controlplane_v6 = [for ip in local.controlplanes : ip.ipv6]
 }
 
-output "controlplanes" {
-  value = local.controlplanes
-}
-
 resource "proxmox_virtual_environment_file" "controlplane_metadata" {
-  for_each     = local.controlplanes
+  for_each = local.controlplanes
+
   node_name    = each.value.zone
   content_type = "snippets"
   datastore_id = "local"
@@ -51,28 +48,36 @@ resource "proxmox_virtual_environment_file" "controlplane_metadata" {
 }
 
 resource "proxmox_virtual_environment_vm" "controlplane" {
-  for_each    = local.controlplanes
+  for_each = local.controlplanes
+
   name        = each.value.name
-  node_name   = each.value.zone
-  vm_id       = each.value.id
   description = "Talos controlplane at ${var.region}"
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_talos-${var.release}-nocloud-amd64", "type_k8s", "type-k8s-role_control-plane"]
+
+  node_name = each.value.zone
+  vm_id     = each.value.id
 
   agent {
     enabled = true
   }
 
-  machine = "q35"
+  startup {
+    order = "1"
+  }
+
   cpu {
     cores   = each.value.cpu
     sockets = 1
     numa    = true
     type    = "host"
   }
+
+  machine = "q35"
+
   memory {
     dedicated = each.value.mem
   }
 
-  scsi_hardware = "virtio-scsi-single"
   disk {
     datastore_id = var.nodes[each.value.zone].storage
     file_id      = proxmox_virtual_environment_download_file.talos_cloud_image[each.value.zone].id
@@ -112,6 +117,9 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
   operating_system {
     type = "l26"
   }
+
+  scsi_hardware = "virtio-scsi-single"
+
   tpm_state {
     version      = "v2.0"
     datastore_id = var.nodes[each.value.zone].storage
@@ -128,7 +136,6 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
     ]
   }
 
-  tags = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_talos-${var.release}-nocloud-amd64", "type_k8s", "type-k8s-role_control-plane"]
 
   depends_on = [proxmox_virtual_environment_file.controlplane_metadata]
 }

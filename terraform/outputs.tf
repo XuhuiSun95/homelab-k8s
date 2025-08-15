@@ -7,3 +7,7 @@ output "csi" {
   sensitive = true
   value     = proxmox_virtual_environment_user_token.csi.value
 }
+
+output "controlplanes" {
+  value = local.controlplanes
+}
