@@ -48,4 +48,4 @@ machine-learning:
     istio.io/dataplane-mode: ambient
   image:
     repository: ghcr.io/immich-app/immich-machine-learning
-    tag: v1.137.0
+    tag: v1.138.0
