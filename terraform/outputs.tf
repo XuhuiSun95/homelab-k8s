@@ -11,3 +11,13 @@ output "csi" {
 output "controlplanes" {
   value = local.controlplanes
 }
+
+output "talosconfig" {
+  sensitive = true
+  value     = data.talos_client_configuration.talosconfig.talos_config
+}
+
+output "kubeconfig" {
+  sensitive = true
+  value     = talos_cluster_kubeconfig.this.kubeconfig_raw
+}

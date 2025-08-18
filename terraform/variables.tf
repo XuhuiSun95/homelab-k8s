@@ -72,3 +72,15 @@ variable "controlplane" {
     },
   }
 }
+
+variable "cluster_name" {
+  description = "The name of the cluster"
+  type        = string
+  default     = "cluster"
+}
+
+variable "cluster_endpoint" {
+  description = "The endpoint of the cluster"
+  type        = string
+  default     = "https://cluster.local:6443"
+}

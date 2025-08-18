@@ -14,8 +14,9 @@ locals {
         ipv4 : cidrhost(cidrsubnet(var.vpc_cidr[0], 4, var.network_shift + index(local.zones, zone)), -(2 + inx))
         gwv4 : lookup(try(var.nodes[zone], {}), "gw4", local.gwv4)
 
-        ipv6 : cidrhost(cidrsubnet(var.vpc_cidr[1], 16, var.network_shift + index(local.zones, zone)), 512 + lookup(try(var.controlplane[zone], {}), "id", 9000) + inx)
-        gwv6 : lookup(try(var.nodes[zone], {}), "gw6", local.gwv6)
+        ipv6ula : cidrhost(cidrsubnet(var.vpc_cidr[1], 16, var.network_shift + index(local.zones, zone)), 512 + lookup(try(var.controlplane[zone], {}), "id", 9000) + inx)
+        ipv6 : cidrhost(cidrsubnet(lookup(try(var.nodes[zone], {}), "ip6", "fe80::/64"), 16, var.network_shift + index(local.zones, zone)), 512 + lookup(try(var.controlplane[zone], {}), "id", 9000) + inx)
+        gwv6 : lookup(try(var.nodes[zone], {}), "gw6", "fe80::/64")
 
         vlan_id : lookup(try(var.nodes[zone], {}), "vlan_id", null)
         trunks : lookup(try(var.nodes[zone], {}), "trunks", null)
@@ -25,6 +26,7 @@ locals {
 
   controlplane_v4 = [for ip in local.controlplanes : ip.ipv4]
   controlplane_v6 = [for ip in local.controlplanes : ip.ipv6]
+  controlplane_v6ula = [for ip in local.controlplanes : ip.ipv6ula]
 }
 
 resource "proxmox_virtual_environment_file" "controlplane_metadata" {
@@ -35,7 +37,7 @@ resource "proxmox_virtual_environment_file" "controlplane_metadata" {
   datastore_id = "local"
 
   source_raw {
-    data = templatefile("${path.module}/templates/metadata.yaml", {
+    data = templatefile("${path.module}/templates/metadata.yaml.tmpl", {
       hostname : each.value.name,
       id : each.value.id,
       type : "${each.value.cpu}VCPU-${floor(each.value.mem / 1024)}GB",
@@ -91,13 +93,18 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
 
   initialization {
     ip_config {
+      ipv6 {
+        address = "${each.value.ipv6}/64"
+        gateway = each.value.gwv6
+      }
+    }
+    ip_config {
       ipv4 {
         address = "${each.value.ipv4}/24"
         gateway = each.value.gwv4
       }
       ipv6 {
-        address = "${each.value.ipv6}/64"
-        gateway = each.value.gwv6
+        address = "${each.value.ipv6ula}/64"
       }
     }
 
@@ -110,6 +117,14 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
     queues      = each.value.cpu
     mtu         = 1
     mac_address = "32:90:${join(":", formatlist("%02X", split(".", each.value.ipv4)))}"
+    vlan_id     = each.value.vlan_id
+    trunks      = each.value.trunks
+  }
+  network_device {
+    bridge      = "vmbr0"
+    queues      = each.value.cpu
+    mtu         = 1
+    mac_address = "32:91:${join(":", formatlist("%02X", split(".", each.value.ipv4)))}"
     vlan_id     = each.value.vlan_id
     trunks      = each.value.trunks
   }
@@ -136,6 +151,8 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
     ]
   }
 
-
-  depends_on = [proxmox_virtual_environment_file.controlplane_metadata]
+  depends_on = [
+    proxmox_virtual_environment_file.controlplane_metadata,
+    proxmox_virtual_environment_download_file.talos_cloud_image,
+  ]
 }

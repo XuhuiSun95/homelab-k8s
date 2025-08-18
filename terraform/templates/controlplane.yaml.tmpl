@@ -1,0 +1,34 @@
+machine:
+  certSANs:
+%{ for san in certSANs ~}
+    - ${san}
+%{ endfor ~}
+  kubelet:
+    nodeIP:
+      validSubnets:
+%{ for subnet in validSubnets ~}
+        - ${subnet}
+%{ endfor ~}
+  install:
+    image: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v${release}
+cluster:
+  allowSchedulingOnControlPlanes: true    
+  network:
+    podSubnets:
+      - fd85:ee78:d8a6:8607::1:0000/112
+    serviceSubnets:
+      - fd85:ee78:d8a6:8607::1000/116
+    cni:
+      name: none
+  controllerManager:
+    extraArgs:
+      controllers: "*,tokencleaner,-node-ipam-controller"
+      node-cidr-mask-size-ipv4: "24"
+      node-cidr-mask-size-ipv6: "120"
+  proxy:
+    disabled: true
+  etcd:
+    advertisedSubnets:
+%{ for subnet in validSubnets ~}
+      - ${subnet}
+%{ endfor ~}
