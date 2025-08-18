@@ -24,8 +24,8 @@ locals {
     ]
   ]) : k.name => k }
 
-  controlplane_v4 = [for ip in local.controlplanes : ip.ipv4]
-  controlplane_v6 = [for ip in local.controlplanes : ip.ipv6]
+  controlplane_v4    = [for ip in local.controlplanes : ip.ipv4]
+  controlplane_v6    = [for ip in local.controlplanes : ip.ipv6]
   controlplane_v6ula = [for ip in local.controlplanes : ip.ipv6ula]
 }
 

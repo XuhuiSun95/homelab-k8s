@@ -21,8 +21,8 @@ resource "talos_machine_configuration_apply" "controlplane" {
   endpoint                    = each.value.ipv4
   config_patches = [
     templatefile("${path.module}/templates/controlplane.yaml.tmpl", {
-      release = var.release,
-      certSANs = [each.value.ipv4, each.value.ipv6, each.value.ipv6ula],
+      release      = var.release,
+      certSANs     = [each.value.ipv4, each.value.ipv6, each.value.ipv6ula],
       validSubnets = [each.value.ipv6ula]
     })
   ]
