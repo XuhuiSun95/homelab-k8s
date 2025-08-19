@@ -21,22 +21,16 @@ resource "talos_machine_configuration_apply" "controlplane" {
   endpoint                    = each.value.ipv4
   config_patches = [
     templatefile("${path.module}/templates/controlplane.yaml.tmpl", {
-      release      = var.release,
-      certSANs     = [each.value.ipv4, each.value.ipv6, each.value.ipv6ula],
-      validSubnets = [each.value.ipv6ula]
+      installer_image = data.talos_image_factory_urls.talos_image.urls.installer
+      certSANs        = [each.value.ipv4, each.value.ipv6, each.value.ipv6ula]
+      validSubnets    = [each.value.ipv6ula]
+      cilium_template = indent(8, chomp(data.helm_template.cilium.manifest))
     })
   ]
 
   depends_on = [
     proxmox_virtual_environment_vm.controlplane,
   ]
-}
-
-output "talos_machine_configuration_apply" {
-  sensitive = true
-  value = {
-    for k, v in talos_machine_configuration_apply.controlplane : k => v.machine_configuration
-  }
 }
 
 resource "talos_machine_bootstrap" "this" {

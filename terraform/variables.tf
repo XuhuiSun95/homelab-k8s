@@ -57,7 +57,7 @@ variable "nodes" {
 variable "release" {
   type        = string
   description = "The version of the Talos image"
-  default     = "1.10.6"
+  default     = "latest"
 }
 
 variable "controlplane" {

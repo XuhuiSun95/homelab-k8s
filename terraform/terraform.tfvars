@@ -16,7 +16,7 @@ nodes = {
 controlplane = {
   "pve2" = {
     id    = 1500,
-    count = 1,
+    count = 3,
     cpu   = 4,
     mem   = 4096,
   }

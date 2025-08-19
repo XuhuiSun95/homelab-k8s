@@ -54,7 +54,7 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
 
   name        = each.value.name
   description = "Talos controlplane at ${var.region}"
-  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_talos-${var.release}-nocloud-amd64", "type_k8s", "type-k8s-role_control-plane"]
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_release_version}-nocloud-amd64", "type_k8s", "type-k8s-role_control-plane"]
 
   node_name = each.value.zone
   vm_id     = each.value.id
