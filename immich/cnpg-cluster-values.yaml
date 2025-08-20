@@ -6,7 +6,7 @@ mode: standalone
 cluster:
   instances: 3
   # imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0"
-  imageName: "ghcr.io/xuhuisun95/homelab-k8s/cloudnative-vectorchord-pgvector.rs:16.5-0.5.0-0.3.0"
+  imageName: "ghcr.io/xuhuisun95/homelab-k8s/cloudnative-vectorchord-pgvector.rs:16.5-0.4.3-0.3.0"
   storage:
     size: 4Gi
     storageClass: "ceph-block"
