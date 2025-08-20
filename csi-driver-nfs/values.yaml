@@ -22,7 +22,7 @@ storageClass:
   create: true
   name: "nfs-csi"
   parameters:
-    server: 192.168.10.200
+    server: 10.101.61.2
     share: /var/nfs/shared/KubernetesCluster
     csi.storage.k8s.io/provisioner-secret-name: "nfs-mount-options"
     csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
