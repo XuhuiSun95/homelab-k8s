@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: mimir-distributed
       repoURL: 'https://grafana.github.io/helm-charts'
-      targetRevision: 5.8.0-weekly.354
+      targetRevision: 5.8.0
       helm:
         valueFiles:
         - $values/lgtm/mimir-values.yaml
