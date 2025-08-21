@@ -58,7 +58,7 @@ config:
             icon: proxmox.png
             href: https://pbs.local-v2.xuhuisun.com
             description: pbs
-            siteMonitor: https://192.168.60.2:8007
+            siteMonitor: https://10.101.3.4:8007
     - Remote Access:
         - PVE2 IPMI:
             icon: supermicro.png
