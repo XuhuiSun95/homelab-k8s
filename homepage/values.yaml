@@ -53,7 +53,7 @@ config:
             icon: proxmox.png
             href: https://pve2.local-v2.xuhuisun.com
             description: pve2
-            siteMonitor: https://192.168.60.3:8006
+            siteMonitor: https://10.101.3.3:8006
         - Proxmox Backup Server:
             icon: proxmox.png
             href: https://pbs.local-v2.xuhuisun.com
