@@ -8,13 +8,13 @@ kubeProxyReplacement: true
 ipam:
   mode: kubernetes
 
-k8s:
-  requireIPv6PodCIDR: true
+# k8s:
+#   requireIPv6PodCIDR: true
 routingMode: native
-ipv6NativeRoutingCIDR: fd85:ee78:d8a6:8607::1:0000/112
 autoDirectNodeRoutes: true
-devices:
-  - "eth1"
+ipv6NativeRoutingCIDR: fd85:ee78:d8a6:8607::1:0000/112
+# devices:
+#   - "eth1"
 
 bgpControlPlane:
   enabled: true
@@ -22,7 +22,7 @@ bgpControlPlane:
 enableIPv6Masquerade: true
 bpf:
   masquerade: true
-egressMasqueradeInterfaces: "eth0"
+# egressMasqueradeInterfaces: "eth0"
 
 cni:
   exclusive: false
