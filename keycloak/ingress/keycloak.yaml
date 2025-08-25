@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: keycloak-admin-vs
+  namespace: keycloak
+spec:
+  hosts:
+  - "keycloak.local-v2.xuhuisun.com"
+  - "iam.local-v2.xuhuisun.com"
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - match:
+    - hosts:
+      - "keycloak.local-v2.xuhuisun.com"
+    route:
+    - destination:
+        host: keycloak-keycloak
+        port:
+          number: 80
+  - match:
+    - uri:
+        prefix: "/realms/"
+    - uri:
+        prefix: "/resources/"
+    - hosts:
+      - "iam.local-v2.xuhuisun.com"
+    route:
+    - destination:
+        host: keycloak-keycloak
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: keycloak-dr
+  namespace: keycloak
+spec:
+  host: keycloak-keycloak
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpCookie:
+          name: User
+          ttl: 0s
