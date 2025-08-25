@@ -1,0 +1,54 @@
+ipv4:
+  enabled: false
+ipv6:
+  enabled: true
+
+kubeProxyReplacement: true
+
+ipam:
+  mode: kubernetes
+
+k8s:
+  requireIPv6PodCIDR: true
+routingMode: native
+ipv6NativeRoutingCIDR: fd85:ee78:d8a6:8607::1:0000/112
+autoDirectNodeRoutes: true
+devices:
+  - "eth1"
+
+bgpControlPlane:
+  enabled: true
+
+enableIPv6Masquerade: true
+bpf:
+  masquerade: true
+egressMasqueradeInterfaces: "eth0"
+
+cni:
+  exclusive: false
+
+securityContext:
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+k8sServiceHost: localhost
+k8sServicePort: 7445
