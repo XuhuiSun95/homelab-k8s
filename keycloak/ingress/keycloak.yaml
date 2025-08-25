@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: keycloak-admin-vs
+  name: keycloak-vs
   namespace: keycloak
 spec:
   hosts:
@@ -11,8 +11,8 @@ spec:
   - istio-ingress/gateway
   http:
   - match:
-    - hosts:
-      - "keycloak.local-v2.xuhuisun.com"
+    - authority:
+        exact: "keycloak.local-v2.xuhuisun.com"
     route:
     - destination:
         host: keycloak-keycloak
@@ -23,8 +23,8 @@ spec:
         prefix: "/realms/"
     - uri:
         prefix: "/resources/"
-    - hosts:
-      - "iam.local-v2.xuhuisun.com"
+    - authority:
+        exact: "iam.local-v2.xuhuisun.com"
     route:
     - destination:
         host: keycloak-keycloak
