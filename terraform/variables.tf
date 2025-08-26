@@ -84,6 +84,11 @@ variable "cluster_vip" {
   type        = string
 }
 
+variable "cluster_vip_vlan" {
+  description = "The VIP VLAN of the cluster"
+  type        = number
+}
+
 variable "cluster_vip_domain" {
   description = "The domain of the cluster"
   type        = string

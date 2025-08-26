@@ -9,29 +9,32 @@ machine:
 %{ for subnet in validSubnets ~}
         - ${subnet}
 %{ endfor ~}
+  network:
+    interfaces:
+      - interface: eth0
+        vlans:
+          - vlanId: ${cluster_vip_vlan}
+            vip:
+              ip: ${cluster_vip}
   install:
     image: ${installer_image}
 cluster:
   network:
     podSubnets:
-      - fd85:ee78:d8a6:8607::1:0000/112
+      - 10.244.0.0/16
+      - fd10:244::/56
     serviceSubnets:
-      - fd85:ee78:d8a6:8607::1000/116
+      - 10.224.0.0/12
+      - fd10:224::/112
     cni:
       name: none
-  apiServer:
-    extraArgs:
-      bind-address: "::"
   controllerManager:
     extraArgs:
-      bind-address: "::"
       controllers: "*,bootstrapsigner,tokencleaner"
-      node-cidr-mask-size-ipv6: "120"
+      node-cidr-mask-size-ipv4: "24"
+      node-cidr-mask-size-ipv6: "64"
   proxy:
     disabled: true
-  scheduler:
-    extraArgs:
-      bind-address: "::"
   etcd:
     advertisedSubnets:
 %{ for subnet in validSubnets ~}

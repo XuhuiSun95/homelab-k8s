@@ -1,5 +1,7 @@
 region = "vegas-1"
 
+network_shift = 1
+
 vpc_cidr = ["10.101.70.0/24", "fd10:101:70::/64"]
 
 nodes = {
@@ -23,7 +25,8 @@ controlplane = {
 
 cluster_name = "homelab-k8s"
 
-cluster_vip = "10.101.3.21"
+cluster_vip      = "10.101.3.21"
+cluster_vip_vlan = 3
 
 cluster_vip_domain = "homelab-k8s.local.xuhuisun.com"
 

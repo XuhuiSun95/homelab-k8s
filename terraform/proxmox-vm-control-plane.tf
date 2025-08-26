@@ -14,17 +14,13 @@ locals {
         ipv4 : cidrhost(cidrsubnet(var.vpc_cidr[0], 4, var.network_shift + index(local.zones, zone)), -(2 + inx))
         gwv4 : lookup(try(var.nodes[zone], {}), "gw4", local.gwv4)
 
-        ipv6ula : cidrhost(cidrsubnet(var.vpc_cidr[1], 16, var.network_shift + index(local.zones, zone)), 512 + lookup(try(var.controlplane[zone], {}), "id", 9000) + inx)
-        gwv6 : lookup(try(var.nodes[zone], {}), "gw6", "fe80::/64")
-
         vlan_id : lookup(try(var.nodes[zone], {}), "vlan_id", null)
         trunks : lookup(try(var.nodes[zone], {}), "trunks", null)
       }
     ]
   ]) : k.name => k }
 
-  controlplane_v4    = [for ip in local.controlplanes : ip.ipv4]
-  controlplane_v6ula = [for ip in local.controlplanes : ip.ipv6ula]
+  controlplane_v4 = [for ip in local.controlplanes : ip.ipv4]
 }
 
 resource "proxmox_virtual_environment_file" "controlplane_metadata" {
@@ -52,7 +48,7 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
 
   name        = each.value.name
   description = "Talos controlplane at ${var.region}"
-  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_release_version}-nocloud-amd64", "type_k8s", "type-k8s-role_control-plane"]
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_image_version}", "type_k8s", "type-k8s-role_control-plane"]
 
   node_name = each.value.zone
   vm_id     = each.value.id
@@ -90,14 +86,16 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
   }
 
   initialization {
+    dns {
+      servers = [each.value.gwv4]
+    }
     ip_config {
       ipv4 {
         address = "${each.value.ipv4}/24"
         gateway = each.value.gwv4
       }
       ipv6 {
-        address = "${each.value.ipv6ula}/64"
-        gateway = each.value.gwv6
+        address = "auto"
       }
     }
 
