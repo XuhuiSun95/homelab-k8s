@@ -1,0 +1,46 @@
+machine:
+  certSANs:
+%{ for san in certSANs ~}
+    - ${san}
+%{ endfor ~}
+  kubelet:
+    nodeIP:
+      validSubnets:
+%{ for subnet in validSubnets ~}
+        - ${subnet}
+%{ endfor ~}
+  network:
+    interfaces:
+      - interface: eth0
+        vlans:
+          - vlanId: ${cluster_vip_vlan}
+            vip:
+              ip: ${cluster_vip}
+  install:
+    image: ${installer_image}
+cluster:
+  network:
+    podSubnets:
+      - 10.244.0.0/16
+      - fd10:244::/56
+    serviceSubnets:
+      - 10.224.0.0/12
+      - fd10:224::/112
+    cni:
+      name: none
+  controllerManager:
+    extraArgs:
+      controllers: "*,bootstrapsigner,tokencleaner"
+      node-cidr-mask-size-ipv4: "24"
+      node-cidr-mask-size-ipv6: "64"
+  proxy:
+    disabled: true
+  etcd:
+    advertisedSubnets:
+%{ for subnet in validSubnets ~}
+      - ${subnet}
+%{ endfor ~}
+  inlineManifests:
+    - name: cilium
+      contents: |
+        ${cilium_template}
