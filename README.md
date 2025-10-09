@@ -5,7 +5,7 @@ A comprehensive cloud-native homelab built on Kubernetes with GitOps, service me
 ## 🏗️ Architecture Overview
 
 This homelab deploys a production-ready Kubernetes cluster using:
-- **Infrastructure**: Kubespray for Kubernetes deployment with kube-vip, MetalLB, and cert-manager
+- **Infrastructure**: Talos Linux with Terraform for immutable Kubernetes deployment
 - **GitOps**: ArgoCD for declarative application management
 - **Service Mesh**: Istio for traffic management, security, and observability
 - **Ingress**: Custom domain (`local-v2.xuhuisun.com`) with Let's Encrypt certificates
@@ -99,27 +99,75 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 
 ## 🛠️ Setup Instructions
 
-### 1. Initial Kubernetes Cluster Setup
+### Prerequisites
 
-Deploy Kubernetes using Kubespray:
+Install required tools:
 
 ```bash
-# Pull Kubespray container
-docker pull quay.io/kubespray/kubespray:v2.28.0
+# Install Terraform
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install terraform
 
-# Run Kubespray deployment
-docker run --rm -it \
-  --mount type=bind,source="$(pwd)"/ansible/inventory/myculster,dst=/inventory \
-  --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
-  quay.io/kubespray/kubespray:v2.28.0 bash
+# Install Talos CLI
+curl -sL https://talos.dev/install | sh
+sudo mv talosctl /usr/local/bin/
 
-# Deploy cluster
-ansible-playbook -i /inventory/inventory.ini \
-  --private-key /root/.ssh/id_rsa cluster.yml \
-  -u esun-local -b
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
-### 2. Bootstrap ArgoCD
+### 1. Initial Kubernetes Cluster Setup
+
+Deploy Kubernetes using Talos Linux with Terraform:
+
+```bash
+# Navigate to terraform directory
+cd terraform
+
+# Initialize Terraform
+terraform init
+
+# Configure Proxmox credentials (create credentials.auto.tfvars)
+cat > credentials.auto.tfvars << EOF
+virtual_environment_endpoint = "https://<pve-ip>:8006"
+virtual_environment_api_token = "your-proxmox-api-token"
+virtual_environment_ssh_username = "root"
+EOF
+
+# Plan the deployment
+terraform plan
+
+# Deploy the infrastructure
+terraform apply
+
+# Get the talosconfig
+terraform output -raw talosconfig > talosconfig
+
+# Configure talosctl
+export TALOSCONFIG="$(pwd)/talosconfig"
+```
+
+### 2. Configure Cluster Networking
+
+Apply Cilium CNI and cloud controller manager:
+
+```bash
+# Apply Cilium CNI
+kubectl apply -f files/cilium.yaml
+
+# Apply Proxmox Cloud Controller Manager
+kubectl apply -f files/proxmox-ccm.yaml
+
+# Apply Talos Cloud Controller Manager
+kubectl apply -f files/talos-ccm.yaml
+
+# Wait for nodes to be ready
+kubectl wait --for=condition=Ready nodes --all --timeout=300s
+```
+
+### 3. Bootstrap ArgoCD
 
 Deploy ArgoCD manually for the first time (it will self-manage afterwards):
 
@@ -131,7 +179,7 @@ helm upgrade --install argocd argo/argo-cd \
   --create-namespace
 ```
 
-### 3. Required Secrets Setup
+### 4. Required Secrets Setup
 
 #### Cert-Manager Route53 Credentials
 ```bash
@@ -166,7 +214,7 @@ kubectl create secret generic nfs-mount-options \
   --namespace kube-system
 ```
 
-### 4. Deploy All Applications
+### 5. Deploy All Applications
 
 Deploy the entire stack using GitOps:
 
@@ -177,6 +225,25 @@ kubectl apply -f deployment.yaml
 This single command deploys all applications in the correct order using ArgoCD sync waves.
 
 ## 🔑 Access Credentials
+
+### Talos Cluster Management
+```bash
+# Set talosconfig
+export TALOSCONFIG="$(pwd)/terraform/talosconfig"
+
+# Get cluster status
+talosctl get nodes
+talosctl get services
+talosctl get pods
+
+# View cluster configuration
+talosctl get config
+talosctl get machineconfig
+
+# Restart services
+talosctl restart kubelet
+talosctl restart containerd
+```
 
 ### ArgoCD Admin Password
 ```bash
@@ -210,11 +277,26 @@ kubectl -n rook-ceph get secret rook-ceph-dashboard-password \
 ## 🔄 Maintenance & Upgrades
 
 ### Kubernetes Cluster Upgrade
+
+Upgrade Talos Linux and Kubernetes:
+
 ```bash
-# Graceful cluster upgrade using Kubespray
-ansible-playbook -i /inventory/inventory.ini \
-  --private-key /root/.ssh/id_rsa upgrade-cluster.yml \
-  -u esun-local -b
+# Navigate to terraform directory
+cd terraform
+
+# Update Talos version in terraform.tfvars
+# release = "v1.8.0"  # Update to desired version
+
+# Plan the upgrade
+terraform plan
+
+# Apply the upgrade (this will update Talos on all nodes)
+terraform apply
+
+# Verify cluster is healthy after upgrade
+talosctl get nodes
+kubectl get nodes
+kubectl get pods --all-namespaces
 ```
 
 ### Application Updates
@@ -247,12 +329,27 @@ ansible-playbook -i /inventory/inventory.ini \
 - **💾 Multiple Storage**: Block, object, file, and database storage solutions
 - **🤖 AI Ready**: Open-WebUI for LLM interactions
 - **🏠 Home Integration**: Proxmox, Scrypted, and network infrastructure
+- **⚡ Immutable Infrastructure**: Talos Linux provides immutable, API-driven OS
+- **🔧 Infrastructure as Code**: Complete cluster lifecycle managed with Terraform
+- **🛡️ Enhanced Security**: Minimal attack surface with read-only root filesystem
 
 ## 📁 Repository Structure
 
 ```
-├── ansible/                    # Kubespray inventory and configuration
-│   └── inventory/myculster/    # Cluster inventory and group vars
+├── terraform/                   # Talos Linux infrastructure as code
+│   ├── files/                   # Kubernetes manifests and configurations
+│   │   ├── cilium.yaml         # Cilium CNI configuration
+│   │   ├── proxmox-ccm.yaml    # Proxmox Cloud Controller Manager
+│   │   └── talos-ccm.yaml      # Talos Cloud Controller Manager
+│   ├── templates/              # Talos configuration templates
+│   │   ├── controlplane.yaml.tmpl # Control plane node configuration
+│   │   └── metadata.yaml.tmpl  # VM metadata template
+│   ├── terraform.tfvars        # Terraform variables
+│   ├── variables.tf            # Variable definitions
+│   ├── outputs.tf              # Terraform outputs
+│   ├── talos-bootstrap.tf      # Talos cluster bootstrap
+│   ├── proxmox-vm-control-plane.tf # Proxmox VM definitions
+│   └── talos-image-factory.tf  # Talos image management
 ├── argocd/                     # ArgoCD configuration and applications
 │   ├── applications/           # Application definitions by category
 │   │   ├── cloud-native-storage/ # Storage solutions
@@ -313,11 +410,11 @@ ansible-playbook -i /inventory/inventory.ini \
 ## 🔧 Configuration Highlights
 
 ### Cluster Architecture
-- **Control Plane**: 3 nodes with stacked etcd
-- **System Pool**: 3 dedicated nodes for system workloads
-- **User Pool**: 6 nodes for user applications
+- **Control Plane**: Single node with stacked etcd (expandable)
+- **Talos Linux**: Immutable, API-driven operating system
 - **Dual Stack**: IPv6/IPv4 support throughout
-- **Node Affinity**: Proper workload placement with taints/tolerations
+- **CNI**: Cilium for advanced networking and security
+- **Cloud Integration**: Proxmox Cloud Controller Manager for VM management
 
 ### Storage Strategy
 - **Rook-Ceph**: Primary distributed storage
@@ -347,12 +444,19 @@ ansible-playbook -i /inventory/inventory.ini \
 
 ## 📚 Documentation
 
-- [Kubespray Documentation](./kubespray/docs/)
+- [Talos Linux Documentation](https://www.talos.dev/docs/)
 - [Istio Service Mesh Guide](https://istio.io/latest/docs/)
 - [ArgoCD User Guide](https://argo-cd.readthedocs.io/)
 - [CNCF Landscape](https://landscape.cncf.io/) for technology choices
 
 ## 🚨 Important Notes
+
+### Talos Linux Benefits
+- **Immutable OS**: Read-only root filesystem prevents configuration drift
+- **API-Driven**: All configuration managed through gRPC API
+- **Minimal Attack Surface**: No SSH, package managers, or shell access
+- **Atomic Updates**: Rolling updates with automatic rollback on failure
+- **Declarative Configuration**: Infrastructure as code with Terraform
 
 ### Backup Strategy
 - **Rook-Ceph**: Built-in replication and snapshots
