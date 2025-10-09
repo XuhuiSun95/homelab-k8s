@@ -20,12 +20,18 @@ resource "talos_machine_configuration_apply" "controlplane" {
   node                        = each.value.ipv4
   config_patches = [
     templatefile("${path.module}/templates/controlplane.yaml.tmpl", {
-      installer_image  = data.talos_image_factory_urls.talos_image.urls.installer
-      certSANs         = [each.value.ipv4]
-      validSubnets     = [each.value.ipv4]
-      cluster_vip      = var.cluster_vip
-      cluster_vip_vlan = var.cluster_vip_vlan
-      cilium_template  = indent(8, chomp(data.helm_template.cilium.manifest))
+      installer_image = data.talos_image_factory_urls.talos_image.urls.installer
+      certSANs        = [each.value.ipv4]
+      validSubnets    = [each.value.ipv4]
+      clusters = yamlencode({
+        "clusters" : [{
+          "url" : "${var.virtual_environment_endpoint}/api2/json"
+          "insecure" : true
+          "token_id" : split("=", proxmox_virtual_environment_user_token.ccm.value)[0]
+          "token_secret" : split("=", proxmox_virtual_environment_user_token.ccm.value)[1]
+          "region" : var.region
+        }]
+      })
     })
   ]
 

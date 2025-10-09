@@ -13,6 +13,8 @@ locals {
 
         ipv4 : cidrhost(cidrsubnet(var.vpc_cidr[0], 4, var.network_shift + index(local.zones, zone)), -(2 + inx))
         gwv4 : lookup(try(var.nodes[zone], {}), "gw4", local.gwv4)
+        ipv6 : cidrhost(cidrsubnet(lookup(try(var.nodes[zone], {}), "ip6", "fe80::/64"), 16, index(local.zones, zone)), 512 + lookup(try(var.controlplane[zone], {}), "id", 9000) + inx)
+        gwv6 : lookup(try(var.nodes[zone], {}), "gw6", "fe80::1")
 
         vlan_id : lookup(try(var.nodes[zone], {}), "vlan_id", null)
         trunks : lookup(try(var.nodes[zone], {}), "trunks", null)
@@ -82,20 +84,23 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
     cache        = "none"
     size         = 50
     ssd          = true
+    discard      = "on"
     file_format  = "raw"
   }
 
   initialization {
     dns {
-      servers = [each.value.gwv4]
+      servers = [each.value.gwv4, each.value.gwv6]
     }
+
     ip_config {
       ipv4 {
         address = "${each.value.ipv4}/24"
         gateway = each.value.gwv4
       }
       ipv6 {
-        address = "auto"
+        address = "${each.value.ipv6}/64"
+        gateway = each.value.gwv6
       }
     }
 

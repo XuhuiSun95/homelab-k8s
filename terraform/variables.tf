@@ -79,21 +79,6 @@ variable "cluster_name" {
   default     = "cluster"
 }
 
-variable "cluster_vip" {
-  description = "The VIP of the cluster"
-  type        = string
-}
-
-variable "cluster_vip_vlan" {
-  description = "The VIP VLAN of the cluster"
-  type        = number
-}
-
-variable "cluster_vip_domain" {
-  description = "The domain of the cluster"
-  type        = string
-}
-
 variable "cluster_endpoint" {
   description = "The endpoint of the cluster"
   type        = string

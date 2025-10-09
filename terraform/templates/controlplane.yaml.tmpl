@@ -4,35 +4,38 @@ machine:
     - ${san}
 %{ endfor ~}
   kubelet:
+    extraArgs:
+      cloud-provider: external
+      rotate-server-certificates: true
     nodeIP:
       validSubnets:
 %{ for subnet in validSubnets ~}
         - ${subnet}
 %{ endfor ~}
-  network:
-    interfaces:
-      - interface: eth0
-        vlans:
-          - vlanId: ${cluster_vip_vlan}
-            vip:
-              ip: ${cluster_vip}
   install:
     image: ${installer_image}
+  features:
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+        - os:reader
+      allowedKubernetesNamespaces:
+        - kube-system
 cluster:
   network:
     podSubnets:
       - 10.244.0.0/16
-      - fd10:244::/56
+      - fd00:10:244::/64
     serviceSubnets:
       - 10.224.0.0/12
-      - fd10:224::/112
+      - fd40:10:224::/108
     cni:
       name: none
   controllerManager:
     extraArgs:
-      controllers: "*,bootstrapsigner,tokencleaner"
+      controllers: "*,tokencleaner,-node-ipam-controller"
       node-cidr-mask-size-ipv4: "24"
-      node-cidr-mask-size-ipv6: "64"
+      node-cidr-mask-size-ipv6: "80"
   proxy:
     disabled: true
   etcd:
@@ -40,7 +43,16 @@ cluster:
 %{ for subnet in validSubnets ~}
       - ${subnet}
 %{ endfor ~}
+  externalCloudProvider:
+    enabled: true
   inlineManifests:
-    - name: cilium
-      contents: |
-        ${cilium_template}
+    - name: proxmox-cloud-controller-manager
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: proxmox-cloud-controller-manager
+          namespace: kube-system
+        data:
+          config.yaml: ${base64encode(clusters)} 
