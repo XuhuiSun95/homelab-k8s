@@ -1,0 +1,59 @@
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: cilium-bgp
+spec:
+  nodeSelector:
+    matchLabels: {}
+  bgpInstances:
+  - name: "asn-65020"
+    localASN: 65020
+    localPort: 179
+    peers:
+    - name: "peer-65000-v4"
+      peerASN: 65000
+      peerAddress: 10.101.70.1
+      peerConfigRef:
+        name: "cilium-peer"
+    # - name: "peer-65000-v6"
+    #   peerASN: 65000
+    #   peerAddress: 2600:8801:2aa0:b302::1
+    #   peerConfigRef:
+    #     name: "cilium-peer"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer
+spec:
+  timers:
+    connectRetryTimeSeconds: 12
+    holdTimeSeconds: 9
+    keepAliveTimeSeconds: 3
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  families:
+    - afi: ipv4
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgp"
+    - afi: ipv6
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgp"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+    - advertisementType: "Service"
+      service:
+        addresses:
+          - LoadBalancerIP

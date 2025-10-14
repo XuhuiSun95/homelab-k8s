@@ -147,24 +147,32 @@ terraform output -raw talosconfig > talosconfig
 
 # Configure talosctl
 export TALOSCONFIG="$(pwd)/talosconfig"
+
+# Get the kubeconfig
+terraform output -raw kubeconfig > kubeconfig
+
+# Configure kubectl
+export KUBECONFIG="$(pwd)/kubeconfig"
 ```
 
 ### 2. Configure Cluster Networking
 
-Apply Cilium CNI and cloud controller manager:
+Deploy Cilium CNI and cloud controller managers using Helm:
 
 ```bash
-# Apply Cilium CNI
-kubectl apply -f files/cilium.yaml
+# Add Helm repositories
+helm repo add cilium https://helm.cilium.io/
+helm repo add siderolabs https://helm.siderolabs.com/
+helm repo add proxmox https://helm.siderolabs.com/
 
-# Apply Proxmox Cloud Controller Manager
-kubectl apply -f files/proxmox-ccm.yaml
+# Install Cilium CNI
+helm upgrade -i cilium cilium/cilium --namespace kube-system --values files/cilium.yaml
 
-# Apply Talos Cloud Controller Manager
-kubectl apply -f files/talos-ccm.yaml
+# Install Talos Cloud Controller Manager
+helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/talos-cloud-controller-manager --namespace kube-system --values files/talos-ccm.yaml
 
-# Wait for nodes to be ready
-kubectl wait --for=condition=Ready nodes --all --timeout=300s
+# Install Proxmox Cloud Controller Manager
+helm install proxmox-ccm proxmox/proxmox-cloud-controller-manager --namespace kube-system --values files/proxmox-ccm.yaml
 ```
 
 ### 3. Bootstrap ArgoCD
