@@ -1,3 +1,6 @@
+image:
+  repository: bitnamilegacy/keycloak
+
 auth:
   adminPassword: nIskQiijss
 
