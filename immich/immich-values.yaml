@@ -41,10 +41,11 @@ valkey:
   enabled: true
 
 server:
-  podLabels:
-    istio.io/dataplane-mode: ambient
   controllers:
     main:
+      pod:
+        labels:
+          istio.io/dataplane-mode: ambient
       containers:
         main:
           image:
@@ -52,10 +53,11 @@ server:
             tag: v2.0.1
 
 machine-learning:
-  podLabels:
-    istio.io/dataplane-mode: ambient
   controllers:
     main:
+      pod:
+        labels:
+          istio.io/dataplane-mode: ambient
       containers:
         main:
           image:
