@@ -87,7 +87,7 @@ dashboards:
     7645-istio-control-plane-dashboard:
       # renovate: depName="Istio Control Plane Dashboard"
       gnetId: 7645
-      revision: 270
+      revision: 271
       datasource: Mimir
     13277-istio-wasm-extension-dashboard:
       # renovate: depName="Istio Wasm Extension Dashboard"
