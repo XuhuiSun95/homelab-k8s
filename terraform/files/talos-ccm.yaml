@@ -1,0 +1,54 @@
+image:
+  pullPolicy: Always
+  tag: edge
+
+logVerbosityLevel: 4
+
+enabledControllers:
+  - cloud-node
+  - node-csr-approval
+  - node-ipam-controller
+
+extraArgs:
+  - --allocate-node-cidrs
+  - --cidr-allocator-type=CloudAllocator
+  - --node-cidr-mask-size-ipv4=24
+  - --node-cidr-mask-size-ipv6=80
+
+transformations:
+  - name: system
+    nodeSelector:
+      - matchExpressions:
+          - key: hostname
+            operator: Regexp
+            values:
+              - ^system-.+$
+    labels:
+      node-role.kubernetes.io/system: ""
+
+  - name: user
+    nodeSelector:
+      - matchExpressions:
+          - key: hostname
+            operator: Regexp
+            values:
+              - ^user-.+$
+    labels:
+      node-role.kubernetes.io/user: ""
+
+  - name: gpu
+    nodeSelector:
+      - matchExpressions:
+          - key: hostname
+            operator: Regexp
+            values:
+              - ^gpu-.+$
+    labels:
+      node-role.kubernetes.io/gpu: ""
+
+daemonSet:
+  enabled: true
+
+tolerations:
+  - effect: NoSchedule
+    operator: Exists
