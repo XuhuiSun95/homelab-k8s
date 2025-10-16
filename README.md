@@ -162,17 +162,18 @@ Deploy Cilium CNI and cloud controller managers using Helm:
 ```bash
 # Add Helm repositories
 helm repo add cilium https://helm.cilium.io/
-helm repo add siderolabs https://helm.siderolabs.com/
-helm repo add proxmox https://helm.siderolabs.com/
 
 # Install Cilium CNI
 helm upgrade -i cilium cilium/cilium --namespace kube-system --values files/cilium.yaml
+
+# Apply Cilium BGP Configuration
+kubectl apply -f files/cilium-bgp.yaml
 
 # Install Talos Cloud Controller Manager
 helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/talos-cloud-controller-manager --namespace kube-system --values files/talos-ccm.yaml
 
 # Install Proxmox Cloud Controller Manager
-helm install proxmox-ccm proxmox/proxmox-cloud-controller-manager --namespace kube-system --values files/proxmox-ccm.yaml
+helm upgrade -i proxmox-cloud-controller-manager oci://ghcr.io/sergelogvinov/charts/proxmox-cloud-controller-manager --namespace kube-system --values files/proxmox-ccm.yaml
 ```
 
 ### 3. Bootstrap ArgoCD

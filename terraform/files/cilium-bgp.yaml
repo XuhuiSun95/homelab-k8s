@@ -14,22 +14,23 @@ spec:
       peerASN: 65000
       peerAddress: 10.101.70.1
       peerConfigRef:
-        name: "cilium-peer"
-    # - name: "peer-65000-v6"
-    #   peerASN: 65000
-    #   peerAddress: 2600:8801:2aa0:b302::1
-    #   peerConfigRef:
-    #     name: "cilium-peer"
+        name: "cilium-peer-v4"
+    - name: "peer-65000-v6"
+      peerASN: 65000
+      peerAddress: 2600:8801:2aa0:b302::1
+      peerConfigRef:
+        name: "cilium-peer-v6"
 ---
 apiVersion: cilium.io/v2
 kind: CiliumBGPPeerConfig
 metadata:
-  name: cilium-peer
+  name: cilium-peer-v4
 spec:
   timers:
     connectRetryTimeSeconds: 12
     holdTimeSeconds: 9
     keepAliveTimeSeconds: 3
+  ebgpMultihop: 4
   gracefulRestart:
     enabled: true
     restartTimeSeconds: 15
@@ -39,6 +40,21 @@ spec:
       advertisements:
         matchLabels:
           advertise: "bgp"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer-v6
+spec:
+  timers:
+    connectRetryTimeSeconds: 12
+    holdTimeSeconds: 9
+    keepAliveTimeSeconds: 3
+  ebgpMultihop: 4
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  families:
     - afi: ipv6
       safi: unicast
       advertisements:
@@ -53,7 +69,20 @@ metadata:
     advertise: bgp
 spec:
   advertisements:
+    - advertisementType: "PodCIDR"
     - advertisementType: "Service"
       service:
         addresses:
           - LoadBalancerIP
+      selector:
+        matchExpressions:
+            - {key: somekey, operator: NotIn, values: ['never-used-value']}
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "dmz-lb-pool"
+spec:
+  blocks:
+  - cidr: "172.16.10.128/26"
+  - start: "2601:8801:2aa0:b306:1::/122"

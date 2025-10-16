@@ -21,6 +21,9 @@ machine:
         - os:reader
       allowedKubernetesNamespaces:
         - kube-system
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
 cluster:
   network:
     podSubnets:
