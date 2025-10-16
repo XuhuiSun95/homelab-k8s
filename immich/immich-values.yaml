@@ -50,7 +50,7 @@ server:
         main:
           image:
             repository: ghcr.io/immich-app/immich-server
-            tag: v2.0.1
+            tag: v2.1.0
 
 machine-learning:
   controllers:
