@@ -11,7 +11,8 @@ enabledControllers:
 
 extraArgs:
   - --allocate-node-cidrs
-  - --cidr-allocator-type=CloudAllocator
+  # - --cidr-allocator-type=CloudAllocator
+  - --cidr-allocator-type=RangeAllocator
   - --node-cidr-mask-size-ipv4=24
   - --node-cidr-mask-size-ipv6=80
 

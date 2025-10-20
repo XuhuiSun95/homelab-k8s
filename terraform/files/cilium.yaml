@@ -2,19 +2,40 @@ ipv4:
   enabled: true 
 ipv6:
   enabled: true
+enableIPv4BIGTCP: true
+enableIPv6BIGTCP: true
 
 kubeProxyReplacement: true
+loadBalancer:
+  mode: dsr
+  # acceleration: native
+  dsrDispatch: opt
+
+socketLB:
+  enabled: true
+endpointRoutes:
+  enabled: true
 
 ipam:
   mode: kubernetes
 
 routingMode: native
 autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: 10.244.0.0/16
+ipv6NativeRoutingCIDR: fd00:10:244::/64
+
 bgpControlPlane:
   enabled: true
 
-enableIPv4Masquerade: false
-enableIPv6Masquerade: false
+enableIPv4Masquerade: true 
+enableIPv6Masquerade: true
+bpf:
+  datapathMode: netkit
+  masquerade: true
+  distributedLRU:
+    enabled: true
+  mapDynamicSizeRatio: 0.08
+bpfClockProbe: true
 
 cni:
   exclusive: false

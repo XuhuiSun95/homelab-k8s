@@ -4,7 +4,8 @@ metadata:
   name: cilium-bgp
 spec:
   nodeSelector:
-    matchLabels: {}
+    matchExpressions:
+      - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
   bgpInstances:
   - name: "asn-65020"
     localASN: 65020
@@ -69,7 +70,6 @@ metadata:
     advertise: bgp
 spec:
   advertisements:
-    - advertisementType: "PodCIDR"
     - advertisementType: "Service"
       service:
         addresses:
