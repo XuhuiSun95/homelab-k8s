@@ -174,6 +174,9 @@ helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/t
 
 # Install Proxmox Cloud Controller Manager
 helm upgrade -i proxmox-cloud-controller-manager oci://ghcr.io/sergelogvinov/charts/proxmox-cloud-controller-manager --namespace kube-system --values files/proxmox-ccm.yaml
+
+# Install Proxmox CSI Plugin
+helm upgrade -i proxmox-csi-plugin oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin --namespace csi-proxmox --values files/proxmox-csi.yaml 
 ```
 
 ### 3. Bootstrap ArgoCD
