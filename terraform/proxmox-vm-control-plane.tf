@@ -1,6 +1,5 @@
 locals {
   controlplane_prefix = "control-plane"
-  controlplane_labels = "node-pool=control-plane"
 
   controlplanes = { for k in flatten([
     for zone in local.zones : [

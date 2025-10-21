@@ -1,8 +1,4 @@
 machine:
-  certSANs:
-%{ for san in certSANs ~}
-    - ${san}
-%{ endfor ~}
   kubelet:
     extraArgs:
       cloud-provider: external
@@ -59,16 +55,6 @@ cluster:
           namespace: kube-system
         data:
           config.yaml: ${base64encode(proxmox-ccm-clusters)}
-    - name: proxmox-csi-ns
-      contents: |-
-        apiVersion: v1
-        kind: Namespace
-        metadata:
-          name: csi-proxmox
-          labels:
-            pod-security.kubernetes.io/enforce: privileged
-            pod-security.kubernetes.io/audit: baseline
-            pod-security.kubernetes.io/warn: baseline
     - name: proxmox-csi-plugin
       contents: |-
         apiVersion: v1
@@ -76,6 +62,16 @@ cluster:
         type: Opaque
         metadata:
           name: proxmox-csi-plugin
-          namespace: csi-proxmox
+          namespace: kube-system 
         data:
           config.yaml: ${base64encode(proxmox-csi-clusters)}
+    - name: karpenter-provider-proxmox 
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: karpenter-provider-proxmox
+          namespace: kube-system 
+        data:
+          config.yaml: ${base64encode(proxmox-karpenter-clusters)}

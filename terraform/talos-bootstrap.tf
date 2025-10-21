@@ -21,7 +21,6 @@ resource "talos_machine_configuration_apply" "controlplane" {
   config_patches = [
     templatefile("${path.module}/templates/controlplane.yaml.tmpl", {
       installer_image = data.talos_image_factory_urls.talos_image.urls.installer
-      certSANs        = [each.value.ipv4]
       validSubnets    = [each.value.ipv4]
       proxmox-ccm-clusters = yamlencode({
         "clusters" : [{
@@ -38,6 +37,15 @@ resource "talos_machine_configuration_apply" "controlplane" {
           "insecure" : true
           "token_id" : split("=", proxmox_virtual_environment_user_token.csi.value)[0]
           "token_secret" : split("=", proxmox_virtual_environment_user_token.csi.value)[1]
+          "region" : var.region
+        }]
+      })
+      proxmox-karpenter-clusters = yamlencode({
+        "clusters" : [{
+          "url" : "${var.virtual_environment_endpoint}/api2/json"
+          "insecure" : true
+          "token_id" : split("=", proxmox_virtual_environment_user_token.karpenter.value)[0]
+          "token_secret" : split("=", proxmox_virtual_environment_user_token.karpenter.value)[1]
           "region" : var.region
         }]
       })
