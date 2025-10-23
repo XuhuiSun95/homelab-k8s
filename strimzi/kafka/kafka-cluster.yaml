@@ -55,7 +55,7 @@ spec:
   kafkaExporter:
     resources:
       requests:
-        cpu: 14m
+        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -84,7 +84,7 @@ spec:
         ipFamilies: ["IPv6","IPv4"]
     resources:
       requests:
-        cpu: 24m
+        cpu: 14m
         memory: 1701Mi
       limits:
         memory: 1701Mi
