@@ -107,25 +107,25 @@ controller:
   replicas: 1
   resources:
     requests:
-      cpu: 163m
-      memory: 1800Mi
+      cpu: 208m
+      memory: 1023Mi
     limits:
-      memory: 1800Mi
+      memory: 1023Mi
 
 server:
   replicas: 2
   resources:
     requests:
-      cpu: 40m
-      memory: 264Mi
+      cpu: 13m
+      memory: 158Mi
     limits:
-      memory: 264Mi
+      memory: 158Mi
 
 repoServer:
   replicas: 2
   resources:
     requests:
-      cpu: 10m
-      memory: 256Mi
+      cpu: 157m
+      memory: 195Mi
     limits:
-      memory: 256Mi
+      memory: 195Mi
