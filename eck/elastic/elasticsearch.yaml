@@ -41,9 +41,9 @@ spec:
           resources:
             requests:
               cpu: 42m
-              memory: 4018Mi
+              memory: 3Gi
             limits:
-              memory: 4018Mi
+              memory: 3Gi
   - name: data
     count: 3
     config:
@@ -76,6 +76,6 @@ spec:
           resources:
             requests:
               cpu: 66m
-              memory: 7064Mi
+              memory: 6Gi
             limits:
-              memory: 7064Mi
+              memory: 6Gi
