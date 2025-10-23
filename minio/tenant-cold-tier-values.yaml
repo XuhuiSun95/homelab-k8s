@@ -9,9 +9,9 @@ tenant:
       resources:
         requests:
           cpu: 23m
-          memory: 2355Mi
+          memory: 512Mi
         limits:
-          memory: 2355Mi
+          memory: 2Gi 
       securityContext:
         runAsUser: 977 
         runAsGroup: 988
