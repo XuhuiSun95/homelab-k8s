@@ -13,10 +13,10 @@ spec:
     - controller
   resources:
     requests:
-      cpu: 1000m
-      memory: 4Gi
+      cpu: 800m
+      memory: 3Gi
     limits:
-      memory: 4Gi
+      memory: 3Gi
   storage:
     type: persistent-claim
     size: 1Gi
@@ -38,10 +38,10 @@ spec:
     - broker
   resources:
     requests:
-      cpu: 2000m
-      memory: 8Gi
+      cpu: 1000m
+      memory: 5Gi
     limits:
-      memory: 8Gi
+      memory: 5Gi
   storage:
     type: persistent-claim
     size: 10Gi
