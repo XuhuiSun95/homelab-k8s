@@ -1,7 +1,7 @@
 type: postgresql
 version:
   postgresql: "17"
-mode: standalone
+mode: recovery
 
 recovery:
   method: object_store
