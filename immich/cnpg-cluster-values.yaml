@@ -3,6 +3,16 @@ version:
   postgresql: "17"
 mode: standalone
 
+recovery:
+  method: object_store
+  clusterName: "immich-cnpg-cluster"
+  endpointURL: "https://s3.local-v2.xuhuisun.com"
+  provider: s3
+  s3:
+    bucket: "cloudnative-pg-backups"
+    accessKey: "om9WSI45aMEZxBqASwSy"
+    secretKey: "f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ"
+
 cluster:
   instances: 3
   imageName: "ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3"
