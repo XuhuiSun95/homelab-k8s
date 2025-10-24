@@ -26,9 +26,9 @@ cluster:
     limits:
       memory: 1Gi
   roles:
-    - name: app
+    - name: immich
       superuser: true
-      login: true 
+      login: true
   monitoring:
     enabled: true
   postgresql:
