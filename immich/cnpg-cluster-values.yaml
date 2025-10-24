@@ -26,7 +26,7 @@ cluster:
     limits:
       memory: 1Gi
   roles:
-    - name: immich
+    - name: app
       superuser: true
       login: true 
   monitoring:
