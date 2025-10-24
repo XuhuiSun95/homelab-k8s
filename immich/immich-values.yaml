@@ -11,15 +11,9 @@ controllers:
                 name: immich-cnpg-cluster-v2-app
                 key: host
           - name: DB_USERNAME
-            valueFrom: 
-              secretKeyRef:
-                name: immich-cnpg-cluster-v2-app
-                key: user
+            value: "immich"
           - name: DB_DATABASE_NAME
-            valueFrom:
-              secretKeyRef:
-                name: immich-cnpg-cluster-v2-app
-                key: dbname
+            value: "immich"
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
