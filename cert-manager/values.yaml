@@ -1,5 +1,5 @@
 global:
-  priorityClassName: "system-cluster-critical"
+  priorityClassName: platform-critical
 
 crds:
   enabled: true
@@ -42,9 +42,9 @@ volumeMounts:
   readOnly: true
 dns01RecursiveNameservers: "1.1.1.1:53,8.8.8.8:53"
 dns01RecursiveNameserversOnly: true
-serviceIPFamilyPolicy: "PreferDualStack"
+serviceIPFamilyPolicy: PreferDualStack
 serviceIPFamilies: ["IPv6","IPv4"]
-podDnsPolicy: "ClusterFirst"
+podDnsPolicy: ClusterFirst
 podDnsConfig:
   nameservers:
     - "1.1.1.1"
@@ -54,12 +54,13 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: "node-role.kubernetes.io/system"
-              operator: "Exists"
+          - key: karpenter.sh/nodepool
+            operator: In
+            values: ["system"]
 tolerations:
-- key: "node-role.kubernetes.io/system"
-  operator: "Exists"
-  effect: "NoSchedule"
+- key: node-role.kubernetes.io/system
+  operator: Exists
+  effect: NoSchedule
 
 cainjector:
   extraArgs:
@@ -106,12 +107,13 @@ cainjector:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
 
 webhook:
   replicaCount: 3
@@ -155,13 +157,14 @@ webhook:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
-  serviceIPFamilyPolicy: "PreferDualStack"
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
+  serviceIPFamilyPolicy: PreferDualStack
   serviceIPFamilies: ["IPv6","IPv4"]
 
 startupapicheck:
@@ -196,9 +199,10 @@ startupapicheck:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
