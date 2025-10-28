@@ -223,6 +223,13 @@ helm upgrade --install argocd argo/argo-cd \
 
 ### 4. Required Secrets Setup
 
+#### NFS CSI Driver Configuration
+```bash
+kubectl create secret generic nfs-mount-options \
+  --from-literal mountOptions="nolock" \
+  --namespace kube-system
+```
+
 #### Cert-Manager Route53 Credentials
 ```bash
 export aws_secret=<your_aws_secret_access_key>
@@ -247,13 +254,6 @@ kubectl create secret generic snapshot-settings \
   --from-literal=s3.client.default.access_key=$YOUR_ACCESS_KEY \
   --from-literal=s3.client.default.secret_key=$YOUR_SECRET_ACCESS_KEY \
   --namespace elastic
-```
-
-#### NFS CSI Driver Configuration
-```bash
-kubectl create secret generic nfs-mount-options \
-  --from-literal mountOptions="nolock" \
-  --namespace kube-system
 ```
 
 #### Proxmox Cloud Provider Credentials

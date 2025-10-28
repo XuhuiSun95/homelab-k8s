@@ -1,31 +1,22 @@
 controller:
   replicas: 2
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: node-role.kubernetes.io/system
-                operator: Exists
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+  runOnControlPlane: true 
 
 node:
+  nodeSelector:
+    node.cloudprovider.kubernetes.io/platform: nocloud
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - operator: Exists
+
 
 storageClass:
   create: true
-  name: "nfs-csi"
+  name: nfs-csi
   parameters:
-    server: 10.101.61.2
+    server: unas-pro.local.xuhuisun.com
     share: /var/nfs/shared/KubernetesCluster
-    csi.storage.k8s.io/provisioner-secret-name: "nfs-mount-options"
-    csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
+    csi.storage.k8s.io/provisioner-secret-name: nfs-mount-options
+    csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
   mountOptions:
