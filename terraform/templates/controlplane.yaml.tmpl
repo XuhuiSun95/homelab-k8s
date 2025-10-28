@@ -1,0 +1,87 @@
+machine:
+  kubelet:
+    extraArgs:
+      cloud-provider: external
+      rotate-server-certificates: true
+    nodeIP:
+      validSubnets:
+%{ for subnet in validSubnets ~}
+        - ${subnet}
+%{ endfor ~}
+  install:
+    image: ${installer_image}
+  features:
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+        - os:reader
+      allowedKubernetesNamespaces:
+        - kube-system
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+cluster:
+  network:
+    podSubnets:
+      - 10.244.0.0/16
+      - fd00:10:244::/64
+    serviceSubnets:
+      - 10.224.0.0/12
+      - fd40:10:224::/108
+    cni:
+      name: none
+  controllerManager:
+    extraArgs:
+      controllers: "*,tokencleaner,-node-ipam-controller"
+      node-cidr-mask-size-ipv4: "24"
+      node-cidr-mask-size-ipv6: "80"
+  proxy:
+    disabled: true
+  etcd:
+    advertisedSubnets:
+%{ for subnet in validSubnets ~}
+      - ${subnet}
+%{ endfor ~}
+  externalCloudProvider:
+    enabled: true
+  inlineManifests:
+    - name: proxmox-cloud-controller-manager
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: proxmox-cloud-controller-manager
+          namespace: kube-system
+        data:
+          config.yaml: ${base64encode(proxmox-ccm-clusters)}
+    - name: proxmox-csi-plugin
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: proxmox-csi-plugin
+          namespace: kube-system 
+        data:
+          config.yaml: ${base64encode(proxmox-csi-clusters)}
+    - name: karpenter-provider-proxmox 
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: karpenter-provider-proxmox
+          namespace: kube-system 
+        data:
+          config.yaml: ${base64encode(proxmox-karpenter-clusters)}
+    - name: karpenter-template
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: karpenter-template
+          namespace: kube-system 
+        data:
+          user-data: ${base64encode(proxmox-karpenter-template)}

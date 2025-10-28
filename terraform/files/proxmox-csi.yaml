@@ -1,0 +1,22 @@
+existingConfigSecret: proxmox-csi-plugin
+
+node:
+  nodeSelector:
+    node.cloudprovider.kubernetes.io/platform: nocloud
+  tolerations:
+    - operator: Exists
+
+nodeSelector:
+  node-role.kubernetes.io/control-plane: ""
+  node.cloudprovider.kubernetes.io/platform: nocloud
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    effect: NoSchedule
+
+storageClass:
+  - name: proxmox-local-zfs-xfs
+    storage: local-zfs
+    cache: none
+    ssd: true
+    fstype: xfs 
+    reclaimPolicy: Delete

@@ -5,11 +5,14 @@ A comprehensive cloud-native homelab built on Kubernetes with GitOps, service me
 ## 🏗️ Architecture Overview
 
 This homelab deploys a production-ready Kubernetes cluster using:
-- **Infrastructure**: Kubespray for Kubernetes deployment with kube-vip, MetalLB, and cert-manager
+- **Infrastructure**: Talos Linux on Proxmox VMs with Terraform for immutable Kubernetes deployment
+- **Cloud Provider**: Proxmox integration with CCM, CSI, and Karpenter for automation
+- **Networking**: Cilium CNI with BGP integration and dual-stack IPv4/IPv6 support
+- **Auto-scaling**: Karpenter with Proxmox provider for dynamic node provisioning
 - **GitOps**: ArgoCD for declarative application management
 - **Service Mesh**: Istio for traffic management, security, and observability
 - **Ingress**: Custom domain (`local-v2.xuhuisun.com`) with Let's Encrypt certificates
-- **Storage**: Multiple storage solutions (Rook-Ceph, MinIO, NFS, CloudNativePG)
+- **Storage**: Multiple storage solutions (Rook-Ceph, MinIO, NFS, CloudNativePG, Proxmox CSI)
 - **Observability**: Complete LGTM stack (Loki, Grafana, Tempo, Mimir) plus ELK stack
 - **Authentication**: Keycloak for identity and access management
 - **Automation**: Renovate for dependency updates, KEDA for auto-scaling
@@ -99,27 +102,111 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 
 ## 🛠️ Setup Instructions
 
-### 1. Initial Kubernetes Cluster Setup
+### Prerequisites
 
-Deploy Kubernetes using Kubespray:
+Install required tools:
 
 ```bash
-# Pull Kubespray container
-docker pull quay.io/kubespray/kubespray:v2.28.0
+# Install Terraform
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install terraform
 
-# Run Kubespray deployment
-docker run --rm -it \
-  --mount type=bind,source="$(pwd)"/ansible/inventory/myculster,dst=/inventory \
-  --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
-  quay.io/kubespray/kubespray:v2.28.0 bash
+# Install Talos CLI
+curl -sL https://talos.dev/install | sh
+sudo mv talosctl /usr/local/bin/
 
-# Deploy cluster
-ansible-playbook -i /inventory/inventory.ini \
-  --private-key /root/.ssh/id_rsa cluster.yml \
-  -u esun-local -b
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
-### 2. Bootstrap ArgoCD
+**Note**: This setup requires a Proxmox VE cluster with appropriate storage and network configuration.
+
+### 1. Initial Kubernetes Cluster Setup
+
+Deploy Kubernetes using Talos Linux with Terraform on Proxmox:
+
+```bash
+# Navigate to terraform directory
+cd terraform
+
+# Initialize Terraform
+terraform init
+
+# Configure Proxmox credentials (create credentials.auto.tfvars)
+cat > credentials.auto.tfvars << EOF
+virtual_environment_endpoint = "https://<pve-ip>:8006"
+virtual_environment_api_token = "your-proxmox-api-token"
+virtual_environment_ssh_username = "root"
+EOF
+
+# Review and customize terraform.tfvars for your environment
+# Key parameters:
+# - region: Proxmox cluster name
+# - nodes: Proxmox nodes with storage and network config
+# - controlplane: Control plane VM specifications
+# - cluster_name: Kubernetes cluster name
+# - cluster_endpoint: API server endpoint
+
+# Plan the deployment
+terraform plan
+
+# Deploy the infrastructure (creates control plane VMs and bootstraps cluster)
+terraform apply
+
+# Get the talosconfig
+terraform output -raw talosconfig > talosconfig
+
+# Configure talosctl
+export TALOSCONFIG="$(pwd)/talosconfig"
+
+# Get the kubeconfig
+terraform output -raw kubeconfig > kubeconfig
+
+# Configure kubectl
+export KUBECONFIG="$(pwd)/kubeconfig"
+
+# Verify cluster is running
+kubectl get nodes
+kubectl get pods --all-namespaces
+```
+
+### 2. Configure Cluster Networking and Cloud Providers
+
+Deploy Cilium CNI with BGP integration and Proxmox cloud integrations:
+
+```bash
+# Add Helm repositories
+helm repo add cilium https://helm.cilium.io/
+
+# Install Cilium CNI with advanced networking features
+helm upgrade -i cilium cilium/cilium --namespace kube-system --values files/cilium.yaml
+
+# Apply Cilium BGP Configuration (for routing and load balancer IP pools)
+kubectl apply -f files/cilium-bgp.yaml
+
+# Install Talos Cloud Controller Manager
+# Note: CCM credentials are automatically configured via inline manifests
+helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/talos-cloud-controller-manager --namespace kube-system --values files/talos-ccm.yaml
+
+# Install Proxmox Cloud Controller Manager
+# Note: CCM credentials are automatically configured via inline manifests
+helm upgrade -i proxmox-cloud-controller-manager oci://ghcr.io/sergelogvinov/charts/proxmox-cloud-controller-manager --namespace kube-system --values files/proxmox-ccm.yaml
+
+# Install Proxmox CSI Plugin (block storage provisioner)
+# Note: CSI credentials are automatically configured via inline manifests
+helm upgrade -i proxmox-csi-plugin oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin --namespace kube-system --values files/proxmox-csi.yaml 
+
+# Install Karpenter Provider Proxmox (dynamic node provisioning)
+# Note: Karpenter credentials and worker template are configured via inline manifests
+helm upgrade -i karpenter-provider-proxmox oci://ghcr.io/sergelogvinov/charts/karpenter-provider-proxmox --namespace kube-system --values files/proxmox-karpenter.yaml 
+
+# Configure Karpenter NodePool for system and user workloads
+kubectl apply -f files/karpenter-node.yaml
+```
+
+### 3. Bootstrap ArgoCD
 
 Deploy ArgoCD manually for the first time (it will self-manage afterwards):
 
@@ -131,7 +218,7 @@ helm upgrade --install argocd argo/argo-cd \
   --create-namespace
 ```
 
-### 3. Required Secrets Setup
+### 4. Required Secrets Setup
 
 #### Cert-Manager Route53 Credentials
 ```bash
@@ -166,7 +253,10 @@ kubectl create secret generic nfs-mount-options \
   --namespace kube-system
 ```
 
-### 4. Deploy All Applications
+#### Proxmox Cloud Provider Credentials
+The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured during cluster bootstrap via inline manifests in Talos. No manual secret creation is needed for Proxmox integrations.
+
+### 5. Deploy All Applications
 
 Deploy the entire stack using GitOps:
 
@@ -177,6 +267,25 @@ kubectl apply -f deployment.yaml
 This single command deploys all applications in the correct order using ArgoCD sync waves.
 
 ## 🔑 Access Credentials
+
+### Talos Cluster Management
+```bash
+# Set talosconfig
+export TALOSCONFIG="$(pwd)/terraform/talosconfig"
+
+# Get cluster status
+talosctl get nodes
+talosctl get services
+talosctl get pods
+
+# View cluster configuration
+talosctl get config
+talosctl get machineconfig
+
+# Restart services
+talosctl restart kubelet
+talosctl restart containerd
+```
 
 ### ArgoCD Admin Password
 ```bash
@@ -210,12 +319,36 @@ kubectl -n rook-ceph get secret rook-ceph-dashboard-password \
 ## 🔄 Maintenance & Upgrades
 
 ### Kubernetes Cluster Upgrade
+
+Upgrade Talos Linux and Kubernetes:
+
 ```bash
-# Graceful cluster upgrade using Kubespray
-ansible-playbook -i /inventory/inventory.ini \
-  --private-key /root/.ssh/id_rsa upgrade-cluster.yml \
-  -u esun-local -b
+# Navigate to terraform directory
+cd terraform
+
+# Update Talos version in terraform.tfvars
+# release = "v1.8.0"  # Update to desired version
+
+# Plan the upgrade
+terraform plan
+
+# Apply the upgrade (this will recreate VMs with new Talos version)
+terraform apply
+
+# Verify cluster is healthy after upgrade
+talosctl get nodes
+kubectl get nodes
+kubectl get pods --all-namespaces
+
+# Verify Proxmox integrations are working
+kubectl get pods -n kube-system | grep -E "(proxmox|karpenter|cilium)"
 ```
+
+### Proxmox Node Management
+Worker nodes are automatically managed by Karpenter. Control plane nodes are managed by Terraform. To scale worker nodes:
+- System workloads: Karpenter automatically provisions based on Pod requirements
+- User workloads: Karpenter automatically provisions based on Pod requirements
+- Manual scaling: Edit NodePool limits in `terraform/files/karpenter-node.yaml`
 
 ### Application Updates
 - **Automated**: Renovate automatically creates PRs for Helm chart updates
@@ -229,6 +362,8 @@ ansible-playbook -i /inventory/inventory.ini \
 - **Wildcard Certificate**: `*.local-v2.xuhuisun.com` (Let's Encrypt)
 - **DNS Provider**: Unifi with External DNS automation
 - **TLS Termination**: Istio Ingress Gateway
+- **BGP Integration**: Cilium BGP for LoadBalancer IP advertisement
+- **Load Balancer IPs**: Managed via CiliumLoadBalancerIPPool resources
 
 ### Sync Wave Deployment Order
 1. **Wave 30**: Core monitoring and telemetry (Prometheus, OpenTelemetry)
@@ -247,12 +382,40 @@ ansible-playbook -i /inventory/inventory.ini \
 - **💾 Multiple Storage**: Block, object, file, and database storage solutions
 - **🤖 AI Ready**: Open-WebUI for LLM interactions
 - **🏠 Home Integration**: Proxmox, Scrypted, and network infrastructure
+- **⚡ Immutable Infrastructure**: Talos Linux provides immutable, API-driven OS
+- **🔧 Infrastructure as Code**: Complete cluster lifecycle managed with Terraform
+- **🛡️ Enhanced Security**: Minimal attack surface with read-only root filesystem
+- **📦 Container-Optimized**: Built specifically for Kubernetes workloads
+- **🔄 Dynamic Scaling**: Karpenter auto-scales nodes based on workload demand
+- **🏷️ Node Pool Management**: Separate pools for system and user workloads
 
 ## 📁 Repository Structure
 
 ```
-├── ansible/                    # Kubespray inventory and configuration
-│   └── inventory/myculster/    # Cluster inventory and group vars
+├── terraform/                   # Talos Linux infrastructure as code
+│   ├── files/                   # Kubernetes manifests and Helm values
+│   │   ├── cilium.yaml         # Cilium CNI configuration (BGP, DSR, dual-stack)
+│   │   ├── cilium-bgp.yaml     # Cilium BGP routing configuration
+│   │   ├── proxmox-ccm.yaml    # Proxmox Cloud Controller Manager
+│   │   ├── proxmox-csi.yaml    # Proxmox CSI Plugin
+│   │   ├── proxmox-karpenter.yaml # Karpenter Proxmox provider
+│   │   ├── karpenter-node.yaml # Karpenter NodePool definitions
+│   │   └── talos-ccm.yaml      # Talos Cloud Controller Manager
+│   ├── templates/              # Talos configuration templates
+│   │   ├── controlplane.yaml.tmpl # Control plane configuration (Proxmox integration)
+│   │   ├── metadata.yaml.tmpl  # VM metadata template
+│   │   └── worker.yaml.tmpl    # Worker node template for Karpenter
+│   ├── terraform.tfvars        # Terraform variables (customize for your Proxmox)
+│   ├── variables.tf            # Variable definitions
+│   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, credentials)
+│   ├── providers.tf            # Terraform provider configuration
+│   ├── network.tf              # Network configuration and helpers
+│   ├── talos-bootstrap.tf      # Talos cluster bootstrap and kubeconfig generation
+│   ├── proxmox-kubenetes-token.tf # Proxmox API tokens for cloud providers
+│   ├── proxmox-vm-cloud-image.tf  # Talos image management in Proxmox
+│   ├── proxmox-vm-control-plane.tf # Control plane VM definitions
+│   ├── proxmox-vm-worker-template.tf # Worker template for Karpenter
+│   └── talos-image-factory.tf  # Talos image factory integration
 ├── argocd/                     # ArgoCD configuration and applications
 │   ├── applications/           # Application definitions by category
 │   │   ├── cloud-native-storage/ # Storage solutions
@@ -277,7 +440,6 @@ ansible-playbook -i /inventory/inventory.ini \
 ├── keycloak/                  # Identity and access management
 ├── kiali/                     # Istio service mesh visualization
 ├── kube-prometheus-stack/     # Prometheus monitoring stack
-├── kubespray/                 # Kubernetes cluster deployment
 ├── lgtm/                      # LGTM observability stack
 ├── lgtm-distributed/          # Distributed LGTM deployment
 ├── minio/                     # Object storage
@@ -313,14 +475,17 @@ ansible-playbook -i /inventory/inventory.ini \
 ## 🔧 Configuration Highlights
 
 ### Cluster Architecture
-- **Control Plane**: 3 nodes with stacked etcd
-- **System Pool**: 3 dedicated nodes for system workloads
-- **User Pool**: 6 nodes for user applications
-- **Dual Stack**: IPv6/IPv4 support throughout
-- **Node Affinity**: Proper workload placement with taints/tolerations
+- **Control Plane**: 3-node control plane with stacked etcd on Proxmox VMs
+- **Talos Linux**: Immutable, API-driven operating system
+- **Cloud Provider**: Proxmox with CCM, CSI, and Karpenter integration
+- **Auto-scaling**: Karpenter with dynamic node provisioning from Proxmox templates
+- **Dual Stack**: IPv6/IPv4 support with native routing
+- **CNI**: Cilium with BGP integration, DSR mode, and advanced BPF features
+- **Networking**: Native routing with BGP, load balancer IP pools, and pod CIDR management
 
 ### Storage Strategy
-- **Rook-Ceph**: Primary distributed storage
+- **Proxmox CSI**: Native Proxmox block storage provisioner
+- **Rook-Ceph**: Distributed storage for high availability
 - **MinIO**: S3-compatible object storage
 - **CloudNativePG**: PostgreSQL databases
 - **NFS CSI**: Network file system support
@@ -337,6 +502,7 @@ ansible-playbook -i /inventory/inventory.ini \
 - **ELK**: Elasticsearch, Kibana for advanced log analytics
 - **Prometheus**: Metrics collection and alerting
 - **Kiali**: Service mesh visualization
+- **Cilium Hubble**: Network and security observability
 
 ## 🤝 Contributing
 
@@ -347,12 +513,29 @@ ansible-playbook -i /inventory/inventory.ini \
 
 ## 📚 Documentation
 
-- [Kubespray Documentation](./kubespray/docs/)
+- [Talos Linux Documentation](https://www.talos.dev/docs/)
 - [Istio Service Mesh Guide](https://istio.io/latest/docs/)
 - [ArgoCD User Guide](https://argo-cd.readthedocs.io/)
 - [CNCF Landscape](https://landscape.cncf.io/) for technology choices
 
 ## 🚨 Important Notes
+
+### Talos Linux Benefits
+- **Immutable OS**: Read-only root filesystem prevents configuration drift
+- **API-Driven**: All configuration managed through gRPC API
+- **Minimal Attack Surface**: No SSH, package managers, or shell access
+- **Atomic Updates**: Rolling updates with automatic rollback on failure
+- **Declarative Configuration**: Infrastructure as code with Terraform
+- **Proxmox Integration**: Seamless VM lifecycle management via Terraform
+- **Automated Bootstrap**: Proxmox credentials automatically injected via inline manifests
+- **Cloud-Ready**: Built-in cloud controller integration for node management
+
+### Proxmox Integration
+- **Automated Credentials**: CCM, CSI, and Karpenter credentials are generated by Terraform
+- **Secrets Management**: All Proxmox API tokens stored securely via inline manifests
+- **Dynamic Provisioning**: Karpenter uses Proxmox templates for on-demand node scaling
+- **Storage Integration**: Proxmox CSI provides native block storage provisioning
+- **Network Integration**: Cilium BGP enables advanced routing with Proxmox infrastructure
 
 ### Backup Strategy
 - **Rook-Ceph**: Built-in replication and snapshots
