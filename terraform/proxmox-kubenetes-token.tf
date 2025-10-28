@@ -72,6 +72,17 @@ resource "proxmox_virtual_environment_role" "karpenter" {
     "SDN.Audit",
     "SDN.Use",
     "VM.Audit",
+    "VM.Allocate",
+    "VM.Clone",
+    "VM.Config.CDROM",
+    "VM.Config.CPU",
+    "VM.Config.Memory",
+    "VM.Config.Disk",
+    "VM.Config.Network",
+    "VM.Config.HWType",
+    "VM.Config.Cloudinit",
+    "VM.Config.Options",
+    "VM.PowerMgmt"
   ]
 }
 
