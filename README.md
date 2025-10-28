@@ -204,6 +204,9 @@ helm upgrade -i karpenter-provider-proxmox oci://ghcr.io/sergelogvinov/charts/ka
 
 # Configure Karpenter NodePool for system and user workloads
 kubectl apply -f files/karpenter-node.yaml
+
+# Add custom priority class
+kubectl apply -f files/priority-class.yaml
 ```
 
 ### 3. Bootstrap ArgoCD
