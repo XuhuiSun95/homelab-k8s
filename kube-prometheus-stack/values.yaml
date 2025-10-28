@@ -17,6 +17,8 @@ kubelet:
 
 kubeControllerManager:
   service:
+    port: 2381
+    targetPort: 2381
     ipDualStack:
       enabled: true
   serviceMonitor:
@@ -36,13 +38,16 @@ coreDns:
         action: replace
 
 kubeEtcd:
-  endpoints:
-    - 192.168.60.150
-    - 192.168.60.151
-    - 192.168.60.152
   service:
+    selector:
+      k8s-app: kube-controller-manager
     ipDualStack:
       enabled: true
+  serviceMonitor:
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: instance
+        action: replace
 
 kubeScheduler:
   service:
@@ -66,18 +71,20 @@ kube-state-metrics:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
       memory: 100Mi
     limits:
       memory: 100Mi
+  priorityClassName: platform-critical
 
 prometheus-node-exporter:
   service:
@@ -95,6 +102,7 @@ prometheus-node-exporter:
       memory: 100Mi
     limits:
       memory: 100Mi
+  priorityClassName: platform-critical
 
 prometheusOperator:
   service:
@@ -105,18 +113,20 @@ prometheusOperator:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   resources:
     requests:
       cpu: 10m
       memory: 100Mi
     limits:
       memory: 100Mi
+  priorityClassName: platform-critical
   prometheusConfigReloader:
     resources:
       requests:
@@ -145,15 +155,17 @@ prometheus:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: "node-role.kubernetes.io/system"
-                  operator: "Exists"
+              - key: karpenter.sh/nodepool
+                operator: In
+                values: ["system"]
     tolerations:
-      - key: "node-role.kubernetes.io/system"
-        operator: "Exists"
-        effect: "NoSchedule"
+      - key: node-role.kubernetes.io/system
+        operator: Exists
+        effect: NoSchedule
     resources:
       requests:
         cpu: 293m
         memory: 2640Mi
       limits:
         memory: 2640Mi
+    priorityClassName: platform-critical
