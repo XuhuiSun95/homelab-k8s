@@ -2,26 +2,26 @@ crds:
   installPrometheus: false
 
 opentelemetry-operator:
+  priorityClassName: platform-critical
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 
 defaultCRConfig:
+  priorityClassName: platform-critical
+  nodeSelector:
+    node.cloudprovider.kubernetes.io/platform: nocloud
   tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - operator: Exists
 
 collectors:
   daemon:
@@ -48,13 +48,13 @@ collectors:
         otlphttp/mimir:
           endpoint: http://lgtm-mimir-nginx.monitoring.svc.cluster.local/otlp
           headers:
-            X-Scope-OrgID: "homelab-v2"
+            X-Scope-OrgID: homelab-k8s
           tls:
             insecure: true
         otlphttp/loki:
           endpoint: http://lgtm-loki-gateway.monitoring.svc/otlp
           headers:
-            X-Scope-OrgID: "homelab-v2"
+            X-Scope-OrgID: homelab-k8s
           tls:
             insecure: true
       service:

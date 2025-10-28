@@ -24,7 +24,7 @@ datasources:
         jsonData:
           httpHeaderName1: X-Scope-OrgID
         secureJsonData:
-          httpHeaderValue1: homelab-v2
+          httpHeaderValue1: homelab-k8s
       - name: Mimir
         uid: prom
         type: prometheus
@@ -33,7 +33,7 @@ datasources:
         jsonData:
           httpHeaderName1: X-Scope-OrgID
         secureJsonData:
-          httpHeaderValue1: homelab-v2
+          httpHeaderValue1: homelab-k8s
       - name: Tempo
         uid: tempo
         type: tempo

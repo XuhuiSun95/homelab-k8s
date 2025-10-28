@@ -139,7 +139,7 @@ prometheus:
     remoteWrite:
       - url:  http://lgtm-mimir-nginx/api/v1/push
         headers:
-          X-Scope-OrgID: "homelab-v2"
+          X-Scope-OrgID: homelab-k8s
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
