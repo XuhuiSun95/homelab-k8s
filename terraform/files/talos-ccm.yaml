@@ -26,6 +26,8 @@ transformations:
               - ^system-.+$
     labels:
       node-role.kubernetes.io/system: ""
+    taints:
+      node-role.kubernetes.io/system: ":NoSchedule"
 
   - name: user
     nodeSelector:

@@ -176,7 +176,13 @@ helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/t
 helm upgrade -i proxmox-cloud-controller-manager oci://ghcr.io/sergelogvinov/charts/proxmox-cloud-controller-manager --namespace kube-system --values files/proxmox-ccm.yaml
 
 # Install Proxmox CSI Plugin
-helm upgrade -i proxmox-csi-plugin oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin --namespace csi-proxmox --values files/proxmox-csi.yaml 
+helm upgrade -i proxmox-csi-plugin oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin --namespace kube-system --values files/proxmox-csi.yaml 
+
+# Install Karpenter Provider Proxmox
+helm upgrade -i karpenter-provider-proxmox oci://ghcr.io/sergelogvinov/charts/karpenter-provider-proxmox --namespace kube-system --values files/proxmox-karpenter.yaml 
+
+# Apply Karpenter Configuration
+kubectl apply -f files/karpenter-node.yaml
 ```
 
 ### 3. Bootstrap ArgoCD

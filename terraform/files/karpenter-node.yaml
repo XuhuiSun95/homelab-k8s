@@ -1,0 +1,66 @@
+apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
+kind: ProxmoxUnmanagedTemplate
+metadata:
+  name: talos-worker-template
+spec:
+  templateName: talos-worker-template
+---
+apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
+kind: ProxmoxNodeClass
+metadata:
+  name: default 
+spec:
+  instanceTemplateRef:
+    kind: ProxmoxUnmanagedTemplate
+    name: talos-worker-template
+  metadataOptions:
+    type: cdrom
+    templatesRef:
+      name: karpenter-template
+      namespace: kube-system
+  bootDevice:
+    size: 50Gi
+    storage: local-zfs 
+  tags:
+    - managed-by_karpenter
+    - type_k8s
+    - type-k8s-role_node-pool
+    - cloned-from_talos-worker-template
+---
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: system
+spec:
+  limits:
+    cpu: "64"
+    memory: 512Gi
+  template:
+    spec:
+      nodeClassRef:
+        group: karpenter.proxmox.sinextra.dev
+        kind: ProxmoxNodeClass
+        name: default
+      requirements:
+        - key: "kubernetes.io/arch"
+          operator: In
+          values: ["amd64"]
+---
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: user
+spec:
+  limits:
+    cpu: "64"
+    memory: 512Gi
+  template:
+    spec:
+      nodeClassRef:
+        group: karpenter.proxmox.sinextra.dev
+        kind: ProxmoxNodeClass
+        name: default
+      requirements:
+        - key: "kubernetes.io/arch"
+          operator: In
+          values: ["amd64"]

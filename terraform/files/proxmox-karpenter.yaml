@@ -1,0 +1,8 @@
+existingConfigSecret: karpenter-provider-proxmox
+
+nodeSelector:
+  node-role.kubernetes.io/control-plane: ""
+  node.cloudprovider.kubernetes.io/platform: nocloud
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    effect: NoSchedule

@@ -75,3 +75,13 @@ cluster:
           namespace: kube-system 
         data:
           config.yaml: ${base64encode(proxmox-karpenter-clusters)}
+    - name: karpenter-template
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: karpenter-template
+          namespace: kube-system 
+        data:
+          user-data: ${base64encode(proxmox-karpenter-template)}

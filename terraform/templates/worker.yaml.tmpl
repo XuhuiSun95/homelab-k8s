@@ -1,0 +1,20 @@
+machine:
+  kubelet:
+    extraArgs:
+      cloud-provider: external
+      rotate-server-certificates: true
+      register-with-taints: "karpenter.sh/unregistered=:NoExecute"
+  install:
+    image: ${installer_image}
+  features:
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+cluster:
+  network:
+    podSubnets:
+      - 10.244.0.0/16
+      - fd00:10:244::/64
+    serviceSubnets:
+      - 10.224.0.0/12
+      - fd40:10:224::/108

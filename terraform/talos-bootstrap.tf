@@ -13,6 +13,19 @@ data "talos_machine_configuration" "controlplane" {
   machine_secrets  = talos_machine_secrets.machine_secrets.machine_secrets
 }
 
+data "talos_machine_configuration" "worker" {
+  cluster_name     = var.cluster_name
+  cluster_endpoint = var.cluster_endpoint
+  machine_type     = "worker"
+  machine_secrets  = talos_machine_secrets.machine_secrets.machine_secrets
+
+  config_patches = [
+    templatefile("${path.module}/templates/worker.yaml.tmpl", {
+      installer_image = data.talos_image_factory_urls.talos_image.urls.installer
+    })
+  ]
+}
+
 resource "talos_machine_configuration_apply" "controlplane" {
   client_configuration        = talos_machine_secrets.machine_secrets.client_configuration
   machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
@@ -49,6 +62,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
           "region" : var.region
         }]
       })
+      proxmox-karpenter-template = data.talos_machine_configuration.worker.machine_configuration
     })
   ]
 
