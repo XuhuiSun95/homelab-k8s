@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   hosts:
-  - "argocd.local-v2.xuhuisun.com"
+  - "argocd.local.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:

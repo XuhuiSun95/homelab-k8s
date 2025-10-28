@@ -204,6 +204,9 @@ helm upgrade -i karpenter-provider-proxmox oci://ghcr.io/sergelogvinov/charts/ka
 
 # Configure Karpenter NodePool for system and user workloads
 kubectl apply -f files/karpenter-node.yaml
+
+# Add custom priority class
+kubectl apply -f files/priority-class.yaml
 ```
 
 ### 3. Bootstrap ArgoCD
@@ -219,6 +222,13 @@ helm upgrade --install argocd argo/argo-cd \
 ```
 
 ### 4. Required Secrets Setup
+
+#### NFS CSI Driver Configuration
+```bash
+kubectl create secret generic nfs-mount-options \
+  --from-literal mountOptions="nolock" \
+  --namespace kube-system
+```
 
 #### Cert-Manager Route53 Credentials
 ```bash
@@ -244,13 +254,6 @@ kubectl create secret generic snapshot-settings \
   --from-literal=s3.client.default.access_key=$YOUR_ACCESS_KEY \
   --from-literal=s3.client.default.secret_key=$YOUR_SECRET_ACCESS_KEY \
   --namespace elastic
-```
-
-#### NFS CSI Driver Configuration
-```bash
-kubectl create secret generic nfs-mount-options \
-  --from-literal mountOptions="nolock" \
-  --namespace kube-system
 ```
 
 #### Proxmox Cloud Provider Credentials

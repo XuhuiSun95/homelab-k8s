@@ -1,23 +1,25 @@
 global:
-  domain: argocd.local-v2.xuhuisun.com
+  domain: argocd.local.xuhuisun.com
   dualStack:
-    ipFamilyPolicy: "PreferDualStack"
+    ipFamilyPolicy: PreferDualStack
     ipFamilies: ["IPv6","IPv4"]
+  priorityClassName: platform-critical
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
   affinity:
     nodeAffinity:
       matchExpressions:
-      - key: "node-role.kubernetes.io/system"
-        operator: "Exists"
+      - key: karpenter.sh/nodepool
+        operator: In
+        values: ["system"]
 
 configs:
   cm:
     oidc.config: |
       name: Keycloak
-      issuer: https://iam.local-v2.xuhuisun.com/realms/local-v2
+      issuer: https://iam.local.xuhuisun.com/realms/local
       clientID: argocd
       enablePKCEAuthentication: true
       requestedScopes: ["openid", "profile", "email", "groups"]
@@ -64,12 +66,13 @@ redis-ha:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: "node-role.kubernetes.io/system"
-                  operator: "Exists"
+              - key: karpenter.sh/nodepool
+                operator: In
+                values: ["system"]
     tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   redis:
     resources:
       requests:
@@ -96,21 +99,22 @@ redis-ha:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
 
 controller:
   replicas: 1
   resources:
     requests:
       cpu: 208m
-      memory: 1023Mi
+      memory: 1523Mi
     limits:
-      memory: 1023Mi
+      memory: 1523Mi
 
 server:
   replicas: 2
