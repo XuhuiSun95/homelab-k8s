@@ -7,15 +7,16 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: "node-role.kubernetes.io/system"
-              operator: "Exists"
+          - key: karpenter.sh/nodepool
+            operator: In
+            values: ["system"]
 tolerations:
-- key: "node-role.kubernetes.io/system"
-  operator: "Exists"
-  effect: "NoSchedule"
+- key: node-role.kubernetes.io/system
+  operator: Exists
+  effect: NoSchedule
 env:
   PILOT_ENABLE_QUIC_LISTENERS: true
-ipFamilyPolicy: "PreferDualStack"
+ipFamilyPolicy: PreferDualStack
 ipFamilies: ["IPv6", "IPv4"]
 meshConfig:
   enableTracing: true
@@ -28,4 +29,4 @@ meshConfig:
         environment: {}
 
 global:
-  priorityClassName: "system-cluster-critical"
+  priorityClassName: platform-critical

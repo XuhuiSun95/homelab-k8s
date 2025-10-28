@@ -5,7 +5,7 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "scrypted.com"
+  - scrypted.com
   location: MESH_EXTERNAL
   ports:
   - number: 443
@@ -24,13 +24,13 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "scrypted.local-v2.xuhuisun.com"
+  - scrypted.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:
   - route:
     - destination:
-        host: "scrypted.com"
+        host: scrypted.com
         port:
           number: 443
 ---
@@ -40,7 +40,7 @@ metadata:
   name: scrypted-dr
   namespace: istio-ingress
 spec:
-  host: "scrypted.com"
+  host: scrypted.com
   trafficPolicy:
     tls:
       mode: SIMPLE
