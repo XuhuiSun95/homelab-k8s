@@ -5,7 +5,7 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "pbs.com"
+  - pbs.com
   location: MESH_EXTERNAL
   ports:
   - number: 443
@@ -24,13 +24,13 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "pbs.local-v2.xuhuisun.com"
+  - pbs.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:
   - route:
     - destination:
-        host: "pbs.com"
+        host: pbs.com
         port:
           number: 443
 ---
@@ -40,7 +40,7 @@ metadata:
   name: pbs-dr
   namespace: istio-ingress
 spec:
-  host: "pbs.com"
+  host: pbs.com
   trafficPolicy:
     tls:
       mode: SIMPLE

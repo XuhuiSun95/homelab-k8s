@@ -5,7 +5,7 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve2.com"
+  - pve2.com
   location: MESH_EXTERNAL
   ports:
   - number: 443
@@ -24,13 +24,13 @@ metadata:
   namespace: istio-ingress
 spec:
   hosts:
-  - "pve2.local-v2.xuhuisun.com"
+  - pve2.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway-http2
   http:
   - route:
     - destination:
-        host: "pve2.com"
+        host: pve2.com
         port:
           number: 443
 ---
@@ -40,7 +40,7 @@ metadata:
   name: pve2-dr
   namespace: istio-ingress
 spec:
-  host: "pve2.com"
+  host: pve2.com
   trafficPolicy:
     tls:
       mode: SIMPLE
