@@ -13,6 +13,7 @@ tolerations:
 - key: node-role.kubernetes.io/system
   operator: Exists
   effect: NoSchedule
+priorityClassName: platform-critical
 
 dashboards:
   enabled: true
