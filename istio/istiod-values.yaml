@@ -14,11 +14,18 @@ tolerations:
 - key: node-role.kubernetes.io/system
   operator: Exists
   effect: NoSchedule
+
 env:
   PILOT_ENABLE_QUIC_LISTENERS: true
+  ISTIO_DUAL_STACK: true
+
 ipFamilyPolicy: PreferDualStack
 ipFamilies: ["IPv6", "IPv4"]
+
 meshConfig:
+  defaultConfig:
+    proxyMetadata:
+      ISTIO_DUAL_STACK: true
   enableTracing: true
   extensionProviders:
   - name: otel-tracing
