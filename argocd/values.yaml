@@ -9,11 +9,12 @@ global:
     operator: Exists
     effect: NoSchedule
   affinity:
+    podAntiAffinity: hard
     nodeAffinity:
       matchExpressions:
-      - key: karpenter.sh/nodepool
-        operator: In
-        values: ["system"]
+        - key: karpenter.sh/nodepool
+          operator: In
+          values: ["system"]
 
 configs:
   cm:
