@@ -12,12 +12,14 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: "node-role.kubernetes.io/system"
-              operator: "Exists"
+          - key: karpenter.sh/nodepool
+            operator: In
+            values: ["system"]
 tolerations:
-- key: "node-role.kubernetes.io/system"
-  operator: "Exists"
-  effect: "NoSchedule"
+- key: node-role.kubernetes.io/system
+  operator: Exists
+  effect: NoSchedule
+priorityClassName: platform-critical
 
 cr:
   create: true
@@ -27,9 +29,9 @@ cr:
     auth:
       strategy: openid
       openid:
-        client_id: "kiali"
+        client_id: kiali
         disable_rbac: true
-        issuer_uri: "https://iam.local-v2.xuhuisun.com/realms/local-v2"
+        issuer_uri: https://iam.local.xuhuisun.com/realms/local
         scopes: ["openid", "email"]
         username_claim: "email"
     deployment:
@@ -54,27 +56,27 @@ cr:
         istio.io/dataplane-mode: ambient
     external_services:
       grafana:
-        internal_url: "http://lgtm-grafana.monitoring.svc.cluster.local"
-        external_url: "https://grafana.local-v2.xuhuisun.com"
+        internal_url: http://lgtm-grafana.monitoring.svc.cluster.local
+        external_url: https://grafana.local.xuhuisun.com
       istio:
         component_status:
           components:
-          - app_label: "istiod"
+          - app_label: istiod
             is_core: true
             is_proxy: false
-          - app_label: "istio-ingress-gateway"
+          - app_label: istio-ingress-gateway
             is_core: true
             is_proxy: true
             namespace: istio-ingress
       prometheus:
-        url: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
+        url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
       tracing:
         enabled: true
-        health_check_url: "http://lgtm-tempo-gateway.monitoring.svc.cluster.local"
-        internal_url: "http://lgtm-tempo-gateway.monitoring.svc.cluster.local"
-        provider: "tempo"
+        health_check_url: http://lgtm-tempo-gateway.monitoring.svc.cluster.local
+        internal_url: http://lgtm-tempo-gateway.monitoring.svc.cluster.local
+        provider: tempo
         tempo_config:
-          org_id: "1"
-          datasource_uid: "tempo"
+          org_id: 1
+          datasource_uid: tempo
         use_grpc: false 
-        external_url: "https://grafana.local-v2.xuhuisun.com"
+        external_url: https://grafana.local.xuhuisun.com

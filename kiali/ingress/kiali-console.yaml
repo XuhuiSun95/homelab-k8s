@@ -5,7 +5,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-  - "kiali.local-v2.xuhuisun.com"
+  - "kiali.local.xuhuisun.com"
   gateways:
   - istio-ingress/gateway
   http:
