@@ -5,7 +5,7 @@ metadata:
   namespace: minio
 spec:
   hosts:
-  - "minio-console.local-v2.xuhuisun.com"
+  - minio-console.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:

@@ -5,7 +5,7 @@ tenant:
       name: pool-0
       volumesPerServer: 4
       size: 10Gi
-      storageClassName: ceph-block
+      storageClassName: proxmox-local-zfs-xfs
       resources:
         requests:
           cpu: 23m
@@ -17,9 +17,10 @@ tenant:
   features:
     domains:
       minio:
-        - https://s3.local-v2.xuhuisun.com
-      console: https://minio-console.local-v2.xuhuisun.com
+        - https://s3.local.xuhuisun.com
+      console: https://minio-console.local.xuhuisun.com
   buckets:
+    - name: "cloudnative-pg-backups"
     - name: "elasticsearch-backup"
     - name: "mimir-tsdb"
     - name: "mimir-ruler"
@@ -32,7 +33,7 @@ tenant:
     - name: MINIO_PROMETHEUS_URL
       value: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
     - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
-      value: "https://iam.local-v2.xuhuisun.com/realms/local-v2/.well-known/openid-configuration"
+      value: "https://iam.local.xuhuisun.com/realms/local/.well-known/openid-configuration"
     - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
       value: "minio"
     - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
@@ -44,6 +45,6 @@ tenant:
     # - name: MINIO_IDENTITY_OPENID_VENDOR_KEYCLOAK_PRIMARY
     #   value: "keycloak"
     # - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL_KEYCLOAK_PRIMARY
-    #   value: "https://keycloak.local-v2.xuhuisun.com/admin"
+    #   value: "https://keycloak.local.xuhuisun.com/admin"
     # - name: MINIO_IDENTITY_OPENID_KEYCLOAK_REALM_KEYCLOAK_PRIMARY
     #   value: "minio"
