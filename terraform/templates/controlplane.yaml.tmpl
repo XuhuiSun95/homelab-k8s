@@ -38,6 +38,8 @@ cluster:
   proxy:
     disabled: true
   etcd:
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
     advertisedSubnets:
 %{ for subnet in validSubnets ~}
       - ${subnet}
