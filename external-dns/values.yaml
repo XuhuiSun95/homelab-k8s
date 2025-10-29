@@ -10,11 +10,11 @@ affinity:
             - key: karpenter.sh/nodepool
               operator: In
               values: ["system"]
-
 tolerations:
 - key: node-role.kubernetes.io/system
   operator: Exists
   effect: NoSchedule
+priorityClassName: platform-critical
 
 resources:
   requests:
