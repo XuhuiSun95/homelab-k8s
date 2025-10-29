@@ -19,7 +19,7 @@ controlplane = {
     id    = 1500,
     count = 3,
     cpu   = 4,
-    mem   = 4096,
+    mem   = 8192,
   }
 }
 
