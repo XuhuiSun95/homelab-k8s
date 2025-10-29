@@ -13,15 +13,15 @@ spec:
     - controller
   resources:
     requests:
-      cpu: 800m
-      memory: 3Gi
+      cpu: 500m
+      memory: 1Gi
     limits:
-      memory: 3Gi
+      memory: 1Gi
   storage:
     type: persistent-claim
-    size: 1Gi
+    size: 3Gi
     deleteClaim: false
-    class: ceph-block
+    class: proxmox-local-zfs-xfs
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
@@ -39,11 +39,11 @@ spec:
   resources:
     requests:
       cpu: 1000m
-      memory: 5Gi
+      memory: 2Gi
     limits:
-      memory: 5Gi
+      memory: 2Gi
   storage:
     type: persistent-claim
-    size: 10Gi
+    size: 20Gi
     deleteClaim: false
-    class: ceph-block
+    class: proxmox-local-zfs-xfs

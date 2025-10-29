@@ -8,7 +8,7 @@ nodes = {
   "pve2" = {
     storage = "local-zfs",
     gw4     = "10.101.70.1",
-    gw6     = "2600:8801:2aa0:b302::1",
+    gw6     = "2600:8801:2aa0:b307::1",
     vlan_id = 70,
     trunks  = "70;1610",
   }

@@ -6,12 +6,13 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: "node-role.kubernetes.io/system"
-              operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
 tolerations:
-- key: "node-role.kubernetes.io/system"
-  operator: "Exists"
-  effect: "NoSchedule"
+- key: node-role.kubernetes.io/system
+  operator: Exists
+  effect: NoSchedule
 
 dashboards:
   enabled: true

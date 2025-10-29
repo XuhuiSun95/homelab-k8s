@@ -18,7 +18,7 @@ spec:
         name: "cilium-peer-v4"
     - name: "peer-65000-v6"
       peerASN: 65000
-      peerAddress: 2600:8801:2aa0:b302::1
+      peerAddress: 2600:8801:2aa0:b307::1
       peerConfigRef:
         name: "cilium-peer-v6"
 ---
@@ -85,4 +85,4 @@ metadata:
 spec:
   blocks:
   - cidr: "172.16.10.128/26"
-  - cidr: "2601:8801:2aa0:b306:2::/122"
+  - cidr: "2601:8801:2aa0:b301:2::/122"

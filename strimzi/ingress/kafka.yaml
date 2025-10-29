@@ -5,7 +5,7 @@ metadata:
   namespace: kafka
 spec:
   hosts:
-  - "kafka-bootstrap.local-v2.xuhuisun.com"
+  - kafka-bootstrap.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   tcp:
@@ -25,7 +25,7 @@ metadata:
   namespace: kafka
 spec:
   hosts:
-  - "kafka-broker-0.local-v2.xuhuisun.com"
+  - kafka-broker-0.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   tcp:
@@ -45,7 +45,7 @@ metadata:
   namespace: kafka
 spec:
   hosts:
-  - "kafka-broker-1.local-v2.xuhuisun.com"
+  - kafka-broker-1.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   tcp:
@@ -65,7 +65,7 @@ metadata:
   namespace: kafka
 spec:
   hosts:
-  - "kafka-broker-2.local-v2.xuhuisun.com"
+  - kafka-broker-2.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   tcp:

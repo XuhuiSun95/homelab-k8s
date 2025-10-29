@@ -21,15 +21,15 @@ spec:
         tls: false
         authentication:
           type: oauth
-          validIssuerUri: https://iam.local-v2.xuhuisun.com/realms/local-v2
-          jwksEndpointUri: https://iam.local-v2.xuhuisun.com/realms/local-v2/protocol/openid-connect/certs
+          validIssuerUri: https://iam.local.xuhuisun.com/realms/local
+          jwksEndpointUri: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/certs
           userNameClaim: sub
           maxSecondsWithoutReauthentication: 3600
           jwksExpirySeconds: 360
           jwksRefreshSeconds: 300
           jwksMinRefreshPauseSeconds: 1
         configuration:
-          advertisedHostTemplate: kafka-broker-{nodeId}.local-v2.xuhuisun.com
+          advertisedHostTemplate: kafka-broker-{nodeId}.local.xuhuisun.com
           brokers:
             - broker: 0
               advertisedPort: 9092
@@ -37,7 +37,7 @@ spec:
               advertisedPort: 9092
             - broker: 2
               advertisedPort: 9092
-          ipFamilyPolicy: "PreferDualStack"
+          ipFamilyPolicy: PreferDualStack
           ipFamilies: ["IPv6","IPv4"]
     config:
       auto.create.topics.enable: "false"
@@ -80,7 +80,7 @@ spec:
       - mode: remove-brokers
     template:
       apiService:
-        ipFamilyPolicy: "PreferDualStack"
+        ipFamilyPolicy: PreferDualStack
         ipFamilies: ["IPv6","IPv4"]
     resources:
       requests:
