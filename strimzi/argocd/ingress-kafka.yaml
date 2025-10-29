@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "20"
-  name: ingress-strimzi
+  name: ingress-kafka
   namespace: argocd
 spec:
   project: default
