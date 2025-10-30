@@ -7,7 +7,7 @@ auth:
 production: true
 proxyHeaders: xforwarded
 
-# replicaCount: 2
+replicaCount: 2
 # podLabels:
 #   istio.io/dataplane-mode: ambient
 podAntiAffinityPreset: hard

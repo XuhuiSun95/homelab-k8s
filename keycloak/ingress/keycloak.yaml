@@ -48,5 +48,6 @@ spec:
     loadBalancer:
       consistentHash:
         httpCookie:
-          name: AUTH_SESSION_ID
+          name: STICKY_SESSION
           ttl: 0s
+          path: /
