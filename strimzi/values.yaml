@@ -9,6 +9,19 @@ affinity:
             - key: karpenter.sh/nodepool
               operator: In
               values: ["system"]
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: strimzi-cluster-operator
+          topologyKey: topology.kubernetes.io/zone
+        weight: 100
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: strimzi-cluster-operator
+        topologyKey: kubernetes.io/hostname
 tolerations:
 - key: node-role.kubernetes.io/system
   operator: Exists
