@@ -5,8 +5,8 @@ metadata:
   namespace: homepage
 spec:
   hosts:
-  - "local-v2.xuhuisun.com"
-  - "homepage.local-v2.xuhuisun.com"
+  - local.xuhuisun.com
+  - homepage.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:
@@ -27,5 +27,6 @@ spec:
     loadBalancer:
       consistentHash:
         httpCookie:
-          name: User
+          name: STICKY_SESSION
           ttl: 0s
+          path: /

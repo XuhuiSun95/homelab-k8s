@@ -26,6 +26,8 @@ cluster:
       memory: 1Gi
   priorityClassName: platform-critical
   affinity:
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
     nodeSelector:
       karpenter.sh/nodepool: system
     tolerations:
