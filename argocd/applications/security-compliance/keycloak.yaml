@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "70"
-  name: keycloak-v2
+  name: keycloak
   namespace: argocd
 spec:
   project: default
