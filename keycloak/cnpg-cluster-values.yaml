@@ -25,6 +25,13 @@ cluster:
     limits:
       memory: 1Gi
   priorityClassName: platform-critical
+  affinity:
+    nodeselector:
+      karpenter.sh/nodepool: system
+    tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   monitoring:
     enabled: true
   initdb:
