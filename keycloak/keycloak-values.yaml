@@ -5,13 +5,19 @@ auth:
   adminPassword: nIskQiijss
 
 production: true
-
 proxyHeaders: xforwarded
 
 replicaCount: 2
-
 podLabels:
   istio.io/dataplane-mode: ambient
+podAntiAffinityPreset: hard
+nodeSelector:
+  karpenter.sh/nodepool: system
+tolerations:
+- key: node-role.kubernetes.io/system
+  operator: Exists
+  effect: NoSchedule
+priorityClassName: platform-critical
 
 networkPolicy:
   extraIngress:
@@ -36,9 +42,9 @@ postgresql:
   enabled: false
 
 externalDatabase:
-  host: keycloak-cnpg-cluster-rw
+  host: keycloak-cnpg-cluster-v2-rw
   port: 5432
   database: keycloak
-  existingSecret: keycloak-cnpg-cluster-app
+  existingSecret: keycloak-cnpg-cluster-v2-app
   existingSecretUserKey: user
   existingSecretPasswordKey: password
