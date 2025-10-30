@@ -76,7 +76,7 @@ cr:
         internal_url: http://lgtm-tempo-gateway.monitoring.svc.cluster.local
         provider: tempo
         tempo_config:
-          org_id: 1
+          org_id: "1"
           datasource_uid: tempo
         use_grpc: false 
         external_url: https://grafana.local.xuhuisun.com
