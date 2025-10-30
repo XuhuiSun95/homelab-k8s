@@ -13,8 +13,8 @@ serviceAccount:
   create: true
   name: homepage
 
-podLabels:
-  istio.io/dataplane-mode: ambient
+# podLabels:
+#   istio.io/dataplane-mode: ambient
 
 config:
   settings:
@@ -51,12 +51,12 @@ config:
     - Hypervisor:
         - Proxmox:
             icon: proxmox.png
-            href: https://pve2.local-v2.xuhuisun.com
+            href: https://pve2.local.xuhuisun.com
             description: pve2
             siteMonitor: https://10.101.3.3:8006
         - Proxmox Backup Server:
             icon: proxmox.png
-            href: https://pbs.local-v2.xuhuisun.com
+            href: https://pbs.local.xuhuisun.com
             description: pbs
             siteMonitor: https://10.101.3.4:8007
     - Remote Access:
@@ -67,70 +67,70 @@ config:
     - Storage:
         - Rook Ceph:
             icon: rook.png
-            href: https://rook-ceph.local-v2.xuhuisun.com
+            href: https://rook-ceph.local.xuhuisun.com
             description: rook ceph storage orchestration
             siteMonitor: https://rook-ceph-mgr-dashboard.rook-ceph.svc.cluster.local:8443
         - MinIO:
             icon: minio.png
-            href: https://minio-console.local-v2.xuhuisun.com
+            href: https://minio-console.local.xuhuisun.com
             description: object storage
             siteMonitor: https://minio-console.minio.svc.cluster.local:9443
         - MinIO Cold Tier:
             icon: minio.png
-            href: https://minio-console-cold-tier.local-v2.xuhuisun.com
+            href: https://minio-console-cold-tier.local.xuhuisun.com
             description: object storage
             siteMonitor: https://minio-console.minio-cold-tier.svc.cluster.local:9443
     - Home Automation:
         - Scrypted:
             icon: scrypted.png
-            href: https://scrypted.local-v2.xuhuisun.com
+            href: https://scrypted.local.xuhuisun.com
             description: mgmt console
             siteMonitor: https://10.101.20.221:10443
     - Management:
         - Keycloak:
             icon: keycloak.png
-            href: https://keycloak.local-v2.xuhuisun.com
+            href: https://keycloak.local.xuhuisun.com
             description: iam
             siteMonitor: http://keycloak-keycloak.keycloak.svc.cluster.local
         - Argo CD:
             icon: argo-cd.png
-            href: https://argocd.local-v2.xuhuisun.com
+            href: https://argocd.local.xuhuisun.com
             description: in-cluster cd
             siteMonitor: https://argocd-server.argocd.svc.cluster.local
     - Monitoring:
         - Grafana:
             icon: grafana.png
-            href: https://grafana.local-v2.xuhuisun.com
+            href: https://grafana.local.xuhuisun.com
             description: metrics visualization
             siteMonitor: http://lgtm-grafana.monitoring.svc.cluster.local
         - Prometheus:
             icon: prometheus.png
-            href: https://prometheus.local-v2.xuhuisun.com
+            href: https://prometheus.local.xuhuisun.com
             description: metrics tsdb
             siteMonitor: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         - Mimir:
             icon: prometheus.png
-            href: https://mimir.local-v2.xuhuisun.com
+            href: https://mimir.local.xuhuisun.com
             description: tsdb backend
             siteMonitor: http://lgtm-mimir-nginx.monitoring.svc.cluster.local
         - Kiali:
-            href: https://kiali.local-v2.xuhuisun.com
+            href: https://kiali.local.xuhuisun.com
             description: istio mgmt console
             siteMonitor: http://kiali.istio-system.svc.cluster.local:20001
         - Kibana:
             icon: kibana.png
-            href: https://kibana.local-v2.xuhuisun.com
+            href: https://kibana.local.xuhuisun.com
             description: elasticsearch visualization
             siteMonitor: https://kibana-kb-http.elastic.svc.cluster.local:5601
     - Productivity:
         - Open-WebUI:
             icon: open-webui.png
-            href: https://open-webui.local-v2.xuhuisun.com
+            href: https://open-webui.local.xuhuisun.com
             description: ai interface
             siteMonitor: http://open-webui.open-webui.svc.cluster.local
         - Immich:
             icon: immich.png
-            href: https://immich.local-v2.xuhuisun.com
+            href: https://immich.local.xuhuisun.com
             description: photo management/backup
             siteMonitor: http://immich-immich-server.immich.svc.cluster.local:2283
   widgets:
@@ -162,7 +162,7 @@ config:
 
 env:
   - name: HOMEPAGE_ALLOWED_HOSTS
-    value: "local-v2.xuhuisun.com,homepage.local-v2.xuhuisun.com"
+    value: "local.xuhuisun.com,homepage.local.xuhuisun.com"
 
 resources:
   requests:
