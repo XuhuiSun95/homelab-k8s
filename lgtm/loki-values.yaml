@@ -2,7 +2,7 @@ deploymentMode: Distributed
 
 loki:
   limits_config:
-    retention_period: 30d
+    retention_period: 10d
     allow_structured_metadata: true
     volume_enabled: true
   storage:
@@ -55,16 +55,6 @@ ingester:
               app.kubernetes.io/instance: lgtm-loki
               app.kubernetes.io/name: loki
           topologyKey: kubernetes.io/hostname
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
 querier:
   replicas: 3
   maxUnavailable: 2
@@ -77,16 +67,6 @@ querier:
               app.kubernetes.io/instance: lgtm-loki
               app.kubernetes.io/name: loki
           topologyKey: kubernetes.io/hostname
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
@@ -103,12 +83,13 @@ queryFrontend:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 queryScheduler:
   replicas: 2
   affinity:
@@ -124,12 +105,13 @@ queryScheduler:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 distributor:
   replicas: 3 
   maxUnavailable: 2
@@ -146,12 +128,13 @@ distributor:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 compactor:
   replicas: 1
   affinity:
@@ -163,16 +146,6 @@ compactor:
               app.kubernetes.io/instance: lgtm-loki
               app.kubernetes.io/name: loki
           topologyKey: kubernetes.io/hostname
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
-  tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
 indexGateway:
   replicas: 2
   maxUnavailable: 1
@@ -189,12 +162,13 @@ indexGateway:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 gateway:
   replicas: 1
   affinity:
@@ -210,38 +184,43 @@ gateway:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: "node-role.kubernetes.io/system"
-                operator: "Exists"
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
   tolerations:
-    - key: "node-role.kubernetes.io/system"
-      operator: "Exists"
-      effect: "NoSchedule"
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 resultsCache:
   replicas: 1
-  # affinity:
-  #   nodeAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       nodeSelectorTerms:
-  #         - matchExpressions:
-  #             - key: "node-role.kubernetes.io/system"
-  #               operator: "Exists"
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  affinity:
+    # TODO: add pod anti affinity
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 chunksCache:
   replicas: 1
-  # affinity:
-  #   nodeAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       nodeSelectorTerms:
-  #         - matchExpressions:
-  #             - key: "node-role.kubernetes.io/system"
-  #               operator: "Exists"
-  # tolerations:
-  #   - key: "node-role.kubernetes.io/system"
-  #     operator: "Exists"
-  #     effect: "NoSchedule"
+  affinity:
+    # TODO: add pod anti affinity
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 
 bloomPlanner:
   replicas: 0

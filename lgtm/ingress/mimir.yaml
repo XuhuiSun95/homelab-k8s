@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   hosts:
-  - "mimir.local-v2.xuhuisun.com"
+  - mimir.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:
