@@ -1,19 +1,30 @@
 type: postgresql
 version:
-  postgresql: "17"
-mode: standalone
+  postgresql: 17
+mode: recovery
+
+recovery:
+  method: object_store
+  clusterName: keycloak-cnpg-cluster
+  endpointURL: https://s3.local.xuhuisun.com
+  provider: s3
+  s3:
+    bucket: cloudnative-pg-backups
+    accessKey: om9WSI45aMEZxBqASwSy
+    secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
 
 cluster:
   instances: 3
   storage:
     size: 1Gi
-    storageClass: "ceph-block"
+    storageClass: proxmox-local-zfs-xfs
   resources:
     requests:
       cpu: 100m
       memory: 1Gi
     limits:
       memory: 1Gi
+  priorityClassName: platform-critical
   monitoring:
     enabled: true
   initdb:
@@ -21,12 +32,12 @@ cluster:
 
 backups:
   enabled: true
-  endpointURL: "https://s3.local-v2.xuhuisun.com"
+  endpointURL: https://s3.local.xuhuisun.com
   provider: s3
   s3:
-    bucket: "cloudnative-pg-backups"
-    accessKey: "om9WSI45aMEZxBqASwSy"
-    secretKey: "f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ"
+    bucket: cloudnative-pg-backups
+    accessKey: om9WSI45aMEZxBqASwSy
+    secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
   wal:
     encryption: ""
   data:
