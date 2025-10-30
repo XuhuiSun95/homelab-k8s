@@ -4,18 +4,32 @@ operator:
       value: "on"
     - name: PROMETHEUS_NAMESPACE
       value: "monitoring"
-  priorityClassName: "system-cluster-critical"
+  priorityClassName: platform-critical
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-            - key: "node-role.kubernetes.io/system"
-              operator: "Exists"
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: operator
+            topologyKey: topology.kubernetes.io/zone
+          weight: 100
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: operator
+          topologyKey: kubernetes.io/hostname
   tolerations:
-  - key: "node-role.kubernetes.io/system"
-    operator: "Exists"
-    effect: "NoSchedule"
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
   resources:
     requests:
       cpu: 10m
