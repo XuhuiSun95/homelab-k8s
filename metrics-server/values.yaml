@@ -1,10 +1,40 @@
+updateStrategy:
+  type: RollingUpdate
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 128Mi
+
+livenessProbe:
+  periodSeconds: 30
+
+readinessProbe:
+  periodSeconds: 30
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+
 nodeSelector:
   node-role.kubernetes.io/control-plane: ""
 tolerations:
   - key: node-role.kubernetes.io/control-plane
     effect: NoSchedule
 
-apiService:
-  insecureSkipTLSVerify: false
-tls:
-  type: cert-manager
+# apiService:
+#   insecureSkipTLSVerify: false
+# tls:
+#   type: cert-manager
