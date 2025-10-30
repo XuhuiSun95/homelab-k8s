@@ -1,6 +1,6 @@
 type: postgresql
 version:
-  postgresql: 17
+  postgresql: "17"
 mode: recovery
 
 recovery:
