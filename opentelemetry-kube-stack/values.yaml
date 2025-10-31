@@ -46,7 +46,7 @@ collectors:
           tls:
             insecure: true
         otlphttp/mimir:
-          endpoint: http://lgtm-mimir-nginx.monitoring.svc.cluster.local/otlp
+          endpoint: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
           tls:

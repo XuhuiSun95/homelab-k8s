@@ -11,6 +11,6 @@ spec:
   http:
   - route:
     - destination:
-        host: lgtm-mimir-nginx
+        host: lgtm-mimir-gateway
         port:
           number: 80

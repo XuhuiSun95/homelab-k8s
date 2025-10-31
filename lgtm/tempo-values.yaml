@@ -21,7 +21,7 @@ metricsGenerator:
   config:
     storage:
       remote_write:
-      - url: http://lgtm-mimir-nginx/api/v1/push
+      - url: http://lgtm-mimir-gateway/api/v1/push
         send_exemplars: true
   affinity: |
     podAntiAffinity:
