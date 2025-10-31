@@ -180,6 +180,7 @@ store_gateway:
 nginx:
   enabled: false
 gateway:
+  enabledNonEnterprise: true
   replicas: 1
   affinity:
     nodeAffinity:

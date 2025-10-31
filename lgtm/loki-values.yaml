@@ -199,7 +199,14 @@ gateway:
 resultsCache:
   replicas: 1
   affinity:
-    # TODO: add pod anti affinity
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: memcached-results-cache
+              app.kubernetes.io/instance: lgtm-loki
+              app.kubernetes.io/name: loki
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -215,7 +222,14 @@ resultsCache:
 chunksCache:
   replicas: 1
   affinity:
-    # TODO: add pod anti affinity
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: memcached-chunks-cache
+              app.kubernetes.io/instance: lgtm-loki
+              app.kubernetes.io/name: loki
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
