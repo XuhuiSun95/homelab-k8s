@@ -7,8 +7,8 @@ resources:
     memory: 235Mi
   limits:
     memory: 235Mi
-# podLabels:
-#   istio.io/dataplane-mode: ambient
+podLabels:
+  istio.io/dataplane-mode: ambient
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:

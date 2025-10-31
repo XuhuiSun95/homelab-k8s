@@ -13,8 +13,8 @@ serviceAccount:
   create: true
   name: homepage
 
-# podLabels:
-#   istio.io/dataplane-mode: ambient
+podLabels:
+  istio.io/dataplane-mode: ambient
 
 config:
   settings:

@@ -8,8 +8,8 @@ production: true
 proxyHeaders: xforwarded
 
 replicaCount: 2
-# podLabels:
-#   istio.io/dataplane-mode: ambient
+podLabels:
+  istio.io/dataplane-mode: ambient
 podAntiAffinityPreset: hard
 nodeSelector:
   karpenter.sh/nodepool: system
