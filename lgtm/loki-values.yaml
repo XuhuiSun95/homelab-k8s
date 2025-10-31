@@ -90,6 +90,7 @@ queryFrontend:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 queryScheduler:
   replicas: 2
   affinity:
@@ -112,6 +113,7 @@ queryScheduler:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 distributor:
   replicas: 3 
   maxUnavailable: 2
@@ -135,6 +137,7 @@ distributor:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 compactor:
   replicas: 1
   affinity:
@@ -169,6 +172,7 @@ indexGateway:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 gateway:
   replicas: 1
   affinity:
@@ -191,6 +195,7 @@ gateway:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 resultsCache:
   replicas: 1
   affinity:
@@ -206,6 +211,7 @@ resultsCache:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 chunksCache:
   replicas: 1
   affinity:
@@ -221,6 +227,7 @@ chunksCache:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 
 bloomPlanner:
   replicas: 0
