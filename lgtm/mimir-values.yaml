@@ -25,6 +25,9 @@ mimir:
       s3:
         bucket_name: mimir-ruler
 alertmanager:
+  persistentVolume:
+    size: 1Gi
+    storageClass: proxmox-local-zfs-xfs
   replicas: 2
   affinity:
     nodeAffinity:
@@ -38,14 +41,17 @@ alertmanager:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 compactor:
   persistentVolume:
     size: 5Gi
+    storageClass: proxmox-local-zfs-xfs
 distributor:
   replicas: 2
 ingester:
   persistentVolume:
     size: 10Gi
+    storageClass: proxmox-local-zfs-xfs
   replicas: 3
   zoneAwareReplication:
      enabled: false
@@ -64,6 +70,7 @@ chunks-cache:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 index-cache:
   enabled: true
   replicas: 1
@@ -79,6 +86,7 @@ index-cache:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 metadata-cache:
   enabled: true
   replicas: 1
@@ -94,6 +102,7 @@ metadata-cache:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 results-cache:
   enabled: true
   replicas: 1
@@ -109,6 +118,7 @@ results-cache:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 minio:
   enabled: false
 overrides_exporter:
@@ -125,6 +135,7 @@ overrides_exporter:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 querier:
   replicas: 1
 query_frontend:
@@ -141,6 +152,7 @@ query_frontend:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 query_scheduler:
   replicas: 1
   affinity:
@@ -155,14 +167,18 @@ query_scheduler:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 ruler:
   replicas: 1
 store_gateway:
   persistentVolume:
     size: 2Gi
+    storageClass: proxmox-local-zfs-xfs
   replicas: 3
   zoneAwareReplication:
      enabled: false
+nginx:
+  enabled: false
 gateway:
   replicas: 1
   affinity:
@@ -177,3 +193,4 @@ gateway:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
