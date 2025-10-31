@@ -4,14 +4,13 @@ ingester:
      enabled: false
   affinity: |
     podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "tempo.selectorLabels" (dict "ctx" . "component" "ingester") | nindent 12 }}
+            topologyKey: kubernetes.io/hostname
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                {{- include "tempo.selectorLabels" (dict "ctx" . "component" "ingester") | nindent 12 }}
-            topologyKey: kubernetes.io/hostname
-        - weight: 75
           podAffinityTerm:
             labelSelector:
               matchLabels:
@@ -116,6 +115,7 @@ queryFrontend:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 
 traces:
   otlp:
@@ -162,6 +162,7 @@ memcached:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 
 gateway:
   enabled: true
@@ -191,6 +192,7 @@ gateway:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
+  priorityClassName: platform-critical
 
 global_overrides:
   defaults:
