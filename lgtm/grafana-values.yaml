@@ -39,7 +39,7 @@ datasources:
       - name: Mimir
         uid: prom
         type: prometheus
-        url: http://lgtm-mimir-nginx/prometheus
+        url: http://lgtm-mimir-gateway/prometheus
         isDefault: true
         jsonData:
           httpHeaderName1: X-Scope-OrgID

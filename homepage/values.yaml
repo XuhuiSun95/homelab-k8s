@@ -102,7 +102,7 @@ config:
             icon: prometheus.png
             href: https://mimir.local.xuhuisun.com
             description: tsdb backend
-            siteMonitor: http://lgtm-mimir-nginx.monitoring.svc.cluster.local
+            siteMonitor: http://lgtm-mimir-gateway.monitoring.svc.cluster.local
         - Kiali:
             href: https://kiali.local.xuhuisun.com
             description: istio mgmt console
