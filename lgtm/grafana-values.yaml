@@ -103,7 +103,7 @@ dashboards:
     13277-istio-wasm-extension-dashboard:
       # renovate: depName="Istio Wasm Extension Dashboard"
       gnetId: 13277
-      revision: 230
+      revision: 235
       datasource: Mimir
     13502-minio-dashboard:
       # renovate: depName="MinIO Dashboard"
