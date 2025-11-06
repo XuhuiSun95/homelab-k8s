@@ -17,8 +17,6 @@ kubelet:
 
 kubeControllerManager:
   service:
-    port: 2381
-    targetPort: 2381
     ipDualStack:
       enabled: true
   serviceMonitor:
