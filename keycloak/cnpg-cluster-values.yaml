@@ -5,7 +5,7 @@ mode: recovery
 
 recovery:
   method: object_store
-  clusterName: keycloak-cnpg-cluster
+  clusterName: keycloak-cnpg-cluster-v2
   endpointURL: https://s3.local.xuhuisun.com
   provider: s3
   s3:
