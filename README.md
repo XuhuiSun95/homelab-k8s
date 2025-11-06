@@ -232,7 +232,7 @@ kubectl create secret generic nfs-mount-options \
 
 #### Cert-Manager Route53 Credentials
 ```bash
-export aws_secret=<your_aws_secret_access_key>
+ export aws_secret=<your_aws_secret_access_key>
 kubectl create secret generic route53-credentials-secret \
   --from-literal="secret-access-key=$aws_secret" \
   --namespace cert-manager
@@ -240,7 +240,7 @@ kubectl create secret generic route53-credentials-secret \
 
 #### External DNS Unifi Integration
 ```bash
-export api_key=<your_unifi_api_key>
+ export api_key=<your_unifi_api_key>
 kubectl create secret generic external-dns-unifi-secret \
   --from-literal="api-key=$api_key" \
   --namespace external-dns
@@ -248,8 +248,8 @@ kubectl create secret generic external-dns-unifi-secret \
 
 #### Elasticsearch MinIO Snapshots
 ```bash
-export YOUR_ACCESS_KEY=<minio_access_key>
-export YOUR_SECRET_ACCESS_KEY=<minio_secret_key>
+ export YOUR_ACCESS_KEY=<minio_access_key>
+ export YOUR_SECRET_ACCESS_KEY=<minio_secret_key>
 kubectl create secret generic snapshot-settings \
   --from-literal=s3.client.default.access_key=$YOUR_ACCESS_KEY \
   --from-literal=s3.client.default.secret_key=$YOUR_SECRET_ACCESS_KEY \
