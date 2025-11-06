@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  name: keycloak-cnpg-cluster-v2
+  name: keycloak-cnpg-cluster
   namespace: argocd
 spec:
   project: default

@@ -177,10 +177,7 @@ store_gateway:
   replicas: 3
   zoneAwareReplication:
      enabled: false
-nginx:
-  enabled: false
 gateway:
-  enabledNonEnterprise: true
   replicas: 1
   affinity:
     nodeAffinity:
