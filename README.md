@@ -180,15 +180,15 @@ Deploy Cilium CNI with BGP integration and Proxmox cloud integrations:
 # Add Helm repositories
 helm repo add cilium https://helm.cilium.io/
 
+# Install Talos Cloud Controller Manager
+# Note: CCM credentials are automatically configured via inline manifests
+helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/talos-cloud-controller-manager --namespace kube-system --values files/talos-ccm.yaml
+
 # Install Cilium CNI with advanced networking features
 helm upgrade -i cilium cilium/cilium --namespace kube-system --values files/cilium.yaml
 
 # Apply Cilium BGP Configuration (for routing and load balancer IP pools)
 kubectl apply -f files/cilium-bgp.yaml
-
-# Install Talos Cloud Controller Manager
-# Note: CCM credentials are automatically configured via inline manifests
-helm upgrade -i talos-cloud-controller-manager oci://ghcr.io/siderolabs/charts/talos-cloud-controller-manager --namespace kube-system --values files/talos-ccm.yaml
 
 # Install Proxmox Cloud Controller Manager
 # Note: CCM credentials are automatically configured via inline manifests

@@ -23,20 +23,24 @@ machine:
 cluster:
   network:
     podSubnets:
-      - 10.244.0.0/16
-      - fd00:10:244::/64
+      - 10.233.0.0/18
+      - fd85:ee78:d8a6:8607::1:0000/112
     serviceSubnets:
-      - 10.224.0.0/12
-      - fd40:10:224::/108
+      - 10.233.64.0/18
+      - fd85:ee78:d8a6:8607::1000/116
     cni:
       name: none
   controllerManager:
     extraArgs:
+      bind-address: 0.0.0.0
       controllers: "*,tokencleaner,-node-ipam-controller"
       node-cidr-mask-size-ipv4: "24"
-      node-cidr-mask-size-ipv6: "80"
+      node-cidr-mask-size-ipv6: "120"
   proxy:
     disabled: true
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
   etcd:
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
