@@ -2,17 +2,37 @@
 
 A comprehensive cloud-native homelab built on Kubernetes with GitOps, service mesh, observability, and AI capabilities.
 
+## ⚠️ Temporary Warning
+
+**Known Issue**: When using Cilium with eBPF host routing (kubeproxyreplacement) and Istio ambient mode enabled, there is a known health probe issue that causes readiness and liveness probes to fail.
+
+**Fix**: Apply the fix following the instructions at [Istio Issue #57911](https://github.com/istio/istio/issues/57911). The fix involves patching the `istio-cni-node` DaemonSet to set `HOST_PROBE_SNAT_IP` environment variable to use `status.hostIP`:
+
+```yaml
+spec:
+  template:
+    spec:
+      containers:
+      - name: install-cni
+        env:
+        - name: HOST_PROBE_SNAT_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+```
+
 ## 🏗️ Architecture Overview
 
 This homelab deploys a production-ready Kubernetes cluster using:
 - **Infrastructure**: Talos Linux on Proxmox VMs with Terraform for immutable Kubernetes deployment
 - **Cloud Provider**: Proxmox integration with CCM, CSI, and Karpenter for automation
-- **Networking**: Cilium CNI with BGP integration and dual-stack IPv4/IPv6 support
+- **Networking**: Cilium CNI with eBPF host routing (kubeProxyReplacement), BGP integration, and dual-stack IPv4/IPv6 support
 - **Auto-scaling**: Karpenter with Proxmox provider for dynamic node provisioning
 - **GitOps**: ArgoCD for declarative application management
-- **Service Mesh**: Istio for traffic management, security, and observability
+- **Service Mesh**: Istio Ambient Mode for zero-trust traffic management, security, and observability
 - **Ingress**: Custom domain (`local-v2.xuhuisun.com`) with Let's Encrypt certificates
-- **Storage**: Multiple storage solutions (Rook-Ceph, MinIO, NFS, CloudNativePG, Proxmox CSI)
+- **Storage**: Multiple storage solutions (MinIO, NFS, CloudNativePG, Proxmox CSI)
 - **Observability**: Complete LGTM stack (Loki, Grafana, Tempo, Mimir) plus ELK stack
 - **Authentication**: Keycloak for identity and access management
 - **Automation**: Renovate for dependency updates, KEDA for auto-scaling
@@ -39,7 +59,6 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 ### 💾 Storage & Data
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **Rook-Ceph** | https://rook-ceph.local-v2.xuhuisun.com | Distributed storage management |
 | **MinIO Console** | https://minio-console.local-v2.xuhuisun.com | Object storage management |
 
 ### 🤖 AI & Productivity
@@ -62,10 +81,10 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 - **Certificate Management**: Automated Let's Encrypt certificates
 
 ### Cloud Native Storage
-- **Rook-Ceph**: Distributed block, object, and file storage
 - **MinIO**: S3-compatible object storage
 - **CloudNativePG**: PostgreSQL operator for databases
 - **NFS CSI Driver**: Network file system support
+- **Proxmox CSI**: Native Proxmox block storage provisioner
 
 ### Continuous Integration/Delivery
 - **ArgoCD**: GitOps platform for Kubernetes deployments
@@ -76,12 +95,12 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 - **Istio Service Mesh**: Advanced traffic management, security, and observability
 
 ### Observability Stack
-- **LGTM Stack**: Complete observability with Loki, Grafana, Tempo, Mimir
-- **LGTM Distributed**: Production-grade distributed LGTM deployment for scalability
+- **LGTM Stack**: Complete observability with Loki (distributed), Grafana, Tempo (distributed), Mimir (distributed)
 - **OpenTelemetry Kube Stack**: Unified observability framework with automated instrumentation
 - **Elastic Stack**: Elasticsearch, Kibana for log analytics
-- **Kube-Prometheus**: Comprehensive cluster monitoring
+- **Kube-Prometheus-Stack**: Comprehensive cluster monitoring with Prometheus and Grafana
 - **Kiali**: Service mesh visualization
+- **Metrics Server**: Kubernetes metrics API implementation
 
 ### Security & Compliance
 - **Cert-Manager**: Automated certificate lifecycle management
@@ -89,8 +108,10 @@ Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.
 - **OIDC Integration**: Single sign-on across services
 
 ### Service Mesh
+- **Istio Ambient Mode**: Zero-trust service mesh without sidecars using ztunnel
 - **Istio Base**: Core service mesh functionality
 - **Istio CNI**: Network plugin for pod-to-pod encryption
+- **Istio Ztunnel**: Secure overlay network for ambient mode
 - **Traffic Policies**: Advanced routing, load balancing, and circuit breaking
 
 ### Streaming & Messaging
@@ -269,6 +290,35 @@ kubectl apply -f deployment.yaml
 
 This single command deploys all applications in the correct order using ArgoCD sync waves.
 
+### 6. Apply Istio CNI Health Probe Fix (Required for Cilium with eBPF Host Routing)
+
+If you're using Cilium with `kubeProxyReplacement` enabled and Istio ambient mode, you must apply the health probe fix to prevent probe failures:
+
+```bash
+# Patch the istio-cni-node DaemonSet to set HOST_PROBE_SNAT_IP
+kubectl patch daemonset istio-cni-node -n istio-system --type='json' \
+  -p='[{"op": "add", "path": "/spec/template/spec/containers/0/env/-", "value": {"name": "HOST_PROBE_SNAT_IP", "valueFrom": {"fieldRef": {"apiVersion": "v1", "fieldPath": "status.hostIP"}}}}]'
+```
+
+Alternatively, you can manually edit the DaemonSet:
+
+```bash
+kubectl edit daemonset istio-cni-node -n istio-system
+```
+
+Add the following environment variable to the `install-cni` container:
+
+```yaml
+env:
+- name: HOST_PROBE_SNAT_IP
+  valueFrom:
+    fieldRef:
+      apiVersion: v1
+      fieldPath: status.hostIP
+```
+
+See the [warning section](#-temporary-warning) at the top of this README for more details.
+
 ## 🔑 Access Credentials
 
 ### Talos Cluster Management
@@ -313,10 +363,10 @@ kubectl -n elastic get secret elasticsearch-es-elastic-user \
   -o jsonpath="{.data.elastic}" | base64 --decode | xclip
 ```
 
-### Rook Ceph Dashboard Password
+### MinIO Console Credentials
 ```bash
-kubectl -n rook-ceph get secret rook-ceph-dashboard-password \
-  -o jsonpath="{.data.password}" | base64 --decode | xclip
+# MinIO credentials are configured in the MinIO tenant values
+# Check minio/tenant-values.yaml for access key and secret
 ```
 
 ## 🔄 Maintenance & Upgrades
@@ -369,12 +419,17 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **Load Balancer IPs**: Managed via CiliumLoadBalancerIPPool resources
 
 ### Sync Wave Deployment Order
-1. **Wave 30**: Core monitoring and telemetry (Prometheus, OpenTelemetry)
-2. **Wave 41**: Auto-scaling (KEDA)
-3. **Wave 42**: GitOps (ArgoCD)
-4. **Wave 60**: Storage operators and service mesh (CNPG, Strimzi)
-5. **Wave 70**: Applications and distributed services (LGTM, Keycloak, MinIO, Elastic)
-6. **Wave 200**: User applications (Homepage, Open-WebUI, Immich)
+1. **Wave 0**: Istio Base (foundation for service mesh)
+2. **Wave 3**: Istio Ztunnel (ambient mode secure overlay)
+3. **Wave 11**: Istio Ingress Gateway (traffic entry point)
+4. **Wave 20**: Cert-Manager (certificate management)
+5. **Wave 30**: Core monitoring and telemetry (Prometheus, OpenTelemetry, Metrics Server, Istio)
+6. **Wave 41**: Auto-scaling (KEDA)
+7. **Wave 42**: GitOps (ArgoCD)
+8. **Wave 50**: External DNS (DNS automation)
+9. **Wave 60**: Storage operators and distributed services (CNPG, Strimzi, MinIO, Elastic)
+10. **Wave 70**: Applications and observability (LGTM stack, Keycloak)
+11. **Wave 200**: User applications (Homepage, Open-WebUI, Immich)
 
 ## 🎯 Key Features
 
@@ -443,12 +498,11 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 ├── keycloak/                  # Identity and access management
 ├── kiali/                     # Istio service mesh visualization
 ├── kube-prometheus-stack/     # Prometheus monitoring stack
-├── lgtm/                      # LGTM observability stack
-├── lgtm-distributed/          # Distributed LGTM deployment
+├── lgtm/                      # LGTM observability stack (Loki, Grafana, Tempo, Mimir)
+├── metrics-server/            # Kubernetes metrics server
 ├── minio/                     # Object storage
 ├── open-webui/                # AI interface application
 ├── opentelemetry-kube-stack/  # OpenTelemetry configuration
-├── rook-ceph/                 # Distributed storage
 ├── strimzi/                   # Kafka operator
 └── */values.yaml              # Helm values for each service
 ```
@@ -457,23 +511,31 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 
 | Application | Version | Chart Repository |
 |-------------|---------|------------------|
-| ArgoCD | 8.1.3 | argo/argo-cd |
-| Cert-Manager | v1.18.2 | jetstack/cert-manager |
-| Istio | 1.26.2 | istio-release |
-| Kube-Prometheus-Stack | 75.15.1 | prometheus-community |
-| LGTM Distributed | 2.1.0 | grafana |
-| OpenTelemetry Kube Stack | 0.7.0 | open-telemetry |
-| Keycloak | 24.7.7 | bitnami/keycloak |
-| Open-WebUI | 6.21.0 | openwebui |
+| ArgoCD | 9.0.3 | argo/argo-cd |
+| Cert-Manager | v1.19.1 | jetstack/cert-manager |
+| Istio | 1.27.3 | istio-release |
+| Istio Base | 1.27.3 | istio-release |
+| Istio Ztunnel | 1.27.3 | istio-release |
+| Kube-Prometheus-Stack | 78.3.2 | prometheus-community |
+| Grafana | 10.1.2 | grafana |
+| Mimir (Distributed) | 5.8.0 | grafana |
+| Loki | 6.43.0 | grafana |
+| Tempo (Distributed) | 1.48.1 | grafana |
+| OpenTelemetry Kube Stack | 0.10.5 | open-telemetry |
+| Keycloak | 25.2.0 | bitnami/keycloak |
+| Open-WebUI | 8.10.0 | openwebui |
 | Homepage | 2.1.0 | jameswynn/helm-charts |
-| Immich | 0.9.3 | immich |
-| Rook-Ceph | v1.17.6 | rook-release |
+| Immich | 0.10.1 | immich |
 | MinIO Operator | 7.1.1 | minio/operator |
-| CloudNativePG | 0.24.0 | cnpg-system |
+| CloudNativePG | 0.26.0 | cnpg-system |
 | CSI Driver NFS | 4.11.0 | csi-driver-nfs |
-| Strimzi Kafka | 0.47.0 | strimzi |
-| KEDA | 2.17.2 | kedacore |
-| External DNS | 1.18.0 | external-dns |
+| Strimzi Kafka Operator | 0.47.0 | strimzi |
+| Kafka | 4.0.0 | (via Strimzi) |
+| KEDA | 2.18.0 | kedacore |
+| External DNS | 1.19.0 | kubernetes-sigs/external-dns |
+| Metrics Server | 3.13.0 | kubernetes-sigs/metrics-server |
+| Kiali | 2.16.0 | kiali/kiali-operator |
+| ECK Operator | 3.1.0 | elastic/eck-operator |
 
 ## 🔧 Configuration Highlights
 
@@ -483,29 +545,29 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **Cloud Provider**: Proxmox with CCM, CSI, and Karpenter integration
 - **Auto-scaling**: Karpenter with dynamic node provisioning from Proxmox templates
 - **Dual Stack**: IPv6/IPv4 support with native routing
-- **CNI**: Cilium with BGP integration, DSR mode, and advanced BPF features
-- **Networking**: Native routing with BGP, load balancer IP pools, and pod CIDR management
+- **CNI**: Cilium with eBPF host routing (kubeProxyReplacement), BGP integration, DSR mode, and advanced BPF features
+- **Networking**: Native routing with BGP, load balancer IP pools, pod CIDR management, and eBPF datapath (netkit)
 
 ### Storage Strategy
 - **Proxmox CSI**: Native Proxmox block storage provisioner
-- **Rook-Ceph**: Distributed storage for high availability
 - **MinIO**: S3-compatible object storage
 - **CloudNativePG**: PostgreSQL databases
 - **NFS CSI**: Network file system support
 
 ### Security Features
-- **mTLS**: Service-to-service encryption via Istio
+- **mTLS**: Service-to-service encryption via Istio Ambient Mode
+- **Zero-Trust**: Istio ambient mode provides security without sidecars
 - **OIDC**: Single sign-on with Keycloak
 - **Certificate Automation**: Let's Encrypt with Route53
 - **RBAC**: Role-based access control
 
 ### Observability Stack
-- **LGTM**: Loki (logs), Grafana (visualization), Tempo (traces), Mimir (metrics)
+- **LGTM**: Loki (distributed logs), Grafana (visualization), Tempo (distributed traces), Mimir (distributed metrics)
 - **OpenTelemetry**: Standardized telemetry collection and export to LGTM stack
 - **ELK**: Elasticsearch, Kibana for advanced log analytics
-- **Prometheus**: Metrics collection and alerting
+- **Prometheus**: Metrics collection and alerting (via Kube-Prometheus-Stack)
 - **Kiali**: Service mesh visualization
-- **Cilium Hubble**: Network and security observability
+- **Metrics Server**: Kubernetes metrics API for HPA and VPA
 
 ## 🤝 Contributing
 
@@ -541,10 +603,10 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **Network Integration**: Cilium BGP enables advanced routing with Proxmox infrastructure
 
 ### Backup Strategy
-- **Rook-Ceph**: Built-in replication and snapshots
 - **MinIO**: Object versioning and lifecycle policies
 - **CloudNativePG**: Automated backups to MinIO
 - **Elasticsearch**: Snapshot backups to MinIO
+- **Proxmox CSI**: Native Proxmox storage snapshots
 
 ### Monitoring Alerts
 - **Prometheus**: Cluster and application metrics
