@@ -122,15 +122,15 @@ server:
   resources:
     requests:
       cpu: 13m
-      memory: 158Mi
+      memory: 300Mi
     limits:
-      memory: 158Mi
+      memory: 300Mi
 
 repoServer:
   replicas: 2
   resources:
     requests:
       cpu: 157m
-      memory: 195Mi
+      memory: 300Mi
     limits:
-      memory: 195Mi
+      memory: 300Mi

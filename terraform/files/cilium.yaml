@@ -5,7 +5,8 @@ ipv6:
 
 kubeProxyReplacement: true
 loadBalancer:
-  mode: hybrid
+  mode: dsr
+  dsrDispatch: opt
 
 socketLB:
   enabled: true
