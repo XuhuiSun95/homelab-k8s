@@ -8,7 +8,7 @@ spec:
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxNodeClass
 metadata:
-  name: default 
+  name: system-node-class 
 spec:
   instanceTemplateRef:
     kind: ProxmoxUnmanagedTemplate
@@ -24,7 +24,29 @@ spec:
   tags:
     - managed-by_karpenter
     - type_k8s
-    - type-k8s-role_node-pool
+    - type-k8s-role_system
+    - cloned-from_talos-worker-template
+---
+apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
+kind: ProxmoxNodeClass
+metadata:
+  name: user-node-class 
+spec:
+  instanceTemplateRef:
+    kind: ProxmoxUnmanagedTemplate
+    name: talos-worker-template
+  metadataOptions:
+    type: cdrom
+    templatesRef:
+      name: karpenter-template
+      namespace: kube-system
+  bootDevice:
+    size: 50Gi
+    storage: local-zfs 
+  tags:
+    - managed-by_karpenter
+    - type_k8s
+    - type-k8s-role_user
     - cloned-from_talos-worker-template
 ---
 apiVersion: karpenter.sh/v1
@@ -37,17 +59,24 @@ spec:
       nodeClassRef:
         group: karpenter.proxmox.sinextra.dev
         kind: ProxmoxNodeClass
-        name: default
+        name: system-node-class
+      expireAfter: 720h
+      terminationGracePeriod: 48h
       requirements:
         - key: kubernetes.io/arch
           operator: In
           values: ["amd64"]
         - key: karpenter.proxmox.sinextra.dev/instance-family
           operator: In
-          values: ["s1"]
+          values: ["c1", "t1", "s1"]
         - key: node.kubernetes.io/instance-type
           operator: In
-          values: ["s1.2VCPU-8GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB"]
+          values: ["c1.4VCPU-8GB", "c1.8VCPU-16GB", "t1.4VCPU-12GB", "t1.8VCPU-24GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB"]
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
+    budgets:
+      - nodes: 10%
   limits:
     cpu: "64"
     memory: 512Gi
@@ -62,7 +91,9 @@ spec:
       nodeClassRef:
         group: karpenter.proxmox.sinextra.dev
         kind: ProxmoxNodeClass
-        name: default
+        name: user-node-class
+      expireAfter: 720h
+      terminationGracePeriod: 48h
       requirements:
         - key: "kubernetes.io/arch"
           operator: In
@@ -72,7 +103,12 @@ spec:
           values: ["c1", "s1", "m1"]
         - key: node.kubernetes.io/instance-type
           operator: In
-          values: ["c1.2VCPU-4GB", "c1.4VCPU-8GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB", "m1.2VCPU-16GB", "m1.4VCPU-32GB", "m1.8VCPU-64GB"]
+          values: ["c1.2VCPU-4GB", "c1.4VCPU-8GB", "c1.8VCPU-16GB", "s1.2VCPU-8GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB", "m1.2VCPU-16GB", "m1.4VCPU-32GB", "m1.8VCPU-64GB"]
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
+    budgets:
+      - nodes: 10%
   limits:
     cpu: "64"
     memory: 512Gi
