@@ -62,4 +62,4 @@ machine-learning:
         main:
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
-            tag: v2.1.0
+            tag: v2.2.3
