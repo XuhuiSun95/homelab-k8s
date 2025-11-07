@@ -3,7 +3,7 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  name: immich-cnpg-cluster-v2
+  name: immich-cnpg-cluster
   namespace: argocd
 spec:
   project: default
