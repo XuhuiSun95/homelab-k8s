@@ -1,1 +1,4 @@
 profile: ambient
+
+global:
+  nativeNftables: true
