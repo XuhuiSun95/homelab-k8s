@@ -5,7 +5,7 @@ metadata:
   namespace: immich 
 spec:
   hosts:
-  - "immich.local-v2.xuhuisun.com"
+  - immich.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:
