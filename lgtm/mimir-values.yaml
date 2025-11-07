@@ -28,7 +28,7 @@ mimir:
       kafka:
         address: kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
         topic: mimir-ingest
-        auto_create_topics_enabled: false
+        auto_create_topic_enabled: false
 alertmanager:
   persistentVolume:
     size: 1Gi
