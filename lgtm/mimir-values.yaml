@@ -24,6 +24,11 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
+    ingester_storage:
+      kafka:
+        addresses: kafka-cluster-kafka-brokers.kafka.svc.cluster.local:9092
+      topic: mimir-ingester
+      auto_create_topics_enabled: false
 alertmanager:
   persistentVolume:
     size: 1Gi
@@ -120,6 +125,8 @@ results-cache:
       effect: NoSchedule
   priorityClassName: platform-critical
 minio:
+  enabled: false
+kafka:
   enabled: false
 overrides_exporter:
   replicas: 1
