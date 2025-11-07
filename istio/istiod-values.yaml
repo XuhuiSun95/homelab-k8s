@@ -50,3 +50,4 @@ meshConfig:
 
 global:
   priorityClassName: platform-critical
+  nativeNftables: true
