@@ -31,7 +31,7 @@ This homelab deploys a production-ready Kubernetes cluster using:
 - **Auto-scaling**: Karpenter with Proxmox provider for dynamic node provisioning
 - **GitOps**: ArgoCD for declarative application management
 - **Service Mesh**: Istio Ambient Mode for zero-trust traffic management, security, and observability
-- **Ingress**: Custom domain (`local-v2.xuhuisun.com`) with Let's Encrypt certificates
+- **Ingress**: Custom domain (`local.xuhuisun.com`) with Let's Encrypt certificates
 - **Storage**: Multiple storage solutions (MinIO, NFS, CloudNativePG, Proxmox CSI)
 - **Observability**: Complete LGTM stack (Loki, Grafana, Tempo, Mimir) plus ELK stack
 - **Authentication**: Keycloak for identity and access management
@@ -39,40 +39,40 @@ This homelab deploys a production-ready Kubernetes cluster using:
 
 ## 📊 Services Dashboard
 
-Access your services at [Homepage Dashboard](https://homepage.local-v2.xuhuisun.com)
+Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com)
 
 ### 🔐 Management & Security
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **ArgoCD** | https://argocd.local-v2.xuhuisun.com | GitOps continuous delivery |
-| **Keycloak** | https://keycloak.local-v2.xuhuisun.com | Identity & access management |
-| **Homepage** | https://homepage.local-v2.xuhuisun.com | Service dashboard |
+| **ArgoCD** | https://argocd.local.xuhuisun.com | GitOps continuous delivery |
+| **Keycloak** | https://keycloak.local.xuhuisun.com | Identity & access management |
+| **Homepage** | https://homepage.local.xuhuisun.com | Service dashboard |
 
 ### 📈 Observability & Monitoring
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **Grafana** | https://grafana.local-v2.xuhuisun.com | Metrics visualization |
-| **Mimir** | https://mimir.local-v2.xuhuisun.com | Long-term metrics storage |
-| **Kiali** | https://kiali.local-v2.xuhuisun.com | Istio service mesh console |
-| **Kibana** | https://kibana.local-v2.xuhuisun.com | Elasticsearch visualization |
+| **Grafana** | https://grafana.local.xuhuisun.com | Metrics visualization |
+| **Mimir** | https://mimir.local.xuhuisun.com | Long-term metrics storage |
+| **Kiali** | https://kiali.local.xuhuisun.com | Istio service mesh console |
+| **Kibana** | https://kibana.local.xuhuisun.com | Elasticsearch visualization |
 
 ### 💾 Storage & Data
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **MinIO Console** | https://minio-console.local-v2.xuhuisun.com | Object storage management |
+| **MinIO Console** | https://minio-console.local.xuhuisun.com | Object storage management |
 
 ### 🤖 AI & Productivity
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **Open-WebUI** | https://open-webui.local-v2.xuhuisun.com | AI interface (LLM frontend) |
-| **Immich** | https://immich.local-v2.xuhuisun.com | Photo management & backup |
+| **Open-WebUI** | https://open-webui.local.xuhuisun.com | AI interface (LLM frontend) |
+| **Immich** | https://immich.local.xuhuisun.com | Photo management & backup |
 
 ### 🏠 Infrastructure
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **Proxmox VE** | https://pve2.local-v2.xuhuisun.com | Hypervisor management |
-| **Proxmox Backup** | https://pbs.local-v2.xuhuisun.com | Backup management |
-| **Scrypted** | https://scrypted.local-v2.xuhuisun.com | Home automation |
+| **Proxmox VE** | https://pve2.local.xuhuisun.com | Hypervisor management |
+| **Proxmox Backup** | https://pbs.local.xuhuisun.com | Backup management |
+| **Scrypted** | https://scrypted.local.xuhuisun.com | Home automation |
 
 ## 🚀 Deployment Categories
 
@@ -411,8 +411,8 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 ## 🌐 Network Configuration
 
 ### Domain Structure
-- **Primary Domain**: `local-v2.xuhuisun.com`
-- **Wildcard Certificate**: `*.local-v2.xuhuisun.com` (Let's Encrypt)
+- **Primary Domain**: `local.xuhuisun.com`
+- **Wildcard Certificate**: `*.local.xuhuisun.com` (Let's Encrypt)
 - **DNS Provider**: Unifi with External DNS automation
 - **TLS Termination**: Istio Ingress Gateway
 - **BGP Integration**: Cilium BGP for LoadBalancer IP advertisement
