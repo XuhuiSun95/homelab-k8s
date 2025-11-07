@@ -26,7 +26,7 @@ mimir:
         bucket_name: mimir-ruler
     ingest_storage:
       kafka:
-        addresses: kafka-cluster-kafka-brokers.kafka.svc.cluster.local:9092
+        addresses: kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
       topic: mimir-ingester
       auto_create_topics_enabled: false
 alertmanager:
