@@ -20,6 +20,6 @@ spec:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
-  # syncPolicy:
-    # automated:
-    #   selfHeal: true 
+  syncPolicy:
+    automated:
+      selfHeal: true 
