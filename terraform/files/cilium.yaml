@@ -19,6 +19,9 @@ ipam:
 
 routingMode: native
 autoDirectNodeRoutes: true
+devices: "eth+"
+nodePort:
+  directRoutingDevice: "eth+"
 
 bgpControlPlane:
   enabled: true

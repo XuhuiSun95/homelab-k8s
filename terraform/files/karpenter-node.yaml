@@ -61,17 +61,17 @@ spec:
         kind: ProxmoxNodeClass
         name: system-node-class
       expireAfter: 720h
-      terminationGracePeriod: 48h
+      terminationGracePeriod: 1h
       requirements:
         - key: kubernetes.io/arch
           operator: In
           values: ["amd64"]
-        - key: karpenter.proxmox.sinextra.dev/instance-family
-          operator: In
-          values: ["c1", "t1", "s1"]
-        - key: node.kubernetes.io/instance-type
-          operator: In
-          values: ["c1.4VCPU-8GB", "c1.8VCPU-16GB", "t1.4VCPU-12GB", "t1.8VCPU-24GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB"]
+        # - key: karpenter.proxmox.sinextra.dev/instance-family
+        #   operator: In
+        #   values: ["c1", "t1", "s1"]
+        # - key: node.kubernetes.io/instance-type
+        #   operator: In
+        #   values: ["c1.4VCPU-8GB", "c1.8VCPU-16GB", "t1.4VCPU-12GB", "t1.8VCPU-24GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB"]
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 1m
@@ -93,17 +93,17 @@ spec:
         kind: ProxmoxNodeClass
         name: user-node-class
       expireAfter: 720h
-      terminationGracePeriod: 48h
+      terminationGracePeriod: 1h
       requirements:
         - key: "kubernetes.io/arch"
           operator: In
           values: ["amd64"]
-        - key: karpenter.proxmox.sinextra.dev/instance-family
-          operator: In
-          values: ["c1", "s1", "m1"]
-        - key: node.kubernetes.io/instance-type
-          operator: In
-          values: ["c1.2VCPU-4GB", "c1.4VCPU-8GB", "c1.8VCPU-16GB", "s1.2VCPU-8GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB", "m1.2VCPU-16GB", "m1.4VCPU-32GB", "m1.8VCPU-64GB"]
+        # - key: karpenter.proxmox.sinextra.dev/instance-family
+        #   operator: In
+        #   values: ["c1", "s1", "m1"]
+        # - key: node.kubernetes.io/instance-type
+        #   operator: In
+        #   values: ["c1.2VCPU-4GB", "c1.4VCPU-8GB", "c1.8VCPU-16GB", "s1.2VCPU-8GB", "s1.4VCPU-16GB", "s1.8VCPU-32GB", "m1.2VCPU-16GB", "m1.4VCPU-32GB", "m1.8VCPU-64GB"]
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 1m
