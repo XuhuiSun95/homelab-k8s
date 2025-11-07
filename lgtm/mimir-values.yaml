@@ -24,7 +24,7 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
-    ingester_storage:
+    ingest_storage:
       kafka:
         addresses: kafka-cluster-kafka-brokers.kafka.svc.cluster.local:9092
       topic: mimir-ingester
