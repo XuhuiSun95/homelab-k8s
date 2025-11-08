@@ -39,6 +39,12 @@ immich:
 
 valkey:
   enabled: true
+  resources:
+    requests:
+      cpu: 15m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 
 server:
   controllers:
@@ -51,6 +57,12 @@ server:
           image:
             repository: ghcr.io/immich-app/immich-server
             tag: v2.2.3
+  resources:
+    requests:
+      cpu: 189m
+      memory: 564Mi
+    limits:
+      memory: 564Mi
 
 machine-learning:
   controllers:
@@ -63,3 +75,9 @@ machine-learning:
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
             tag: v2.2.3
+  resources:
+    requests:
+      cpu: 23m
+      memory: 391Mi
+    limits:
+      memory: 391Mi

@@ -19,9 +19,9 @@ priorityClassName: platform-critical
 resources:
   requests:
     cpu: 10m
-    memory: 115Mi
+    memory: 100Mi
   limits:
-    memory: 115Mi
+    memory: 100Mi
 
 sources:
   - service
