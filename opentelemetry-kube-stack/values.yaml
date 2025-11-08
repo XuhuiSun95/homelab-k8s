@@ -28,7 +28,7 @@ collectors:
     scrape_configs_file: ""
     presets:
       logsCollection:
-        enabled: false
+        enabled: true
       kubeletMetrics:
         enabled: false 
       hostMetrics:
