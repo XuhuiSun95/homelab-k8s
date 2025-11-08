@@ -45,7 +45,8 @@ meshConfig:
     opentelemetry:
       port: 4317
       # service: opentelemetry-kube-stack-daemon-collector.opentelemetry-operator-system.svc.cluster.local
-      service: lgtm-tempo-gateway.monitoring.svc.cluster.local
+      # service: lgtm-tempo-gateway.monitoring.svc.cluster.local
+      service: test.monitoring.svc.cluster.local
       resource_detectors:
         environment: {}
 
