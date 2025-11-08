@@ -83,9 +83,9 @@ cainjector:
   resources:
     requests:
       cpu: 10m
-      memory: 114Mi
+      memory: 100Mi
     limits:
-      memory: 114Mi
+      memory: 100Mi
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
