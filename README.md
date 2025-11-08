@@ -1,6 +1,34 @@
 # Homelab Kubernetes Cluster
 
-A comprehensive cloud-native homelab built on Kubernetes with GitOps, service mesh, observability, and AI capabilities.
+> **Production-ready Kubernetes homelab infrastructure** built with Talos Linux, Proxmox, GitOps (ArgoCD), Istio service mesh, and comprehensive observability stack. Features auto-scaling with Karpenter, zero-trust security, and full cloud-native tooling.
+
+[![Kubernetes](https://img.shields.io/badge/kubernetes-1.29+-blue.svg)](https://kubernetes.io/)
+[![Talos Linux](https://img.shields.io/badge/Talos-v1.8.0-blue)](https://www.talos.dev/)
+[![Terraform](https://img.shields.io/badge/terraform-1.0+-purple.svg)](https://www.terraform.io/)
+[![ArgoCD](https://img.shields.io/badge/ArgoCD-9.0.3-blue)](https://argo-cd.readthedocs.io/)
+[![Istio](https://img.shields.io/badge/Istio-1.27.3-blue)](https://istio.io/)
+
+A comprehensive, production-grade Kubernetes homelab infrastructure built on **Talos Linux** and **Proxmox**. This repository provides a complete cloud-native platform featuring GitOps workflows, service mesh capabilities, full observability (LGTM stack), auto-scaling, and enterprise-grade security. Perfect for learning Kubernetes, running personal services, or building a production-like environment at home.
+
+## 📑 Table of Contents
+
+- [🏗️ Architecture Overview](#️-architecture-overview)
+- [🛠️ Technology Stack](#️-technology-stack)
+- [📊 Services Dashboard](#-services-dashboard)
+- [🚀 Deployment Categories](#-deployment-categories)
+- [🛠️ Setup Instructions](#️-setup-instructions)
+- [🔑 Access Credentials](#-access-credentials)
+- [🔄 Maintenance & Upgrades](#-maintenance--upgrades)
+- [🌐 Network Configuration](#-network-configuration)
+- [🎯 Key Features](#-key-features)
+- [💡 Use Cases](#-use-cases)
+- [📁 Repository Structure](#-repository-structure)
+- [📋 Current Application Versions](#-current-application-versions)
+- [🔧 Configuration Highlights](#-configuration-highlights)
+- [🤝 Contributing](#-contributing)
+- [📚 Documentation & Resources](#-documentation--resources)
+- [🚨 Important Notes](#-important-notes)
+- [🏷️ Topics & Tags](#️-topics--tags)
 
 ## ⚠️ Temporary Warning
 
@@ -24,18 +52,58 @@ spec:
 
 ## 🏗️ Architecture Overview
 
-This homelab deploys a production-ready Kubernetes cluster using:
-- **Infrastructure**: Talos Linux on Proxmox VMs with Terraform for immutable Kubernetes deployment
-- **Cloud Provider**: Proxmox integration with CCM, CSI, and Karpenter for automation
-- **Networking**: Cilium CNI with eBPF host routing (kubeProxyReplacement), BGP integration, and dual-stack IPv4/IPv6 support
-- **Auto-scaling**: Karpenter with Proxmox provider for dynamic node provisioning
-- **GitOps**: ArgoCD for declarative application management
-- **Service Mesh**: Istio Ambient Mode for zero-trust traffic management, security, and observability
-- **Ingress**: Custom domain (`local.xuhuisun.com`) with Let's Encrypt certificates
-- **Storage**: Multiple storage solutions (MinIO, NFS, CloudNativePG, Proxmox CSI)
-- **Observability**: Complete LGTM stack (Loki, Grafana, Tempo, Mimir) plus ELK stack
-- **Authentication**: Keycloak for identity and access management
-- **Automation**: Renovate for dependency updates, KEDA for auto-scaling
+This homelab deploys a **production-ready Kubernetes cluster** using modern cloud-native technologies:
+
+- **Infrastructure**: **Talos Linux** on **Proxmox VMs** with **Terraform** for immutable Kubernetes deployment
+- **Cloud Provider**: **Proxmox** integration with **Cloud Controller Manager (CCM)**, **Container Storage Interface (CSI)**, and **Karpenter** for automation
+- **Networking**: **Cilium CNI** with **eBPF** host routing (kubeProxyReplacement), **BGP** integration, and dual-stack **IPv4/IPv6** support
+- **Auto-scaling**: **Karpenter** with Proxmox provider for dynamic node provisioning and workload scaling
+- **GitOps**: **ArgoCD** for declarative application management and continuous delivery
+- **Service Mesh**: **Istio Ambient Mode** for zero-trust traffic management, security, and observability
+- **Ingress**: Custom domain (`local.xuhuisun.com`) with **Let's Encrypt** certificates via **cert-manager**
+- **Storage**: Multiple storage solutions (**MinIO** S3-compatible, **NFS CSI**, **CloudNativePG** PostgreSQL, **Proxmox CSI**)
+- **Observability**: Complete **LGTM stack** (Loki, Grafana, Tempo, Mimir) plus **ELK stack** (Elasticsearch, Kibana)
+- **Authentication**: **Keycloak** for identity and access management with **OIDC** integration
+- **Automation**: **Renovate** for dependency updates, **KEDA** for event-driven auto-scaling
+
+## 🛠️ Technology Stack
+
+### Core Infrastructure
+- **Kubernetes**: Container orchestration platform
+- **Talos Linux**: Immutable, API-driven Linux distribution for Kubernetes
+- **Proxmox VE**: Virtualization platform and hypervisor
+- **Terraform**: Infrastructure as Code (IaC) tool
+
+### Networking & Service Mesh
+- **Cilium**: eBPF-based CNI plugin with advanced networking features
+- **Istio**: Service mesh with ambient mode (zero-trust networking)
+- **BGP**: Border Gateway Protocol for advanced routing
+
+### GitOps & CI/CD
+- **ArgoCD**: GitOps continuous delivery tool
+- **Renovate**: Automated dependency updates
+
+### Observability & Monitoring
+- **LGTM Stack**: Loki (logs), Grafana (visualization), Tempo (traces), Mimir (metrics)
+- **ELK Stack**: Elasticsearch, Logstash, Kibana
+- **Prometheus**: Metrics collection and alerting
+- **OpenTelemetry**: Unified observability framework
+- **Kiali**: Service mesh observability
+
+### Storage Solutions
+- **MinIO**: S3-compatible object storage
+- **CloudNativePG**: PostgreSQL operator for Kubernetes
+- **NFS CSI**: Network File System support
+- **Proxmox CSI**: Native Proxmox block storage
+
+### Security & Authentication
+- **Keycloak**: Identity and Access Management (IAM)
+- **cert-manager**: Automated certificate lifecycle management
+- **mTLS**: Mutual TLS for service-to-service encryption
+
+### Auto-scaling & Orchestration
+- **Karpenter**: Dynamic node provisioning and scaling
+- **KEDA**: Event-driven autoscaling for workloads
 
 ## 📊 Services Dashboard
 
@@ -76,54 +144,67 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 
 ## 🚀 Deployment Categories
 
-### API Gateway
-- **Istio Ingress Gateway**: HTTP/HTTPS traffic routing with TLS termination
-- **Certificate Management**: Automated Let's Encrypt certificates
+This homelab includes a comprehensive set of **cloud-native applications** organized by category:
+
+### API Gateway & Ingress
+- **Istio Ingress Gateway**: HTTP/HTTPS traffic routing with **TLS termination** and load balancing
+- **Certificate Management**: Automated **Let's Encrypt** certificates via **cert-manager** with **Route53** DNS validation
 
 ### Cloud Native Storage
-- **MinIO**: S3-compatible object storage
-- **CloudNativePG**: PostgreSQL operator for databases
-- **NFS CSI Driver**: Network file system support
-- **Proxmox CSI**: Native Proxmox block storage provisioner
+- **MinIO**: **S3-compatible object storage** for backups, artifacts, and data lake
+- **CloudNativePG**: **PostgreSQL operator** for Kubernetes-native database management
+- **NFS CSI Driver**: **Network File System** support for shared storage
+- **Proxmox CSI**: Native **Proxmox block storage** provisioner for persistent volumes
 
-### Continuous Integration/Delivery
-- **ArgoCD**: GitOps platform for Kubernetes deployments
-- **Self-healing**: Automated drift detection and correction
+### Continuous Integration/Delivery (CI/CD)
+- **ArgoCD**: **GitOps platform** for declarative Kubernetes deployments
+- **Self-healing**: Automated drift detection and correction with continuous sync
+- **Renovate**: Automated dependency and Helm chart updates
 
-### DNS & Network
-- **External DNS**: Automated DNS record management with Unifi integration
-- **Istio Service Mesh**: Advanced traffic management, security, and observability
+### DNS & Network Management
+- **External DNS**: Automated **DNS record management** with **Unifi** integration
+- **Istio Service Mesh**: Advanced **traffic management**, **security policies**, and **observability**
 
-### Observability Stack
-- **LGTM Stack**: Complete observability with Loki (distributed), Grafana, Tempo (distributed), Mimir (distributed)
-- **OpenTelemetry Kube Stack**: Unified observability framework with automated instrumentation
-- **Elastic Stack**: Elasticsearch, Kibana for log analytics
-- **Kube-Prometheus-Stack**: Comprehensive cluster monitoring with Prometheus and Grafana
-- **Kiali**: Service mesh visualization
-- **Metrics Server**: Kubernetes metrics API implementation
+### Observability & Monitoring Stack
+- **LGTM Stack**: Complete observability with **Loki** (distributed logs), **Grafana** (visualization), **Tempo** (distributed traces), **Mimir** (distributed metrics)
+- **OpenTelemetry Kube Stack**: Unified observability framework with **automated instrumentation**
+- **Elastic Stack**: **Elasticsearch** and **Kibana** for advanced log analytics and search
+- **Kube-Prometheus-Stack**: Comprehensive **cluster monitoring** with **Prometheus** metrics and **Grafana** dashboards
+- **Kiali**: **Service mesh visualization** and traffic flow analysis
+- **Metrics Server**: **Kubernetes metrics API** implementation for **HPA** and **VPA**
 
 ### Security & Compliance
-- **Cert-Manager**: Automated certificate lifecycle management
-- **Keycloak**: Enterprise identity and access management
-- **OIDC Integration**: Single sign-on across services
+- **Cert-Manager**: Automated **certificate lifecycle management** with **Let's Encrypt** integration
+- **Keycloak**: Enterprise **identity and access management (IAM)** with **OIDC** and **OAuth2**
+- **OIDC Integration**: **Single sign-on (SSO)** across all services
+- **mTLS**: **Mutual TLS** encryption for service-to-service communication via **Istio**
 
 ### Service Mesh
-- **Istio Ambient Mode**: Zero-trust service mesh without sidecars using ztunnel
-- **Istio Base**: Core service mesh functionality
-- **Istio CNI**: Network plugin for pod-to-pod encryption
-- **Istio Ztunnel**: Secure overlay network for ambient mode
-- **Traffic Policies**: Advanced routing, load balancing, and circuit breaking
+- **Istio Ambient Mode**: **Zero-trust service mesh** without sidecars using **ztunnel** for secure overlay
+- **Istio Base**: Core **service mesh functionality** and control plane
+- **Istio CNI**: **Network plugin** for pod-to-pod encryption and traffic policies
+- **Istio Ztunnel**: **Secure overlay network** for ambient mode with **L4 encryption**
+- **Traffic Policies**: Advanced **routing**, **load balancing**, **circuit breaking**, and **retry logic**
 
 ### Streaming & Messaging
-- **Strimzi Kafka**: Apache Kafka on Kubernetes
-- **OAuth Authentication**: Secured Kafka access via Keycloak
+- **Strimzi Kafka**: **Apache Kafka** operator for Kubernetes with **high availability**
+- **OAuth Authentication**: Secured **Kafka access** via **Keycloak** integration
 
 ### Auto-scaling & Orchestration
-- **KEDA**: Event-driven autoscaling for workloads
+- **KEDA**: **Event-driven autoscaling** for workloads based on metrics, queues, and external events
+- **Karpenter**: **Dynamic node provisioning** and scaling with **Proxmox** integration
 
 ## 🛠️ Setup Instructions
 
+This guide will help you deploy a **production-ready Kubernetes cluster** on **Proxmox** using **Talos Linux** and **Terraform**. The setup follows **Infrastructure as Code** best practices and uses **GitOps** for application management.
+
 ### Prerequisites
+
+Before starting, ensure you have:
+
+- A **Proxmox VE** cluster with appropriate storage and network configuration
+- Network access to your Proxmox cluster
+- Basic knowledge of **Kubernetes**, **Terraform**, and **Linux**
 
 Install required tools:
 
@@ -433,19 +514,34 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 
 ## 🎯 Key Features
 
-- **🔄 GitOps Workflow**: Everything managed as code with ArgoCD
-- **🔒 Security First**: mTLS, OAuth2/OIDC, automated certificate management
-- **📊 Full Observability**: Metrics, logs, traces, and service mesh visibility
-- **🚀 Auto-scaling**: KEDA for event-driven scaling
-- **💾 Multiple Storage**: Block, object, file, and database storage solutions
-- **🤖 AI Ready**: Open-WebUI for LLM interactions
-- **🏠 Home Integration**: Proxmox, Scrypted, and network infrastructure
-- **⚡ Immutable Infrastructure**: Talos Linux provides immutable, API-driven OS
-- **🔧 Infrastructure as Code**: Complete cluster lifecycle managed with Terraform
-- **🛡️ Enhanced Security**: Minimal attack surface with read-only root filesystem
-- **📦 Container-Optimized**: Built specifically for Kubernetes workloads
-- **🔄 Dynamic Scaling**: Karpenter auto-scales nodes based on workload demand
-- **🏷️ Node Pool Management**: Separate pools for system and user workloads
+- **🔄 GitOps Workflow**: Everything managed as code with **ArgoCD** - declarative, version-controlled infrastructure
+- **🔒 Security First**: **mTLS**, **OAuth2/OIDC**, automated certificate management with **cert-manager** and **Let's Encrypt**
+- **📊 Full Observability**: Complete **metrics, logs, traces** collection with **LGTM stack**, **Prometheus**, **OpenTelemetry**, and service mesh visibility via **Kiali**
+- **🚀 Auto-scaling**: **KEDA** for event-driven scaling and **Karpenter** for dynamic node provisioning
+- **💾 Multiple Storage**: **Block storage** (Proxmox CSI), **object storage** (MinIO S3), **file storage** (NFS), and **database storage** (CloudNativePG)
+- **🤖 AI Ready**: **Open-WebUI** for LLM interactions and AI workloads
+- **🏠 Home Integration**: **Proxmox** virtualization, **Scrypted** home automation, and network infrastructure
+- **⚡ Immutable Infrastructure**: **Talos Linux** provides immutable, API-driven operating system with read-only root filesystem
+- **🔧 Infrastructure as Code**: Complete cluster lifecycle managed with **Terraform** - from VM creation to Kubernetes bootstrap
+- **🛡️ Enhanced Security**: Minimal attack surface with **Talos Linux**, zero-trust networking via **Istio Ambient Mode**
+- **📦 Container-Optimized**: Built specifically for **Kubernetes workloads** with optimized resource usage
+- **🔄 Dynamic Scaling**: **Karpenter** auto-scales nodes based on workload demand with Proxmox integration
+- **🏷️ Node Pool Management**: Separate pools for system and user workloads with resource isolation
+- **🌐 Advanced Networking**: **Cilium eBPF** datapath, **BGP** routing, dual-stack **IPv4/IPv6**, and **DSR** mode support
+- **🔍 Service Mesh**: **Istio Ambient Mode** for zero-trust security without sidecar overhead
+
+## 💡 Use Cases
+
+This Kubernetes homelab is perfect for:
+
+- **Learning Kubernetes**: Hands-on experience with production-grade Kubernetes tooling
+- **Personal Cloud Services**: Self-hosted alternatives to cloud services (photo management, AI tools, storage)
+- **Development Environment**: Production-like environment for testing and development
+- **Home Automation**: Centralized platform for smart home services and automation
+- **DevOps Practice**: Real-world experience with GitOps, service mesh, observability, and infrastructure automation
+- **Cost Optimization**: Run cloud-native workloads on-premises with enterprise features
+- **Security Research**: Zero-trust networking, mTLS, and advanced security configurations
+- **CNCF Technology Exploration**: Hands-on experience with CNCF projects (Istio, ArgoCD, Cilium, etc.)
 
 ## 📁 Repository Structure
 
@@ -576,12 +672,26 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 3. Renovate handles dependency updates
 4. Test changes in staging environment first
 
-## 📚 Documentation
+## 📚 Documentation & Resources
 
-- [Talos Linux Documentation](https://www.talos.dev/docs/)
-- [Istio Service Mesh Guide](https://istio.io/latest/docs/)
-- [ArgoCD User Guide](https://argo-cd.readthedocs.io/)
-- [CNCF Landscape](https://landscape.cncf.io/) for technology choices
+### Official Documentation
+- [Talos Linux Documentation](https://www.talos.dev/docs/) - Immutable Kubernetes OS
+- [Istio Service Mesh Guide](https://istio.io/latest/docs/) - Service mesh documentation
+- [ArgoCD User Guide](https://argo-cd.readthedocs.io/) - GitOps continuous delivery
+- [Cilium Documentation](https://docs.cilium.io/) - eBPF-based networking
+- [Karpenter Documentation](https://karpenter.sh/) - Dynamic node provisioning
+- [Proxmox VE Documentation](https://pve.proxmox.com/pve-docs/) - Virtualization platform
+
+### Learning Resources
+- [CNCF Landscape](https://landscape.cncf.io/) - Cloud Native technology overview
+- [Kubernetes Documentation](https://kubernetes.io/docs/) - Official Kubernetes docs
+- [Terraform Documentation](https://www.terraform.io/docs) - Infrastructure as Code
+
+### Related Projects
+- [Talos Linux](https://github.com/siderolabs/talos) - Immutable Kubernetes OS
+- [Istio](https://github.com/istio/istio) - Service mesh
+- [ArgoCD](https://github.com/argoproj/argo-cd) - GitOps tool
+- [Cilium](https://github.com/cilium/cilium) - eBPF networking
 
 ## 🚨 Important Notes
 
@@ -618,6 +728,30 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **ArgoCD**: Self-healing and drift detection
 - **Storage**: Distributed and replicated storage
 - **Backups**: Automated backup strategies
+
+---
+
+## 🏷️ Topics & Tags
+
+This project uses and demonstrates:
+
+**Kubernetes Ecosystem**: `kubernetes` `talos-linux` `proxmox` `terraform` `infrastructure-as-code` `gitops` `argocd`
+
+**Service Mesh & Networking**: `istio` `cilium` `ebpf` `bgp` `service-mesh` `zero-trust` `mtls`
+
+**Observability**: `prometheus` `grafana` `loki` `tempo` `mimir` `opentelemetry` `kiali` `elasticsearch` `kibana` `lgtm-stack`
+
+**Storage**: `minio` `s3` `cloudnative-pg` `postgresql` `nfs` `csi` `proxmox-csi`
+
+**Security & Authentication**: `keycloak` `oidc` `oauth2` `cert-manager` `lets-encrypt` `rbac`
+
+**Auto-scaling**: `karpenter` `keda` `autoscaling` `dynamic-scaling`
+
+**CI/CD & Automation**: `argocd` `gitops` `renovate` `continuous-delivery`
+
+**Applications**: `immich` `open-webui` `homepage` `kafka` `strimzi`
+
+**Infrastructure**: `homelab` `self-hosted` `cloud-native` `cncf` `production-ready`
 
 ---
 
