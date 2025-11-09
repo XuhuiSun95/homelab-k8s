@@ -5,7 +5,11 @@ grafana:
   enabled: false
   forceDeployDashboards: true
 
+kubeApiServer:
+  enabled: false 
+
 kubelet:
+  enabled: false
   serviceMonitor:
     relabelings:
       - action: replace
@@ -16,6 +20,7 @@ kubelet:
         action: replace
 
 kubeControllerManager:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -26,6 +31,7 @@ kubeControllerManager:
         action: replace
 
 coreDns:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
@@ -36,6 +42,7 @@ coreDns:
         action: replace
 
 kubeEtcd:
+  enabled: false
   service:
     selector:
       k8s-app: kube-controller-manager
@@ -48,6 +55,7 @@ kubeEtcd:
         action: replace
 
 kubeScheduler:
+  enabled: false
   service:
     ipDualStack:
       enabled: true
