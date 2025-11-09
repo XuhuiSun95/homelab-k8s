@@ -39,20 +39,20 @@ collectors:
       logsCollection:
         enabled: true
       kubeletMetrics:
-        enabled: false
+        enabled: true 
       hostMetrics:
         enabled: false
       kubernetesAttributes:
         enabled: true
       kubernetesEvents:
-        enabled: false
+        enabled: false 
       clusterMetrics:
         enabled: false
     config:
       receivers:
-        prometheus: {}
-          # config:
-          #   scrape_configs:
+        prometheus:
+          config:
+            scrape_configs: {}
       exporters:
         otlp/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
@@ -76,9 +76,6 @@ collectors:
             exporters:
               - otlp/tempo
           metrics:
-            # receivers:
-            #   - otlp
-            #   - prometheus
             exporters:
               - otlphttp/mimir
           logs:
