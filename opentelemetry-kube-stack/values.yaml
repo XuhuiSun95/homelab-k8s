@@ -25,7 +25,7 @@ defaultCRConfig:
 
 collectors:
   daemon:
-    scrape_configs_file: ""
+    # scrape_configs_file: ""
     presets:
       logsCollection:
         enabled: true
