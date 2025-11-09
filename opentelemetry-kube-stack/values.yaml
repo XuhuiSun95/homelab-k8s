@@ -72,6 +72,9 @@ collectors:
             exporters:
               - otlphttp/loki
 
+kubernetesServiceMonitors:
+  enabled: true 
+
 kubeApiServer:
   enabled: true 
 
