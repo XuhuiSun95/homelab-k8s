@@ -80,29 +80,18 @@ kubelet:
 
 kubeControllerManager:
   enabled: true
-  service:
-    ipDualStack:
-      enabled: true
 
 coreDns:
   enabled: true
-  service:
-    ipDualStack:
-      enabled: true
 
 kubeEtcd:
   enabled: true
   service:
     selector:
       k8s-app: kube-controller-manager
-    ipDualStack:
-      enabled: true
 
 kubeScheduler:
   enabled: true
-  service:
-    ipDualStack:
-      enabled: true
 
 kubeProxy:
   enabled: false
