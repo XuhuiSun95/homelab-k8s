@@ -60,50 +60,11 @@ kubeScheduler:
 kubeProxy:
   enabled: false
 
-kube-state-metrics:
-  service:
-    ipDualStack:
-      enabled: true
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-            - key: karpenter.sh/nodepool
-              operator: In
-              values: ["system"]
-  tolerations:
-    - key: node-role.kubernetes.io/system
-      operator: Exists
-      effect: NoSchedule
-  resources:
-    requests:
-      cpu: 10m
-      memory: 100Mi
-    limits:
-      memory: 100Mi
-  priorityClassName: platform-critical
+kubeStateMetrics:
+  enabled: false 
 
 nodeExporter:
   enabled: false 
-
-# prometheus-node-exporter:
-#   service:
-#     ipDualStack:
-#       enabled: true
-#   prometheus:
-#     monitor:
-#       relabelings:
-#         - sourceLabels: [__meta_kubernetes_pod_node_name]
-#           targetLabel: instance
-#           action: replace
-#   resources:
-#     requests:
-#       cpu: 10m
-#       memory: 100Mi
-#     limits:
-#       memory: 100Mi
-#   priorityClassName: platform-critical
 
 prometheusOperator:
   admissionWebhooks:

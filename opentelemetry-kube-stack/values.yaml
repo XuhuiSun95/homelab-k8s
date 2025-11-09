@@ -40,6 +40,9 @@ collectors:
       clusterMetrics:
         enabled: false
     config:
+      processors:
+        resourcedetection/env:
+          detectors: [env]
       exporters:
         otlp/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
@@ -69,6 +72,32 @@ collectors:
             exporters:
               - otlphttp/loki
 
+kubeStateMetrics:
+  enabled: true 
+
+kube-state-metrics:
+  service:
+    ipDualStack:
+      enabled: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+  priorityClassName: platform-critical
 
 nodeExporter:
   enabled: true 
@@ -82,12 +111,6 @@ prometheus-node-exporter:
   service:
     ipDualStack:
       enabled: true
-  # prometheus:
-  #   monitor:
-  #     relabelings:
-  #       - sourceLabels: [__meta_kubernetes_pod_node_name]
-  #         targetLabel: instance
-  #         action: replace
   resources:
     requests:
       cpu: 10m
