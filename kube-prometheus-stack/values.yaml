@@ -122,7 +122,7 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
-  enabled: false 
+  enabled: true 
   service:
     ipDualStack:
       enabled: true
@@ -132,10 +132,10 @@ prometheus:
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     retention: 1h
-    remoteWrite:
-      - url:  http://lgtm-mimir-gateway/api/v1/push
-        headers:
-          X-Scope-OrgID: homelab-k8s
+    # remoteWrite:
+    #   - url:  http://lgtm-mimir-gateway/api/v1/push
+    #     headers:
+    #       X-Scope-OrgID: homelab-k8s
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
