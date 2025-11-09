@@ -84,23 +84,26 @@ kube-state-metrics:
       memory: 100Mi
   priorityClassName: platform-critical
 
-prometheus-node-exporter:
-  service:
-    ipDualStack:
-      enabled: true
-  prometheus:
-    monitor:
-      relabelings:
-        - sourceLabels: [__meta_kubernetes_pod_node_name]
-          targetLabel: instance
-          action: replace
-  resources:
-    requests:
-      cpu: 10m
-      memory: 100Mi
-    limits:
-      memory: 100Mi
-  priorityClassName: platform-critical
+nodeExporter:
+  enabled: false 
+
+# prometheus-node-exporter:
+#   service:
+#     ipDualStack:
+#       enabled: true
+#   prometheus:
+#     monitor:
+#       relabelings:
+#         - sourceLabels: [__meta_kubernetes_pod_node_name]
+#           targetLabel: instance
+#           action: replace
+#   resources:
+#     requests:
+#       cpu: 10m
+#       memory: 100Mi
+#     limits:
+#       memory: 100Mi
+#   priorityClassName: platform-critical
 
 prometheusOperator:
   admissionWebhooks:

@@ -68,3 +68,30 @@ collectors:
           logs:
             exporters:
               - otlphttp/loki
+
+
+nodeExporter:
+  enabled: true 
+
+prometheus-node-exporter:
+  extraArgs:
+    - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run/containerd/.+|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+    - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|erofs)$
+    - --collector.systemd
+    - --collector.processes
+  service:
+    ipDualStack:
+      enabled: true
+  # prometheus:
+  #   monitor:
+  #     relabelings:
+  #       - sourceLabels: [__meta_kubernetes_pod_node_name]
+  #         targetLabel: instance
+  #         action: replace
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+  priorityClassName: platform-critical
