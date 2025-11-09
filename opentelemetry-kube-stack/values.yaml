@@ -45,13 +45,10 @@ collectors:
       kubernetesAttributes:
         enabled: true 
       kubernetesEvents:
-        enabled: false
+        enabled: true 
       clusterMetrics:
-        enabled: false
+        enabled: true 
     config:
-      # processors:
-      #   resourcedetection/env:
-      #     detectors: [env]
       receivers:
         prometheus: {}
       exporters:
