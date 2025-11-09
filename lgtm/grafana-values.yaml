@@ -3,10 +3,10 @@ service:
   ipFamilies: ["IPv6","IPv4"]
 resources:
   requests:
-    cpu: 109m
-    memory: 235Mi
+    cpu: 157m
+    memory: 256Mi
   limits:
-    memory: 235Mi
+    memory: 256Mi
 podLabels:
   istio.io/dataplane-mode: ambient
 affinity:
@@ -75,6 +75,11 @@ dashboardProviders:
 
 dashboards:
   default:
+    1860-node-exporter-full:
+      # renovate: depName="Node Exporter Full"
+      gnetId: 1860
+      revision: 42
+      datasource: Mimir
     7639-istio-mesh-dashboard:
       # renovate: depName="Istio Mesh Dashboard"
       gnetId: 7639
@@ -156,7 +161,7 @@ sidecar:
       allowUiUpdates: false
   resources:
     requests:
-      cpu: 56m
-      memory: 200Mi
+      cpu: 98m
+      memory: 115Mi
     limits:
-      memory: 200Mi
+      memory: 115Mi
