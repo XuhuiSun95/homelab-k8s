@@ -31,6 +31,10 @@ cluster:
       login: true
   monitoring:
     enabled: true
+    podMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: false
   postgresql:
     shared_preload_libraries:
       - "vchord.so"

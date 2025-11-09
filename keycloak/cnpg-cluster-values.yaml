@@ -36,6 +36,10 @@ cluster:
       effect: NoSchedule
   monitoring:
     enabled: true
+    podMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: false
   initdb:
     database: keycloak
 
