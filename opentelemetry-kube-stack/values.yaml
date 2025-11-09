@@ -25,7 +25,16 @@ defaultCRConfig:
 
 collectors:
   daemon:
-    # scrape_configs_file: ""
+    scrape_configs_file: ""
+    targetAllocator:
+      enabled: true
+      image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
+      allocationStrategy: per-node
+      prometheusCR:
+        enabled: true
+        podMonitorSelector: {}
+        scrapeInterval: "30s"
+        serviceMonitorSelector: {}
     presets:
       logsCollection:
         enabled: true

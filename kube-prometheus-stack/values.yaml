@@ -122,7 +122,7 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
-  enabled: true
+  enabled: false 
   service:
     ipDualStack:
       enabled: true
