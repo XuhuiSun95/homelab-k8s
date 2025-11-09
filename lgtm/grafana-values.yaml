@@ -75,6 +75,36 @@ dashboardProviders:
 
 dashboards:
   default:
+    15761-kubernetes-system-api-server:
+      # renovate: depName="Kubernetes System API Server"
+      gnetId: 15761
+      revision: 20
+      datasource: Mimir
+    15762-kubernetes-system-coredns:
+      # renovate: depName="Kubernetes System CoreDNS"
+      gnetId: 15762
+      revision: 22
+      datasource: Mimir
+    15757-kubernetes-views-global:
+      # renovate: depName="Kubernetes Views Global"
+      gnetId: 15757
+      revision: 43
+      datasource: Mimir
+    15758-kubernetes-views-namespaces:
+      # renovate: depName="Kubernetes Views Namespaces"
+      gnetId: 15758
+      revision: 44
+      datasource: Mimir
+    15759-kubernetes-views-nodes:
+      # renovate: depName="Kubernetes Views Nodes"
+      gnetId: 15759
+      revision: 40
+      datasource: Mimir
+    15760-kubernetes-views-pods:
+      # renovate: depName="Kubernetes Views Pods"
+      gnetId: 15760
+      revision: 37
+      datasource: Mimir
     1860-node-exporter-full:
       # renovate: depName="Node Exporter Full"
       gnetId: 1860
