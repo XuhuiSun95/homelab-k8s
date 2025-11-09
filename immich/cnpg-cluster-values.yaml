@@ -32,7 +32,7 @@ cluster:
   monitoring:
     enabled: true
     podMonitor:
-      enabled: false
+      enabled: true 
     prometheusRule:
       enabled: false
   postgresql:
