@@ -3,7 +3,7 @@ alertmanager:
 
 grafana:
   enabled: false
-  forceDeployDashboards: true
+  # forceDeployDashboards: true
 
 kubeApiServer:
   enabled: false 

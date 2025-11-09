@@ -75,6 +75,9 @@ collectors:
             exporters:
               - otlp/tempo
           metrics:
+            receivers:
+              - otlp
+              - prometheus
             exporters:
               - otlphttp/mimir
           logs:
