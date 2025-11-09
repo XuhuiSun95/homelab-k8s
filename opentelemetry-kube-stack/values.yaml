@@ -25,7 +25,7 @@ defaultCRConfig:
 
 collectors:
   daemon:
-    scrape_configs_file: "https://raw.githubusercontent.com/open-telemetry/opentelemetry-helm-charts/refs/heads/main/charts/opentelemetry-kube-stack/examples/prometheus-otel/kubelet_scrape_configs.yaml"
+    crape_configs_file: ""
     targetAllocator:
       enabled: true
       image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
@@ -39,19 +39,19 @@ collectors:
       logsCollection:
         enabled: true
       kubeletMetrics:
-        enabled: false 
+        enabled: true 
       hostMetrics:
         enabled: false
       kubernetesAttributes:
-        enabled: false 
+        enabled: true 
       kubernetesEvents:
         enabled: false
       clusterMetrics:
         enabled: false
     config:
-      processors:
-        resourcedetection/env:
-          detectors: [env]
+      # processors:
+      #   resourcedetection/env:
+      #     detectors: [env]
       receivers:
         prometheus: {}
       exporters:
