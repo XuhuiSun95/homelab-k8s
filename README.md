@@ -400,6 +400,13 @@ env:
 
 See the [warning section](#-temporary-warning) at the top of this README for more details.
 
+### 7. Apply Mimir Record Rules
+```bash
+mimirtool rules list --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+
+mimirtool rules sync ./lgtm/mimir-record-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+```
+
 ## 🔑 Access Credentials
 
 ### Talos Cluster Management

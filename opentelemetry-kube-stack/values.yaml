@@ -1,5 +1,5 @@
-crds:
-  installPrometheus: false
+# crds:
+#   installPrometheus: false
 
 opentelemetry-operator:
   priorityClassName: platform-critical
