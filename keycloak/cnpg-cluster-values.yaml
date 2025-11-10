@@ -39,7 +39,7 @@ cluster:
     podMonitor:
       enabled: true
     prometheusRule:
-      enabled: true
+      enabled: false
   initdb:
     database: keycloak
 
