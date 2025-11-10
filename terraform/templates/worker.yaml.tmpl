@@ -4,6 +4,11 @@ machine:
       cloud-provider: external
       rotate-server-certificates: true
       register-with-taints: "karpenter.sh/unregistered=:NoExecute"
+    nodeIP:
+      validSubnets:
+%{ for subnet in validSubnets ~}
+        - ${subnet}
+%{ endfor ~}
   install:
     image: ${installer_image}
   features:
