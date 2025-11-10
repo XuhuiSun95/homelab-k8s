@@ -21,6 +21,7 @@ data "talos_machine_configuration" "worker" {
 
   config_patches = [
     templatefile("${path.module}/templates/worker.yaml.tmpl", {
+      validSubnets    = [var.vpc_cidr[0]]
       installer_image = data.talos_image_factory_urls.talos_image.urls.installer
     })
   ]
