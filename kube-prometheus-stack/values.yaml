@@ -3,7 +3,6 @@ alertmanager:
 
 grafana:
   enabled: false
-  # forceDeployDashboards: true
 
 kubeApiServer:
   enabled: false 
@@ -75,6 +74,7 @@ nodeExporter:
   enabled: false 
 
 prometheusOperator:
+  enabled: false
   admissionWebhooks:
     patch:
       enabled: true
@@ -122,7 +122,7 @@ prometheusOperator:
         memory: 100Mi
 
 prometheus:
-  enabled: true 
+  enabled: false 
   service:
     ipDualStack:
       enabled: true
@@ -132,10 +132,10 @@ prometheus:
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     retention: 1h
-    # remoteWrite:
-    #   - url:  http://lgtm-mimir-gateway/api/v1/push
-    #     headers:
-    #       X-Scope-OrgID: homelab-k8s
+    remoteWrite:
+      - url:  http://lgtm-mimir-gateway/api/v1/push
+        headers:
+          X-Scope-OrgID: homelab-k8s
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
