@@ -277,6 +277,9 @@ collectors:
                 tls_config:
                   ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
                   insecure_skip_verify: true
+      processors:
+        resourcedetection/env:
+          detectors: [env]
       exporters:
         otlp/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
