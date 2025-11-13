@@ -13,7 +13,7 @@ spec:
     - controller
   resources:
     requests:
-      cpu: 500m
+      cpu: 55m
       memory: 1Gi
     limits:
       memory: 1Gi
@@ -38,7 +38,7 @@ spec:
     - broker
   resources:
     requests:
-      cpu: 1000m
+      cpu: 200m
       memory: 2Gi
     limits:
       memory: 2Gi
