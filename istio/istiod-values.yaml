@@ -2,6 +2,12 @@ profile: ambient
 
 autoscaleMin: 2
 replicaCount: 2
+resources:
+  requests:
+    cpu: 46m
+    memory: 210Mi
+  limits:
+    memory: 210Mi
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
