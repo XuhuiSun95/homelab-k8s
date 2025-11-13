@@ -186,6 +186,12 @@ store_gateway:
      enabled: false
 gateway:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

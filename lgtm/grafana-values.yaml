@@ -4,9 +4,9 @@ service:
 resources:
   requests:
     cpu: 157m
-    memory: 256Mi
+    memory: 320Mi
   limits:
-    memory: 256Mi
+    memory: 320Mi
 podLabels:
   istio.io/dataplane-mode: ambient
 affinity:
