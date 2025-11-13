@@ -56,6 +56,12 @@ ingester:
 querier:
   replicas: 3
   maxUnavailable: 2
+  resources:
+    requests:
+      cpu: 89m
+      memory: 195Mi
+    limits:
+      memory: 195Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -68,6 +74,12 @@ querier:
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 11m
+      memory: 170Mi
+    limits:
+      memory: 170Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -91,6 +103,12 @@ queryFrontend:
   priorityClassName: platform-critical
 queryScheduler:
   replicas: 2
+  resources:
+    requests:
+      cpu: 11m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -115,6 +133,12 @@ queryScheduler:
 distributor:
   replicas: 3 
   maxUnavailable: 2
+  resources:
+    requests:
+      cpu: 65m
+      memory: 180Mi
+    limits:
+      memory: 180Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -173,6 +197,12 @@ indexGateway:
   priorityClassName: platform-critical
 gateway:
   replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
