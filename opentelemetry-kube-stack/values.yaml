@@ -28,6 +28,12 @@ collectors:
     crape_configs_file: ""
     targetAllocator:
       enabled: true
+      resources:
+        requests:
+          cpu: 38m
+          memory: 245Mi
+        limits:
+          memory: 245Mi
       image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
       allocationStrategy: per-node
       prometheusCR:
