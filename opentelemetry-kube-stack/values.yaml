@@ -2,6 +2,20 @@
 #   installPrometheus: false
 
 opentelemetry-operator:
+  manager:
+    resources:
+      requests:
+        cpu: 24m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+  kubeRBACProxy:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
   priorityClassName: platform-critical
   affinity:
     nodeAffinity:
@@ -304,9 +318,9 @@ collectors:
           tls:
             insecure: true
       service:
-        telemetry:
-          logs:
-            level: "DEBUG"
+        # telemetry:
+        #   logs:
+        #     level: "DEBUG"
         pipelines:
           traces:
             exporters:
