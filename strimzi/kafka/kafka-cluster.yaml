@@ -80,10 +80,10 @@ spec:
         ipFamilies: ["IPv6","IPv4"]
     resources:
       requests:
-        cpu: 14m
-        memory: 1701Mi
+        cpu: 204m
+        memory: 1493Mi
       limits:
-        memory: 1701Mi
+        memory: 1493Mi
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
