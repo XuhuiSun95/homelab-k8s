@@ -1,4 +1,4 @@
 profile: ambient
 
-global:
-  nativeNftables: true
+# global:
+#   nativeNftables: true
