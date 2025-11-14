@@ -5,7 +5,8 @@ mode: recovery
 
 recovery:
   method: object_store
-  clusterName: immich-cnpg-cluster-v2
+  clusterName: immich-cnpg-cluster
+  database: immich
   endpointURL: https://s3.local.xuhuisun.com
   provider: s3
   s3:
