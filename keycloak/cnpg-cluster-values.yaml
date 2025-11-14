@@ -17,7 +17,7 @@ recovery:
 cluster:
   instances: 3
   storage:
-    size: 1Gi
+    size: 3Gi
     storageClass: proxmox-local-zfs-xfs
   resources:
     requests:
