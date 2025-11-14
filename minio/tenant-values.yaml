@@ -9,9 +9,9 @@ tenant:
       resources:
         requests:
           cpu: 23m
-          memory: 4Gi
+          memory: 2Gi
         limits:
-          memory: 4Gi
+          memory: 2Gi
   metrics:
     enabled: true
   features:

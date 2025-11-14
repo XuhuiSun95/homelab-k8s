@@ -34,6 +34,12 @@ alertmanager:
     size: 1Gi
     storageClass: proxmox-local-zfs-xfs
   replicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -51,18 +57,42 @@ compactor:
   persistentVolume:
     size: 5Gi
     storageClass: proxmox-local-zfs-xfs
+  resources:
+    requests:
+      cpu: 10m
+      memory: 645Mi
+    limits:
+      memory: 645Mi
 distributor:
   replicas: 2
+  resources:
+    requests:
+      cpu: 124m
+      memory: 1024Mi
+    limits:
+      memory: 1024Mi
 ingester:
   persistentVolume:
     size: 10Gi
     storageClass: proxmox-local-zfs-xfs
   replicas: 3
+  resources:
+    requests:
+      cpu: 57m
+      memory: 1024Mi
+    limits:
+      memory: 1024Mi
   zoneAwareReplication:
      enabled: false
 chunks-cache:
   enabled: true
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 800Mi
+    limits:
+      memory: 800Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -79,6 +109,12 @@ chunks-cache:
 index-cache:
   enabled: true
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 300Mi
+    limits:
+      memory: 300Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -95,6 +131,12 @@ index-cache:
 metadata-cache:
   enabled: true
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 200Mi
+    limits:
+      memory: 200Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -111,6 +153,12 @@ metadata-cache:
 results-cache:
   enabled: true
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 300Mi
+    limits:
+      memory: 300Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -130,6 +178,12 @@ kafka:
   enabled: false
 overrides_exporter:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -145,8 +199,20 @@ overrides_exporter:
   priorityClassName: platform-critical
 querier:
   replicas: 1
+  resources:
+    requests:
+      cpu: 72m
+      memory: 670Mi
+    limits:
+      memory: 670Mi
 query_frontend:
   replicas: 1
+  resources:
+    requests:
+      cpu: 119m
+      memory: 864Mi
+    limits:
+      memory: 864Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -162,6 +228,12 @@ query_frontend:
   priorityClassName: platform-critical
 query_scheduler:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 136Mi
+    limits:
+      memory: 136Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -177,11 +249,23 @@ query_scheduler:
   priorityClassName: platform-critical
 ruler:
   replicas: 1
+  resources:
+    requests:
+      cpu: 31m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 store_gateway:
   persistentVolume:
     size: 2Gi
     storageClass: proxmox-local-zfs-xfs
   replicas: 3
+  resources:
+    requests:
+      cpu: 10m
+      memory: 300Mi
+    limits:
+      memory: 300Mi
   zoneAwareReplication:
      enabled: false
 gateway:
@@ -207,6 +291,12 @@ gateway:
   priorityClassName: platform-critical
 
 rollout_operator:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

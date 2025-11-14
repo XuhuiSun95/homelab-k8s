@@ -42,6 +42,12 @@ lokiCanary:
 
 ingester:
   replicas: 3
+  resources:
+    requests:
+      cpu: 38m
+      memory: 800Mi
+    limits:
+      memory: 800Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -162,6 +168,12 @@ distributor:
   priorityClassName: platform-critical
 compactor:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 128Mi
+    limits:
+      memory: 128Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -174,6 +186,12 @@ compactor:
 indexGateway:
   replicas: 2
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 158Mi
+    limits:
+      memory: 158Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -226,6 +244,12 @@ gateway:
   priorityClassName: platform-critical
 resultsCache:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 300Mi
+    limits:
+      memory: 300Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -249,6 +273,12 @@ resultsCache:
   priorityClassName: platform-critical
 chunksCache:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 5000Mi
+    limits:
+      memory: 5000Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
