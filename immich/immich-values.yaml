@@ -8,22 +8,22 @@ controllers:
           - name: DB_HOSTNAME
             valueFrom: 
               secretKeyRef:
-                name: immich-cnpg-cluster-app-v2
+                name: immich-cnpg-cluster-v2-app
                 key: host
           - name: DB_USERNAME
             valueFrom: 
               secretKeyRef:
-                name: immich-cnpg-cluster-app-v2
+                name: immich-cnpg-cluster-v2-app
                 key: user
           - name: DB_DATABASE_NAME
             valueFrom: 
               secretKeyRef:
-                name: immich-cnpg-cluster-app-v2
+                name: immich-cnpg-cluster-v2-app
                 key: dbname
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: immich-cnpg-cluster-app-v2
+                name: immich-cnpg-cluster-v2-app
                 key: password
           - name: IMMICH_MACHINE_LEARNING_URL
             value: "http://immich-immich-machine-learning:3003"
