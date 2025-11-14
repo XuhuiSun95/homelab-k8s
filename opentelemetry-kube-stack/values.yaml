@@ -39,6 +39,13 @@ defaultCRConfig:
 
 collectors:
   daemon:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 250Mi
+      limits:
+        cpu: null
+        memory: 250Mi
     crape_configs_file: ""
     targetAllocator:
       enabled: true
