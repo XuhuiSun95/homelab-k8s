@@ -25,3 +25,9 @@ spec:
       - CreateNamespace=true
     # automated:
     #   selfHeal: true
+  ignoreDifferences:
+    - kind: Secret
+      name: lgtm-grafana
+      namespace: monitoring
+      jsonPointers:
+        - /admin-password
