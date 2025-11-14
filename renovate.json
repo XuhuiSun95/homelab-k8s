@@ -1,16 +1,28 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":dependencyDashboard"],
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
   "helm-values": {
-    "fileMatch": ["^values\\.ya?ml$", "^.*-values\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/^values\\.ya?ml$/",
+      "/^.*-values\\.ya?ml$/"
+    ]
   },
   "argocd": {
-    "fileMatch": ["argocd/applications/.+\\.yaml$", ".+\\/argocd\\/.+\\.yaml$", "^deployment\\.yaml$"]
+    "managerFilePatterns": [
+      "/argocd/applications/.+\\.yaml$/",
+      "/.+\\/argocd\\/.+\\.yaml$/",
+      "/^deployment\\.yaml$/"
+    ]
   },
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^lgtm/grafana-values\\.yaml$"],
+      "managerFilePatterns": [
+        "/^lgtm/grafana-values\\.yaml$/"
+      ],
       "matchStrings": [
         "#\\s+renovate:\\s+depName=\"(?<depName>.*)\"\\n\\s+gnetId:\\s+(?<packageName>.*?)\\n\\s+revision:\\s+(?<currentValue>.*)"
       ],
