@@ -60,4 +60,4 @@ backups:
     - name: daily-backup
       schedule: "0 0 0 * * *"
       backupOwnerReference: self
-  retentionPolicy: "30d" 
+  retentionPolicy: "7d" 
