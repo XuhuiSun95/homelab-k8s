@@ -23,7 +23,6 @@ A comprehensive, production-grade Kubernetes homelab infrastructure built on **T
 - [🎯 Key Features](#-key-features)
 - [💡 Use Cases](#-use-cases)
 - [📁 Repository Structure](#-repository-structure)
-- [📋 Current Application Versions](#-current-application-versions)
 - [🔧 Configuration Highlights](#-configuration-highlights)
 - [🤝 Contributing](#-contributing)
 - [📚 Documentation & Resources](#-documentation--resources)
@@ -606,35 +605,6 @@ This Kubernetes homelab is perfect for:
 ├── strimzi/                   # Kafka operator
 └── */values.yaml              # Helm values for each service
 ```
-
-## 📋 Current Application Versions
-
-| Application | Version | Chart Repository |
-|-------------|---------|------------------|
-| ArgoCD | 9.0.3 | argo/argo-cd |
-| Cert-Manager | v1.19.1 | jetstack/cert-manager |
-| Istio | 1.27.3 | istio-release |
-| Istio Base | 1.27.3 | istio-release |
-| Istio Ztunnel | 1.27.3 | istio-release |
-| Grafana | 10.1.2 | grafana |
-| Mimir (Distributed) | 5.8.0 | grafana |
-| Loki | 6.43.0 | grafana |
-| Tempo (Distributed) | 1.48.1 | grafana |
-| OpenTelemetry Kube Stack | 0.10.5 | open-telemetry |
-| Keycloak | 25.2.0 | bitnami/keycloak |
-| Open-WebUI | 8.10.0 | openwebui |
-| Homepage | 2.1.0 | jameswynn/helm-charts |
-| Immich | 0.10.1 | immich |
-| MinIO Operator | 7.1.1 | minio/operator |
-| CloudNativePG | 0.26.0 | cnpg-system |
-| CSI Driver NFS | 4.11.0 | csi-driver-nfs |
-| Strimzi Kafka Operator | 0.47.0 | strimzi |
-| Kafka | 4.0.0 | (via Strimzi) |
-| KEDA | 2.18.0 | kedacore |
-| External DNS | 1.19.0 | kubernetes-sigs/external-dns |
-| Metrics Server | 3.13.0 | kubernetes-sigs/metrics-server |
-| Kiali | 2.16.0 | kiali/kiali-operator |
-| ECK Operator | 3.1.0 | elastic/eck-operator |
 
 ## 🔧 Configuration Highlights
 
