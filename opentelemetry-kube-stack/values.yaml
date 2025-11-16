@@ -68,9 +68,8 @@ collectors:
           memory: 245Mi
         limits:
           memory: 245Mi
-      # image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
-      # allocationStrategy: per-node
-      allocationStrategy: consistent-hashing
+      allocationStrategy: per-node
+      # allocationStrategy: consistent-hashing
       prometheusCR:
         enabled: true
         podMonitorSelector: {}
