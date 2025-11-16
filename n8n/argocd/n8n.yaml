@@ -16,7 +16,7 @@ spec:
       targetRevision: 1.1.0
       helm:
         valueFiles:
-        - $values/n8n/values.yaml
+        - $values/n8n/n8n-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
