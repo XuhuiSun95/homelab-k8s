@@ -49,7 +49,7 @@ collectors:
     crape_configs_file: ""
     targetAllocator:
       enabled: true
-      priorityClassName: platform-critical
+      # priorityClassName: platform-critical
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -62,12 +62,12 @@ collectors:
         - key: node-role.kubernetes.io/system
           operator: Exists
           effect: NoSchedule
-          resources:
-            requests:
-              cpu: 38m
-              memory: 245Mi
-            limits:
-              memory: 245Mi
+      resources:
+        requests:
+          cpu: 38m
+          memory: 245Mi
+        limits:
+          memory: 245Mi
       # image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
       # allocationStrategy: per-node
       allocationStrategy: consistent-hashing
