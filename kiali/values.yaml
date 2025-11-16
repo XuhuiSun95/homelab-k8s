@@ -84,6 +84,7 @@ cr:
             is_proxy: true
             namespace: istio-ingress
       prometheus:
+        health_check_url: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/ready
         url: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/prometheus
         custom_headers:
           X-Scope-OrgID: homelab-k8s
