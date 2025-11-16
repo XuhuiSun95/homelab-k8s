@@ -346,6 +346,7 @@ collectors:
             exporters:
               - otlp/tempo
           metrics:
+            processors: [resourcedetection/env, resource/hostname, batch]
             exporters:
               - otlphttp/mimir
           logs:
