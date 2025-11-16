@@ -1,0 +1,60 @@
+main:
+  config:
+    db:
+      type: postgresdb
+      postgresdb:
+        pool:
+          size: 10
+        ssl:
+          enabled: true
+          reject_Unauthorized: true
+          ca_file: "/home/ssl/certs/postgresql/ca.crt"
+  secret:
+    n8n:
+      encryption_key: "BwkqwMGXJKpjpxAEUlEoph7A8efSKwWL"
+
+  extraEnv:
+    DB_POSTGRESDB_DATABASE:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-cnpg-cluster-app
+          key: dbname
+    DB_POSTGRESDB_HOST:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-cnpg-cluster-app
+          key: host
+    DB_POSTGRESDB_PORT:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-cnpg-cluster-app
+          key: port
+    DB_POSTGRESDB_USER:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-cnpg-cluster-app
+          key: user
+    DB_POSTGRESDB_PASSWORD:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-cnpg-cluster-app
+          key: password
+  extraVolumeMounts:
+    - name: db-ca-cert
+      mountPath: /home/ssl/certs/postgresql
+      readOnly: true
+  extraVolumes:
+    - name: db-ca-cert
+      secret:
+        secretName: n8n-cnpg-cluster-ca
+        items:
+          - key: ca.crt
+            path: ca.crt
+  podLabels:
+    istio.io/dataplane-mode: ambient
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 512Mi
