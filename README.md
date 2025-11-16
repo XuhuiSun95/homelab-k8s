@@ -86,8 +86,7 @@ This homelab deploys a **production-ready Kubernetes cluster** using modern clou
 ### Observability & Monitoring
 - **LGTM Stack**: Loki (logs), Grafana (visualization), Tempo (traces), Mimir (metrics)
 - **ELK Stack**: Elasticsearch, Logstash, Kibana
-- **Prometheus**: Metrics collection and alerting
-- **OpenTelemetry**: Unified observability framework
+- **OpenTelemetry Kube Stack**: Unified observability framework with automated instrumentation and metrics collection
 - **Kiali**: Service mesh observability
 
 ### Storage Solutions
@@ -167,9 +166,8 @@ This homelab includes a comprehensive set of **cloud-native applications** organ
 
 ### Observability & Monitoring Stack
 - **LGTM Stack**: Complete observability with **Loki** (distributed logs), **Grafana** (visualization), **Tempo** (distributed traces), **Mimir** (distributed metrics)
-- **OpenTelemetry Kube Stack**: Unified observability framework with **automated instrumentation**
+- **OpenTelemetry Kube Stack**: Unified observability framework with **automated instrumentation** and **metrics collection** - replaces Prometheus stack
 - **Elastic Stack**: **Elasticsearch** and **Kibana** for advanced log analytics and search
-- **Kube-Prometheus-Stack**: Comprehensive **cluster monitoring** with **Prometheus** metrics and **Grafana** dashboards
 - **Kiali**: **Service mesh visualization** and traffic flow analysis
 - **Metrics Server**: **Kubernetes metrics API** implementation for **HPA** and **VPA**
 
@@ -511,7 +509,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 2. **Wave 3**: Istio Ztunnel (ambient mode secure overlay)
 3. **Wave 11**: Istio Ingress Gateway (traffic entry point)
 4. **Wave 20**: Cert-Manager (certificate management)
-5. **Wave 30**: Core monitoring and telemetry (Prometheus, OpenTelemetry, Metrics Server, Istio)
+5. **Wave 30**: Core monitoring and telemetry (OpenTelemetry Kube Stack, Metrics Server, Istio)
 6. **Wave 41**: Auto-scaling (KEDA)
 7. **Wave 42**: GitOps (ArgoCD)
 8. **Wave 50**: External DNS (DNS automation)
@@ -523,7 +521,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 
 - **🔄 GitOps Workflow**: Everything managed as code with **ArgoCD** - declarative, version-controlled infrastructure
 - **🔒 Security First**: **mTLS**, **OAuth2/OIDC**, automated certificate management with **cert-manager** and **Let's Encrypt**
-- **📊 Full Observability**: Complete **metrics, logs, traces** collection with **LGTM stack**, **Prometheus**, **OpenTelemetry**, and service mesh visibility via **Kiali**
+- **📊 Full Observability**: Complete **metrics, logs, traces** collection with **LGTM stack**, **OpenTelemetry Kube Stack**, and service mesh visibility via **Kiali**
 - **🚀 Auto-scaling**: **KEDA** for event-driven scaling and **Karpenter** for dynamic node provisioning
 - **💾 Multiple Storage**: **Block storage** (Proxmox CSI), **object storage** (MinIO S3), **file storage** (NFS), and **database storage** (CloudNativePG)
 - **🤖 AI Ready**: **Open-WebUI** for LLM interactions and AI workloads
@@ -600,7 +598,6 @@ This Kubernetes homelab is perfect for:
 ├── keda/                      # Event-driven autoscaling
 ├── keycloak/                  # Identity and access management
 ├── kiali/                     # Istio service mesh visualization
-├── kube-prometheus-stack/     # Prometheus monitoring stack
 ├── lgtm/                      # LGTM observability stack (Loki, Grafana, Tempo, Mimir)
 ├── metrics-server/            # Kubernetes metrics server
 ├── minio/                     # Object storage
@@ -619,7 +616,6 @@ This Kubernetes homelab is perfect for:
 | Istio | 1.27.3 | istio-release |
 | Istio Base | 1.27.3 | istio-release |
 | Istio Ztunnel | 1.27.3 | istio-release |
-| Kube-Prometheus-Stack | 78.3.2 | prometheus-community |
 | Grafana | 10.1.2 | grafana |
 | Mimir (Distributed) | 5.8.0 | grafana |
 | Loki | 6.43.0 | grafana |
@@ -666,9 +662,8 @@ This Kubernetes homelab is perfect for:
 
 ### Observability Stack
 - **LGTM**: Loki (distributed logs), Grafana (visualization), Tempo (distributed traces), Mimir (distributed metrics)
-- **OpenTelemetry**: Standardized telemetry collection and export to LGTM stack
+- **OpenTelemetry Kube Stack**: Standardized telemetry collection with automated instrumentation, metrics collection, and export to LGTM stack (replaces Prometheus stack)
 - **ELK**: Elasticsearch, Kibana for advanced log analytics
-- **Prometheus**: Metrics collection and alerting (via Kube-Prometheus-Stack)
 - **Kiali**: Service mesh visualization
 - **Metrics Server**: Kubernetes metrics API for HPA and VPA
 
@@ -726,7 +721,8 @@ This Kubernetes homelab is perfect for:
 - **Proxmox CSI**: Native Proxmox storage snapshots
 
 ### Monitoring Alerts
-- **Prometheus**: Cluster and application metrics
+- **OpenTelemetry Kube Stack**: Cluster and application metrics collection
+- **Mimir**: Long-term metrics storage and alerting
 - **Grafana**: Custom dashboards and alerting
 - **Kiali**: Service mesh health monitoring
 
@@ -746,7 +742,7 @@ This project uses and demonstrates:
 
 **Service Mesh & Networking**: `istio` `cilium` `ebpf` `bgp` `service-mesh` `zero-trust` `mtls`
 
-**Observability**: `prometheus` `grafana` `loki` `tempo` `mimir` `opentelemetry` `kiali` `elasticsearch` `kibana` `lgtm-stack`
+**Observability**: `grafana` `loki` `tempo` `mimir` `opentelemetry` `kiali` `elasticsearch` `kibana` `lgtm-stack`
 
 **Storage**: `minio` `s3` `cloudnative-pg` `postgresql` `nfs` `csi` `proxmox-csi`
 
