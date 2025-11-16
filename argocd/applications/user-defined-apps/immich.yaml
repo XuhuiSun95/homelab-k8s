@@ -3,12 +3,12 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "200"
-  name: immich 
+  name: immich
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: immich 
+    namespace: immich
     server: 'https://kubernetes.default.svc'
   source:
     path: immich/argocd

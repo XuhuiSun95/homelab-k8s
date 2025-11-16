@@ -83,7 +83,7 @@ collectors:
       hostMetrics:
         enabled: false
       kubernetesAttributes:
-        enabled: false 
+        enabled: false
       kubernetesEvents:
         enabled: false
       clusterMetrics:
@@ -380,7 +380,7 @@ kubeProxy:
   enabled: false
 
 kubeStateMetrics:
-  enabled: true 
+  enabled: true
 
 kube-state-metrics:
   # service:
@@ -407,7 +407,7 @@ kube-state-metrics:
   priorityClassName: platform-critical
 
 nodeExporter:
-  enabled: true 
+  enabled: true
 
 prometheus-node-exporter:
   extraArgs:

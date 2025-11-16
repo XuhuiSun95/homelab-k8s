@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: immich-vs
-  namespace: immich 
+  namespace: immich
 spec:
   hosts:
   - immich.local.xuhuisun.com

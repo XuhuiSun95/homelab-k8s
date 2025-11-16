@@ -18,5 +18,5 @@ storageClass:
     storage: local-zfs
     cache: none
     ssd: true
-    fstype: xfs 
+    fstype: xfs
     reclaimPolicy: Delete

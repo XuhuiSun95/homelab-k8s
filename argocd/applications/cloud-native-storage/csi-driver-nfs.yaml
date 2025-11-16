@@ -22,4 +22,4 @@ spec:
       ref: values
   syncPolicy:
     automated:
-      selfHeal: true 
+      selfHeal: true

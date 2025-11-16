@@ -25,4 +25,4 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
     automated:
-      selfHeal: true 
+      selfHeal: true
