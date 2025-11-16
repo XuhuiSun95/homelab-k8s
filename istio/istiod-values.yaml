@@ -45,9 +45,10 @@ meshConfig:
   defaultConfig:
     proxyMetadata:
       ISTIO_DUAL_STACK: true
+    tracing: {}
   enableTracing: true
   extensionProviders:
-  - name: otel-tracing
+  - name: "otel-tracing"
     opentelemetry:
       port: 4317
       service: opentelemetry-kube-stack-daemon-collector.opentelemetry-operator-system.svc.cluster.local
