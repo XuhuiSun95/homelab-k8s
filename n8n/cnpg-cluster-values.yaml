@@ -1,0 +1,53 @@
+type: postgresql
+version:
+  postgresql: "17"
+# mode: recovery
+
+# recovery:
+#   method: object_store
+#   clusterName: n8n-cnpg-cluster
+#   database: n8n
+#   endpointURL: https://s3.local.xuhuisun.com
+#   provider: s3
+#   s3:
+#     bucket: cloudnative-pg-backups
+#     accessKey: om9WSI45aMEZxBqASwSy
+#     secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
+
+cluster:
+  instances: 3
+  storage:
+    size: 1Gi
+    storageClass: proxmox-local-zfs-xfs
+  resources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+    limits:
+      memory: 1Gi
+  monitoring:
+    enabled: true
+    podMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: false
+  initdb:
+    database: n8n
+
+backups:
+  enabled: true
+  endpointURL: https://s3.local.xuhuisun.com
+  provider: s3
+  s3:
+    bucket: cloudnative-pg-backups
+    accessKey: om9WSI45aMEZxBqASwSy
+    secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
+  wal:
+    encryption: ""
+  data:
+    encryption: ""
+  scheduledBackups:
+    - name: daily-backup
+      schedule: "0 0 0 * * *"
+      backupOwnerReference: self
+  retentionPolicy: "7d"
