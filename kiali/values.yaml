@@ -59,14 +59,16 @@ cr:
               target:
                 type: Utilization
                 averageUtilization: 50
+      network_policy:
+        enabled: false
+      pod_labels:
+        istio.io/dataplane-mode: ambient
       resources:
         requests:
           cpu: 50m
           memory: 100Mi
         limits:
           memory: 100Mi
-      pod_labels:
-        istio.io/dataplane-mode: ambient
     external_services:
       grafana:
         internal_url: http://lgtm-grafana.monitoring.svc.cluster.local
@@ -82,7 +84,9 @@ cr:
             is_proxy: true
             namespace: istio-ingress
       prometheus:
-        url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        url: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/prometheus
+        custom_headers:
+          X-Scope-OrgID: homelab-k8s
       tracing:
         enabled: true
         health_check_url: http://lgtm-tempo-gateway.monitoring.svc.cluster.local
