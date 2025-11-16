@@ -558,12 +558,14 @@ This Kubernetes homelab is perfect for:
 │   │   ├── proxmox-csi.yaml    # Proxmox CSI Plugin
 │   │   ├── proxmox-karpenter.yaml # Karpenter Proxmox provider
 │   │   ├── karpenter-node.yaml # Karpenter NodePool definitions
+│   │   ├── priority-class.yaml # Kubernetes priority classes
 │   │   └── talos-ccm.yaml      # Talos Cloud Controller Manager
 │   ├── templates/              # Talos configuration templates
 │   │   ├── controlplane.yaml.tmpl # Control plane configuration (Proxmox integration)
 │   │   ├── metadata.yaml.tmpl  # VM metadata template
 │   │   └── worker.yaml.tmpl    # Worker node template for Karpenter
 │   ├── terraform.tfvars        # Terraform variables (customize for your Proxmox)
+│   ├── terraform.tf            # Terraform backend configuration
 │   ├── variables.tf            # Variable definitions
 │   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, credentials)
 │   ├── providers.tf            # Terraform provider configuration
@@ -603,6 +605,8 @@ This Kubernetes homelab is perfect for:
 ├── open-webui/                # AI interface application
 ├── opentelemetry-kube-stack/  # OpenTelemetry configuration
 ├── strimzi/                   # Kafka operator
+├── deployment.yaml            # Root ArgoCD application (deploys all applications)
+├── renovate.json             # Renovate configuration for automated dependency updates
 └── */values.yaml              # Helm values for each service
 ```
 
