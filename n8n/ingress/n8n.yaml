@@ -1,16 +1,16 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: immich-vs
-  namespace: immich
+  name: n8n-vs
+  namespace: n8n
 spec:
   hosts:
-  - immich.local.xuhuisun.com
+  - n8n.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
   http:
   - route:
     - destination:
-        host: immich-immich-server
+        host: n8n-n8n
         port:
-          number: 2283
+          number: 80

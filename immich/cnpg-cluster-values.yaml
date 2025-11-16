@@ -33,7 +33,7 @@ cluster:
   monitoring:
     enabled: true
     podMonitor:
-      enabled: true 
+      enabled: true
     prometheusRule:
       enabled: false
   postgresql:
@@ -61,4 +61,4 @@ backups:
     - name: daily-backup
       schedule: "0 0 0 * * *"
       backupOwnerReference: self
-  retentionPolicy: "7d" 
+  retentionPolicy: "7d"

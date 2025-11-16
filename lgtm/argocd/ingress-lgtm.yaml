@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   destination:
-    namespace: monitoring 
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'

@@ -8,7 +8,7 @@ spec:
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxNodeClass
 metadata:
-  name: system-node-class 
+  name: system-node-class
 spec:
   instanceTemplateRef:
     kind: ProxmoxUnmanagedTemplate
@@ -20,7 +20,7 @@ spec:
       namespace: kube-system
   bootDevice:
     size: 50Gi
-    storage: local-zfs 
+    storage: local-zfs
   tags:
     - managed-by_karpenter
     - type_k8s
@@ -30,7 +30,7 @@ spec:
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxNodeClass
 metadata:
-  name: user-node-class 
+  name: user-node-class
 spec:
   instanceTemplateRef:
     kind: ProxmoxUnmanagedTemplate
@@ -42,7 +42,7 @@ spec:
       namespace: kube-system
   bootDevice:
     size: 50Gi
-    storage: local-zfs 
+    storage: local-zfs
   tags:
     - managed-by_karpenter
     - type_k8s

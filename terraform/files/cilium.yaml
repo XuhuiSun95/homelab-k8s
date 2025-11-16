@@ -1,5 +1,5 @@
 ipv4:
-  enabled: true 
+  enabled: true
 ipv6:
   enabled: true
 

@@ -38,7 +38,7 @@ metricsGenerator:
                 {{- include "tempo.selectorLabels" (dict "ctx" . "component" "metrics-generator") | nindent 12 }}
             topologyKey: topology.kubernetes.io/zone
 distributor:
-  replicas: 3 
+  replicas: 3
   maxUnavailable: 2
   affinity: |
     podAntiAffinity:

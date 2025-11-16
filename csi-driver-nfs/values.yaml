@@ -1,6 +1,6 @@
 controller:
   replicas: 2
-  runOnControlPlane: true 
+  runOnControlPlane: true
 
 node:
   nodeSelector:

@@ -3,25 +3,25 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  name: eck-operator
+  name: n8n-cnpg-cluster
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: elastic-system
+    namespace: n8n
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: eck-operator
-      repoURL: 'https://helm.elastic.co'
-      targetRevision: 3.1.0
+    - chart: cluster
+      repoURL: 'https://cloudnative-pg.github.io/charts'
+      targetRevision: 0.3.1
       helm:
         valueFiles:
-        - $values/eck/values.yaml
+        - $values/n8n/cnpg-cluster-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-    # automated:
-    #   selfHeal: true
+    automated:
+      selfHeal: true
