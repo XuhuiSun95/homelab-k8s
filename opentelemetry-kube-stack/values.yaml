@@ -83,7 +83,7 @@ collectors:
       hostMetrics:
         enabled: false
       kubernetesAttributes:
-        enabled: true
+        enabled: false 
       kubernetesEvents:
         enabled: false
       clusterMetrics:
@@ -346,7 +346,6 @@ collectors:
             exporters:
               - otlp/tempo
           metrics:
-            processors: [resourcedetection/env, resource/hostname, batch]
             exporters:
               - otlphttp/mimir
           logs:
@@ -354,10 +353,10 @@ collectors:
               - otlphttp/loki
 
 kubernetesServiceMonitors:
-  enabled: true 
+  enabled: true
 
 kubeApiServer:
-  enabled: true 
+  enabled: true
 
 kubelet:
   enabled: true
