@@ -30,71 +30,71 @@ config:
   bookmarks:
     - Developer:
         - Github:
-            - icon: github-light.png
+            - icon: github-light
               href: https://github.com/
         - Gitlab:
-            - icon: gitlab.png
+            - icon: gitlab
               href: https://gitlab.com/
         - Cursor:
-            - icon: vscode.png
+            - icon: vscode
               href: https://cursor.com/
     - Entertainment:
         - Youtube:
-            - icon: youtube.png
+            - icon: youtube
               href: https://www.youtube.com/
   services:
     - Network:
         - UniFi:
-            icon: unifi-controller.png
+            icon: unifi-dark
             href: https://unifi.ui.com/consoles
             description: network
     - Hypervisor:
         - Proxmox:
-            icon: proxmox.png
+            icon: proxmox
             href: https://pve2.local.xuhuisun.com
             description: pve2
             siteMonitor: https://10.101.3.3:8006
         - Proxmox Backup Server:
-            icon: proxmox.png
+            icon: proxmox
             href: https://pbs.local.xuhuisun.com
             description: pbs
             siteMonitor: https://10.101.3.4:8007
     - Remote Access:
         - PVE2 IPMI:
-            icon: supermicro.png
+            icon: supermicro
             href: https://10.101.2.2
             description: supermicro ipmi
     - Storage:
         - MinIO:
-            icon: minio.png
+            icon: minio
             href: https://minio-console.local.xuhuisun.com
             description: object storage
             siteMonitor: https://minio-console.minio.svc.cluster.local:9443
     - Home Automation:
         - Scrypted:
-            icon: scrypted.png
+            icon: scrypted
             href: https://scrypted.local.xuhuisun.com
             description: mgmt console
             siteMonitor: https://10.101.20.221:10443
     - Management:
         - Keycloak:
-            icon: keycloak.png
+            icon: keycloak
             href: https://keycloak.local.xuhuisun.com
             description: iam
             siteMonitor: http://keycloak-keycloak.keycloak.svc.cluster.local
         - Argo CD:
-            icon: argo-cd.png
+            icon: argo-cd
             href: https://argocd.local.xuhuisun.com
             description: in-cluster cd
             siteMonitor: https://argocd-server.argocd.svc.cluster.local
     - Monitoring:
         - Grafana:
-            icon: grafana.png
+            icon: grafana
             href: https://grafana.local.xuhuisun.com
             description: metrics visualization
             siteMonitor: http://lgtm-grafana.monitoring.svc.cluster.local
         - Mimir:
-            icon: prometheus.png
+            icon: prometheus
             href: https://mimir.local.xuhuisun.com
             description: tsdb backend
             siteMonitor: http://lgtm-mimir-gateway.monitoring.svc.cluster.local
@@ -103,21 +103,26 @@ config:
             description: istio mgmt console
             siteMonitor: http://kiali.istio-system.svc.cluster.local:20001
         - Kibana:
-            icon: kibana.png
+            icon: kibana
             href: https://kibana.local.xuhuisun.com
             description: elasticsearch visualization
             # siteMonitor: https://kibana-kb-http.elastic.svc.cluster.local:5601
     - Productivity:
         - Open-WebUI:
-            icon: open-webui.png
+            icon: open-webui
             href: https://open-webui.local.xuhuisun.com
             description: ai interface
             # siteMonitor: http://open-webui.open-webui.svc.cluster.local
         - Immich:
-            icon: immich.png
+            icon: immich
             href: https://immich.local.xuhuisun.com
             description: photo management/backup
             siteMonitor: http://immich-immich-server.immich.svc.cluster.local:2283
+        - n8n:
+            icon: n8n
+            href: https://n8n.local.xuhuisun.com
+            description: workflow automation
+            siteMonitor: http://n8n-n8n.n8n.svc.cluster.local:80
   widgets:
     - kubernetes:
         cluster:
