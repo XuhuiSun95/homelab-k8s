@@ -79,11 +79,11 @@ collectors:
       logsCollection:
         enabled: true
       kubeletMetrics:
-        enabled: false 
+        enabled: false
       hostMetrics:
         enabled: false
       kubernetesAttributes:
-        enabled: false 
+        enabled: true
       kubernetesEvents:
         enabled: false 
       clusterMetrics:
@@ -317,9 +317,9 @@ collectors:
                 tls_config:
                   ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
                   insecure_skip_verify: true
-      processors:
-        resourcedetection/env:
-          detectors: [env]
+      # processors:
+      #   resourcedetection/env:
+      #     detectors: [env]
       exporters:
         otlp/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
