@@ -42,10 +42,6 @@ ipFamilyPolicy: PreferDualStack
 ipFamilies: ["IPv6", "IPv4"]
 
 meshConfig:
-  # defaultConfig:
-  #   proxyMetadata:
-  #     ISTIO_DUAL_STACK: true
-  #   tracing: {}
   enableTracing: true
   extensionProviders:
   - name: "otel-tracing"

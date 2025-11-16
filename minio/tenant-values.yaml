@@ -32,8 +32,6 @@ tenant:
     minioServiceLabels:
       tenant: minio
   env:
-    - name: MINIO_PROMETHEUS_URL
-      value: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
     - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
       value: "https://iam.local.xuhuisun.com/realms/local/.well-known/openid-configuration"
     - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
