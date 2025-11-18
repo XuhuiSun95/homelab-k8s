@@ -14,7 +14,13 @@ service:
     targetPort: 443
   ipFamilyPolicy: PreferDualStack
   ipFamilies: ["IPv6", "IPv4"]
-
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    cpu: null 
+    memory: 512Mi
 autoscaling:
   minReplicas: 2
   maxReplicas: 15
