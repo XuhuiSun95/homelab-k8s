@@ -2,6 +2,12 @@ ingester:
   replicas: 3
   zoneAwareReplication:
      enabled: false
+  resources:
+    requests:
+      cpu: 15m
+      memory: 1216Mi
+    limits:
+      memory: 1216Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -23,6 +29,12 @@ metricsGenerator:
       remote_write:
       - url: http://lgtm-mimir-gateway/api/v1/push
         send_exemplars: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -40,6 +52,12 @@ metricsGenerator:
 distributor:
   replicas: 3
   maxUnavailable: 2
+  resources:
+    requests:
+      cpu: 35m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -56,6 +74,12 @@ distributor:
             topologyKey: topology.kubernetes.io/zone
 compactor:
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 411Mi
+    limits:
+      memory: 411Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -73,6 +97,12 @@ compactor:
 querier:
   replicas: 3
   maxUnavailable: 2
+  resources:
+    requests:
+      cpu: 34m
+      memory: 1024Mi
+    limits:
+      memory: 1024Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -90,6 +120,12 @@ querier:
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 12m
+      memory: 1024Mi
+    limits:
+      memory: 1024Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -137,6 +173,12 @@ storage:
       secret_key: VcqVSaBjrsZhHm8qThNBuzjirzkI3EPB4tQwD5ad
 
 memcached:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -167,6 +209,12 @@ memcached:
 gateway:
   enabled: true
   replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

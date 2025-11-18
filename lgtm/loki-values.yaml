@@ -247,9 +247,9 @@ resultsCache:
   resources:
     requests:
       cpu: 10m
-      memory: 300Mi
+      memory: 180Mi
     limits:
-      memory: 300Mi
+      memory: 180Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -276,9 +276,9 @@ chunksCache:
   resources:
     requests:
       cpu: 10m
-      memory: 5000Mi
+      memory: 4645Mi
     limits:
-      memory: 5000Mi
+      memory: 4645Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
