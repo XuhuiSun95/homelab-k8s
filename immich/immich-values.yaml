@@ -82,6 +82,6 @@ machine-learning:
           resources:
             requests:
               cpu: 23m
-              memory: 705Mi
+              memory: 1024Mi
             limits:
-              memory: 705Mi
+              memory: 1024Mi
