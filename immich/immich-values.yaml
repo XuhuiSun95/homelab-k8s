@@ -64,9 +64,9 @@ server:
           resources:
             requests:
               cpu: 189m
-              memory: 705Mi
+              memory: 1024Mi
             limits:
-              memory: 705Mi
+              memory: 1024Mi
 
 machine-learning:
   controllers:
