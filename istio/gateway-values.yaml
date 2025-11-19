@@ -27,7 +27,7 @@ resources:
     cpu: 100m
     memory: 512Mi
   limits:
-    cpu: null 
+    cpu: null
     memory: 512Mi
 autoscaling:
   minReplicas: 2
