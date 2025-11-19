@@ -18,8 +18,8 @@ spec:
         authentication:
           type: oauth
           enableMetrics: true
-          validIssuerUri: http://keycloak-keycloak.keycloak.svc.cluster.local/realms/local
-          jwksEndpointUri: http://keycloak-keycloak.keycloak.svc.cluster.local/realms/local/protocol/openid-connect/certs
+          validIssuerUri: https://iam.local.xuhuisun.com/realms/local
+          jwksEndpointUri: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/certs
           userNameClaim: sub
           maxSecondsWithoutReauthentication: 3600
           jwksExpirySeconds: 360
