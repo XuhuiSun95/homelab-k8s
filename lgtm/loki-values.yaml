@@ -171,9 +171,9 @@ compactor:
   resources:
     requests:
       cpu: 10m
-      memory: 128Mi
+      memory: 160Mi
     limits:
-      memory: 128Mi
+      memory: 160Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -242,6 +242,13 @@ gateway:
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
+memcachedExporter:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 resultsCache:
   replicas: 1
   resources:

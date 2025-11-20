@@ -150,6 +150,13 @@ metadata-cache:
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
+memcachedExporter:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
 results-cache:
   enabled: true
   replicas: 1
