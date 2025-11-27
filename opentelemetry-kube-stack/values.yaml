@@ -417,8 +417,6 @@ prometheus-node-exporter:
   service:
     # ipDualStack:
     #   enabled: true
-    labels:
-      jobLabel: node-exporter
   resources:
     requests:
       cpu: 10m
