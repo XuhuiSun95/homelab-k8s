@@ -2,7 +2,7 @@ deploymentMode: Distributed
 
 loki:
   limits_config:
-    retention_period: 10d
+    retention_period: 30d
     allow_structured_metadata: true
     volume_enabled: true
   storage:
@@ -27,6 +27,10 @@ loki:
         index:
           prefix: index_
           period: 24h
+  compactor:
+    retention_enabled: true
+    delete_request_store: s3
+    retention_delete_delay: 2h
   pattern_ingester:
     enabled: true
   querier:
