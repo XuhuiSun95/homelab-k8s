@@ -217,17 +217,17 @@ querier:
   resources:
     requests:
       cpu: 10m
-      memory: 216Mi
+      memory: 270Mi
     limits:
-      memory: 216Mi
+      memory: 270Mi
 query_frontend:
   replicas: 1
   resources:
     requests:
       cpu: 10m
-      memory: 285Mi
+      memory: 357Mi
     limits:
-      memory: 285Mi
+      memory: 357Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
