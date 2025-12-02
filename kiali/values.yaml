@@ -2,10 +2,10 @@ replicaCount: 2
 
 resources:
   requests:
-    cpu: 365m
-    memory: 300Mi
+    cpu: 10m
+    memory: 247Mi
   limits:
-    memory: 300Mi
+    memory: 247Mi
 
 affinity:
   nodeAffinity:
@@ -65,7 +65,7 @@ cr:
         istio.io/dataplane-mode: ambient
       resources:
         requests:
-          cpu: 50m
+          cpu: 10m
           memory: 100Mi
         limits:
           memory: 100Mi
