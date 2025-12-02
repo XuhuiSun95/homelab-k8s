@@ -54,7 +54,7 @@ main:
     istio.io/dataplane-mode: ambient
   resources:
     requests:
-      cpu: 100m
+      cpu: 10m
       memory: 512Mi
     limits:
       memory: 512Mi
