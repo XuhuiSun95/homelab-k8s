@@ -4,10 +4,10 @@ ingester:
      enabled: false
   resources:
     requests:
-      cpu: 15m
-      memory: 1216Mi
+      cpu: 10m
+      memory: 800Mi
     limits:
-      memory: 1216Mi
+      memory: 800Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -54,7 +54,7 @@ distributor:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 35m
+      cpu: 10m
       memory: 100Mi
     limits:
       memory: 100Mi
@@ -99,10 +99,10 @@ querier:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 34m
-      memory: 1024Mi
+      cpu: 10m
+      memory: 285Mi
     limits:
-      memory: 1024Mi
+      memory: 285Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -122,10 +122,10 @@ queryFrontend:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 12m
-      memory: 1024Mi
+      cpu: 10m
+      memory: 213Mi
     limits:
-      memory: 1024Mi
+      memory: 213Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
