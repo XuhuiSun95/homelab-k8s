@@ -68,10 +68,10 @@ querier:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 89m
-      memory: 195Mi
+      cpu: 18m
+      memory: 152Mi
     limits:
-      memory: 195Mi
+      memory: 152Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -86,10 +86,10 @@ queryFrontend:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 11m
-      memory: 170Mi
+      cpu: 10m
+      memory: 213Mi
     limits:
-      memory: 170Mi
+      memory: 213Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -115,7 +115,7 @@ queryScheduler:
   replicas: 2
   resources:
     requests:
-      cpu: 11m
+      cpu: 10m
       memory: 100Mi
     limits:
       memory: 100Mi
@@ -145,10 +145,10 @@ distributor:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 65m
-      memory: 180Mi
+      cpu: 24m
+      memory: 155Mi
     limits:
-      memory: 180Mi
+      memory: 155Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -174,10 +174,10 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 160Mi
+      cpu: 15m
+      memory: 164Mi
     limits:
-      memory: 160Mi
+      memory: 164Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -221,7 +221,7 @@ gateway:
   replicas: 1
   resources:
     requests:
-      cpu: 25m
+      cpu: 10m
       memory: 100Mi
     limits:
       memory: 100Mi
@@ -255,6 +255,8 @@ memcachedExporter:
       memory: 100Mi
 resultsCache:
   replicas: 1
+  allocatedMemory: 150
+  # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
@@ -284,12 +286,14 @@ resultsCache:
   priorityClassName: platform-critical
 chunksCache:
   replicas: 1
+  allocatedMemory: 2205
+  # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 4645Mi
+      memory: 2647Mi
     limits:
-      memory: 4645Mi
+      memory: 2647Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
