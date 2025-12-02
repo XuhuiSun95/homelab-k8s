@@ -13,7 +13,7 @@ spec:
   sources:
     - path: . 
       repoURL: 'oci://8gears.container-registry.com/library/n8n'
-      targetRevision: 1.1.0
+      targetRevision: 2.0.0
       helm:
         valueFiles:
         - $values/n8n/n8n-values.yaml
