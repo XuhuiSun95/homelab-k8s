@@ -225,9 +225,9 @@ query_frontend:
   resources:
     requests:
       cpu: 10m
-      memory: 357Mi
+      memory: 447Mi
     limits:
-      memory: 357Mi
+      memory: 447Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
