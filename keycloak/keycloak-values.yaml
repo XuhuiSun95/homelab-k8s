@@ -24,16 +24,23 @@ networkPolicy:
     - ports:
       - port: 15008
 
+autoscaling:
+  enabled: true
+  hpa:
+    enabled: true
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 80
+
 metrics:
   enabled: true
   serviceMonitor:
     enabled: true
   prometheusRule:
-    enabled: true
+    enabled: false
 
 resources:
   requests:
-    cpu: 25m
+    cpu: 40m
     memory: 1000Mi
   limits:
     memory: 1000Mi

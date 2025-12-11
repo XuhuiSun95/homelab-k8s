@@ -50,22 +50,22 @@ cr:
     deployment:
       hpa:
         spec:
-          maxReplicas: 2
-          minReplicas: 1
+          maxReplicas: 10
+          minReplicas: 2
           metrics:
           - type: Resource
             resource:
               name: cpu
               target:
                 type: Utilization
-                averageUtilization: 50
+                averageUtilization: 80
       network_policy:
         enabled: false
       pod_labels:
         istio.io/dataplane-mode: ambient
       resources:
         requests:
-          cpu: 10m
+          cpu: 25m
           memory: 100Mi
         limits:
           memory: 100Mi
