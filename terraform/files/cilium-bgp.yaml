@@ -82,5 +82,5 @@ metadata:
   name: "dmz-lb-pool"
 spec:
   blocks:
-  - cidr: "172.16.10.128/26"
-  - cidr: "2601:8801:2aa0:b301:2::/122"
+  - cidr: "172.16.1.128/26"
+  - cidr: "fdac:ac10:1:80::/122"
