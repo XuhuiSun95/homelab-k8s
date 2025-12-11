@@ -11,13 +11,12 @@ loki:
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      # endpoint: minio.minio.svc.cluster.local
-      endpoint: s3.local.xuhuisun.com
+      endpoint: https://minio.minio.svc.cluster.local
       access_key_id: X3EEh4lU0Uz9M44FWebq
       secret_access_key: VcqVSaBjrsZhHm8qThNBuzjirzkI3EPB4tQwD5ad
       s3ForcePathStyle: true
-      # http_config:
-      #   insecure_skip_verify: true
+      http_config:
+        insecure_skip_verify: true
   schemaConfig:
     configs:
       - from: 2024-04-01
