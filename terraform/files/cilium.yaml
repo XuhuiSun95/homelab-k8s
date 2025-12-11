@@ -36,7 +36,12 @@ bpf:
   distributedLRU:
     enabled: true
   mapDynamicSizeRatio: 0.08
+  # hostLegacyRouting: true # enable host legacy routing for istio ambient mode
 bpfClockProbe: true
+
+bandwidthManager:
+  enabled: true
+  bbr: true
 
 cni:
   exclusive: false
