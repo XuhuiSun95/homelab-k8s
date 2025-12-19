@@ -192,6 +192,6 @@ sidecar:
   resources:
     requests:
       cpu: 10m
-      memory: 130Mi
+      memory: 324Mi
     limits:
-      memory: 130Mi
+      memory: 324Mi
