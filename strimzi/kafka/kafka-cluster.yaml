@@ -23,7 +23,7 @@ spec:
           sasl.enabled.mechanisms: OAUTHBEARER
           oauthbearer.sasl.server.callback.handler.class: io.strimzi.kafka.oauth.server.JaasServerOauthValidatorCallbackHandler
           oauthbearer.sasl.jaas.config: |
-            org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="thePrincipalName" oauth.valid.issuer.uri="https://iam.local.xuhuisun.com/realms/local" oauth.jwks.endpoint.uri="https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/certs" oauth.username.claim="sub" oauth.enable.metrics="true"
+            org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="thePrincipalName" oauth.valid.issuer.uri="https://iam.local.xuhuisun.com/realms/local" oauth.jwks.endpoint.uri="https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/certs" oauth.username.claim="sub" oauth.enable.metrics="true";
           connections.max.reauth.ms: 3600
       configuration:
         brokers:
