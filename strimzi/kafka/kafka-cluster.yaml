@@ -1,4 +1,5 @@
-apiVersion: kafka.strimzi.io/v1beta2
+---
+apiVersion: kafka.strimzi.io/v1
 kind: Kafka
 metadata:
   name: kafka-cluster
@@ -7,36 +8,39 @@ spec:
   kafka:
     version: 4.1.0
     listeners:
-      - name: plain
-        port: 9092
-        type: internal
-        tls: false
-      - name: external
-        port: 9093
-        type: cluster-ip
-        tls: false
-        authentication:
-          type: oauth
-          enableMetrics: true
-          validIssuerUri: https://iam.local.xuhuisun.com/realms/local
-          jwksEndpointUri: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/certs
-          userNameClaim: sub
-          maxSecondsWithoutReauthentication: 3600
-          jwksExpirySeconds: 360
-          jwksRefreshSeconds: 300
-          jwksMinRefreshPauseSeconds: 1
-        configuration:
-          advertisedHostTemplate: kafka-broker-{nodeId}.local.xuhuisun.com
-          brokers:
-            - broker: 0
-              advertisedPort: 9092
-            - broker: 1
-              advertisedPort: 9092
-            - broker: 2
-              advertisedPort: 9092
-          ipFamilyPolicy: PreferDualStack
-          ipFamilies: ["IPv6","IPv4"]
+    - name: plain
+      port: 9092
+      type: internal
+      tls: false
+    - name: external
+      port: 9093
+      type: cluster-ip
+      tls: false
+      authentication:
+        type: custom
+        sasl: true
+        listenerConfig:
+          sasl.enabled.mechanisms: OAUTHBEARER
+          oauthbearer.sasl.server.callback.handler.class: io.strimzi.kafka.oauth.server.JaasServerOauthValidatorCallbackHandler
+          oauthbearer.sasl.jaas.config: |
+            org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="thePrincipalName" oauth.valid.issuer.uri="https://iam.local.xuhuisun.com/realms/local" oauth.jwks.endpoint.uri="https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/certs" oauth.username.claim="sub" oauth.enable.metrics="true"
+          connections.max.reauth.ms: 3600
+      configuration:
+        brokers:
+        - broker: 0
+          advertisedPort: 9092
+        - broker: 1
+          advertisedPort: 9092
+        - broker: 2
+          advertisedPort: 9092
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies:
+        - IPv6
+        - IPv4
+        createBootstrapService: true
+        advertisedHostTemplate: "kafka-broker-{nodeId}.local.xuhuisun.com"
     config:
+      principal.builder.class: io.strimzi.kafka.oauth.server.OAuthKafkaPrincipalBuilder
       auto.create.topics.enable: "false"
       offsets.topic.replication.factor: 3
       transaction.state.log.replication.factor: 3
@@ -73,12 +77,14 @@ spec:
           memory: 231Mi
   cruiseControl:
     autoRebalance:
-      - mode: add-brokers
-      - mode: remove-brokers
+    - mode: add-brokers
+    - mode: remove-brokers
     template:
       apiService:
         ipFamilyPolicy: PreferDualStack
-        ipFamilies: ["IPv6","IPv4"]
+        ipFamilies:
+        - IPv6
+        - IPv4
     resources:
       requests:
         cpu: 204m
@@ -260,6 +266,67 @@ data:
     - pattern: "kafka.server<type=broker-metadata-metrics><>(.+):"
       name: kafka_server_brokermetadatametrics_$1
       type: GAUGE
+    # OAuth Metrics
+    - pattern: "strimzi.oauth<type=(.+), context=(.+), kind=(.+), host=\"(.+)\", path=\"(.+)\", (.+)=(.+), (.+)=(.+), (.+)=(.+)><>(count|totalTimeMs):"
+      name: "strimzi_oauth_$1_$12"
+      type: COUNTER
+      labels:
+        context: "$2"
+        kind: "$3"
+        host: "$4"
+        path: "$5"
+        "$6": "$7"
+        "$8": "$9"
+        "$10": "$11"
+    - pattern: "strimzi.oauth<type=(.+), context=(.+), kind=(.+), host=\"(.+)\", path=\"(.+)\", (.+)=(.+), (.+)=(.+)><>(count|totalTimeMs):"
+      name: "strimzi_oauth_$1_$10"
+      type: COUNTER
+      labels:
+        context: "$2"
+        kind: "$3"
+        host: "$4"
+        path: "$5"
+        "$6": "$7"
+        "$8": "$9"
+    - pattern: "strimzi.oauth<type=(.+), context=(.+), kind=(.+), host=\"(.+)\", path=\"(.+)\", (.+)=(.+)><>(count|totalTimeMs):"
+      name: "strimzi_oauth_$1_$8"
+      type: COUNTER
+      labels:
+        context: "$2"
+        kind: "$3"
+        host: "$4"
+        path: "$5"
+        "$6": "$7"
+    - pattern: "strimzi.oauth<type=(.+), context=(.+), kind=(.+), host=\"(.+)\", path=\"(.+)\", (.+)=(.+), (.+)=(.+), (.+)=(.+)><>(.+):"
+      name: "strimzi_oauth_$1_$12"
+      type: GAUGE
+      labels:
+        context: "$2"
+        kind: "$3"
+        host: "$4"
+        path: "$5"
+        "$6": "$7"
+        "$8": "$9"
+        "$10": "$11"
+    - pattern: "strimzi.oauth<type=(.+), context=(.+), kind=(.+), host=\"(.+)\", path=\"(.+)\", (.+)=(.+), (.+)=(.+)><>(.+):"
+      name: "strimzi_oauth_$1_$10"
+      type: GAUGE
+      labels:
+        context: "$2"
+        kind: "$3"
+        host: "$4"
+        path: "$5"
+        "$6": "$7"
+        "$8": "$9"
+    - pattern: "strimzi.oauth<type=(.+), context=(.+), kind=(.+), host=\"(.+)\", path=\"(.+)\", (.+)=(.+)><>(.+):"
+      name: "strimzi_oauth_$1_$8"
+      type: GAUGE
+      labels:
+        context: "$2"
+        kind: "$3"
+        host: "$4"
+        path: "$5"
+        "$6": "$7"
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -268,7 +335,7 @@ metadata:
   labels:
     app: strimzi
 data:
-  metrics-config.yml: |
+  metrics-config.yml: |-
     # See https://github.com/prometheus/jmx_exporter for more info about JMX Prometheus Exporter metrics
     lowercaseOutputName: true
     rules:

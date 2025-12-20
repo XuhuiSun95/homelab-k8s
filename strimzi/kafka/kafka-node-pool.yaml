@@ -1,4 +1,4 @@
-apiVersion: kafka.strimzi.io/v1beta2
+apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
 metadata:
   name: controller
@@ -10,7 +10,7 @@ metadata:
 spec:
   replicas: 3
   roles:
-    - controller
+  - controller
   resources:
     requests:
       cpu: 55m
@@ -23,7 +23,7 @@ spec:
     deleteClaim: false
     class: proxmox-local-zfs-xfs
 ---
-apiVersion: kafka.strimzi.io/v1beta2
+apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
 metadata:
   name: kafka
@@ -35,7 +35,7 @@ metadata:
 spec:
   replicas: 3
   roles:
-    - broker
+  - broker
   resources:
     requests:
       cpu: 200m
