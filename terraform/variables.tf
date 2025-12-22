@@ -84,3 +84,9 @@ variable "cluster_endpoint" {
   type        = string
   default     = "https://cluster.local:6443"
 }
+
+variable "kubernetes_version" {
+  description = "The version of the Kubernetes"
+  type        = string
+  default     = "v1.35.0"
+}
