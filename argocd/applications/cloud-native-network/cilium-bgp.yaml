@@ -13,7 +13,9 @@ spec:
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: terraform/files/cilium-bgp.yaml
+      path: terraform/files
+      directory:
+        include: "cilium-bgp.yaml"
   # syncPolicy:
   #   automated:
   #     selfHeal: true
