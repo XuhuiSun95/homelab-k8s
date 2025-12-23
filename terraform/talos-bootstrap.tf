@@ -7,17 +7,19 @@ data "talos_client_configuration" "talosconfig" {
 }
 
 data "talos_machine_configuration" "controlplane" {
-  cluster_name     = var.cluster_name
-  cluster_endpoint = var.cluster_endpoint
-  machine_type     = "controlplane"
-  machine_secrets  = talos_machine_secrets.machine_secrets.machine_secrets
+  cluster_name       = var.cluster_name
+  cluster_endpoint   = var.cluster_endpoint
+  machine_type       = "controlplane"
+  machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
+  kubernetes_version = var.kubernetes_version
 }
 
 data "talos_machine_configuration" "worker" {
-  cluster_name     = var.cluster_name
-  cluster_endpoint = var.cluster_endpoint
-  machine_type     = "worker"
-  machine_secrets  = talos_machine_secrets.machine_secrets.machine_secrets
+  cluster_name       = var.cluster_name
+  cluster_endpoint   = var.cluster_endpoint
+  machine_type       = "worker"
+  machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
+  kubernetes_version = var.kubernetes_version
 
   config_patches = [
     templatefile("${path.module}/templates/worker.yaml.tmpl", {
