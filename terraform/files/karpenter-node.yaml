@@ -87,7 +87,16 @@ spec:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 10m
     budgets:
-      - nodes: 10%
+    - nodes: "20%"
+      reasons:
+      - "Empty"
+      - "Drifted"
+    - nodes: "2"
+    - nodes: "0"
+      schedule: "@daily"
+      duration: "20h"
+      reasons:
+      - "Underutilized"
   limits:
     cpu: "16"
     memory: 256Gi
@@ -137,7 +146,16 @@ spec:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 10m
     budgets:
-      - nodes: 10%
+    - nodes: "20%"
+      reasons:
+      - "Empty"
+      - "Drifted"
+    - nodes: "2"
+    - nodes: "0"
+      schedule: "@daily"
+      duration: "20h"
+      reasons:
+      - "Underutilized"
   limits:
     cpu: "24"
     memory: 384Gi
