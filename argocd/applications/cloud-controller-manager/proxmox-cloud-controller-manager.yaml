@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: proxmox-cloud-controller-manager
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: . 
+      repoURL: 'oci://ghcr.io/sergelogvinov/charts/proxmox-cloud-controller-manager'
+      targetRevision: 0.2.17
+      helm:
+        valueFiles:
+        - $values/terraform/files/proxmox-ccm.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  # syncPolicy:
+  #   automated:
+  #     selfHeal: true
