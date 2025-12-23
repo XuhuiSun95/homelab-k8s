@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: proxmox-csi-plugin
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: . 
+      repoURL: 'oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin'
+      targetRevision: 0.4.0
+      helm:
+        valueFiles:
+        - $values/terraform/files/proxmox-csi.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  # syncPolicy:
+  #   automated:
+  #     selfHeal: true
