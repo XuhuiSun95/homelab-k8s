@@ -30,4 +30,4 @@ spec:
       name: lgtm-grafana
       namespace: monitoring
       jsonPointers:
-        - /admin-password
+        - /data/admin-password
