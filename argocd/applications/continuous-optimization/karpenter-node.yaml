@@ -13,7 +13,9 @@ spec:
   sources:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: terraform/files/karpenter-node.yaml
+      path: terraform/files
+      directory:
+        include: "karpenter-node.yaml"
   # syncPolicy:
   #   automated:
   #     selfHeal: true
