@@ -458,29 +458,101 @@ kubectl -n elastic get secret elasticsearch-es-elastic-user \
 
 ### Kubernetes Cluster Upgrade
 
-Upgrade Talos Linux and Kubernetes:
+Upgrade Talos Linux and Kubernetes to the latest version:
 
-```bash
-# Navigate to terraform directory
-cd terraform
+#### Automatic Upgrade to Latest Version
 
-# Update Talos version in terraform.tfvars
-# release = "v1.8.0"  # Update to desired version
+Terraform automatically detects and upgrades to the latest stable Talos version when `release = "latest"` is set in `terraform.tfvars` (this is the default).
 
-# Plan the upgrade
-terraform plan
+**Steps:**
 
-# Apply the upgrade (this will recreate VMs with new Talos version)
-terraform apply
+1. **Upgrade talosctl CLI** to latest version:
+   ```bash
+   # Upgrade talosctl to latest version
+   curl -sL https://talos.dev/install | sh
+   ```
 
-# Verify cluster is healthy after upgrade
-talosctl get nodes
-kubectl get nodes
-kubectl get pods --all-namespaces
+2. **Terraform plan and upgrade** - Auto-detect and upgrade Talos image to latest version:
+   ```bash
+   # Navigate to terraform directory
+   cd terraform
+   
+   # Review planned changes (Terraform will auto-detect latest Talos version)
+   terraform plan
+   ```
 
-# Verify Proxmox integrations are working
-kubectl get pods -n kube-system | grep -E "(proxmox|karpenter|cilium)"
-```
+3. **Apply the upgrade** - Run terraform apply to upgrade:
+   ```bash
+   # Apply the upgrade (this will recreate VMs with new Talos version)
+   terraform apply
+   ```
+
+   **Note:** Steps 2 and 3 only upgrade the template for future Karpenter provisioned nodes. Existing nodes are not upgraded automatically. New nodes created by Karpenter will use the updated Talos image template.
+
+4. **Manually upgrade Talos control plane nodes** by running CLI:
+   ```bash
+   # Upgrade control plane nodes (replace node IP and image version with corresponding values)
+   talosctl upgrade --nodes <NODE_IP> --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:<VERSION>
+   
+   # Example:
+   # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.0
+   ```
+
+5. **Modify Terraform values** to upgrade Kubernetes version to latest version/version that matches with new Talos image:
+   ```bash
+   # Edit terraform/terraform.tfvars and update kubernetes_version
+   # Example:
+   # kubernetes_version = "v1.35.0"
+   
+   # Then apply the changes
+   cd terraform
+   terraform plan
+   terraform apply
+   ```
+
+6. **Remove old Karpenter secret** so during the Talos upgrade-k8s, the new secret with new Kubernetes and image version will be used:
+   ```bash
+   # Remove the old karpenter-template secret in kube-system namespace
+   kubectl delete secret karpenter-template -n kube-system
+   ```
+
+7. **Reboot one of the control plane nodes** so that the new inline manifest that was deleted from step 6 will be reapplied to Kubernetes:
+   ```bash
+   # Reboot a control plane node (replace <NODE_IP> with actual control plane node IP)
+   talosctl reboot --nodes <NODE_IP>
+   
+   # Wait for the node to come back online and verify
+   talosctl get nodes
+   kubectl get nodes
+   ```
+
+8. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
+   ```bash
+   # Option 1: Drift nodes (mark for replacement - Karpenter will gracefully replace them)
+   kubectl annotate node <NODE_NAME> karpenter.sh/do-not-consolidate=true
+   kubectl delete node <NODE_NAME> --grace-period=0
+   
+   # Option 2: Directly delete old nodes (replace <NODE_NAME> with actual node name)
+   kubectl delete node <NODE_NAME>
+   
+   # Karpenter will automatically provision new nodes with the updated Talos image and machine config
+   # Monitor node provisioning
+   kubectl get nodes -w
+   ```
+
+9. **Verify cluster health** after upgrade:
+   ```bash
+   # Verify Talos nodes
+   talosctl get nodes
+   
+   # Verify Kubernetes nodes
+   kubectl get nodes
+   kubectl get pods --all-namespaces
+   
+   # Verify Proxmox integrations are working
+   kubectl get pods -n kube-system | grep -E "(proxmox|karpenter|cilium)"
+   ```
+
 
 ### Proxmox Node Management
 Worker nodes are automatically managed by Karpenter. Control plane nodes are managed by Terraform. To scale worker nodes:
