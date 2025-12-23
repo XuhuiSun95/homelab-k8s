@@ -31,3 +31,8 @@ spec:
       namespace: monitoring
       jsonPointers:
         - /data/admin-password
+    - kind: Deployment
+      name: lgtm-grafana
+      namespace: monitoring
+      jsonPointers:
+        - /spec/template/metadata/annotations/checksum~1secret
