@@ -49,6 +49,11 @@ config:
             href: https://unifi.ui.com/consoles
             description: network
     - Hypervisor:
+        - Prxmox Datacenter Manager:
+            icon: proxmox
+            href: https://pdm.local.xuhuisun.com
+            description: pdm
+            siteMonitor: https://10.101.3.5:8443
         - Proxmox:
             icon: proxmox
             href: https://pve2.local.xuhuisun.com

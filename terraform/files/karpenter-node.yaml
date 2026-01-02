@@ -93,7 +93,7 @@ spec:
       - "Drifted"
     - nodes: "2"
     - nodes: "0"
-      schedule: "@daily"
+      schedule: "0 7 * * *"
       duration: "20h"
       reasons:
       - "Underutilized"
@@ -152,7 +152,7 @@ spec:
       - "Drifted"
     - nodes: "2"
     - nodes: "0"
-      schedule: "@daily"
+      schedule: "0 7 * * *"
       duration: "20h"
       reasons:
       - "Underutilized"
