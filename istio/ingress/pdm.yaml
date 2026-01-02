@@ -1,0 +1,51 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: pdm-ext
+  namespace: istio-ingress
+spec:
+  hosts:
+  - pdm.com
+  location: MESH_EXTERNAL
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  endpoints:
+  - address: 10.101.3.5
+    ports:
+      https: 8443
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: pdm-vs
+  namespace: istio-ingress
+spec:
+  hosts:
+  - pdm.local.xuhuisun.com
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: pdm.com
+        port:
+          number: 443
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: pdm-dr
+  namespace: istio-ingress
+spec:
+  host: pdm.com
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      insecureSkipVerify: true
+    # outlierDetection:
+    #   consecutive5xxErrors: 1
+    #   interval: 15s
+    #   baseEjectionTime: 1m
