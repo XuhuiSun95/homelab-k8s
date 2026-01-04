@@ -13,7 +13,7 @@ spec:
   sources:
     - path: . 
       repoURL: 'oci://ghcr.io/sergelogvinov/charts/karpenter-provider-proxmox'
-      targetRevision: 0.4.1
+      targetRevision: 0.4.2
       helm:
         valueFiles:
         - $values/terraform/files/proxmox-karpenter.yaml
