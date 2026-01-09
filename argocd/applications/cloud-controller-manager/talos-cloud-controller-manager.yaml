@@ -13,7 +13,7 @@ spec:
   sources:
     - path: . 
       repoURL: 'oci://ghcr.io/siderolabs/charts/talos-cloud-controller-manager'
-      targetRevision: 0.5.2
+      targetRevision: 0.5.4
       helm:
         valueFiles:
         - $values/terraform/files/talos-ccm.yaml
