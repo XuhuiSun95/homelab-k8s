@@ -31,7 +31,8 @@ spec:
       namespace: monitoring
       jsonPointers:
         - /data/admin-password
-    - kind: Deployment
+    - group: apps
+      kind: Deployment
       name: lgtm-grafana
       namespace: monitoring
       jsonPointers:
