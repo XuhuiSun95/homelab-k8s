@@ -22,15 +22,19 @@ cluster:
   resources:
     requests:
       cpu: 100m
-      memory: 1Gi
+      memory: 1024Mi
     limits:
-      memory: 1Gi
+      cpu: 100m
+      memory: 1024Mi
   monitoring:
     enabled: true
     podMonitor:
       enabled: true
     prometheusRule:
       enabled: false
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
   initdb:
     database: n8n
 

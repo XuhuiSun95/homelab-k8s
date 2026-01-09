@@ -22,9 +22,10 @@ cluster:
   resources:
     requests:
       cpu: 100m
-      memory: 1Gi
+      memory: 1024Mi
     limits:
-      memory: 1Gi
+      cpu: 100m
+      memory: 1024Mi
   priorityClassName: platform-critical
   affinity:
     topologyKey: kubernetes.io/hostname
@@ -41,6 +42,9 @@ cluster:
       enabled: true
     prometheusRule:
       enabled: false
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
   initdb:
     database: keycloak
 

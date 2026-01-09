@@ -23,9 +23,10 @@ cluster:
   resources:
     requests:
       cpu: 100m
-      memory: 1Gi
+      memory: 1024Mi
     limits:
-      memory: 1Gi
+      cpu: 100m
+      memory: 1024Mi
   roles:
     - name: immich
       superuser: true
@@ -37,6 +38,8 @@ cluster:
     prometheusRule:
       enabled: false
   postgresql:
+    parameters:
+      shared_buffers: 256MB
     shared_preload_libraries:
       - "vchord.so"
   initdb:
