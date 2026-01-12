@@ -33,7 +33,7 @@ spec:
                     operator: In
                     values:
                       - controller
-              topologyKey: "kubernetes.io/hostname"
+              topologyKey: kubernetes.io/hostname
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
@@ -70,4 +70,4 @@ spec:
                     operator: In
                     values:
                       - broker
-              topologyKey: "kubernetes.io/hostname"
+              topologyKey: kubernetes.io/hostname
