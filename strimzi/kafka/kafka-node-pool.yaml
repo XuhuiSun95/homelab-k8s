@@ -69,5 +69,5 @@ spec:
                   - key: strimzi.io/pool-name
                     operator: In
                     values:
-                      - broker
+                      - kafka
               topologyKey: kubernetes.io/hostname
