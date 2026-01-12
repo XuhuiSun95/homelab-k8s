@@ -22,10 +22,10 @@ cluster:
   resources:
     requests:
       cpu: 100m
-      memory: 1024Mi
+      memory: 1Gi
     limits:
       cpu: 100m
-      memory: 1024Mi
+      memory: 1Gi
   monitoring:
     enabled: true
     podMonitor:
