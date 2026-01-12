@@ -6,6 +6,14 @@ tenant:
       volumesPerServer: 4
       size: 10Gi
       storageClassName: proxmox-local-zfs-xfs
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  v1.min.io/tenant: minio
+                  v1.min.io/pool: pool-0
+              topologyKey: kubernetes.io/hostname
       resources:
         requests:
           cpu: 23m
