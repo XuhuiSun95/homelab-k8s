@@ -22,6 +22,18 @@ spec:
     size: 3Gi
     deleteClaim: false
     class: proxmox-local-zfs-xfs
+  template:
+    pod:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: strimzi.io/pool-name
+                    operator: In
+                    values:
+                      - controller
+              topologyKey: kubernetes.io/hostname
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
@@ -47,3 +59,15 @@ spec:
     size: 20Gi
     deleteClaim: false
     class: proxmox-local-zfs-xfs
+  template:
+    pod:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: strimzi.io/pool-name
+                    operator: In
+                    values:
+                      - broker
+              topologyKey: kubernetes.io/hostname

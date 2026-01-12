@@ -41,6 +41,14 @@ alertmanager:
     limits:
       memory: 100Mi
   affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: alertmanager
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -57,12 +65,22 @@ compactor:
   persistentVolume:
     size: 5Gi
     storageClass: proxmox-local-zfs-xfs
+  replicas: 1
   resources:
     requests:
       cpu: 10m
       memory: 567Mi
     limits:
       memory: 567Mi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: compactor
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
 distributor:
   replicas: 2
   resources:
@@ -71,6 +89,15 @@ distributor:
       memory: 200Mi
     limits:
       memory: 200Mi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: distributor
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
 ingester:
   persistentVolume:
     size: 10Gi
@@ -84,6 +111,15 @@ ingester:
       memory: 1024Mi
   zoneAwareReplication:
      enabled: false
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: ingester
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
 chunks-cache:
   enabled: true
   replicas: 1
@@ -200,6 +236,14 @@ overrides_exporter:
     limits:
       memory: 100Mi
   affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: overrides-exporter
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -220,6 +264,15 @@ querier:
       memory: 270Mi
     limits:
       memory: 270Mi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: querier
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
 query_frontend:
   replicas: 1
   resources:
@@ -229,6 +282,14 @@ query_frontend:
     limits:
       memory: 447Mi
   affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: query-frontend
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -250,6 +311,14 @@ query_scheduler:
     limits:
       memory: 100Mi
   affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: query-scheduler
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -270,6 +339,15 @@ ruler:
       memory: 102Mi
     limits:
       memory: 102Mi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: ruler
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
 store_gateway:
   persistentVolume:
     size: 2Gi
@@ -283,6 +361,15 @@ store_gateway:
       memory: 300Mi
   zoneAwareReplication:
      enabled: false
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: store-gateway
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
 gateway:
   replicas: 1
   resources:
@@ -292,6 +379,14 @@ gateway:
     limits:
       memory: 100Mi
   affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: gateway
+              app.kubernetes.io/instance: lgtm-mimir
+              app.kubernetes.io/name: mimir
+          topologyKey: kubernetes.io/hostname
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
