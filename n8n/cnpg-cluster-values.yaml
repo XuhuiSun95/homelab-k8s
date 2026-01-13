@@ -26,6 +26,9 @@ cluster:
     limits:
       cpu: 100m
       memory: 1Gi
+  affinity:
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
   monitoring:
     enabled: true
     podMonitor:
