@@ -27,5 +27,5 @@ cluster_name = "homelab-k8s"
 
 cluster_endpoint = "https://homelab-k8s.local.xuhuisun.com:6443"
 
-kubernetes_version = "v1.34.2"
-release = "v1.12.0"
+# kubernetes_version = "v1.35.0"
+# release = "v1.12.1"

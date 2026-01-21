@@ -472,35 +472,28 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    curl -sL https://talos.dev/install | sh
    ```
 
-2. **Manually remove the Proxmox template** so it will create a new template based on the new Talos ISO image:
-   ```bash
-   # Remove the old Proxmox template (talos-worker-template) via Proxmox web UI or CLI
-   # Via Proxmox web UI: Datacenter > VM > talos-worker-template > More > Remove
-   # Via Proxmox CLI (on Proxmox host):
-   qm destroy <VM_ID> --purge
-   
-   # Or via Proxmox API (replace <PVE_HOST> and <VM_ID> with actual values):
-   # curl -X DELETE -H "Authorization: PVEAPIToken=<TOKEN>" https://<PVE_HOST>:8006/api2/json/nodes/<NODE>/qemu/<VM_ID>
-   ```
-
-3. **Terraform plan and upgrade** - Auto-detect and upgrade Talos image to latest version:
+2. **Modify Terraform values and plan** - Update Kubernetes version and auto-detect latest Talos image:
    ```bash
    # Navigate to terraform directory
    cd terraform
+   
+   # Edit terraform/terraform.tfvars and update kubernetes_version to match new Talos image
+   # Example:
+   # kubernetes_version = "v1.35.0"
    
    # Review planned changes (Terraform will auto-detect latest Talos version)
    terraform plan
    ```
 
-4. **Apply the upgrade** - Run terraform apply to upgrade:
+3. **Apply the upgrade** - Run terraform apply to upgrade:
    ```bash
    # Apply the upgrade (this will recreate VMs with new Talos version)
    terraform apply
    ```
 
-   **Note:** Steps 3 and 4 only upgrade the template for future Karpenter provisioned nodes. Existing nodes are not upgraded automatically. New nodes created by Karpenter will use the updated Talos image template.
+   **Note:** Steps 2 and 3 only upgrade the template for future Karpenter provisioned nodes. Existing nodes are not upgraded automatically. New nodes created by Karpenter will use the updated Talos image template.
 
-5. **Manually upgrade Talos control plane nodes** by running CLI:
+4. **Manually upgrade Talos control plane nodes** by running CLI:
    ```bash
    # Upgrade control plane nodes (replace node IP and image version with corresponding values)
    talosctl upgrade --nodes <NODE_IP> --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:<VERSION>
@@ -509,25 +502,13 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.0
    ```
 
-6. **Modify Terraform values** to upgrade Kubernetes version to latest version/version that matches with new Talos image:
-   ```bash
-   # Edit terraform/terraform.tfvars and update kubernetes_version
-   # Example:
-   # kubernetes_version = "v1.35.0"
-   
-   # Then apply the changes
-   cd terraform
-   terraform plan
-   terraform apply
-   ```
-
-7. **Remove old Karpenter secret** so during the Talos upgrade-k8s, the new secret with new Kubernetes and image version will be used:
+5. **Remove old Karpenter secret** so during the Talos upgrade-k8s, the new secret with new Kubernetes and image version will be used:
    ```bash
    # Remove the old karpenter-template secret in kube-system namespace
    kubectl delete secret karpenter-template -n kube-system
    ```
 
-8. **Reboot one of the control plane nodes** so that the new inline manifest that was deleted from step 7 will be reapplied to Kubernetes:
+6. **Reboot one of the control plane nodes** so that the new inline manifest that was deleted from step 5 will be reapplied to Kubernetes:
    ```bash
    # Reboot a control plane node (replace <NODE_IP> with actual control plane node IP)
    talosctl reboot --nodes <NODE_IP>
@@ -537,7 +518,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    kubectl get nodes
    ```
 
-9. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
+7. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
    ```bash
    # Option 1: Drift nodes (mark for replacement - Karpenter will gracefully replace them)
    kubectl annotate node <NODE_NAME> karpenter.sh/do-not-consolidate=true
@@ -551,7 +532,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    kubectl get nodes -w
    ```
 
-10. **Verify cluster health** after upgrade:
+8. **Verify cluster health** after upgrade:
    ```bash
    # Verify Talos nodes
    talosctl get nodes
