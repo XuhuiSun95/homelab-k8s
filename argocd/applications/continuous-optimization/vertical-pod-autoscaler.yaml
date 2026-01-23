@@ -12,6 +12,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   sources:
     - path: . 
+      # TODO: replace with the kubernetes.github.io/autoscaler repo
       repoURL: 'oci://ghcr.io/stevehipwell/helm-charts/vertical-pod-autoscaler'
       targetRevision: 1.10.1
       helm:
@@ -20,9 +21,9 @@ spec:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
-  # syncPolicy:
-  #   automated:
-  #     selfHeal: true
+  syncPolicy:
+    automated:
+      selfHeal: true
   # ignoreDifferences:
   #   - kind: Secret
   #     name: vpa-tls-certs
