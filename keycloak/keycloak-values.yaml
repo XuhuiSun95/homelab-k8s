@@ -24,6 +24,16 @@ networkPolicy:
     - ports:
       - port: 15008
 
+autoscaling:
+  vpa:
+    enabled: true
+    controlledResources: ["cpu"]
+    minAllowed:
+      cpu: 10m
+    maxAllowed:
+      cpu: 3
+    updateMode: InPlaceOrRecreate
+
 metrics:
   enabled: true
   serviceMonitor:
@@ -34,9 +44,9 @@ metrics:
 resources:
   requests:
     cpu: 68m
-    memory: 1000Mi
+    memory: 1250Mi
   limits:
-    memory: 1000Mi
+    memory: 1250Mi
 
 postgresql:
   enabled: false
