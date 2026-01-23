@@ -77,9 +77,9 @@ compactor:
   resources:
     requests:
       cpu: 10m
-      memory: 411Mi
+      memory: 611Mi
     limits:
-      memory: 411Mi
+      memory: 611Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
