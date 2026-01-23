@@ -20,6 +20,14 @@ spec:
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
-  syncPolicy:
-    automated:
-      selfHeal: true
+  # syncPolicy:
+  #   automated:
+  #     selfHeal: true
+  ignoreDifferences:
+    - kind: Secret
+      name: vpa-tls-certs
+      namespace: kube-system
+      jsonPointers:
+        - /data/ca.crt
+        - /data/tls.crt
+        - /data/tls.key
