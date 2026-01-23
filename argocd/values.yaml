@@ -109,7 +109,7 @@ redis-ha:
     effect: NoSchedule
 
 controller:
-  replicas: 1
+  replicas: 2
   vpa:
     enabled: true
     updateMode: InPlaceOrRecreate
@@ -123,10 +123,10 @@ controller:
         memory: 2Gi
   resources:
     requests:
-      cpu: 208m
-      memory: 1523Mi
+      cpu: 200m
+      memory: 1024Mi
     limits:
-      memory: 1523Mi
+      memory: 1024Mi
 
 server:
   replicas: 2
