@@ -6,6 +6,8 @@ admissionController:
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
+  certManager:
+    enabled: true
 
 recommender:
   nodeSelector:
