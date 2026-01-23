@@ -32,7 +32,8 @@ autoscaling:
       cpu: 10m
     maxAllowed:
       cpu: 3
-    updateMode: InPlaceOrRecreate
+    updatePolicy:
+      updateMode: InPlaceOrRecreate
 
 metrics:
   enabled: true
