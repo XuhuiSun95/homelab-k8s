@@ -1,0 +1,26 @@
+admissionController:
+  nodeSelector:
+    karpenter.sh/nodepool: system
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
+  priorityClassName: platform-critical
+
+recommender:
+  nodeSelector:
+    karpenter.sh/nodepool: system
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
+  priorityClassName: platform-critical
+
+updater:
+  nodeSelector:
+    karpenter.sh/nodepool: system
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
+  priorityClassName: platform-critical
