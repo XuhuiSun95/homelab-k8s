@@ -1,18 +1,18 @@
 type: postgresql
 version:
   postgresql: "17"
-mode: recovery
+# mode: recovery
 
-recovery:
-  method: object_store
-  clusterName: n8n-cnpg-cluster
-  database: n8n
-  endpointURL: https://s3.local.xuhuisun.com
-  provider: s3
-  s3:
-    bucket: cloudnative-pg-backups
-    accessKey: om9WSI45aMEZxBqASwSy
-    secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
+# recovery:
+#   method: object_store
+#   clusterName: n8n-cnpg-cluster
+#   database: n8n
+#   endpointURL: https://s3.local.xuhuisun.com
+#   provider: s3
+#   s3:
+#     bucket: cloudnative-pg-backups
+#     accessKey: om9WSI45aMEZxBqASwSy
+#     secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
 
 cluster:
   instances: 3
