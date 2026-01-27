@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: opentelemetry-kube-stack
       repoURL: 'https://open-telemetry.github.io/opentelemetry-helm-charts'
-      targetRevision: 0.12.6
+      targetRevision: 0.13.1
       helm:
         valueFiles:
         - $values/opentelemetry-kube-stack/values.yaml
