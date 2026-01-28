@@ -15,7 +15,7 @@ spec:
         name: "cilium-peer-v4"
     - name: "peer-65000-v6"
       peerASN: 65000
-      peerAddress: 2600:8801:2aa0:b307::1
+      peerAddress: 2600:8801:2a8b:6c04::1
       peerConfigRef:
         name: "cilium-peer-v6"
 ---
