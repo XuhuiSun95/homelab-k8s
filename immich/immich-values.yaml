@@ -60,7 +60,7 @@ server:
         main:
           image:
             repository: ghcr.io/immich-app/immich-server
-            tag: v2.5.0
+            tag: v2.5.2
           resources:
             requests:
               cpu: 189m
@@ -78,7 +78,7 @@ machine-learning:
         main:
           image:
             repository: ghcr.io/immich-app/immich-machine-learning
-            tag: v2.5.0
+            tag: v2.5.2
           resources:
             requests:
               cpu: 23m
