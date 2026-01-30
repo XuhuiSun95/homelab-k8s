@@ -113,7 +113,7 @@ dashboards:
     7639-istio-mesh-dashboard:
       # renovate: depName="Istio Mesh Dashboard"
       gnetId: 7639
-      revision: 287
+      revision: 288
       datasource: Mimir
     7636-istio-service-dashboard:
       # renovate: depName="Istio Service Dashboard"
