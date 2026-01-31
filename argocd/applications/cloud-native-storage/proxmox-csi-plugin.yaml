@@ -13,7 +13,7 @@ spec:
   sources:
     - path: . 
       repoURL: 'oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin'
-      targetRevision: 0.5.4
+      targetRevision: 0.5.5
       helm:
         valueFiles:
         - $values/terraform/files/proxmox-csi.yaml
