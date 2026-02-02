@@ -13,16 +13,4 @@ spec:
     - destination:
         host: argocd-server
         port:
-          number: 443
----
-apiVersion: networking.istio.io/v1
-kind: DestinationRule
-metadata:
-  name: argocd-dr
-  namespace: argocd
-spec:
-  host: argocd-server
-  trafficPolicy:
-    tls:
-      mode: SIMPLE
-      insecureSkipVerify: true
+          number: 80
