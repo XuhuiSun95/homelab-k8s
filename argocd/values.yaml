@@ -37,10 +37,10 @@ applicationSet:
     minAvailable: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 64Mi
+      cpu: 20m
+      memory: 128Mi
     limits:
-      memory: 64Mi
+      memory: 128Mi
 
 dex:
   enabled: false
@@ -121,7 +121,7 @@ controller:
         memory: 2Gi
   resources:
     requests:
-      cpu: 200m
+      cpu: 150m
       memory: 1024Mi
     limits:
       memory: 1024Mi
@@ -133,7 +133,7 @@ server:
     minAvailable: 1
   resources:
     requests:
-      cpu: 10m
+      cpu: 20m
       memory: 180Mi
     limits:
       memory: 180Mi
@@ -145,10 +145,10 @@ repoServer:
     minAvailable: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 128Mi
+      cpu: 20m
+      memory: 256Mi
     limits:
-      memory: 128Mi
+      memory: 256Mi
 
 extraObjects:
   - |
@@ -166,10 +166,10 @@ extraObjects:
               - memory
             minAllowed:
               cpu: 5m
-              memory: 32Mi
+              memory: 64Mi
             maxAllowed:
               cpu: 1
-              memory: 128Mi
+              memory: 256Mi
       targetRef:
         apiVersion: apps/v1
         kind: Deployment
@@ -216,10 +216,10 @@ extraObjects:
               - memory
             minAllowed:
               cpu: 5m
-              memory: 64Mi
+              memory: 128Mi
             maxAllowed:
               cpu: 1
-              memory: 256Mi
+              memory: 512Mi
       targetRef:
         apiVersion: apps/v1
         kind: Deployment
