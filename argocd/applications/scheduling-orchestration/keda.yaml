@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: keda
       repoURL: 'https://kedacore.github.io/charts'
-      targetRevision: 2.18.3
+      targetRevision: 2.19.0
       helm:
         valueFiles:
         - $values/keda/values.yaml
