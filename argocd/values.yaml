@@ -17,6 +17,8 @@ global:
           values: ["system"]
 
 configs:
+  params:
+    server.insecure: true
   cm:
     oidc.config: |
       name: Keycloak
@@ -30,28 +32,21 @@ configs:
 
 applicationSet:
   replicas: 2
+  pdb:
+    enabled: true
+    minAvailable: 1
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
-      memory: 100Mi
+      memory: 64Mi
 
 dex:
-  resources:
-    requests:
-      cpu: 10m
-      memory: 100Mi
-    limits:
-      memory: 100Mi
+  enabled: false
 
 notifications:
-  resources:
-    requests:
-      cpu: 10m
-      memory: 100Mi
-    limits:
-      memory: 100Mi
+  enabled: false
 
 redis-ha:
   enabled: true
@@ -110,6 +105,9 @@ redis-ha:
 
 controller:
   replicas: 2
+  pdb:
+    enabled: true
+    minAvailable: 1
   vpa:
     enabled: true
     updateMode: InPlaceOrRecreate
@@ -130,18 +128,101 @@ controller:
 
 server:
   replicas: 2
+  pdb:
+    enabled: true
+    minAvailable: 1
   resources:
     requests:
-      cpu: 32m
-      memory: 173Mi
+      cpu: 10m
+      memory: 180Mi
     limits:
-      memory: 173Mi
+      memory: 180Mi
 
 repoServer:
   replicas: 2
+  pdb:
+    enabled: true
+    minAvailable: 1
   resources:
     requests:
-      cpu: 18m
-      memory: 375Mi
+      cpu: 10m
+      memory: 128Mi
     limits:
-      memory: 375Mi
+      memory: 128Mi
+
+extraObjects:
+  - |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      name: argocd-applicationset-controller
+      namespace: argocd
+    spec:
+      resourcePolicy:
+        containerPolicies:
+          - containerName: applicationset-controller
+            controlledResources:
+              - cpu
+              - memory
+            minAllowed:
+              cpu: 5m
+              memory: 32Mi
+            maxAllowed:
+              cpu: 1
+              memory: 128Mi
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: argocd-applicationset-controller
+      updatePolicy:
+        updateMode: InPlaceOrRecreate
+  - |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      name: argocd-server
+      namespace: argocd
+    spec:
+      resourcePolicy:
+        containerPolicies:
+          - containerName: server
+            controlledResources:
+              - cpu
+              - memory
+            minAllowed:
+              cpu: 5m
+              memory: 128Mi
+            maxAllowed:
+              cpu: 1
+              memory: 512Mi
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: argocd-server
+      updatePolicy:
+        updateMode: InPlaceOrRecreate
+  - |
+    apiVersion: autoscaling.k8s.io/v1
+    kind: VerticalPodAutoscaler
+    metadata:
+      name: argocd-repo-server
+      namespace: argocd
+    spec:
+      resourcePolicy:
+        containerPolicies:
+          - containerName: repo-server
+            controlledResources:
+              - cpu
+              - memory
+            minAllowed:
+              cpu: 5m
+              memory: 64Mi
+            maxAllowed:
+              cpu: 1
+              memory: 256Mi
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: argocd-repo-server
+      updatePolicy:
+        updateMode: InPlaceOrRecreate
