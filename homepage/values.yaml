@@ -91,7 +91,7 @@ config:
             icon: argo-cd
             href: https://argocd.local.xuhuisun.com
             description: in-cluster cd
-            siteMonitor: https://argocd-server.argocd.svc.cluster.local
+            siteMonitor: http://argocd-server.argocd.svc.cluster.local
     - Monitoring:
         - Grafana:
             icon: grafana
