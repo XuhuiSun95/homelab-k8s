@@ -12,6 +12,7 @@ data "talos_machine_configuration" "controlplane" {
   machine_type       = "controlplane"
   machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
   kubernetes_version = var.kubernetes_version
+  talos_version      = local.talos_release_version
 }
 
 data "talos_machine_configuration" "worker" {
@@ -20,11 +21,28 @@ data "talos_machine_configuration" "worker" {
   machine_type       = "worker"
   machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
   kubernetes_version = var.kubernetes_version
+  talos_version      = local.talos_release_version
 
   config_patches = [
     templatefile("${path.module}/templates/worker.yaml.tmpl", {
       validSubnets    = [var.vpc_cidr[0]]
       installer_image = data.talos_image_factory_urls.talos_image.urls.installer
+    })
+  ]
+}
+
+data "talos_machine_configuration" "gpu-worker" {
+  cluster_name       = var.cluster_name
+  cluster_endpoint   = var.cluster_endpoint
+  machine_type       = "worker"
+  machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
+  kubernetes_version = var.kubernetes_version
+  talos_version      = local.talos_release_version
+
+  config_patches = [
+    templatefile("${path.module}/templates/gpu-worker.yaml.tmpl", {
+      validSubnets    = [var.vpc_cidr[0]]
+      installer_image = data.talos_image_factory_urls.gpu_talos_image.urls.installer
     })
   ]
 }
@@ -66,10 +84,12 @@ resource "talos_machine_configuration_apply" "controlplane" {
         }]
       })
       proxmox-karpenter-template = data.talos_machine_configuration.worker.machine_configuration
+      proxmox-karpenter-gpu-template = data.talos_machine_configuration.gpu-worker.machine_configuration
     })
   ]
 
   depends_on = [
+    proxmox_virtual_environment_vm.bastion,
     proxmox_virtual_environment_vm.controlplane,
   ]
 }

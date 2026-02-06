@@ -13,6 +13,10 @@ output "karpenter" {
   value     = proxmox_virtual_environment_user_token.karpenter.value
 }
 
+output "bastions" {
+  value = local.bastions
+}
+
 output "controlplanes" {
   value = local.controlplanes
 }

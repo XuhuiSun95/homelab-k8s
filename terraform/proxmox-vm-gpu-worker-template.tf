@@ -1,12 +1,12 @@
-resource "proxmox_virtual_environment_vm" "worker-template" {
-  for_each = { for inx, zone in local.zones : zone => inx }
+resource "proxmox_virtual_environment_vm" "gpu-worker-template" {
+  for_each = { for inx, zone in local.zones : zone => inx if lookup(var.nodes[zone], "pci_devices", []) != [] }
 
-  name        = "talos-worker-template"
-  description = "Talos worker template"
-  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_image_version}", "type_k8s-worker-template", "network-interface_${var.nodes[each.key].bridge}", "vlan-id_${var.nodes[each.key].vlan_id}"]
+  name        = "talos-gpu-worker-template"
+  description = "Talos GPU worker template"
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_gpu-${local.talos_image_version}", "type_k8s-gpu-worker-template", "network-interface_${var.nodes[each.key].bridge}", "vlan-id_${var.nodes[each.key].vlan_id}"]
 
   node_name = each.key
-  vm_id     = lookup(try(var.controlplane[each.key], {}), "id", 9000) + each.value + 100
+  vm_id     = lookup(try(var.controlplane[each.key], {}), "id", 9000) + each.value + 200
 
   template = true
 
@@ -29,7 +29,7 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
 
   disk {
     datastore_id = var.nodes[each.key].storage
-    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image[each.key].id
+    file_id      = proxmox_virtual_environment_download_file.gpu_talos_cloud_image[each.key].id
     interface    = "scsi0"
     iothread     = true
     cache        = "none"
@@ -39,9 +39,14 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
     file_format  = "raw"
   }
 
+  hostpci {
+    device  = "hostpci0"
+    mapping = "nvidia-gpu-${each.key}"
+  }
+
   initialization {
     dns {
-      servers = [var.nodes[each.key].gw4, var.nodes[each.key].gw6]
+      servers = [var.nodes[each.key].gw4]
     }
 
     ip_config {
@@ -74,6 +79,6 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
   }
 
   depends_on = [
-    proxmox_virtual_environment_download_file.talos_cloud_image,
+    proxmox_virtual_environment_download_file.gpu_talos_cloud_image,
   ]
 }

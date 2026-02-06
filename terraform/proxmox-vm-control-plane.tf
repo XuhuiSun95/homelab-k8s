@@ -14,8 +14,8 @@ locals {
         gwv4 : lookup(try(var.nodes[zone], {}), "gw4", local.gwv4)
         gwv6 : lookup(try(var.nodes[zone], {}), "gw6", "fe80::1")
 
+        bridge : lookup(try(var.nodes[zone], {}), "bridge", null)
         vlan_id : lookup(try(var.nodes[zone], {}), "vlan_id", null)
-        trunks : lookup(try(var.nodes[zone], {}), "trunks", null)
       }
     ]
   ]) : k.name => k }
@@ -48,7 +48,7 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
 
   name        = each.value.name
   description = "Talos controlplane at ${var.region}"
-  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_image_version}", "type_k8s", "type-k8s-role_control-plane"]
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_image_version}", "type_k8s", "type-k8s-role_control-plane", "network-interface_${each.value.bridge}", "vlan-id_${each.value.vlan_id}"]
 
   node_name = each.value.zone
   vm_id     = each.value.id
@@ -106,12 +106,11 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
   }
 
   network_device {
-    bridge      = "vmbr0"
+    bridge      = each.value.bridge
     queues      = each.value.cpu
     mtu         = 1
     mac_address = "32:90:${join(":", formatlist("%02X", split(".", each.value.ipv4)))}"
     vlan_id     = each.value.vlan_id
-    trunks      = each.value.trunks
   }
 
   operating_system {
@@ -132,7 +131,6 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
       cpu,
       memory,
       disk,
-      network_device,
     ]
   }
 
