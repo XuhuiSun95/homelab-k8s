@@ -91,3 +91,13 @@ cluster:
           namespace: kube-system 
         data:
           user-data: ${base64encode(proxmox-karpenter-template)}
+    - name: karpenter-gpu-template
+      contents: |-
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: karpenter-gpu-template
+          namespace: kube-system 
+        data:
+          user-data: ${base64encode(proxmox-karpenter-gpu-template)}          

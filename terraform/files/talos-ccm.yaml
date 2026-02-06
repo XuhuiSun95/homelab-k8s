@@ -41,6 +41,9 @@ transformations:
               - ^gpu-.+$
     labels:
       node-role.kubernetes.io/gpu: ""
+      nvidia.com/gpu.present: true
+    taints:
+      nvidia.com/gpu: ":NoSchedule"
 
 resources:
   requests:

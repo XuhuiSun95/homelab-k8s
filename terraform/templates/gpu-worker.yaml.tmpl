@@ -1,0 +1,33 @@
+machine:
+  kernel:
+    modules:
+      - name: nvidia
+      - name: nvidia_uvm
+      - name: nvidia_drm
+      - name: nvidia_modeset
+  sysctls:
+    net.core.bpf_jit_harden: 1
+  kubelet:
+    extraArgs:
+      cloud-provider: external
+      rotate-server-certificates: true
+      register-with-taints: "karpenter.sh/unregistered=:NoExecute"
+    nodeIP:
+      validSubnets:
+%{ for subnet in validSubnets ~}
+        - ${subnet}
+%{ endfor ~}
+  install:
+    image: ${installer_image}
+  features:
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+cluster:
+  network:
+    podSubnets:
+      - 10.233.0.0/18
+      - fd85:ee78:d8a6:8607::1:0000/112
+    serviceSubnets:
+      - 10.233.64.0/18
+      - fd85:ee78:d8a6:8607::1000/116       
