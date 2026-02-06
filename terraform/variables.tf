@@ -41,17 +41,15 @@ variable "nodes" {
       storage = "data",
       gw4     = "1.1.0.1",
       gw6     = "2001:1:2:1::64",
-      vlan_id = 10,
-      trunks  = "10;110",
       bridge  = "vmbr0",
+      vlan_id = 10,
     },
     "hvm-2" = {
       storage = "data",
       gw4     = "1.1.0.2",
       gw6     = "2001:1:2:2::64",
-      vlan_id = 20,
-      trunks  = "20;120",
       bridge  = "vmbr0",
+      vlan_id = 20,
     },
   }
 }
@@ -60,6 +58,18 @@ variable "release" {
   type        = string
   description = "The version of the Talos image"
   default     = "latest"
+}
+
+variable "bastion" {
+  description = "Property of bastion"
+  type        = map(any)
+  default = {
+    "pve2" = {
+      id  = 1000,
+      cpu = 1,
+      mem = 2048,
+    },
+  }
 }
 
 variable "controlplane" {

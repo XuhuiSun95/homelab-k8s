@@ -79,7 +79,6 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
       initialization,
       cpu,
       memory,
-      network_device,
     ]
   }
 

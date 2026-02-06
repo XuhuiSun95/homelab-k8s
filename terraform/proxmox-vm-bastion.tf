@@ -120,7 +120,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   network_device {
     bridge  = var.nodes[each.value.zone].bridge
-    queues  = 1
+    queues      = each.value.cpu
     mtu     = 1
     vlan_id = var.nodes[each.value.zone].vlan_id
   }
@@ -147,7 +147,6 @@ resource "proxmox_virtual_environment_vm" "bastion" {
       cpu,
       memory,
       disk,
-      network_device,
     ]
   }
 

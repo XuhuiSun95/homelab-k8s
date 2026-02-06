@@ -16,7 +16,6 @@ locals {
 
         bridge : lookup(try(var.nodes[zone], {}), "bridge", null)
         vlan_id : lookup(try(var.nodes[zone], {}), "vlan_id", null)
-        trunks : lookup(try(var.nodes[zone], {}), "trunks", null)
       }
     ]
   ]) : k.name => k }
@@ -112,7 +111,6 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
     mtu         = 1
     mac_address = "32:90:${join(":", formatlist("%02X", split(".", each.value.ipv4)))}"
     vlan_id     = each.value.vlan_id
-    trunks      = each.value.trunks
   }
 
   operating_system {
@@ -133,7 +131,6 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
       cpu,
       memory,
       disk,
-      network_device,
     ]
   }
 

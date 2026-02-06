@@ -9,9 +9,16 @@ nodes = {
     storage = "local-zfs",
     gw4     = "10.101.70.1",
     gw6     = "2600:8801:2a8b:6c04::1",
-    vlan_id = 70,
-    trunks  = "70;1610",
     bridge  = "vmbr0",
+    vlan_id = 70,
+  }
+}
+
+bastion = {
+  "pve2" = {
+    id  = 1000,
+    cpu = 1,
+    mem = 2048,
   }
 }
 
