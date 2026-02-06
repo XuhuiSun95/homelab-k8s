@@ -77,8 +77,6 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
     ignore_changes = [
       started,
       initialization,
-      cpu,
-      memory,
     ]
   }
 

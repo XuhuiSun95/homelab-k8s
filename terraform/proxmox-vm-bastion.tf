@@ -85,6 +85,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   memory {
     dedicated = each.value.mem
+    floating  = each.value.mem
   }
 
   disk {
@@ -144,8 +145,6 @@ resource "proxmox_virtual_environment_vm" "bastion" {
     ignore_changes = [
       started,
       initialization,
-      cpu,
-      memory,
       disk,
     ]
   }
