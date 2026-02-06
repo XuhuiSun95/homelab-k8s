@@ -10,9 +10,12 @@ locals {
         cpu : lookup(try(var.bastion[zone], {}), "cpu", 1)
         mem : lookup(try(var.bastion[zone], {}), "mem", 2048),
 
-        ipv4 : cidrhost(cidrsubnet(var.vpc_cidr[0], 4, var.network_shift + index(local.zones, zone)), -1 )
+        ipv4 : cidrhost(cidrsubnet(var.vpc_cidr[0], 4, var.network_shift + index(local.zones, zone)), -1)
         gwv4 : lookup(try(var.nodes[zone], {}), "gw4", local.gwv4)
         gwv6 : lookup(try(var.nodes[zone], {}), "gw6", "fe80::1")
+
+        bridge : lookup(try(var.nodes[zone], {}), "bridge", null)
+        vlan_id : lookup(try(var.nodes[zone], {}), "vlan_id", null)
       }
     ]
   ]) : k.name => k }
@@ -61,7 +64,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   name        = each.value.name
   description = "Bastion host for ${each.value.zone}"
-  tags        = ["managed-by_terraform", "os_linux", "os-sku_ubuntu", "os-image-version_noble-server-cloudimg-amd64", "type_vm"]
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_ubuntu", "os-image-version_noble-server-cloudimg-amd64", "type_vm", "network-interface_${each.value.bridge}", "vlan-id_${each.value.vlan_id}"]
 
   node_name = each.value.zone
   vm_id     = each.value.id
@@ -120,10 +123,10 @@ resource "proxmox_virtual_environment_vm" "bastion" {
   }
 
   network_device {
-    bridge  = var.nodes[each.value.zone].bridge
-    queues      = each.value.cpu
+    bridge  = each.value.bridge
+    queues  = each.value.cpu
     mtu     = 1
-    vlan_id = var.nodes[each.value.zone].vlan_id
+    vlan_id = each.value.vlan_id
   }
 
   operating_system {
