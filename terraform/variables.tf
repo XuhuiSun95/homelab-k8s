@@ -43,6 +43,20 @@ variable "nodes" {
       gw6     = "2001:1:2:1::64",
       bridge  = "vmbr0",
       vlan_id = 10,
+      pci_devices = {
+        "a4000-1" = {
+          id           = "10de:24b0"
+          path         = "0000:4b:00"
+          subsystem_id = "10de:14ad"
+          iommu_group  = 4
+        },
+        "a4000-2" = {
+          id           = "10de:24b0"
+          path         = "0000:ca:00"
+          subsystem_id = "10de:14ad"
+          iommu_group  = 11
+        },
+      }
     },
     "hvm-2" = {
       storage = "data",
@@ -50,6 +64,14 @@ variable "nodes" {
       gw6     = "2001:1:2:2::64",
       bridge  = "vmbr0",
       vlan_id = 20,
+      pci_devices = {
+        "a4000-1" = {
+          id           = "10de:24b0"
+          path         = "0000:4b:00"
+          subsystem_id = "10de:14ad"
+          iommu_group  = 4
+        },
+      }
     },
   }
 }
