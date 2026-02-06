@@ -154,6 +154,13 @@ dashboards:
       datasource:
       - name: DS_PROMETHEUS
         value: Mimir
+    14390-keycloak-metrics:
+      # renovate: depName="KeyCloak Metrics"
+      gnetId: 14390
+      revision: 7
+      datasource:
+      - name: DS_PROMETHEUS
+        value: Mimir
 
 grafana.ini:
   server:
