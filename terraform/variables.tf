@@ -43,6 +43,7 @@ variable "nodes" {
       gw6     = "2001:1:2:1::64",
       vlan_id = 10,
       trunks  = "10;110",
+      bridge  = "vmbr0",
     },
     "hvm-2" = {
       storage = "data",
@@ -50,6 +51,7 @@ variable "nodes" {
       gw6     = "2001:1:2:2::64",
       vlan_id = 20,
       trunks  = "20;120",
+      bridge  = "vmbr0",
     },
   }
 }

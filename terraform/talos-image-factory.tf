@@ -20,6 +20,17 @@ data "talos_image_factory_extensions_versions" "worker_extensions" {
   }
 }
 
+data "talos_image_factory_extensions_versions" "gpu_worker_extensions" {
+  talos_version = local.talos_release_version
+  filters = {
+    names = [
+      "qemu-guest-agent",
+      "nvidia-open-gpu-kernel-modules-lts",
+      "nvidia-container-toolkit-lts",
+    ]
+  }
+}
+
 resource "talos_image_factory_schematic" "worker_image_factory_schematic" {
   schematic = yamlencode(
     {
@@ -32,9 +43,28 @@ resource "talos_image_factory_schematic" "worker_image_factory_schematic" {
   )
 }
 
+resource "talos_image_factory_schematic" "gpu_worker_image_factory_schematic" {
+  schematic = yamlencode(
+    {
+      customization = {
+        systemExtensions = {
+          officialExtensions = data.talos_image_factory_extensions_versions.gpu_worker_extensions.extensions_info.*.name
+        }
+      }
+    }
+  )
+}
+
 data "talos_image_factory_urls" "talos_image" {
   talos_version = local.talos_release_version
   schematic_id  = talos_image_factory_schematic.worker_image_factory_schematic.id
+  architecture  = local.talos_architecture
+  platform      = local.talos_platform
+}
+
+data "talos_image_factory_urls" "gpu_talos_image" {
+  talos_version = local.talos_release_version
+  schematic_id  = talos_image_factory_schematic.gpu_worker_image_factory_schematic.id
   architecture  = local.talos_architecture
   platform      = local.talos_platform
 }

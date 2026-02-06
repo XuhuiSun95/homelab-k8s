@@ -6,7 +6,7 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
   tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_${local.talos_image_version}", "type_k8s-worker-template"]
 
   node_name = each.key
-  vm_id     = each.value + 1000
+  vm_id     = lookup(try(var.controlplane[each.key], {}), "id", 9000) + each.value + 100
 
   template = true
 
@@ -57,7 +57,7 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
   }
 
   network_device {
-    bridge  = "vmbr0"
+    bridge  = var.nodes[each.key].bridge
     mtu     = 1
     vlan_id = var.nodes[each.key].vlan_id
     trunks  = var.nodes[each.key].trunks

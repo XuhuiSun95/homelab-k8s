@@ -11,6 +11,7 @@ nodes = {
     gw6     = "2600:8801:2a8b:6c04::1",
     vlan_id = 70,
     trunks  = "70;1610",
+    bridge  = "vmbr0",
   }
 }
 

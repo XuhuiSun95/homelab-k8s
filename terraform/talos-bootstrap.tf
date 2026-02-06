@@ -12,6 +12,7 @@ data "talos_machine_configuration" "controlplane" {
   machine_type       = "controlplane"
   machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
   kubernetes_version = var.kubernetes_version
+  talos_version      = local.talos_release_version
 }
 
 data "talos_machine_configuration" "worker" {
@@ -20,6 +21,7 @@ data "talos_machine_configuration" "worker" {
   machine_type       = "worker"
   machine_secrets    = talos_machine_secrets.machine_secrets.machine_secrets
   kubernetes_version = var.kubernetes_version
+  talos_version      = local.talos_release_version
 
   config_patches = [
     templatefile("${path.module}/templates/worker.yaml.tmpl", {
