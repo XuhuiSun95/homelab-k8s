@@ -126,16 +126,19 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **MinIO Console** | https://minio-console.local.xuhuisun.com | Object storage management |
+| **MinIO S3 API** | https://s3.local.xuhuisun.com | S3-compatible API endpoint |
 
 ### 🤖 AI & Productivity
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **Open-WebUI** | https://open-webui.local.xuhuisun.com | AI interface (LLM frontend) |
 | **Immich** | https://immich.local.xuhuisun.com | Photo management & backup |
+| **n8n** | https://n8n.local.xuhuisun.com | Workflow automation |
 
 ### 🏠 Infrastructure
 | Service | URL | Purpose |
 |---------|-----|---------|
+| **Proxmox Datacenter Manager** | https://pdm.local.xuhuisun.com | Proxmox cluster management |
 | **Proxmox VE** | https://pve2.local.xuhuisun.com | Hypervisor management |
 | **Proxmox Backup** | https://pbs.local.xuhuisun.com | Backup management |
 | **Scrypted** | https://scrypted.local.xuhuisun.com | Home automation |
@@ -568,17 +571,18 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **Load Balancer IPs**: Managed via CiliumLoadBalancerIPPool resources
 
 ### Sync Wave Deployment Order
-1. **Wave 0**: Istio Base (foundation for service mesh)
-2. **Wave 3**: Istio Ztunnel (ambient mode secure overlay)
-3. **Wave 11**: Istio Ingress Gateway (traffic entry point)
-4. **Wave 20**: Cert-Manager (certificate management)
-5. **Wave 30**: Core monitoring and telemetry (OpenTelemetry Kube Stack, Metrics Server, Istio)
-6. **Wave 41**: Auto-scaling (KEDA)
-7. **Wave 42**: GitOps (ArgoCD)
+1. **Wave 0**: Cloud providers and CNI (Cilium, Proxmox CCM, Talos CCM, Proxmox CSI, Karpenter provider, priority classes)
+2. **Wave 10**: Cilium BGP, NFS CSI driver, Karpenter NodePools, Metrics Server, ArgoCD ingress
+3. **Wave 20**: Cert-Manager (certificate management)
+4. **Wave 21**: Vertical Pod Autoscaler
+5. **Wave 30**: Istio (service mesh) and OpenTelemetry Kube Stack
+6. **Wave 41**: KEDA (event-driven autoscaling)
+7. **Wave 42**: ArgoCD (GitOps)
 8. **Wave 50**: External DNS (DNS automation)
-9. **Wave 60**: Storage operators and distributed services (CNPG, Strimzi, MinIO, Elastic)
-10. **Wave 70**: Applications and observability (LGTM stack, Keycloak)
-11. **Wave 200**: User applications (Homepage, Open-WebUI, Immich)
+9. **Wave 60**: Storage and observability operators (CloudNativePG, ECK, Kiali, MinIO)
+10. **Wave 70**: Keycloak and LGTM stack
+11. **Wave 80**: Strimzi (Kafka)
+12. **Wave 200**: User applications (Homepage, Open-WebUI, Immich, n8n)
 
 ## 🎯 Key Features
 
@@ -627,7 +631,8 @@ This Kubernetes homelab is perfect for:
 │   ├── templates/              # Talos configuration templates
 │   │   ├── controlplane.yaml.tmpl # Control plane configuration (Proxmox integration)
 │   │   ├── metadata.yaml.tmpl  # VM metadata template
-│   │   └── worker.yaml.tmpl    # Worker node template for Karpenter
+│   │   ├── worker.yaml.tmpl    # Worker node template for Karpenter
+│   │   └── gpu-worker.yaml.tmpl # GPU worker node template
 │   ├── terraform.tfvars        # Terraform variables (customize for your Proxmox)
 │   ├── terraform.tf            # Terraform backend configuration
 │   ├── variables.tf            # Variable definitions
@@ -639,18 +644,25 @@ This Kubernetes homelab is perfect for:
 │   ├── proxmox-vm-cloud-image.tf  # Talos image management in Proxmox
 │   ├── proxmox-vm-control-plane.tf # Control plane VM definitions
 │   ├── proxmox-vm-worker-template.tf # Worker template for Karpenter
+│   ├── proxmox-vm-gpu-worker-template.tf # GPU worker template
+│   ├── proxmox-vm-bastion.tf   # Bastion host VM
+│   ├── proxmox-pci-device.tf   # PCI device passthrough configuration
 │   └── talos-image-factory.tf  # Talos image factory integration
 ├── argocd/                     # ArgoCD configuration and applications
 │   ├── applications/           # Application definitions by category
-│   │   ├── cloud-native-storage/ # Storage solutions
-│   │   ├── continuous-integration-delivery/ # CI/CD tools
-│   │   ├── dns/                # DNS management
-│   │   ├── observability/      # Monitoring and logging
-│   │   ├── scheduling-orchestration/ # Auto-scaling
-│   │   ├── security-compliance/ # Security tools
-│   │   ├── service-mesh/       # Istio components
-│   │   ├── streaming-messaging/ # Kafka
-│   │   └── user-defined-apps/  # Custom applications
+│   │   ├── cloud-controller-manager/ # Proxmox & Talos CCM
+│   │   ├── cloud-native-network/ # Cilium CNI and BGP
+│   │   ├── cloud-native-storage/ # Storage solutions (MinIO, NFS CSI, Proxmox CSI)
+│   │   ├── continuous-integration-delivery/ # ArgoCD
+│   │   ├── continuous-optimization/ # Karpenter, VPA, priority classes
+│   │   ├── database/           # CloudNativePG operator
+│   │   ├── dns/                # External DNS
+│   │   ├── observability/      # LGTM, ECK, Kiali, Metrics Server, OpenTelemetry
+│   │   ├── scheduling-orchestration/ # KEDA
+│   │   ├── security-compliance/ # Cert-Manager, Keycloak
+│   │   ├── service-mesh/       # Istio
+│   │   ├── streaming-messaging/ # Strimzi Kafka
+│   │   └── user-defined-apps/  # Homepage, Immich, n8n, Open-WebUI
 │   └── values.yaml            # ArgoCD Helm values
 ├── cert-manager/              # Certificate management
 ├── cloudnative-pg/            # CloudNativePG operator configuration
@@ -790,7 +802,7 @@ This project uses and demonstrates:
 
 **CI/CD & Automation**: `argocd` `gitops` `renovate` `continuous-delivery`
 
-**Applications**: `immich` `open-webui` `homepage` `kafka` `strimzi`
+**Applications**: `immich` `open-webui` `homepage` `n8n` `kafka` `strimzi`
 
 **Infrastructure**: `homelab` `self-hosted` `cloud-native` `cncf` `production-ready`
 

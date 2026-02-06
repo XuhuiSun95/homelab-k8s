@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: aistor-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: aistor
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: aistor-operator
+      repoURL: 'https://helm.min.io/'
+      targetRevision: 5.3.0
+      helm:
+        valueFiles:
+        - $values/aistor/aistor-operator-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
