@@ -17,7 +17,7 @@ version:
 cluster:
   instances: 3
   storage:
-    size: 3Gi
+    size: 4Gi
     storageClass: proxmox-local-zfs-xfs
   resources:
     requests:
