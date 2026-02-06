@@ -141,14 +141,6 @@ resource "proxmox_virtual_environment_vm" "bastion" {
     datastore_id = var.nodes[each.value.zone].storage
   }
 
-  lifecycle {
-    ignore_changes = [
-      started,
-      initialization,
-      disk,
-    ]
-  }
-
   depends_on = [
     proxmox_virtual_environment_download_file.ubuntu_cloud_image,
     proxmox_virtual_environment_file.bastion_cloud_config,

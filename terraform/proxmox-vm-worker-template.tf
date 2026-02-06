@@ -73,13 +73,6 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
     datastore_id = var.nodes[each.key].storage
   }
 
-  lifecycle {
-    ignore_changes = [
-      started,
-      initialization,
-    ]
-  }
-
   depends_on = [
     proxmox_virtual_environment_download_file.talos_cloud_image,
   ]
