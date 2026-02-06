@@ -60,7 +60,6 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
     bridge  = var.nodes[each.key].bridge
     mtu     = 1
     vlan_id = var.nodes[each.key].vlan_id
-    trunks  = var.nodes[each.key].trunks
   }
 
   operating_system {

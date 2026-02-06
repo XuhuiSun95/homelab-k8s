@@ -1,4 +1,23 @@
-# TODO install frpc, terraform, kubectl, helm etc.
+locals {
+  bastion_prefix = "bastion"
+
+  bastions = { for k in flatten([
+    for zone in local.zones : [
+      {
+        id : lookup(try(var.bastion[zone], {}), "id", 8000)
+        name : "${local.bastion_prefix}-${zone}"
+        zone : zone
+        cpu : lookup(try(var.bastion[zone], {}), "cpu", 1)
+        mem : lookup(try(var.bastion[zone], {}), "mem", 2048),
+
+        ipv4 : cidrhost(cidrsubnet(var.vpc_cidr[0], 4, var.network_shift + index(local.zones, zone)), -1 )
+        gwv4 : lookup(try(var.nodes[zone], {}), "gw4", local.gwv4)
+        gwv6 : lookup(try(var.nodes[zone], {}), "gw6", "fe80::1")
+      }
+    ]
+  ]) : k.name => k }
+}
+
 resource "proxmox_virtual_environment_file" "bastion_cloud_config" {
   for_each = { for inx, zone in local.zones : zone => inx }
 
@@ -38,14 +57,14 @@ resource "proxmox_virtual_environment_file" "bastion_cloud_config" {
 }
 
 resource "proxmox_virtual_environment_vm" "bastion" {
-  for_each = { for inx, zone in local.zones : zone => inx }
+  for_each = local.bastions
 
-  name        = "${each.key}-bastion"
-  description = "Bastion host for ${each.key}"
+  name        = each.value.name
+  description = "Bastion host for ${each.value.zone}"
   tags        = ["managed-by_terraform", "os_linux", "os-sku_ubuntu", "os-image-version_noble-server-cloudimg-amd64", "type_vm"]
 
-  node_name = each.key
-  vm_id     = 1000
+  node_name = each.value.zone
+  vm_id     = each.value.id
 
   agent {
     enabled = true
@@ -56,7 +75,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
   }
 
   cpu {
-    cores   = 1
+    cores   = each.value.cpu
     sockets = 1
     numa    = true
     type    = "host"
@@ -65,12 +84,12 @@ resource "proxmox_virtual_environment_vm" "bastion" {
   machine = "q35"
 
   memory {
-    dedicated = 2048
+    dedicated = each.value.mem
   }
 
   disk {
-    datastore_id = var.nodes[each.key].storage
-    file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image[each.key].id
+    datastore_id = var.nodes[each.value.zone].storage
+    file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image[each.value.zone].id
     interface    = "scsi0"
     iothread     = true
     cache        = "none"
@@ -82,27 +101,28 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   initialization {
     dns {
-      servers = [var.nodes[each.key].gw4]
+      servers = [each.value.gwv4, each.value.gwv6]
     }
 
     ip_config {
       ipv4 {
-        address = "dhcp"
+        address = "${each.value.ipv4}/24"
+        gateway = each.value.gwv4
       }
       ipv6 {
         address = "auto"
       }
     }
 
-    datastore_id      = var.nodes[each.key].storage
-    user_data_file_id = proxmox_virtual_environment_file.bastion_cloud_config[each.key].id
+    datastore_id      = var.nodes[each.value.zone].storage
+    user_data_file_id = proxmox_virtual_environment_file.bastion_cloud_config[each.value.zone].id
   }
 
   network_device {
-    bridge  = var.nodes[each.key].bridge
+    bridge  = var.nodes[each.value.zone].bridge
     queues  = 1
     mtu     = 1
-    vlan_id = var.nodes[each.key].vlan_id
+    vlan_id = var.nodes[each.value.zone].vlan_id
   }
 
   operating_system {
@@ -111,9 +131,13 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   scsi_hardware = "virtio-scsi-single"
 
+  bios = "ovmf"
+  efi_disk {
+    datastore_id = var.nodes[each.value.zone].storage
+  }
   tpm_state {
     version      = "v2.0"
-    datastore_id = var.nodes[each.key].storage
+    datastore_id = var.nodes[each.value.zone].storage
   }
 
   lifecycle {
