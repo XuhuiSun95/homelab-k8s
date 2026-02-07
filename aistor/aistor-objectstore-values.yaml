@@ -1,0 +1,51 @@
+objectStore:
+  name: aistor-objectstore
+  pools:
+    - servers: 1
+      name: pool-0
+      volumesPerServer: 8
+      size: 10Gi
+      storageClassName: proxmox-local-zfs-xfs
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  aistor.io/objectstore: aistor-objectstore
+                  aistor.io/pool: pool-0
+              topologyKey: kubernetes.io/hostname
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
+  metrics:
+    enabled: true
+
+# extraResources:
+# - |
+#   apiVersion: autoscaling.k8s.io/v1
+#   kind: VerticalPodAutoscaler
+#   metadata:
+#     name: primary-object-store
+#     namespace: primary-object-store
+#   spec:
+#     resourcePolicy:
+#       containerPolicies:
+#         - containerName: object-store
+#           controlledResources:
+#             - cpu
+#             - memory
+#           minAllowed:
+#             cpu: 5m
+#             memory: 64Mi
+#           maxAllowed:
+#             cpu: 1
+#             memory: 256Mi
+#     targetRef:
+#       apiVersion: apps/v1
+#       kind: Deployment
+#       name: primary-object-store
+#     updatePolicy:
+#       updateMode: InPlaceOrRecreate
