@@ -358,6 +358,15 @@ kubectl create secret generic snapshot-settings \
   --namespace elastic
 ```
 
+#### MinKMS Operator MinIO License
+If you use the MinKMS operator (e.g. for AIStor) with a commercial MinIO license, create a secret from your license file so the operator can use it:
+
+```bash
+kubectl create secret generic minio-license -n minkms-operator --from-file minio.license
+```
+
+Ensure the `minio.license` file is in your current directory, or pass the full path: `--from-file /path/to/minio.license`. The namespace `minkms-operator` must exist (it is created when the minkms-operator Argo CD application is deployed).
+
 #### Proxmox Cloud Provider Credentials
 The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured during cluster bootstrap via inline manifests in Talos. No manual secret creation is needed for Proxmox integrations.
 
