@@ -83,3 +83,37 @@ extraResources:
       name: aistor-objectstore-pool-0
     updatePolicy:
       updateMode: InPlaceOrRecreate
+- |
+  apiVersion: monitoring.coreos.com/v1
+  kind: ServiceMonitor
+  metadata:
+    name: aistor-objectstore
+    namespace: primary-object-store
+  spec:
+    jobLabel: ""
+    selector:
+      matchLabels:
+        tenant: aistor-objectstore
+    namespaceSelector:
+      matchNames:
+      - primary-object-store  
+    endpoints:
+    - port: https-minio
+      path: /minio/v2/metrics/cluster
+      authorization:
+        type: Bearer
+        credentials:
+          name: aistor-objectstore-prometheus-token
+          key: token
+      scheme: https
+      tlsConfig:
+        insecureSkipVerify: true
+- |
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: aistor-objectstore-prometheus-token
+    namespace: primary-object-store
+  type: Opaque
+  stringData:
+    token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJwcm9tZXRoZXVzIiwic3ViIjoibWluaW8iLCJleHAiOjQ5MjQwNTU4NDF9.Nab0duAn2pXCFxT5BW5sKy19N3hew_VAEzP_lktii64OO5H6eOgiUxPIpxHn7xUSra63SIwuJu8ZikLu-IxzOw
