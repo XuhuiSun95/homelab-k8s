@@ -367,6 +367,15 @@ kubectl create secret generic minio-license -n minkms-operator --from-file minio
 
 Ensure the `minio.license` file is in your current directory, or pass the full path: `--from-file /path/to/minio.license`. The namespace `minkms-operator` must exist (it is created when the minkms-operator Argo CD application is deployed).
 
+#### AIStor Operator MinIO License
+If you use the AIStor operator with a commercial MinIO license, create a secret from your license file in the `aistor` namespace:
+
+```bash
+kubectl create secret generic minio-license -n aistor --from-file minio.license
+```
+
+Ensure the `minio.license` file is in your current directory, or pass the full path: `--from-file /path/to/minio.license`. The namespace `aistor` must exist (it is created when the aistor-operator Argo CD application is deployed).
+
 #### Proxmox Cloud Provider Credentials
 The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured during cluster bootstrap via inline manifests in Talos. No manual secret creation is needed for Proxmox integrations.
 

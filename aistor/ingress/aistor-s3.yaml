@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: aistor-s3-vs
+  namespace: primary-object-store
+spec:
+  hosts:
+  - aistor.local.xuhuisun.com
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: minio
+        port:
+          number: 443
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: aistor-s3-dr
+  namespace: primary-object-store
+spec:
+  host: minio
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      insecureSkipVerify: true
