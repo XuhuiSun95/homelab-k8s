@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  name: minkms
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: minkms
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: minkms
+      repoURL: 'https://helm.min.io/'
+      targetRevision: 2.2.0
+      helm:
+        valueFiles:
+        - $values/aistor/minkms-values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
