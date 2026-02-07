@@ -26,6 +26,19 @@ objectStore:
     minio:
       labels:
         tenant: aistor-objectstore
+  env:
+    - name: MINIO_BROWSER_REDIRECT_URL
+      value: "https://aistor-console.local.xuhuisun.com"
+    - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
+      value: "https://iam.local.xuhuisun.com/realms/local/.well-known/openid-configuration"
+    - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
+      value: "minio"
+    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
+      value: "MinIO OpenID Login - Keycloak"
+    - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
+      value: "openid,profile,email"
+    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_KEYCLOAK_PRIMARY
+      value: "on"
 
 extraResources:
 - |
