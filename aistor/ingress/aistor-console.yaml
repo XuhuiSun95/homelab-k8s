@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: aistor-console-vs
+  namespace: primary-object-store
+spec:
+  hosts:
+  - aistor-console.local.xuhuisun.com
+  gateways:
+  - istio-ingress/gateway
+  http:
+  - route:
+    - destination:
+        host: aistor-objectstore-console
+        port:
+          number: 9443
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: aistor-console-dr
+  namespace: primary-object-store
+spec:
+  host: aistor-objectstore-console
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      insecureSkipVerify: true
