@@ -3,6 +3,9 @@
 
 opentelemetry-operator:
   manager:
+    featureGatesMap:
+      operator.targetallocator.mtls: true
+    createRbacPermissions: true
     resources:
       requests:
         cpu: 24m
