@@ -8,21 +8,12 @@ spec:
   - aistor.local.xuhuisun.com
   gateways:
   - istio-ingress/gateway
-  http:
-  - route:
+  tcp:
+  - match:
+    - port: 443
+    route:
     - destination:
         host: minio
         port:
           number: 443
----
-apiVersion: networking.istio.io/v1
-kind: DestinationRule
-metadata:
-  name: aistor-s3-dr
-  namespace: primary-object-store
-spec:
-  host: minio
-  trafficPolicy:
-    tls:
-      mode: SIMPLE
-      insecureSkipVerify: true
+      weight: 100
