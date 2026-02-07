@@ -70,11 +70,6 @@ config:
             href: https://10.101.2.2
             description: supermicro ipmi
     - Storage:
-        - MinIO:
-            icon: minio
-            href: https://minio-console.local.xuhuisun.com
-            description: object storage
-            siteMonitor: https://minio-console.minio.svc.cluster.local:9443
         - AiStor:
             icon: minio
             href: https://aistor-console.local.xuhuisun.com
