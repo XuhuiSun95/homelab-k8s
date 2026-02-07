@@ -29,16 +29,33 @@ objectStore:
   env:
     - name: MINIO_BROWSER_REDIRECT_URL
       value: "https://aistor-console.local.xuhuisun.com"
-    - name: MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY
+    - name: MINIO_KMS_SERVER
+      value: "http://minkms-minkms.minkms.svc.cluster.local:7373"
+    - name: MINIO_KMS_SSE_KEY
+      value: "aistor-objectstore-default-key"
+    - name: MINIO_KMS_ENCLAVE
+      value: "aistor-objectstore"
+    - name: MINIO_KMS_API_KEY
+      value: "k1:E-4M_dXrKywZrL2r5w5vRfrrBPlmMlHluINDWRHWDyc"
+    - name: MINIO_IDENTITY_OPENID_CONFIG_URL
       value: "https://iam.local.xuhuisun.com/realms/local/.well-known/openid-configuration"
-    - name: MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY
+    - name: MINIO_IDENTITY_OPENID_CLIENT_ID
       value: "minio"
-    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY
-      value: "MinIO OpenID Login - Keycloak"
-    - name: MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY
+    - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
+      value: "OpenID Login - Keycloak"
+    - name: MINIO_IDENTITY_OPENID_SCOPES
       value: "openid,profile,email"
-    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_KEYCLOAK_PRIMARY
+    - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC
       value: "on"
+    - name: MINIO_IDENTITY_OPENID_CLAIM_USERINFO
+      value: "on"
+    - name: MINIO_IDENTITY_OPENID_VENDOR
+      value: "keycloak"
+    - name: MINIO_IDENTITY_OPENID_KEYCLOAK_REALM
+      value: "local"
+    - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL
+      value: "https://keycloak.local.xuhuisun.com/admin"
+
 
 extraResources:
 - |
