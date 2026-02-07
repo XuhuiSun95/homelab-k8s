@@ -1,0 +1,14 @@
+global:
+  operator:
+    # TODO: missing affinity and priorityClassName
+    replicas: 2
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+    tolerations:
+      - key: node-role.kubernetes.io/system
+        operator: Exists
+        effect: NoSchedule
