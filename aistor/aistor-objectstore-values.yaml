@@ -30,7 +30,7 @@ objectStore:
     - name: MINIO_BROWSER_REDIRECT_URL
       value: "https://aistor-console.local.xuhuisun.com"
     - name: MINIO_KMS_SERVER
-      value: "http://minkms-minkms.minkms.svc.cluster.local:7373"
+      value: "https://minkms-minkms.minkms.svc.cluster.local:7373"
     - name: MINIO_KMS_SSE_KEY
       value: "aistor-objectstore-default-key"
     - name: MINIO_KMS_ENCLAVE
