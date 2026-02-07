@@ -60,7 +60,7 @@ This homelab deploys a **production-ready Kubernetes cluster** using modern clou
 - **GitOps**: **ArgoCD** for declarative application management and continuous delivery
 - **Service Mesh**: **Istio Ambient Mode** for zero-trust traffic management, security, and observability
 - **Ingress**: Custom domain (`local.xuhuisun.com`) with **Let's Encrypt** certificates via **cert-manager**
-- **Storage**: Multiple storage solutions (**MinIO** S3-compatible, **NFS CSI**, **CloudNativePG** PostgreSQL, **Proxmox CSI**)
+- **Storage**: Multiple storage solutions (**AIStor** S3-compatible with MinKMS, **NFS CSI**, **CloudNativePG** PostgreSQL, **Proxmox CSI**)
 - **Observability**: Complete **LGTM stack** (Loki, Grafana, Tempo, Mimir) plus **ELK stack** (Elasticsearch, Kibana)
 - **Authentication**: **Keycloak** for identity and access management with **OIDC** integration
 - **Automation**: **Renovate** for dependency updates, **KEDA** for event-driven auto-scaling
@@ -89,7 +89,7 @@ This homelab deploys a **production-ready Kubernetes cluster** using modern clou
 - **Kiali**: Service mesh observability
 
 ### Storage Solutions
-- **MinIO**: S3-compatible object storage
+- **AIStor**: S3-compatible object storage with MinKMS key management (MinIO-compatible)
 - **CloudNativePG**: PostgreSQL operator for Kubernetes
 - **NFS CSI**: Network File System support
 - **Proxmox CSI**: Native Proxmox block storage
@@ -125,8 +125,8 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 ### 💾 Storage & Data
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **MinIO Console** | https://minio-console.local.xuhuisun.com | Object storage management |
-| **MinIO S3 API** | https://s3.local.xuhuisun.com | S3-compatible API endpoint |
+| **AIStor Console** | https://aistor-console.local.xuhuisun.com | Object storage management (MinKMS) |
+| **AIStor S3 API** | https://aistor.local.xuhuisun.com | S3-compatible API endpoint |
 
 ### 🤖 AI & Productivity
 | Service | URL | Purpose |
@@ -152,7 +152,7 @@ This homelab includes a comprehensive set of **cloud-native applications** organ
 - **Certificate Management**: Automated **Let's Encrypt** certificates via **cert-manager** with **Route53** DNS validation
 
 ### Cloud Native Storage
-- **MinIO**: **S3-compatible object storage** for backups, artifacts, and data lake
+- **AIStor**: **S3-compatible object storage** with **MinKMS** key management for backups, artifacts, and data lake
 - **CloudNativePG**: **PostgreSQL operator** for Kubernetes-native database management
 - **NFS CSI Driver**: **Network File System** support for shared storage
 - **Proxmox CSI**: Native **Proxmox block storage** provisioner for persistent volumes
@@ -478,10 +478,10 @@ kubectl -n elastic get secret elasticsearch-es-elastic-user \
   -o jsonpath="{.data.elastic}" | base64 --decode | xclip
 ```
 
-### MinIO Console Credentials
+### AIStor / Object Storage Credentials
 ```bash
-# MinIO credentials are configured in the MinIO tenant values
-# Check minio/tenant-values.yaml for access key and secret
+# AIStor (object store) credentials are configured in aistor/aistor-objectstore-values.yaml
+# For legacy MinIO tenant, check minio/tenant-values.yaml for access key and secret
 ```
 
 ## 🔄 Maintenance & Upgrades
@@ -606,7 +606,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 6. **Wave 41**: KEDA (event-driven autoscaling)
 7. **Wave 42**: ArgoCD (GitOps)
 8. **Wave 50**: External DNS (DNS automation)
-9. **Wave 60**: Storage and observability operators (CloudNativePG, ECK, Kiali, MinIO)
+9. **Wave 60**: Storage and observability operators (AIStor, CloudNativePG, ECK, Kiali)
 10. **Wave 70**: Keycloak and LGTM stack
 11. **Wave 80**: Strimzi (Kafka)
 12. **Wave 200**: User applications (Homepage, Open-WebUI, Immich, n8n)
@@ -617,7 +617,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **🔒 Security First**: **mTLS**, **OAuth2/OIDC**, automated certificate management with **cert-manager** and **Let's Encrypt**
 - **📊 Full Observability**: Complete **metrics, logs, traces** collection with **LGTM stack**, **OpenTelemetry Kube Stack**, and service mesh visibility via **Kiali**
 - **🚀 Auto-scaling**: **KEDA** for event-driven scaling and **Karpenter** for dynamic node provisioning
-- **💾 Multiple Storage**: **Block storage** (Proxmox CSI), **object storage** (MinIO S3), **file storage** (NFS), and **database storage** (CloudNativePG)
+- **💾 Multiple Storage**: **Block storage** (Proxmox CSI), **object storage** (AIStor S3 / MinKMS), **file storage** (NFS), and **database storage** (CloudNativePG)
 - **🤖 AI Ready**: **Open-WebUI** for LLM interactions and AI workloads
 - **🏠 Home Integration**: **Proxmox** virtualization, **Scrypted** home automation, and network infrastructure
 - **⚡ Immutable Infrastructure**: **Talos Linux** provides immutable, API-driven operating system with read-only root filesystem
@@ -679,7 +679,7 @@ This Kubernetes homelab is perfect for:
 │   ├── applications/           # Application definitions by category
 │   │   ├── cloud-controller-manager/ # Proxmox & Talos CCM
 │   │   ├── cloud-native-network/ # Cilium CNI and BGP
-│   │   ├── cloud-native-storage/ # Storage solutions (MinIO, NFS CSI, Proxmox CSI)
+│   │   ├── cloud-native-storage/ # Storage solutions (AIStor, NFS CSI, Proxmox CSI)
 │   │   ├── continuous-integration-delivery/ # ArgoCD
 │   │   ├── continuous-optimization/ # Karpenter, VPA, priority classes
 │   │   ├── database/           # CloudNativePG operator
@@ -691,6 +691,7 @@ This Kubernetes homelab is perfect for:
 │   │   ├── streaming-messaging/ # Strimzi Kafka
 │   │   └── user-defined-apps/  # Homepage, Immich, n8n, Open-WebUI
 │   └── values.yaml            # ArgoCD Helm values
+├── aistor/                    # AIStor object storage (MinKMS operator, AIStor operator, object store, ingress)
 ├── cert-manager/              # Certificate management
 ├── cloudnative-pg/            # CloudNativePG operator configuration
 ├── csi-driver-nfs/            # NFS CSI driver configuration
@@ -704,7 +705,6 @@ This Kubernetes homelab is perfect for:
 ├── kiali/                     # Istio service mesh visualization
 ├── lgtm/                      # LGTM observability stack (Loki, Grafana, Tempo, Mimir)
 ├── metrics-server/            # Kubernetes metrics server
-├── minio/                     # Object storage
 ├── open-webui/                # AI interface application
 ├── opentelemetry-kube-stack/  # OpenTelemetry configuration
 ├── strimzi/                   # Kafka operator
@@ -726,7 +726,7 @@ This Kubernetes homelab is perfect for:
 
 ### Storage Strategy
 - **Proxmox CSI**: Native Proxmox block storage provisioner
-- **MinIO**: S3-compatible object storage
+- **AIStor**: S3-compatible object storage with MinKMS key management
 - **CloudNativePG**: PostgreSQL databases
 - **NFS CSI**: Network file system support
 
@@ -792,9 +792,9 @@ This Kubernetes homelab is perfect for:
 - **Network Integration**: Cilium BGP enables advanced routing with Proxmox infrastructure
 
 ### Backup Strategy
-- **MinIO**: Object versioning and lifecycle policies
-- **CloudNativePG**: Automated backups to MinIO
-- **Elasticsearch**: Snapshot backups to MinIO
+- **AIStor / S3**: Object versioning and lifecycle policies (S3-compatible)
+- **CloudNativePG**: Automated backups to object storage (e.g. AIStor S3)
+- **Elasticsearch**: Snapshot backups to object storage (e.g. AIStor S3)
 - **Proxmox CSI**: Native Proxmox storage snapshots
 
 ### Monitoring Alerts
@@ -821,7 +821,7 @@ This project uses and demonstrates:
 
 **Observability**: `grafana` `loki` `tempo` `mimir` `opentelemetry` `kiali` `elasticsearch` `kibana` `lgtm-stack`
 
-**Storage**: `minio` `s3` `cloudnative-pg` `postgresql` `nfs` `csi` `proxmox-csi`
+**Storage**: `aistor` `minkms` `minio` `s3` `cloudnative-pg` `postgresql` `nfs` `csi` `proxmox-csi`
 
 **Security & Authentication**: `keycloak` `oidc` `oauth2` `cert-manager` `lets-encrypt` `rbac`
 
