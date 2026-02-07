@@ -37,29 +37,30 @@ minkms:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  extraResources:
-  - |
-    apiVersion: autoscaling.k8s.io/v1
-    kind: VerticalPodAutoscaler
-    metadata:
+
+extraResources:
+- |
+  apiVersion: autoscaling.k8s.io/v1
+  kind: VerticalPodAutoscaler
+  metadata:
+    name: minkms
+    namespace: minkms
+  spec:
+    resourcePolicy:
+      containerPolicies:
+        - containerName: key-manager
+          controlledResources:
+            - cpu
+            - memory
+          minAllowed:
+            cpu: 5m
+            memory: 64Mi
+          maxAllowed:
+            cpu: 1
+            memory: 256Mi
+    targetRef:
+      apiVersion: apps/v1
+      kind: StatefulSet
       name: minkms
-      namespace: minkms
-    spec:
-      resourcePolicy:
-        containerPolicies:
-          - containerName: key-manager
-            controlledResources:
-              - cpu
-              - memory
-            minAllowed:
-              cpu: 5m
-              memory: 64Mi
-            maxAllowed:
-              cpu: 1
-              memory: 256Mi
-      targetRef:
-        apiVersion: apps/v1
-        kind: StatefulSet
-        name: minkms
-      updatePolicy:
-        updateMode: InPlaceOrRecreate
+    updatePolicy:
+      updateMode: InPlaceOrRecreate
