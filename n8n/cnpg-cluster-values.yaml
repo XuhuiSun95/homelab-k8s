@@ -43,7 +43,7 @@ cluster:
 
 backups:
   enabled: true
-  endpointURL: https://s3.local.xuhuisun.com
+  endpointURL: https://aistor.local.xuhuisun.com
   provider: s3
   s3:
     bucket: cloudnative-pg-backups
