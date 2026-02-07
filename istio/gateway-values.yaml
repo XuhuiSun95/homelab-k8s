@@ -24,10 +24,10 @@ service:
   ipFamilies: ["IPv6", "IPv4"]
 resources:
   requests:
-    cpu: 100m
+    cpu: 500m
     memory: 512Mi
   limits:
-    cpu: null
+    cpu: 2
     memory: 512Mi
 autoscaling:
   minReplicas: 2
