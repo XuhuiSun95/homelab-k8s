@@ -26,8 +26,8 @@ spec:
     automated:
       selfHeal: true
   ignoreDifferences:
-    - kind: MutatingWebhookConfiguration
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
       name: object-store-operator-webhook
-      namespace: aistor
       jsonPointers:
         - /webhooks/0/clientConfig/caBundle
