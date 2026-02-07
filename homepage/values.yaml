@@ -75,6 +75,11 @@ config:
             href: https://minio-console.local.xuhuisun.com
             description: object storage
             siteMonitor: https://minio-console.minio.svc.cluster.local:9443
+        - AiStor:
+            icon: minio
+            href: https://aistor-console.local.xuhuisun.com
+            description: object storage
+            siteMonitor: https://aistor-objectstore-console.primary-object-store.svc.cluster.local:9443
     - Home Automation:
         - Scrypted:
             icon: scrypted
