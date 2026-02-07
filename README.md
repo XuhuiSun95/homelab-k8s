@@ -376,6 +376,15 @@ kubectl create secret generic minio-license -n aistor --from-file minio.license
 
 Ensure the `minio.license` file is in your current directory, or pass the full path: `--from-file /path/to/minio.license`. The namespace `aistor` must exist (it is created when the aistor-operator Argo CD application is deployed).
 
+#### MinKMS Enclave for AIStor
+Before deploying AIStor (e.g. the `aistor-objectstore` object store), create the MinKMS enclave so AIStor can use it for key management. Run this **before** deploying the AIStor operator or object store:
+
+```bash
+minkms add-enclave aistor-objectstore -k
+```
+
+The enclave name `aistor-objectstore` must match the object store name used in your AIStor configuration. The `-k` flag creates the necessary keys for the enclave. Ensure the `minkms` CLI is installed and you are authenticated to your MinKMS instance.
+
 #### Proxmox Cloud Provider Credentials
 The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured during cluster bootstrap via inline manifests in Talos. No manual secret creation is needed for Proxmox integrations.
 
