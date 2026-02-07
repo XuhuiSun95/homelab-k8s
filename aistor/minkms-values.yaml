@@ -23,6 +23,7 @@ minkms:
   #               app.kubernetes.io/name: minkms
   #           topologyKey: topology.kubernetes.io/zone
   #         weight: 100
+  # TODO: nodeselector did not work in minkms crd
   nodeSelector:
     node-role.kubernetes.io/system: ""
   priorityClassName: platform-critical
