@@ -11,8 +11,8 @@ objectStore:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  aistor.io/objectstore: aistor-objectstore
-                  aistor.io/pool: pool-0
+                  aistor.min.io/objectStore: aistor-objectstore
+                  v1.min.io/pool: pool-0
               topologyKey: kubernetes.io/hostname
       resources:
         requests:
@@ -22,30 +22,34 @@ objectStore:
           memory: 1Gi
   metrics:
     enabled: true
+  services:
+    minio:
+      labels:
+        tenant: aistor-objectstore
 
-# extraResources:
-# - |
-#   apiVersion: autoscaling.k8s.io/v1
-#   kind: VerticalPodAutoscaler
-#   metadata:
-#     name: primary-object-store
-#     namespace: primary-object-store
-#   spec:
-#     resourcePolicy:
-#       containerPolicies:
-#         - containerName: object-store
-#           controlledResources:
-#             - cpu
-#             - memory
-#           minAllowed:
-#             cpu: 5m
-#             memory: 64Mi
-#           maxAllowed:
-#             cpu: 1
-#             memory: 256Mi
-#     targetRef:
-#       apiVersion: apps/v1
-#       kind: Deployment
-#       name: primary-object-store
-#     updatePolicy:
-#       updateMode: InPlaceOrRecreate
+extraResources:
+- |
+  apiVersion: autoscaling.k8s.io/v1
+  kind: VerticalPodAutoscaler
+  metadata:
+    name: primary-object-store
+    namespace: primary-object-store
+  spec:
+    resourcePolicy:
+      containerPolicies:
+        - containerName: minio
+          controlledResources:
+            - cpu
+            - memory
+          minAllowed:
+            cpu: 5m
+            memory: 512Mi
+          maxAllowed:
+            cpu: 8
+            memory: 4Gi
+    targetRef:
+      apiVersion: apps/v1
+      kind: StatefulSet
+      name: aistor-objectstore-pool-0
+    updatePolicy:
+      updateMode: InPlaceOrRecreate
