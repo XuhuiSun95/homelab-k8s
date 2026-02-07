@@ -20,3 +20,5 @@ storageClass:
     ssd: true
     fstype: xfs
     reclaimPolicy: Delete
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "true"

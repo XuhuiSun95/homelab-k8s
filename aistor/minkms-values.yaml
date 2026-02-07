@@ -28,7 +28,4 @@ minkms:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  volumeClaimTemplate:
-    spec:
-      storageClass: proxmox-local-zfs-xfs
   extraResources: []
