@@ -104,10 +104,7 @@ redis-ha:
     effect: NoSchedule
 
 controller:
-  replicas: 2
-  pdb:
-    enabled: true
-    minAvailable: 1
+  replicas: 1
   vpa:
     enabled: true
     updateMode: InPlaceOrRecreate
