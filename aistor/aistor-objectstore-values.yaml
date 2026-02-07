@@ -17,9 +17,9 @@ objectStore:
       resources:
         requests:
           cpu: 100m
-          memory: 1Gi
+          memory: 2Gi
         limits:
-          memory: 1Gi
+          memory: 2Gi
   metrics:
     enabled: true
   services:
@@ -73,7 +73,7 @@ extraResources:
             - memory
           minAllowed:
             cpu: 5m
-            memory: 512Mi
+            memory: 1Gi
           maxAllowed:
             cpu: 8
             memory: 4Gi
