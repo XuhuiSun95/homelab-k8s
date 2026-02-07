@@ -26,3 +26,5 @@ updater:
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
+  extraArgs:
+    - --min-replicas=1
