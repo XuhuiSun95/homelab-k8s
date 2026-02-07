@@ -1,0 +1,31 @@
+minkms:
+  hsm:
+    key: "hsm:aes256:JbsGzClz/rmD/GeFGDGe8s4uWnuoUXV0zeVlcBgPrQs="
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: minkms
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: minkms
+            topologyKey: topology.kubernetes.io/zone
+          weight: 100
+  priorityClassName: platform-critical
+  replicas: 3
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
+  extraResources: []
