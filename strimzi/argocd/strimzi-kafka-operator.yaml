@@ -11,8 +11,8 @@ spec:
     namespace: strimzi
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: strimzi-kafka-operator
-      repoURL: 'https://strimzi.io/charts'
+    - path: .
+      repoURL: 'oci://quay.io/strimzi-helm/strimzi-kafka-operator'
       targetRevision: 0.50.0
       helm:
         valueFiles:
