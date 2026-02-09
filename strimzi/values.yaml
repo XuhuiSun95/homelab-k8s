@@ -27,6 +27,9 @@ tolerations:
   operator: Exists
   effect: NoSchedule
 priorityClassName: platform-critical
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
 
 dashboards:
   enabled: true
