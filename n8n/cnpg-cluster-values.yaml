@@ -8,10 +8,6 @@ version:
 #   clusterName: n8n-cnpg-cluster
 #   database: n8n
 #   endpointURL: https://s3.local.xuhuisun.com
-  # endpointCA:
-  #   create: false
-  #   name: minio-ca-bundle
-  #   key: ca-bundle.crt
 #   provider: s3
 #   s3:
 #     bucket: cloudnative-pg-backups
@@ -47,11 +43,7 @@ cluster:
 
 backups:
   enabled: true
-  endpointURL: https://minio.primary-object-store.svc.cluster.local
-  endpointCA:
-    create: false
-    name: minio-ca-bundle
-    key: ca-bundle.crt
+  endpointURL: https://aistor.local.xuhuisun.com
   provider: s3
   s3:
     bucket: cloudnative-pg-backups
