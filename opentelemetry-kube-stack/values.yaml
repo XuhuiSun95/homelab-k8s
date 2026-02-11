@@ -49,7 +49,6 @@ collectors:
       limits:
         cpu: null
         memory: 250Mi
-    crape_configs_file: ""
     targetAllocator:
       enabled: true
       # priorityClassName: platform-critical
@@ -72,7 +71,6 @@ collectors:
         limits:
           memory: 245Mi
       allocationStrategy: per-node
-      # allocationStrategy: consistent-hashing
       prometheusCR:
         enabled: true
         podMonitorSelector: {}
@@ -320,40 +318,34 @@ collectors:
                 tls_config:
                   ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
                   insecure_skip_verify: true
-      processors:
-        resourcedetection/env:
-          detectors: [env]
       exporters:
-        otlp/tempo:
+        otlp_grpc/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
           tls:
             insecure: true
-        otlphttp/mimir:
+        otlp_http/mimir:
           endpoint: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
           tls:
             insecure: true
-        otlphttp/loki:
-          endpoint: http://lgtm-loki-gateway.monitoring.svc/otlp
+        otlp_http/loki:
+          endpoint: http://lgtm-loki-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
           tls:
             insecure: true
       service:
-        # telemetry:
-        #   logs:
-        #     level: "DEBUG"
         pipelines:
           traces:
             exporters:
-              - otlp/tempo
+              - otlp_grpc/tempo
           metrics:
             exporters:
-              - otlphttp/mimir
+              - otlp_http/mimir
           logs:
             exporters:
-              - otlphttp/loki
+              - otlp_http/loki
 
 kubernetesServiceMonitors:
   enabled: true
