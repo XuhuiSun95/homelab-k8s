@@ -385,6 +385,16 @@ minkms add-enclave aistor-objectstore -k
 
 The enclave name `aistor-objectstore` must match the object store name used in your AIStor configuration. The `-k` flag creates the necessary keys for the enclave. Ensure the `minkms` CLI is installed and you are authenticated to your MinKMS instance.
 
+#### n8n MinIO CA
+If n8n connects to MinIO or AIStor (S3) over TLS and the server uses the cluster CA, create a secret with the cluster root CA so n8n can verify the connection:
+
+```bash
+export ca_crt=$(kubectl get cm kube-root-ca.crt -o jsonpath="{['data']['ca\\.crt']}" | base64 -w 0)
+kubectl create secret generic minio-ca --from-literal="ca.crt=$ca_crt" --namespace n8n
+```
+
+The `minio-ca` secret supplies the CA certificate for n8n’s MinIO/S3 client. The namespace `n8n` must exist (it is created when the n8n Argo CD application is deployed). On macOS, use `base64` without `-w 0`, or install GNU coreutils and use `gbase64 -w 0`.
+
 #### Proxmox Cloud Provider Credentials
 The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured during cluster bootstrap via inline manifests in Talos. No manual secret creation is needed for Proxmox integrations.
 
