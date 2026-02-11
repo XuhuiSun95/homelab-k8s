@@ -5,8 +5,8 @@ mode: recovery
 
 recovery:
   method: object_store
-  clusterName: keycloak-cnpg-cluster-v3
-  database: keycloak
+  clusterName: immich-cnpg-cluster-v3
+  database: immich
   endpointURL: https://minio.primary-object-store.svc.cluster.local
   endpointCA:
     create: false
@@ -20,6 +20,7 @@ recovery:
 
 cluster:
   instances: 3
+  imageName: "ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3"
   storage:
     size: 4Gi
     storageClass: proxmox-local-zfs-xfs
@@ -30,16 +31,13 @@ cluster:
     limits:
       cpu: 100m
       memory: 1Gi
-  priorityClassName: platform-critical
   affinity:
     topologyKey: kubernetes.io/hostname
     podAntiAffinityType: required
-    nodeSelector:
-      karpenter.sh/nodepool: system
-    tolerations:
-    - key: node-role.kubernetes.io/system
-      operator: Exists
-      effect: NoSchedule
+  roles:
+    - name: immich
+      superuser: true
+      login: true
   monitoring:
     enabled: true
     podMonitor:
@@ -49,8 +47,13 @@ cluster:
   postgresql:
     parameters:
       shared_buffers: 256MB
+    shared_preload_libraries:
+      - "vchord.so"
   initdb:
-    database: keycloak
+    database: immich
+    postInitSQL:
+      - CREATE EXTENSION IF NOT EXISTS "vchord" CASCADE;
+      - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
 
 backups:
   enabled: true
@@ -66,6 +69,6 @@ backups:
     secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
   scheduledBackups:
     - name: daily-backup
-      schedule: "7 0 0 * * *"
+      schedule: "7 30 0 * * *"
       backupOwnerReference: self
   retentionPolicy: "7d"
