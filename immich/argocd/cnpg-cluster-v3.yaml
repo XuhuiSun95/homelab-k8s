@@ -3,12 +3,12 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  name: keycloak-cnpg-cluster-v3
+  name: immich-cnpg-cluster-v3
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: keycloak
+    namespace: immich
     server: 'https://kubernetes.default.svc'
   sources:
     - chart: cluster
@@ -16,7 +16,7 @@ spec:
       targetRevision: 0.5.0
       helm:
         valueFiles:
-        - $values/keycloak/cnpg-cluster-v3-values.yaml
+        - $values/immich/cnpg-cluster-v3-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
