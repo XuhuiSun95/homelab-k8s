@@ -43,18 +43,14 @@ cluster:
 
 backups:
   enabled: true
-  endpointURL: https://aistor.local.xuhuisun.com
+  endpointURL: https://minio.primary-object-store.svc.cluster.local
   provider: s3
   s3:
     bucket: cloudnative-pg-backups
     accessKey: om9WSI45aMEZxBqASwSy
     secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
-  wal:
-    encryption: ""
-  data:
-    encryption: ""
   scheduledBackups:
     - name: daily-backup
-      schedule: "0 0 0 * * *"
+      schedule: "0 7 0 * * *"
       backupOwnerReference: self
   retentionPolicy: "7d"
