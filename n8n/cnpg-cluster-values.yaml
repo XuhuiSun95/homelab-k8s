@@ -8,6 +8,20 @@ version:
 #   clusterName: n8n-cnpg-cluster
 #   database: n8n
 #   endpointURL: https://s3.local.xuhuisun.com
+  # endpointCA:
+  #   create: true
+  #   value: |
+  #     -----BEGIN CERTIFICATE-----
+  #     MIIBiTCCAS+gAwIBAgIQRj7AacQAJwEJy2bXaM+3/jAKBggqhkjOPQQDAjAVMRMw
+  #     ETYDVQQKEwprdWJlcm5ldGVzMB4XDTI1MDgxNzAwMjk1MFoXDTM1MDgxNTAwMjk1
+  #     MFATETMBEGA1UEChMKa3ViZXJuZXRlczBZMBMGByqGSM49AgEGCCqGSM49AwEH
+  #     A0IABLAFbsyTiECiyu9wfL+DykCZ3Ir7yhSHLTPxVSjEXXZd0sUvJ/6tRvIeovf2
+  #     FubocDogj0lVAUnUuHZw2j+rwJWjYTBfMA4GA1UdDwEB/wQEAwIChDAdBgNVHSUE
+  #     FjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4E
+  #     FgQU7U3Ax90R9rjXcwZgBOjm4kn17QEwCgYIKoZIzj0EAwIDSAAwRQIhALB05ci8
+  #     18Vj+kx86qJzm7oSB/oyyP0R7Hk04ucZ/I4zAiARmDVragTHLAwlcdiFP1mtJjhg
+  #     DuOb9YNs4Qm44PJQaw==
+  #     -----END CERTIFICATE-----
 #   provider: s3
 #   s3:
 #     bucket: cloudnative-pg-backups
@@ -44,6 +58,20 @@ cluster:
 backups:
   enabled: true
   endpointURL: https://minio.primary-object-store.svc.cluster.local
+  endpointCA:
+    create: true
+    value: |
+      -----BEGIN CERTIFICATE-----
+      MIIBiTCCAS+gAwIBAgIQRj7AacQAJwEJy2bXaM+3/jAKBggqhkjOPQQDAjAVMRMw
+      ETYDVQQKEwprdWJlcm5ldGVzMB4XDTI1MDgxNzAwMjk1MFoXDTM1MDgxNTAwMjk1
+      MFATETMBEGA1UEChMKa3ViZXJuZXRlczBZMBMGByqGSM49AgEGCCqGSM49AwEH
+      A0IABLAFbsyTiECiyu9wfL+DykCZ3Ir7yhSHLTPxVSjEXXZd0sUvJ/6tRvIeovf2
+      FubocDogj0lVAUnUuHZw2j+rwJWjYTBfMA4GA1UdDwEB/wQEAwIChDAdBgNVHSUE
+      FjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4E
+      FgQU7U3Ax90R9rjXcwZgBOjm4kn17QEwCgYIKoZIzj0EAwIDSAAwRQIhALB05ci8
+      18Vj+kx86qJzm7oSB/oyyP0R7Hk04ucZ/I4zAiARmDVragTHLAwlcdiFP1mtJjhg
+      DuOb9YNs4Qm44PJQaw==
+      -----END CERTIFICATE-----
   provider: s3
   s3:
     bucket: cloudnative-pg-backups
