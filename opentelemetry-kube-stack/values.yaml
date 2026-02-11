@@ -49,7 +49,6 @@ collectors:
       limits:
         cpu: null
         memory: 250Mi
-    crape_configs_file: ""
     targetAllocator:
       enabled: true
       # priorityClassName: platform-critical
@@ -72,7 +71,6 @@ collectors:
         limits:
           memory: 245Mi
       allocationStrategy: per-node
-      # allocationStrategy: consistent-hashing
       prometheusCR:
         enabled: true
         podMonitorSelector: {}
@@ -320,9 +318,6 @@ collectors:
                 tls_config:
                   ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
                   insecure_skip_verify: true
-      processors:
-        resourcedetection/env:
-          detectors: [env]
       exporters:
         otlp_grpc/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
@@ -341,9 +336,6 @@ collectors:
           tls:
             insecure: true
       service:
-        # telemetry:
-        #   logs:
-        #     level: "DEBUG"
         pipelines:
           traces:
             exporters:
