@@ -324,18 +324,18 @@ collectors:
         resourcedetection/env:
           detectors: [env]
       exporters:
-        otlp/tempo:
+        otlp_grpc/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
           tls:
             insecure: true
-        otlphttp/mimir:
+        otlp_http/mimir:
           endpoint: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
           tls:
             insecure: true
-        otlphttp/loki:
-          endpoint: http://lgtm-loki-gateway.monitoring.svc/otlp
+        otlp_http/loki:
+          endpoint: http://lgtm-loki-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
           tls:
@@ -347,13 +347,13 @@ collectors:
         pipelines:
           traces:
             exporters:
-              - otlp/tempo
+              - otlp_grpc/tempo
           metrics:
             exporters:
-              - otlphttp/mimir
+              - otlp_http/mimir
           logs:
             exporters:
-              - otlphttp/loki
+              - otlp_http/loki
 
 kubernetesServiceMonitors:
   enabled: true
