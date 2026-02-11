@@ -10,8 +10,8 @@ version:
 #   endpointURL: https://s3.local.xuhuisun.com
   # endpointCA:
   #   create: false
-  #   name: minio-ca
-  #   key: ca.crt 
+  #   name: minio-ca-bundle
+  #   key: ca-bundle.crt
 #   provider: s3
 #   s3:
 #     bucket: cloudnative-pg-backups
@@ -50,8 +50,8 @@ backups:
   endpointURL: https://minio.primary-object-store.svc.cluster.local
   endpointCA:
     create: false
-    name: minio-ca
-    key: ca.crt
+    name: minio-ca-bundle
+    key: ca-bundle.crt
   provider: s3
   s3:
     bucket: cloudnative-pg-backups
