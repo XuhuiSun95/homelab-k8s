@@ -389,7 +389,7 @@ The enclave name `aistor-objectstore` must match the object store name used in y
 If n8n connects to MinIO or AIStor (S3) over TLS and the server uses the cluster CA, create a secret with the cluster root CA so n8n can verify the connection:
 
 ```bash
- export ca_crt=$(kubectl get cm kube-root-ca.crt -o jsonpath="{['data']['ca\\.crt']}" | base64 -w 0)
+ export ca_crt=$(kubectl get cm kube-root-ca.crt -o jsonpath="{['data']['ca\\.crt']}")
 kubectl create secret generic minio-ca-bundle --from-literal="ca-bundle.crt=$ca_crt" --namespace n8n
 ```
 
