@@ -319,17 +319,17 @@ collectors:
                   ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
                   insecure_skip_verify: true
       exporters:
-        otlp_grpc/tempo:
+        otlp/tempo:
           endpoint: lgtm-tempo-gateway.monitoring.svc.cluster.local:4317
           tls:
             insecure: true
-        otlp_http/mimir:
+        otlphttp/mimir:
           endpoint: http://lgtm-mimir-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
           tls:
             insecure: true
-        otlp_http/loki:
+        otlphttp/loki:
           endpoint: http://lgtm-loki-gateway.monitoring.svc.cluster.local/otlp
           headers:
             X-Scope-OrgID: homelab-k8s
@@ -339,13 +339,13 @@ collectors:
         pipelines:
           traces:
             exporters:
-              - otlp_grpc/tempo
+              - otlp/tempo
           metrics:
             exporters:
-              - otlp_http/mimir
+              - otlphttp/mimir
           logs:
             exporters:
-              - otlp_http/loki
+              - otlphttp/loki
 
 kubernetesServiceMonitors:
   enabled: true
