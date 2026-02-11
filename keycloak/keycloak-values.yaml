@@ -54,9 +54,9 @@ postgresql:
   enabled: false
 
 externalDatabase:
-  host: keycloak-cnpg-cluster-v2-rw
+  host: keycloak-cnpg-cluster-v3-rw
   port: 5432
   database: keycloak
-  existingSecret: keycloak-cnpg-cluster-v2-app
+  existingSecret: keycloak-cnpg-cluster-v3-app
   existingSecretUserKey: user
   existingSecretPasswordKey: password
