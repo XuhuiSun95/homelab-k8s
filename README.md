@@ -385,6 +385,34 @@ minkms add-enclave aistor-objectstore -k
 
 The enclave name `aistor-objectstore` must match the object store name used in your AIStor configuration. The `-k` flag creates the necessary keys for the enclave. Ensure the `minkms` CLI is installed and you are authenticated to your MinKMS instance.
 
+#### CNPG database backup to internal AIStor (MinIO)
+CloudNativePG clusters that back up to the **internal** AIStor/MinIO endpoint (e.g. `https://minio.primary-object-store.svc.cluster.local`) need the cluster root CA so the Postgres pods can verify TLS. Create the `minio-ca-bundle` secret in **each namespace** where a CNPG cluster uses `backups.endpointURL` pointing at that internal host and has `endpointCA.name: minio-ca-bundle` in its values (e.g. Keycloak, or n8n if using the internal endpoint).
+
+Example for the **keycloak** namespace (repeat for other namespaces that use internal AIStor for backups, e.g. `n8n`):
+
+```bash
+ export ca_crt=$(kubectl get cm kube-root-ca.crt -o jsonpath="{['data']['ca\\.crt']}")
+kubectl create secret generic minio-ca-bundle --from-literal="ca-bundle.crt=$ca_crt" --namespace keycloak
+```
+
+Ensure the cluster’s backup config references this secret, for example in `keycloak/cnpg-cluster-values.yaml`:
+
+```yaml
+backups:
+  enabled: true
+  endpointURL: https://minio.primary-object-store.svc.cluster.local
+  endpointCA:
+    create: false
+    name: minio-ca-bundle
+    key: ca-bundle.crt
+  provider: s3
+  s3:
+    bucket: cloudnative-pg-backups
+    # accessKey / secretKey from your object store credentials
+```
+
+Create the secret **before** or right after deploying the CNPG cluster so scheduled and manual backups can run without TLS verification errors.
+
 #### Proxmox Cloud Provider Credentials
 The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured during cluster bootstrap via inline manifests in Talos. No manual secret creation is needed for Proxmox integrations.
 
