@@ -66,6 +66,6 @@ backups:
     secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
   scheduledBackups:
     - name: daily-backup
-      schedule: "7 0 0 * * *"
+      schedule: "0 0 7 * * *"
       backupOwnerReference: self
   retentionPolicy: "7d"
