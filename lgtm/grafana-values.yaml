@@ -59,6 +59,14 @@ datasources:
             datasourceUid: prom
           serviceMap:
             datasourceUid: prom
+      - name: AlertManager
+        uid: alertmanager
+        type: alertmanager
+        url: http://lgtm-mimir-gateway
+        isDefault: false
+        jsonData:
+          implementation: mimir
+          handleGrafanaManagedAlerts: false
 
 dashboardProviders:
   dashboardproviders.yaml:
