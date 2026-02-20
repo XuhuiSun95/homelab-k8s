@@ -25,10 +25,10 @@ cluster:
     storageClass: proxmox-local-zfs-xfs
   resources:
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 1Gi
     limits:
-      cpu: 100m
+      cpu: 500m
       memory: 1Gi
   priorityClassName: platform-critical
   affinity:
