@@ -67,6 +67,9 @@ datasources:
         jsonData:
           implementation: mimir
           handleGrafanaManagedAlerts: false
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: homelab-k8s
 
 dashboardProviders:
   dashboardproviders.yaml:
