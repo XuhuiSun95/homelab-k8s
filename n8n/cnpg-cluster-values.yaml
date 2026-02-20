@@ -43,7 +43,11 @@ cluster:
 
 backups:
   enabled: true
-  endpointURL: https://aistor.local.xuhuisun.com
+  endpointURL: https://minio.primary-object-store.svc.cluster.local
+  endpointCA:
+    create: false
+    name: minio-ca-bundle
+    key: ca-bundle.crt
   provider: s3
   s3:
     bucket: cloudnative-pg-backups

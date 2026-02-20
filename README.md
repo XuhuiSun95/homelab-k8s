@@ -459,7 +459,11 @@ See the [warning section](#-temporary-warning) at the top of this README for mor
 ```bash
 mimirtool rules list --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 
-mimirtool rules load ./lgtm/mimir-record-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+mimirtool rules load ./lgtm/mimir-control-plane-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+mimirtool rules load ./lgtm/mimir-kube-prometheus-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+mimirtool rules load ./lgtm/mimir-kube-state-metrics-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+mimirtool rules load ./lgtm/mimir-node-exporter-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+
 mimirtool rules load ./strimzi/kafka/strimzi-rule.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 ```
 
