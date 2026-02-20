@@ -455,11 +455,12 @@ env:
 
 See the [warning section](#-temporary-warning) at the top of this README for more details.
 
-### 7. Apply Mimir Record Rules
+### 7. Apply Mimir Record/Alert Rules
 ```bash
 mimirtool rules list --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 
-mimirtool rules sync ./lgtm/mimir-record-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+mimirtool rules load ./lgtm/mimir-record-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+mimirtool rules load ./strimzi/kafka/strimzi-rule.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 ```
 
 ## 🔑 Access Credentials
