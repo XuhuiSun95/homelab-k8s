@@ -20,7 +20,7 @@ recovery:
 
 cluster:
   instances: 3
-  imageName: "ghcr.io/tensorchord/cloudnative-vectorchord:16.12-1.1.0"
+  imageName: "ghcr.io/tensorchord/cloudnative-vectorchord:17.8-1.1.0"
   storage:
     size: 4Gi
     storageClass: proxmox-local-zfs-xfs
