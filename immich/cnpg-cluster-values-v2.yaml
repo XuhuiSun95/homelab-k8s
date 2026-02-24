@@ -1,0 +1,74 @@
+type: postgresql
+version:
+  postgresql: "16"
+mode: recovery
+
+recovery:
+  method: object_store
+  clusterName: immich-cnpg-cluster
+  database: immich
+  endpointURL: https://minio.primary-object-store.svc.cluster.local
+  endpointCA:
+    create: false
+    name: minio-ca-bundle
+    key: ca-bundle.crt
+  provider: s3
+  s3:
+    bucket: cloudnative-pg-backups
+    accessKey: om9WSI45aMEZxBqASwSy
+    secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
+
+cluster:
+  instances: 3
+  imageName: "ghcr.io/tensorchord/cloudnative-vectorchord:16.12-1.1.0"
+  storage:
+    size: 4Gi
+    storageClass: proxmox-local-zfs-xfs
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  affinity:
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+  roles:
+    - name: immich
+      superuser: true
+      login: true
+  monitoring:
+    enabled: true
+    podMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: false
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
+    shared_preload_libraries:
+      - "vchord.so"
+  initdb:
+    database: immich
+    postInitSQL:
+      - CREATE EXTENSION IF NOT EXISTS "vchord" CASCADE;
+      - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
+
+backups:
+  enabled: true
+  endpointURL: https://minio.primary-object-store.svc.cluster.local
+  endpointCA:
+    create: false
+    name: minio-ca-bundle
+    key: ca-bundle.crt
+  provider: s3
+  s3:
+    bucket: cloudnative-pg-backups
+    accessKey: om9WSI45aMEZxBqASwSy
+    secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
+  scheduledBackups:
+    - name: daily-backup
+      schedule: "0 30 7 * * *"
+      backupOwnerReference: self
+  retentionPolicy: "7d"
