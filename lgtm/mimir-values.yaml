@@ -81,6 +81,7 @@ compactor:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+  priorityClassName: platform-critical
 distributor:
   replicas: 2
   resources:
@@ -98,6 +99,7 @@ distributor:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+  priorityClassName: platform-critical
 ingester:
   persistentVolume:
     size: 10Gi
@@ -120,6 +122,7 @@ ingester:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+  priorityClassName: platform-critical
 chunks-cache:
   enabled: true
   replicas: 1
@@ -348,6 +351,7 @@ ruler:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+  priorityClassName: platform-critical
 store_gateway:
   persistentVolume:
     size: 2Gi
@@ -370,6 +374,7 @@ store_gateway:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+  priorityClassName: platform-critical
 gateway:
   replicas: 1
   resources:

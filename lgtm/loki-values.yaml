@@ -1,3 +1,6 @@
+global:
+  priorityClassName: platform-critical
+
 deploymentMode: Distributed
 
 loki:
@@ -109,7 +112,6 @@ queryFrontend:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  priorityClassName: platform-critical
 queryScheduler:
   replicas: 2
   resources:
@@ -138,7 +140,6 @@ queryScheduler:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  priorityClassName: platform-critical
 distributor:
   replicas: 3
   maxUnavailable: 2
@@ -168,7 +169,6 @@ distributor:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  priorityClassName: platform-critical
 compactor:
   replicas: 1
   resources:
@@ -215,7 +215,6 @@ indexGateway:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  priorityClassName: platform-critical
 gateway:
   replicas: 1
   resources:
@@ -244,7 +243,6 @@ gateway:
     - key: node-role.kubernetes.io/system
       operator: Exists
       effect: NoSchedule
-  priorityClassName: platform-critical
 memcachedExporter:
   resources:
     requests:

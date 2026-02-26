@@ -455,7 +455,7 @@ env:
 
 See the [warning section](#-temporary-warning) at the top of this README for more details.
 
-### 7. Apply Mimir Record/Alert Rules
+### 7. Apply Mimir Record/Alert Rules and Alertmanager Config
 ```bash
 mimirtool rules list --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 
@@ -465,6 +465,9 @@ mimirtool rules load ./lgtm/mimir-kube-state-metrics-rules.yaml --address=https:
 mimirtool rules load ./lgtm/mimir-node-exporter-rules.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 
 mimirtool rules load ./strimzi/kafka/strimzi-rule.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
+
+# Alertmanager config (routing, receivers, etc.)
+mimirtool alertmanager load ./lgtm/mimir-alertmanager.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 ```
 
 ## 🔑 Access Credentials
