@@ -129,7 +129,7 @@ spec:
       nodeClassRef:
         group: karpenter.proxmox.sinextra.dev
         kind: ProxmoxNodeClass
-        name: system-node-class
+        name: memory-optimized-node-class
       expireAfter: 720h
       terminationGracePeriod: 1h
       requirements:
