@@ -37,9 +37,9 @@ alertmanager:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -69,9 +69,9 @@ compactor:
   resources:
     requests:
       cpu: 10m
-      memory: 567Mi
+      memory: 512Mi
     limits:
-      memory: 567Mi
+      memory: 512Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -86,10 +86,10 @@ distributor:
   replicas: 2
   resources:
     requests:
-      cpu: 79m
-      memory: 200Mi
+      cpu: 80m
+      memory: 256Mi
     limits:
-      memory: 200Mi
+      memory: 256Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -107,7 +107,7 @@ ingester:
   replicas: 3
   resources:
     requests:
-      cpu: 57m
+      cpu: 60m
       memory: 1024Mi
     limits:
       memory: 1024Mi
@@ -126,14 +126,14 @@ ingester:
 chunks-cache:
   enabled: true
   replicas: 1
-  allocatedMemory: 360
+  allocatedMemory: 853
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 432Mi
+      memory: 1024Mi
     limits:
-      memory: 432Mi
+      memory: 1024Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -141,23 +141,23 @@ chunks-cache:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
 index-cache:
   enabled: true
   replicas: 1
-  allocatedMemory: 150
+  allocatedMemory: 426
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 180Mi
+      memory: 512Mi
     limits:
-      memory: 180Mi
+      memory: 512Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -165,23 +165,23 @@ index-cache:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
 metadata-cache:
   enabled: true
   replicas: 1
-  allocatedMemory: 100
+  allocatedMemory: 106
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 120Mi
+      memory: 128Mi
     limits:
-      memory: 120Mi
+      memory: 128Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -189,30 +189,30 @@ metadata-cache:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
 memcachedExporter:
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 5m
+      memory: 16Mi
     limits:
-      memory: 100Mi
+      memory: 16Mi
 results-cache:
   enabled: true
   replicas: 1
-  allocatedMemory: 100
+  allocatedMemory: 213
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 120Mi
+      memory: 256Mi
     limits:
-      memory: 120Mi
+      memory: 256Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -220,9 +220,9 @@ results-cache:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
@@ -381,9 +381,9 @@ gateway:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
-      memory: 100Mi
+      memory: 64Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
