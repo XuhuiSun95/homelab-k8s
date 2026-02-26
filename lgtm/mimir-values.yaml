@@ -276,6 +276,7 @@ querier:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+  priorityClassName: platform-critical
 query_frontend:
   replicas: 1
   resources:
@@ -360,9 +361,9 @@ store_gateway:
   resources:
     requests:
       cpu: 10m
-      memory: 300Mi
+      memory: 500Mi
     limits:
-      memory: 300Mi
+      memory: 500Mi
   zoneAwareReplication:
      enabled: false
   affinity:
