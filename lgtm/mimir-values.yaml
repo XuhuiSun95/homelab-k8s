@@ -264,9 +264,9 @@ querier:
   resources:
     requests:
       cpu: 10m
-      memory: 270Mi
+      memory: 500Mi
     limits:
-      memory: 270Mi
+      memory: 500Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
