@@ -22,6 +22,18 @@ transformations:
     taints:
       node-role.kubernetes.io/system: ":NoSchedule"
 
+  - name: memory-optimized
+    nodeSelector:
+      - matchExpressions:
+          - key: hostname
+            operator: Regexp
+            values:
+              - ^memory-optimized-.+$
+    labels:
+      node-role.kubernetes.io/memory-optimized: ""
+    taints:
+      node-role.kubernetes.io/memory-optimized: ":NoSchedule"
+
   - name: user
     nodeSelector:
       - matchExpressions:
