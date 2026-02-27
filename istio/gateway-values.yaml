@@ -20,7 +20,7 @@ service:
     port: 9092
     protocol: TCP
     targetPort: 9092
-  ipFamilyPolicy: PreferDualStack
+  ipFamilyPolicy: RequireDualStack
   ipFamilies: ["IPv6", "IPv4"]
 
 resources:
