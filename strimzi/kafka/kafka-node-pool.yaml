@@ -34,6 +34,18 @@ spec:
                     values:
                       - controller
               topologyKey: kubernetes.io/hostname
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key:  karpenter.sh/nodepool
+                  operator: In
+                  values: ["system"]
+      tolerations:
+        - key: node-role.kubernetes.io/system
+          operator: Exists
+          effect: NoSchedule
+      priorityClassName: platform-critical
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
@@ -51,9 +63,9 @@ spec:
   resources:
     requests:
       cpu: 200m
-      memory: 2Gi
+      memory: 4Gi
     limits:
-      memory: 2Gi
+      memory: 4Gi
   storage:
     type: persistent-claim
     size: 20Gi
@@ -71,3 +83,15 @@ spec:
                     values:
                       - kafka
               topologyKey: kubernetes.io/hostname
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key:  karpenter.sh/nodepool
+                  operator: In
+                  values: ["memory-optimized"]
+      tolerations:
+        - key: node-role.kubernetes.io/memory-optimized
+          operator: Exists
+          effect: NoSchedule
+      priorityClassName: platform-critical
