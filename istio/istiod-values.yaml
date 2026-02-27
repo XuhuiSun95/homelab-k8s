@@ -4,10 +4,10 @@ autoscaleMin: 2
 replicaCount: 2
 resources:
   requests:
-    cpu: 46m
-    memory: 210Mi
+    cpu: 20m
+    memory: 256Mi
   limits:
-    memory: 210Mi
+    memory: 256Mi
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -38,7 +38,7 @@ env:
   PILOT_ENABLE_QUIC_LISTENERS: true
   ISTIO_DUAL_STACK: true
 
-ipFamilyPolicy: PreferDualStack
+ipFamilyPolicy: RequireDualStack
 ipFamilies: ["IPv6", "IPv4"]
 
 meshConfig:
@@ -52,5 +52,5 @@ meshConfig:
         environment: {}
 
 global:
-  priorityClassName: platform-critical
   # nativeNftables: true
+  priorityClassName: platform-critical

@@ -131,7 +131,7 @@ spec:
         priorityClassName: platform-critical
     resources:
       requests:
-        cpu: 50m
+        cpu: 80m
         memory: 2Gi 
       limits:
         memory: 2Gi
