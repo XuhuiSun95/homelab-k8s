@@ -57,9 +57,9 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 64Mi
+        memory: 32Mi
       limits:
-        memory: 64Mi
+        memory: 32Mi
     template:
       pod:
         affinity:
@@ -131,7 +131,7 @@ spec:
         priorityClassName: platform-critical
     resources:
       requests:
-        cpu: 200m
+        cpu: 50m
         memory: 2Gi 
       limits:
         memory: 2Gi
