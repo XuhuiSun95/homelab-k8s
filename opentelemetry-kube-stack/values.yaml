@@ -8,17 +8,17 @@ opentelemetry-operator:
     createRbacPermissions: true
     resources:
       requests:
-        cpu: 24m
-        memory: 100Mi
+        cpu: 10m
+        memory: 128Mi
       limits:
-        memory: 100Mi
+        memory: 128Mi
   kubeRBACProxy:
     resources:
       requests:
-        cpu: 10m
-        memory: 100Mi
+        cpu: 5m
+        memory: 32Mi
       limits:
-        memory: 100Mi
+        memory: 32Mi
   priorityClassName: platform-critical
   affinity:
     nodeAffinity:
@@ -45,10 +45,10 @@ collectors:
     resources:
       requests:
         cpu: 100m
-        memory: 250Mi
+        memory: 256Mi
       limits:
         cpu: null
-        memory: 250Mi
+        memory: 256Mi
     targetAllocator:
       enabled: true
       # priorityClassName: platform-critical
@@ -66,10 +66,10 @@ collectors:
           effect: NoSchedule
       resources:
         requests:
-          cpu: 38m
-          memory: 245Mi
+          cpu: 30m
+          memory: 256Mi
         limits:
-          memory: 245Mi
+          memory: 256Mi
       allocationStrategy: per-node
       prometheusCR:
         enabled: true
@@ -396,9 +396,9 @@ kube-state-metrics:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
   priorityClassName: platform-critical
 
 nodeExporter:
