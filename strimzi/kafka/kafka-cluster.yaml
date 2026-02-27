@@ -57,24 +57,54 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 100Mi
+        memory: 64Mi
       limits:
-        memory: 100Mi
+        memory: 64Mi
+    template:
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: karpenter.sh/nodepool
+                      operator: In
+                      values: ["system"]
+        tolerations:
+          - key: node-role.kubernetes.io/system
+            operator: Exists
+            effect: NoSchedule
+        priorityClassName: platform-critical
   entityOperator:
     topicOperator:
       resources:
         requests:
           cpu: 10m
-          memory: 236Mi
+          memory: 256Mi
         limits:
-          memory: 236Mi
+          memory: 256Mi
     userOperator:
       resources:
         requests:
           cpu: 10m
-          memory: 231Mi
+          memory: 256Mi
         limits:
-          memory: 231Mi
+          memory: 256Mi
+    template:
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: karpenter.sh/nodepool
+                      operator: In
+                      values: ["system"]
+        tolerations:
+          - key: node-role.kubernetes.io/system
+            operator: Exists
+            effect: NoSchedule
+        priorityClassName: platform-critical
   cruiseControl:
     autoRebalance:
     - mode: add-brokers
@@ -85,12 +115,26 @@ spec:
         ipFamilies:
         - IPv6
         - IPv4
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: karpenter.sh/nodepool
+                      operator: In
+                      values: ["system"]
+        tolerations:
+          - key: node-role.kubernetes.io/system
+            operator: Exists
+            effect: NoSchedule
+        priorityClassName: platform-critical
     resources:
       requests:
-        cpu: 204m
-        memory: 1493Mi
+        cpu: 200m
+        memory: 2Gi 
       limits:
-        memory: 1493Mi
+        memory: 2Gi
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
