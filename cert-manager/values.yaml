@@ -8,9 +8,9 @@ replicaCount: 2
 resources:
   requests:
     cpu: 10m
-    memory: 100Mi
+    memory: 64Mi
   limits:
-    memory: 100Mi
+    memory: 64Mi
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
@@ -83,9 +83,9 @@ cainjector:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
@@ -145,10 +145,10 @@ webhook:
   replicaCount: 3
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 5m
+      memory: 32Mi
     limits:
-      memory: 100Mi
+      memory: 32Mi
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
