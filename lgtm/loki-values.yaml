@@ -50,10 +50,10 @@ ingester:
   replicas: 3
   resources:
     requests:
-      cpu: 38m
-      memory: 800Mi
+      cpu: 40m
+      memory: 1024Mi
     limits:
-      memory: 800Mi
+      memory: 1024Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -65,15 +65,26 @@ ingester:
               app.kubernetes.io/instance: lgtm-loki
               app.kubernetes.io/name: loki
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized
+      operator: Exists
+      effect: NoSchedule
 querier:
   replicas: 3
   maxUnavailable: 2
   resources:
     requests:
       cpu: 18m
-      memory: 152Mi
+      memory: 1024Mi
     limits:
-      memory: 152Mi
+      memory: 1024Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -83,15 +94,26 @@ querier:
               app.kubernetes.io/instance: lgtm-loki
               app.kubernetes.io/name: loki
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized
+      operator: Exists
+      effect: NoSchedule
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 213Mi
+      cpu: 20m
+      memory: 256Mi
     limits:
-      memory: 213Mi
+      memory: 256Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -117,9 +139,9 @@ queryScheduler:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -145,10 +167,10 @@ distributor:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 24m
-      memory: 155Mi
+      cpu: 30m
+      memory: 256Mi
     limits:
-      memory: 155Mi
+      memory: 256Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -173,10 +195,10 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 15m
-      memory: 164Mi
+      cpu: 30m
+      memory: 512Mi
     limits:
-      memory: 164Mi
+      memory: 512Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -186,15 +208,26 @@ compactor:
               app.kubernetes.io/instance: lgtm-loki
               app.kubernetes.io/name: loki
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 indexGateway:
   replicas: 2
   maxUnavailable: 1
   resources:
     requests:
       cpu: 10m
-      memory: 158Mi
+      memory: 512Mi
     limits:
-      memory: 158Mi
+      memory: 512Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -210,9 +243,9 @@ indexGateway:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
 gateway:
@@ -220,9 +253,9 @@ gateway:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
-      memory: 100Mi
+      memory: 64Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -246,20 +279,20 @@ gateway:
 memcachedExporter:
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 5m
+      memory: 16Mi
     limits:
-      memory: 100Mi
+      memory: 16Mi
 resultsCache:
   replicas: 1
-  allocatedMemory: 150
+  allocatedMemory: 213
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 180Mi
+      memory: 256Mi
     limits:
-      memory: 180Mi
+      memory: 256Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -275,22 +308,22 @@ resultsCache:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
 chunksCache:
   replicas: 1
-  allocatedMemory: 2205
+  allocatedMemory: 853
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
       cpu: 10m
-      memory: 2647Mi
+      memory: 1024Mi
     limits:
-      memory: 2647Mi
+      memory: 1024Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -306,9 +339,9 @@ chunksCache:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
   priorityClassName: platform-critical
