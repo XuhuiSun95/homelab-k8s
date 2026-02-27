@@ -81,6 +81,17 @@ compactor:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   priorityClassName: platform-critical
 distributor:
   replicas: 2
@@ -99,6 +110,17 @@ distributor:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   priorityClassName: platform-critical
 ingester:
   persistentVolume:
@@ -122,6 +144,17 @@ ingester:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized
+      operator: Exists
+      effect: NoSchedule
   priorityClassName: platform-critical
 chunks-cache:
   enabled: true
@@ -235,9 +268,9 @@ overrides_exporter:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 32Mi
     limits:
-      memory: 100Mi
+      memory: 32Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -263,10 +296,10 @@ querier:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 500Mi
+      cpu: 30m
+      memory: 1024Mi
     limits:
-      memory: 500Mi
+      memory: 1024Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -276,15 +309,26 @@ querier:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized
+      operator: Exists
+      effect: NoSchedule
   priorityClassName: platform-critical
 query_frontend:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 447Mi
+      cpu: 20m
+      memory: 256Mi
     limits:
-      memory: 447Mi
+      memory: 256Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -311,9 +355,9 @@ query_scheduler:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 128Mi
     limits:
-      memory: 100Mi
+      memory: 128Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -339,10 +383,10 @@ ruler:
   replicas: 1
   resources:
     requests:
-      cpu: 31m
-      memory: 102Mi
+      cpu: 40m
+      memory: 256Mi
     limits:
-      memory: 102Mi
+      memory: 256Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -352,6 +396,17 @@ ruler:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
   priorityClassName: platform-critical
 store_gateway:
   persistentVolume:
@@ -360,10 +415,10 @@ store_gateway:
   replicas: 3
   resources:
     requests:
-      cpu: 10m
-      memory: 500Mi
+      cpu: 20m
+      memory: 1024Mi
     limits:
-      memory: 500Mi
+      memory: 1024Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -375,6 +430,17 @@ store_gateway:
               app.kubernetes.io/instance: lgtm-mimir
               app.kubernetes.io/name: mimir
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized
+      operator: Exists
+      effect: NoSchedule
   priorityClassName: platform-critical
 gateway:
   replicas: 1
@@ -410,9 +476,9 @@ rollout_operator:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
-      memory: 100Mi
+      memory: 64Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
