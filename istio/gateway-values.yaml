@@ -22,6 +22,7 @@ service:
     targetPort: 9092
   ipFamilyPolicy: PreferDualStack
   ipFamilies: ["IPv6", "IPv4"]
+
 resources:
   requests:
     cpu: 500m
@@ -29,6 +30,35 @@ resources:
   limits:
     cpu: 2000m
     memory: 512Mi
+
 autoscaling:
   minReplicas: 2
-  maxReplicas: 15
+  maxReplicas: 6
+
+# TODO: move to ingress nodepool
+tolerations:
+  - key: node-role.kubernetes.io/system
+    operator: Exists
+    effect: NoSchedule
+
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: ScheduleAnyway
+  labelSelector:
+    matchLabels:
+      app.kubernetes.io/name: istio-ingress-gateway
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: karpenter.sh/nodepool
+            operator: In
+            values: ["system"]
+
+podDisruptionBudget:
+  minAvailable: 1
+
+priorityClassName: platform-critical
