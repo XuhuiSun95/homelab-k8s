@@ -54,9 +54,9 @@ redis-ha:
     resources:
       requests:
         cpu: 10m
-        memory: 100Mi
+        memory: 128Mi
       limits:
-        memory: 100Mi
+        memory: 128Mi
     additionalAffinities:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -72,24 +72,24 @@ redis-ha:
   redis:
     resources:
       requests:
-        cpu: 13m
-        memory: 100Mi
+        cpu: 30m
+        memory: 64Mi
       limits:
-        memory: 100Mi
+        memory: 64Mi
   sentinel:
     resources:
       requests:
-        cpu: 14m
-        memory: 100Mi
+        cpu: 30m
+        memory: 64Mi
       limits:
-        memory: 100Mi
+        memory: 64Mi
   splitBrainDetection:
     resources:
       requests:
-        cpu: 10m
-        memory: 100Mi
+        cpu: 5m
+        memory: 16Mi
       limits:
-        memory: 100Mi
+        memory: 16Mi
   additionalAffinities:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
