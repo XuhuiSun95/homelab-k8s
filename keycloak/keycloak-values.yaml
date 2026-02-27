@@ -45,7 +45,7 @@ metrics:
 
 resources:
   requests:
-    cpu: 68m
+    cpu: 60m
     memory: 1250Mi
   limits:
     memory: 1250Mi
