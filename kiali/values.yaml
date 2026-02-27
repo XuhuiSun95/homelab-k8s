@@ -3,9 +3,9 @@ replicaCount: 2
 resources:
   requests:
     cpu: 10m
-    memory: 300Mi
+    memory: 256Mi
   limits:
-    memory: 300Mi
+    memory: 256Mi
 
 affinity:
   nodeAffinity:
@@ -66,9 +66,9 @@ cr:
       resources:
         requests:
           cpu: 100m
-          memory: 100Mi
+          memory: 128Mi
         limits:
-          memory: 100Mi
+          memory: 128Mi
     external_services:
       grafana:
         internal_url: http://lgtm-grafana.monitoring.svc.cluster.local
