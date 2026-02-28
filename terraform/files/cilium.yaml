@@ -54,9 +54,9 @@ operator:
   resources:
     requests:
       cpu: 10m
-      memory: 165Mi
+      memory: 128Mi
     limits:
-      memory: 165Mi
+      memory: 128Mi
 securityContext:
   capabilities:
     ciliumAgent:

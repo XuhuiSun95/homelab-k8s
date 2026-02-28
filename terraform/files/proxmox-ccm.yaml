@@ -1,4 +1,14 @@
+enabledControllers:
+  - cloud-node-lifecycle
+
 existingConfigSecret: proxmox-cloud-controller-manager
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 64Mi
+  limits:
+    memory: 64Mi
 
 affinity:
   nodeAffinity:
@@ -7,8 +17,3 @@ affinity:
       - matchExpressions:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
-
-logVerbosityLevel: 3
-
-enabledControllers:
-  - cloud-node-lifecycle
