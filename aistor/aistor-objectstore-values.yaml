@@ -6,6 +6,10 @@ objectStore:
       volumesPerServer: 8
       size: 15Gi
       storageClassName: proxmox-local-zfs-xfs
+      tolerations:
+        - key: node-role.kubernetes.io/memory-optimized
+          operator: Exists
+          effect: NoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
