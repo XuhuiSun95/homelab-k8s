@@ -36,7 +36,7 @@ alertmanager:
   replicas: 2
   resources:
     requests:
-      cpu: 10m
+      cpu: 20m
       memory: 128Mi
     limits:
       memory: 128Mi
@@ -68,7 +68,7 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
+      cpu: 100m
       memory: 512Mi
     limits:
       memory: 512Mi
@@ -97,7 +97,7 @@ distributor:
   replicas: 2
   resources:
     requests:
-      cpu: 80m
+      cpu: 150m
       memory: 256Mi
     limits:
       memory: 256Mi
@@ -129,7 +129,7 @@ ingester:
   replicas: 3
   resources:
     requests:
-      cpu: 60m
+      cpu: 100m
       memory: 1024Mi
     limits:
       memory: 1024Mi
@@ -187,7 +187,7 @@ index-cache:
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
-      cpu: 10m
+      cpu: 20m
       memory: 512Mi
     limits:
       memory: 512Mi
@@ -267,7 +267,7 @@ overrides_exporter:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
+      cpu: 5m
       memory: 32Mi
     limits:
       memory: 32Mi
@@ -296,7 +296,7 @@ querier:
   replicas: 1
   resources:
     requests:
-      cpu: 30m
+      cpu: 80m
       memory: 1024Mi
     limits:
       memory: 1024Mi
@@ -325,7 +325,7 @@ query_frontend:
   replicas: 1
   resources:
     requests:
-      cpu: 20m
+      cpu: 50m
       memory: 256Mi
     limits:
       memory: 256Mi
@@ -354,7 +354,7 @@ query_scheduler:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
+      cpu: 20m
       memory: 128Mi
     limits:
       memory: 128Mi
@@ -383,7 +383,7 @@ ruler:
   replicas: 1
   resources:
     requests:
-      cpu: 40m
+      cpu: 100m
       memory: 256Mi
     limits:
       memory: 256Mi
@@ -415,7 +415,7 @@ store_gateway:
   replicas: 3
   resources:
     requests:
-      cpu: 20m
+      cpu: 50m
       memory: 1024Mi
     limits:
       memory: 1024Mi
@@ -446,7 +446,7 @@ gateway:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
+      cpu: 20m
       memory: 64Mi
     limits:
       memory: 64Mi
@@ -475,7 +475,7 @@ gateway:
 rollout_operator:
   resources:
     requests:
-      cpu: 10m
+      cpu: 5m
       memory: 64Mi
     limits:
       memory: 64Mi
