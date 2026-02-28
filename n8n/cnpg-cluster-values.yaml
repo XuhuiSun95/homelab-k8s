@@ -21,11 +21,11 @@ cluster:
     storageClass: proxmox-local-zfs-xfs
   resources:
     requests:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 300m
+      memory: 512Mi
     limits:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 300m
+      memory: 512Mi
   affinity:
     topologyKey: kubernetes.io/hostname
     podAntiAffinityType: required
@@ -37,7 +37,7 @@ cluster:
       enabled: false
   postgresql:
     parameters:
-      shared_buffers: 256MB
+      shared_buffers: 128MB
   initdb:
     database: n8n
 
@@ -55,6 +55,6 @@ backups:
     secretKey: f31Tff9m6TaPJRhZ45GjO0HUxzx4yM8HmQ7xCnAJ
   scheduledBackups:
     - name: daily-backup
-      schedule: "0 7 0 * * *"
+      schedule: "0 15 7 * * *"
       backupOwnerReference: self
   retentionPolicy: "7d"

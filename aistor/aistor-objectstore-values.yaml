@@ -4,9 +4,16 @@ objectStore:
     - servers: 1
       name: pool-0
       volumesPerServer: 8
-      size: 10Gi
+      size: 15Gi
       storageClassName: proxmox-local-zfs-xfs
       affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: karpenter.sh/nodepool
+                  operator: In
+                  values: ["memory-optimized"]
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
@@ -16,10 +23,10 @@ objectStore:
               topologyKey: kubernetes.io/hostname
       resources:
         requests:
-          cpu: 100m
-          memory: 2Gi
+          cpu: 4 
+          memory: 24Gi
         limits:
-          memory: 2Gi
+          memory: 24Gi
   metrics:
     enabled: true
   services:
@@ -55,34 +62,17 @@ objectStore:
       value: "local"
     - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL
       value: "https://keycloak.local.xuhuisun.com/admin"
+  priorityClassName: platform-critical
+  sidecars:
+    resources:
+      requests:
+        cpu: 5m
+        memory: 32Mi
+      limits:
+        memory: 32Mi
 
 
 extraResources:
-- |
-  apiVersion: autoscaling.k8s.io/v1
-  kind: VerticalPodAutoscaler
-  metadata:
-    name: primary-object-store
-    namespace: primary-object-store
-  spec:
-    resourcePolicy:
-      containerPolicies:
-        - containerName: minio
-          controlledResources:
-            - cpu
-            - memory
-          minAllowed:
-            cpu: 5m
-            memory: 1Gi
-          maxAllowed:
-            cpu: 8
-            memory: 4Gi
-    targetRef:
-      apiVersion: apps/v1
-      kind: StatefulSet
-      name: aistor-objectstore-pool-0
-    updatePolicy:
-      updateMode: InPlaceOrRecreate
 - |
   apiVersion: monitoring.coreos.com/v1
   kind: ServiceMonitor
