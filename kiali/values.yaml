@@ -3,9 +3,9 @@ replicaCount: 2
 resources:
   requests:
     cpu: 10m
-    memory: 512Mi
+    memory: 256Mi
   limits:
-    memory: 512Mi
+    memory: 256Mi
 
 affinity:
   nodeAffinity:
@@ -68,7 +68,7 @@ cr:
             - labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: kiali
-                topologyKey: kubernetes.io/hostname
+              topologyKey: kubernetes.io/hostname
       hpa:
         spec:
           maxReplicas: 5 
