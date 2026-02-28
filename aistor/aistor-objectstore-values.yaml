@@ -67,7 +67,7 @@ objectStore:
     - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL
       value: "https://keycloak.local.xuhuisun.com/admin"
   priorityClassName: platform-critical
-  sidecars:
+  sideCars:
     resources:
       requests:
         cpu: 5m
