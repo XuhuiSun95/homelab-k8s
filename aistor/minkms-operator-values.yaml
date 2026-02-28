@@ -1,14 +1,43 @@
 global:
   operator:
-    # TODO: missing affinity and priorityClassName
     replicas: 2
     resources:
       requests:
         cpu: 10m
-        memory: 100Mi
+        memory: 128Mi
       limits:
-        memory: 100Mi
+        memory: 128Mi
     tolerations:
       - key: node-role.kubernetes.io/system
         operator: Exists
         effect: NoSchedule
+
+operators:
+  minkms:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: In
+                values: ["system"]
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: minkms.min.io/name
+                  operator: In
+                  values:
+                  - minkms-operator
+              topologyKey: topology.kubernetes.io/zone
+            weight: 100
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: minkms.min.io/name
+              operator: In
+              values:
+              - minkms-operator
+          topologyKey: kubernetes.io/hostname

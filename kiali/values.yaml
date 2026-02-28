@@ -48,9 +48,30 @@ cr:
         scopes: ["openid", "email"]
         username_claim: "email"
     deployment:
+      affinity:
+        node:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: karpenter.sh/nodepool
+                  operator: In
+                  values: ["system"]
+        pod_anti:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: kiali
+                topologyKey: topology.kubernetes.io/zone
+              weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: kiali
+                topologyKey: kubernetes.io/hostname
       hpa:
         spec:
-          maxReplicas: 10
+          maxReplicas: 5 
           minReplicas: 2
           metrics:
           - type: Resource
@@ -63,12 +84,17 @@ cr:
         enabled: false
       pod_labels:
         istio.io/dataplane-mode: ambient
+      priority_class_name: platform-critical
       resources:
         requests:
           cpu: 100m
           memory: 128Mi
         limits:
           memory: 128Mi
+      tolerations:
+        - key: node-role.kubernetes.io/system
+          operator: Exists
+          effect: NoSchedule
     external_services:
       grafana:
         internal_url: http://lgtm-grafana.monitoring.svc.cluster.local

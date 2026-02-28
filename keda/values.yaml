@@ -1,11 +1,3 @@
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-          - key: karpenter.sh/nodepool
-            operator: In
-            values: ["system"]
 tolerations:
 - key: node-role.kubernetes.io/system
   operator: Exists
@@ -15,6 +7,13 @@ priorityClassName: platform-critical
 operator:
   replicaCount: 2
   affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - podAffinityTerm:
@@ -33,10 +32,17 @@ operator:
               operator: In
               values:
               - keda-operator
-          topologyKey: "kubernetes.io/hostname"
+          topologyKey: kubernetes.io/hostname
 
 metricsServer:
   affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - podAffinityTerm:
@@ -55,10 +61,17 @@ metricsServer:
               operator: In
               values:
               - keda-operator-metrics-apiserver
-          topologyKey: "kubernetes.io/hostname"
+          topologyKey: kubernetes.io/hostname
 
 webhooks:
   affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - podAffinityTerm:
@@ -77,27 +90,27 @@ webhooks:
               operator: In
               values:
               - keda-admission-webhooks
-          topologyKey: "kubernetes.io/hostname"
+          topologyKey: kubernetes.io/hostname
 
 resources:
   operator:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
       cpu: null
-      memory: 100Mi
+      memory: 64Mi
   metricServer:
     requests:
       cpu: 15m
-      memory: 100Mi
+      memory: 128Mi
     limits:
       cpu: null
-      memory: 100Mi
+      memory: 128Mi
   webhooks:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 5m
+      memory: 32Mi
     limits:
       cpu: null
-      memory: 100Mi
+      memory: 32Mi
