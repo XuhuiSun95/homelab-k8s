@@ -4,11 +4,28 @@ global:
     replicas: 2
     resources:
       requests:
-        cpu: 10m
-        memory: 100Mi
+        cpu: 5m
+        memory: 32Mi 
       limits:
-        memory: 100Mi
+        memory: 32Mi
     tolerations:
       - key: node-role.kubernetes.io/system
         operator: Exists
         effect: NoSchedule
+
+
+operators:
+  adminjob:
+    resources:
+      requests:
+        cpu: 5m
+        memory: 32Mi
+      limits:
+        memory: 32Mi
+  object-store:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+      limits:
+        memory: 128Mi
