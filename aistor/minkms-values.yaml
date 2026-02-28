@@ -22,6 +22,9 @@ minkms:
                 minkms.min.io/MinKMS: minkms
             topologyKey: topology.kubernetes.io/zone
           weight: 100
+  # TODO: remove once affinity is working
+  nodeSelector:
+    karpenter.sh/nodepool: system
   priorityClassName: platform-critical
   replicas: 3
   resources:
