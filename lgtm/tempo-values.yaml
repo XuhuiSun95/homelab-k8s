@@ -7,10 +7,10 @@ ingester:
      enabled: false
   resources:
     requests:
-      cpu: 10m
-      memory: 800Mi
+      cpu: 40m
+      memory: 1Gi
     limits:
-      memory: 800Mi
+      memory: 1Gi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -25,6 +25,17 @@ ingester:
               matchLabels:
                 {{- include "tempo.selectorLabels" (dict "ctx" . "component" "ingester") | nindent 12 }}
             topologyKey: topology.kubernetes.io/zone
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized 
+      operator: Exists
+      effect: NoSchedule
 metricsGenerator:
   enabled: true
   config:
@@ -35,9 +46,9 @@ metricsGenerator:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
-      memory: 100Mi
+      memory: 64Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -52,15 +63,26 @@ metricsGenerator:
               matchLabels:
                 {{- include "tempo.selectorLabels" (dict "ctx" . "component" "metrics-generator") | nindent 12 }}
             topologyKey: topology.kubernetes.io/zone
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 distributor:
-  replicas: 3
-  maxUnavailable: 2
+  replicas: 2
+  maxUnavailable: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 20m
+      memory: 256Mi
     limits:
-      memory: 100Mi
+      memory: 256Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -75,14 +97,25 @@ distributor:
               matchLabels:
                 {{- include "tempo.selectorLabels" (dict "ctx" . "component" "distributor") | nindent 12 }}
             topologyKey: topology.kubernetes.io/zone
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 1011Mi
+      cpu: 30m
+      memory: 1Gi
     limits:
-      memory: 1011Mi
+      memory: 1Gi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -97,15 +130,26 @@ compactor:
               matchLabels:
                 {{- include "tempo.selectorLabels" (dict "ctx" . "component" "compactor") | nindent 12 }}
             topologyKey: topology.kubernetes.io/zone
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["memory-optimized"]
+  tolerations:
+    - key: node-role.kubernetes.io/memory-optimized 
+      operator: Exists
+      effect: NoSchedule
 querier:
-  replicas: 3
-  maxUnavailable: 2
+  replicas: 2
+  maxUnavailable: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 285Mi
+      cpu: 30m
+      memory: 1Gi
     limits:
-      memory: 285Mi
+      memory: 1Gi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -120,15 +164,26 @@ querier:
               matchLabels:
                 {{- include "tempo.selectorLabels" (dict "ctx" . "component" "querier" "memberlist" true) | nindent 12 }}
             topologyKey: topology.kubernetes.io/zone
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key:  karpenter.sh/nodepool
+              operator: In
+              values: ["system"]
+  tolerations:
+    - key: node-role.kubernetes.io/system
+      operator: Exists
+      effect: NoSchedule
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 213Mi
+      cpu: 20m
+      memory: 256Mi
     limits:
-      memory: 213Mi
+      memory: 256Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -177,10 +232,10 @@ storage:
 memcached:
   resources:
     requests:
-      cpu: 10m
-      memory: 100Mi
+      cpu: 20m
+      memory: 512Mi
     limits:
-      memory: 100Mi
+      memory: 512Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -201,9 +256,9 @@ memcached:
           - matchExpressions:
             - key:  karpenter.sh/nodepool
               operator: In
-              values: ["system"]
+              values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/system
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
 
@@ -213,9 +268,9 @@ gateway:
   resources:
     requests:
       cpu: 10m
-      memory: 100Mi
+      memory: 64Mi
     limits:
-      memory: 100Mi
+      memory: 64Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
