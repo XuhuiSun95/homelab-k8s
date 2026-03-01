@@ -56,19 +56,6 @@ cr:
                 - key: karpenter.sh/nodepool
                   operator: In
                   values: ["system"]
-        pod_anti:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app.kubernetes.io/name: kiali
-                topologyKey: topology.kubernetes.io/zone
-              weight: 100
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: kiali
-              topologyKey: kubernetes.io/hostname
       hpa:
         spec:
           maxReplicas: 5 
@@ -95,6 +82,13 @@ cr:
         - key: node-role.kubernetes.io/system
           operator: Exists
           effect: NoSchedule
+      topology_spread_constraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: kiali
     external_services:
       grafana:
         internal_url: http://lgtm-grafana.monitoring.svc.cluster.local
