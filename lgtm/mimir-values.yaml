@@ -296,7 +296,7 @@ querier:
   replicas: 1
   resources:
     requests:
-      cpu: 80m
+      cpu: 200m
       memory: 1024Mi
     limits:
       memory: 1024Mi
@@ -354,7 +354,7 @@ query_scheduler:
   replicas: 1
   resources:
     requests:
-      cpu: 20m
+      cpu: 60m
       memory: 128Mi
     limits:
       memory: 128Mi
@@ -415,7 +415,7 @@ store_gateway:
   replicas: 3
   resources:
     requests:
-      cpu: 50m
+      cpu: 100m
       memory: 1024Mi
     limits:
       memory: 1024Mi
