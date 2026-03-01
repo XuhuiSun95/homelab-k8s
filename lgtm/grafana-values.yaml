@@ -3,10 +3,10 @@ service:
   ipFamilies: ["IPv6","IPv4"]
 resources:
   requests:
-    cpu: 41m
-    memory: 349Mi
+    cpu: 100m
+    memory: 512Mi
   limits:
-    memory: 349Mi
+    memory: 512Mi
 podLabels:
   istio.io/dataplane-mode: ambient
 affinity:
@@ -210,6 +210,6 @@ sidecar:
   resources:
     requests:
       cpu: 10m
-      memory: 324Mi
+      memory: 128Mi
     limits:
-      memory: 324Mi
+      memory: 128Mi

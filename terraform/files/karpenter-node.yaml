@@ -82,7 +82,7 @@ spec:
         group: karpenter.proxmox.sinextra.dev
         kind: ProxmoxNodeClass
         name: system-node-class
-      expireAfter: 720h
+      expireAfter: 2160h
       terminationGracePeriod: 1h
       requirements:
         - key: kubernetes.io/arch
@@ -97,13 +97,12 @@ spec:
         - key: node.kubernetes.io/instance-type
           operator: In
           values:
-            - "c1.4VCPU-8GB"
             - "c1.8VCPU-16GB"
             - "s1.4VCPU-16GB"
             - "s1.8VCPU-32GB"
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
-    consolidateAfter: 10m
+    consolidateAfter: 60m
     budgets:
     - nodes: "20%"
       reasons:
@@ -116,8 +115,8 @@ spec:
       reasons:
       - "Underutilized"
   limits:
-    cpu: "16"
-    memory: 64Gi
+    cpu: "20"
+    memory: 80Gi
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool
@@ -163,8 +162,8 @@ spec:
       reasons:
       - "Underutilized"
   limits:
-    cpu: "16"
-    memory: 128Gi
+    cpu: "20"
+    memory: 160Gi
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool
