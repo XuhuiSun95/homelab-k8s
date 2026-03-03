@@ -617,6 +617,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - System workloads: Karpenter automatically provisions based on Pod requirements
 - User workloads: Karpenter automatically provisions based on Pod requirements
 - Manual scaling: Edit NodePool limits in `terraform/files/karpenter-node.yaml`
+- Pool isolation: system and memory-optimized nodes are tainted (Talos CCM); workloads use nodeSelector/tolerations so only one pool can satisfy each pod. Underutilized consolidation runs 24/7, rate-limited by NodePool disruption budgets (20%, max 1 node) and workload PDBs (cert-manager, Argo CD, Istio, Strimzi, LGTM).
 
 ### Application Updates
 - **Automated**: Renovate automatically creates PRs for Helm chart updates
