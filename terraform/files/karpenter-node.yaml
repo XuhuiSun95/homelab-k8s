@@ -1,3 +1,8 @@
+# Karpenter NodePools and Proxmox NodeClasses for homelab.
+# Cluster capacity: 88 vCPU, 503Gi usable. Pool limits below (72 CPU, 368Gi total) leave headroom for control plane and static workloads.
+# Instance types: c1/t1/s1/m1/x1 per https://github.com/sergelogvinov/karpenter-provider-proxmox/blob/main/docs/instancetypes.md
+# expireAfter is max node lifetime; drift/consolidation can still replace nodes earlier.
+---
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxUnmanagedTemplate
 metadata:
@@ -5,6 +10,7 @@ metadata:
 spec:
   templateName: talos-worker-template
 ---
+# System workloads (e.g. core add-ons). Nodes are tainted/labeled via Talos CCM; workloads use matching nodeSelector/tolerations.
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxNodeClass
 metadata:
@@ -27,6 +33,7 @@ spec:
     - type-k8s-role_system
     - cloned-from_talos-worker-template
 ---
+# Memory-optimized workloads (high memory:CPU ratio).
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxNodeClass
 metadata:
@@ -49,6 +56,7 @@ spec:
     - type-k8s-role_memory-optimized
     - cloned-from_talos-worker-template
 ---
+# User workloads (general compute). Instance families c1/s1 per provider instancetypes doc (see header).
 apiVersion: karpenter.proxmox.sinextra.dev/v1alpha1
 kind: ProxmoxNodeClass
 metadata:
@@ -103,17 +111,13 @@ spec:
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 60m
+    # 20% for Empty/Drifted; max 1 node disrupting at once. Underutilized consolidation allowed 24/7; rate-limited by these budgets and workload PDBs.
     budgets:
     - nodes: "20%"
       reasons:
       - "Empty"
       - "Drifted"
-    - nodes: "2"
-    - nodes: "0"
-      schedule: "0 7 * * *"
-      duration: "20h"
-      reasons:
-      - "Underutilized"
+    - nodes: "1"
   limits:
     cpu: "20"
     memory: 80Gi
@@ -155,12 +159,7 @@ spec:
       reasons:
       - "Empty"
       - "Drifted"
-    - nodes: "2"
-    - nodes: "0"
-      schedule: "0 7 * * *"
-      duration: "20h"
-      reasons:
-      - "Underutilized"
+    - nodes: "1"
   limits:
     cpu: "20"
     memory: 160Gi
@@ -179,7 +178,7 @@ spec:
       expireAfter: 720h
       terminationGracePeriod: 1h
       requirements:
-        - key: "kubernetes.io/arch"
+        - key: kubernetes.io/arch
           operator: In
           values: ["amd64"]
         - key: karpenter.sh/capacity-type
@@ -205,12 +204,7 @@ spec:
       reasons:
       - "Empty"
       - "Drifted"
-    - nodes: "2"
-    - nodes: "0"
-      schedule: "0 7 * * *"
-      duration: "20h"
-      reasons:
-      - "Underutilized"
+    - nodes: "1"
   limits:
     cpu: "32"
     memory: 128Gi
