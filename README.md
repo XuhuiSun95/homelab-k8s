@@ -568,23 +568,17 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.0
    ```
 
-5. **Remove old Karpenter secret** so during the Talos upgrade-k8s, the new secret with new Kubernetes and image version will be used:
+5. **Resync inline manifests** (e.g. Karpenter template secret) by running `talosctl upgrade-k8s` to the current Kubernetes version on a control plane node:
    ```bash
-   # Remove the old karpenter-template secret in kube-system namespace
-   kubectl delete secret karpenter-template -n kube-system
-   ```
+   # Replace <NODE_IP> with a control plane node IP and use the cluster's current k8s version
+   talosctl upgrade-k8s --nodes <NODE_IP> --to <CURRENT_K8S_VERSION>
 
-6. **Reboot one of the control plane nodes** so that the new inline manifest that was deleted from step 5 will be reapplied to Kubernetes:
-   ```bash
-   # Reboot a control plane node (replace <NODE_IP> with actual control plane node IP)
-   talosctl reboot --nodes <NODE_IP>
-   
-   # Wait for the node to come back online and verify
-   talosctl get nodes
-   kubectl get nodes
+   # Example (current version 1.35.0):
+   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.0
    ```
+   This resyncs the inline manifests (including the Karpenter template secret) without changing the Kubernetes version.
 
-7. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
+6. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
    ```bash
    # Option 1: Drift nodes (mark for replacement - Karpenter will gracefully replace them)
    kubectl annotate node <NODE_NAME> karpenter.sh/do-not-consolidate=true
@@ -598,7 +592,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    kubectl get nodes -w
    ```
 
-8. **Verify cluster health** after upgrade:
+7. **Verify cluster health** after upgrade:
    ```bash
    # Verify Talos nodes
    talosctl get nodes

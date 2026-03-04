@@ -1,4 +1,26 @@
 machine:
+  registries:
+    mirrors:
+      docker.io:
+        endpoints:
+          - ${registry_mirror_endpoint}/v2/docker.io
+        overridePath: true
+      ghcr.io:
+        endpoints:
+          - ${registry_mirror_endpoint}/v2/ghcr.io
+        overridePath: true
+      registry.k8s.io:
+        endpoints:
+          - ${registry_mirror_endpoint}/v2/registry.k8s.io
+        overridePath: true
+      public.ecr.aws:
+        endpoints:
+          - ${registry_mirror_endpoint}/v2/public.ecr.aws
+        overridePath: true
+      quay.io:
+        endpoints:
+          - ${registry_mirror_endpoint}/v2/quay.io
+        overridePath: true
   kubelet:
     extraArgs:
       cloud-provider: external

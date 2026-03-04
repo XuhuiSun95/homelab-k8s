@@ -25,8 +25,9 @@ data "talos_machine_configuration" "worker" {
 
   config_patches = [
     templatefile("${path.module}/templates/worker.yaml.tmpl", {
-      validSubnets    = [var.vpc_cidr[0]]
-      installer_image = data.talos_image_factory_urls.talos_image.urls.installer
+      validSubnets             = [var.vpc_cidr[0]]
+      installer_image          = data.talos_image_factory_urls.talos_image.urls.installer
+      registry_mirror_endpoint = var.registry_mirror_endpoint
     })
   ]
 }
@@ -41,8 +42,9 @@ data "talos_machine_configuration" "gpu-worker" {
 
   config_patches = [
     templatefile("${path.module}/templates/gpu-worker.yaml.tmpl", {
-      validSubnets    = [var.vpc_cidr[0]]
-      installer_image = data.talos_image_factory_urls.gpu_talos_image.urls.installer
+      validSubnets             = [var.vpc_cidr[0]]
+      installer_image          = data.talos_image_factory_urls.gpu_talos_image.urls.installer
+      registry_mirror_endpoint = var.registry_mirror_endpoint
     })
   ]
 }
@@ -54,8 +56,9 @@ resource "talos_machine_configuration_apply" "controlplane" {
   node                        = each.value.ipv4
   config_patches = [
     templatefile("${path.module}/templates/controlplane.yaml.tmpl", {
-      installer_image = data.talos_image_factory_urls.talos_image.urls.installer
-      validSubnets    = [each.value.ipv4]
+      installer_image          = data.talos_image_factory_urls.talos_image.urls.installer
+      validSubnets             = [each.value.ipv4]
+      registry_mirror_endpoint = var.registry_mirror_endpoint
       proxmox-ccm-clusters = yamlencode({
         "clusters" : [{
           "url" : "${var.virtual_environment_endpoint}/api2/json"
@@ -83,7 +86,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
           "region" : var.region
         }]
       })
-      proxmox-karpenter-template = data.talos_machine_configuration.worker.machine_configuration
+      proxmox-karpenter-template     = data.talos_machine_configuration.worker.machine_configuration
       proxmox-karpenter-gpu-template = data.talos_machine_configuration.gpu-worker.machine_configuration
     })
   ]
