@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: harbor
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: harbor
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: harbor
+      repoURL: 'https://helm.goharbor.io'
+      targetRevision: 1.18.2
+      helm:
+        valueFiles:
+          - $values/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+      path: harbor
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true

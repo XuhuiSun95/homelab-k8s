@@ -1,0 +1,37 @@
+# Harbor as pull-through registry cache at https://registry-mirror.local.xuhuisun.com
+# Istio VirtualService routes that host to this service; TLS is terminated at the gateway.
+
+expose:
+  type: clusterIP
+  tls:
+    enabled: false  # Istio terminates TLS; backend is HTTP
+
+externalURL: https://registry-mirror.local.xuhuisun.com
+
+# Persistence for registry storage and internal components
+persistence:
+  enabled: true
+  resourcePolicy: keep
+  persistentVolumeClaim:
+    registry:
+      storageClass: proxmox-local-zfs-xfs
+      size: 20Gi
+    jobservice:
+      storageClass: proxmox-local-zfs-xfs
+      size: 1Gi
+    database:
+      storageClass: proxmox-local-zfs-xfs
+      size: 1Gi
+    redis:
+      storageClass: proxmox-local-zfs-xfs
+      size: 1Gi
+    trivy:
+      storageClass: proxmox-local-zfs-xfs
+      size: 5Gi
+
+# Change after first login
+harborAdminPassword: "Harbor12345"
+
+# Disable Trivy to reduce resource use if not needed for proxy cache
+trivy:
+  enabled: false
