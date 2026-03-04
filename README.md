@@ -113,6 +113,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | **ArgoCD** | https://argocd.local.xuhuisun.com | GitOps continuous delivery |
 | **Keycloak** | https://keycloak.local.xuhuisun.com | Identity & access management |
 | **Homepage** | https://homepage.local.xuhuisun.com | Service dashboard |
+| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, public.ecr.aws, quay.io |
 
 ### 📈 Observability & Monitoring
 | Service | URL | Purpose |
@@ -470,6 +471,14 @@ mimirtool rules load ./strimzi/kafka/strimzi-rule.yaml --address=https://mimir.l
 mimirtool alertmanager load ./lgtm/mimir-alertmanager.yaml --address=https://mimir.local.xuhuisun.com --id=homelab-k8s
 ```
 
+### 8. Registry Mirror (Harbor)
+
+Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos nodes (controlplane and workers) are configured to use this mirror for **docker.io**, **ghcr.io**, **registry.k8s.io**, **public.ecr.aws**, and **quay.io**, so image pulls are served from the cache when possible and only hit upstream on cache miss.
+
+- **Change the mirror URL**: Set the Terraform variable `registry_mirror_endpoint` (default `https://registry-mirror.local.xuhuisun.com`), e.g. in `terraform.tfvars` or via `-var`, then re-apply and roll or re-apply Talos machine config so nodes pick up the new endpoint.
+- **Harbor proxy cache projects**: Create proxy cache project(s) in the Harbor UI (or API) for each upstream registry so the cache keys match what Talos uses (e.g. project names `docker.io`, `ghcr.io`, `registry.k8s.io`, `public.ecr.aws`, `quay.io`). The Terraform Talos provider uses string-only mirror endpoints; for path-based Harbor proxies with `overridePath`, see [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and apply mirror config via `talosctl` if needed. See [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
+- **Existing nodes**: After changing Terraform/Talos config, apply the updated machine config to existing nodes (e.g. `talosctl apply-config` or roll nodes). New nodes (e.g. from Karpenter) receive the config from the applied templates automatically.
+
 ## 🔑 Access Credentials
 
 ### Talos Cluster Management
@@ -568,23 +577,17 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.0
    ```
 
-5. **Remove old Karpenter secret** so during the Talos upgrade-k8s, the new secret with new Kubernetes and image version will be used:
+5. **Resync inline manifests** (e.g. Karpenter template secret) by running `talosctl upgrade-k8s` to the current Kubernetes version on a control plane node:
    ```bash
-   # Remove the old karpenter-template secret in kube-system namespace
-   kubectl delete secret karpenter-template -n kube-system
-   ```
+   # Replace <NODE_IP> with a control plane node IP and use the cluster's current k8s version
+   talosctl upgrade-k8s --nodes <NODE_IP> --to <CURRENT_K8S_VERSION>
 
-6. **Reboot one of the control plane nodes** so that the new inline manifest that was deleted from step 5 will be reapplied to Kubernetes:
-   ```bash
-   # Reboot a control plane node (replace <NODE_IP> with actual control plane node IP)
-   talosctl reboot --nodes <NODE_IP>
-   
-   # Wait for the node to come back online and verify
-   talosctl get nodes
-   kubectl get nodes
+   # Example (current version 1.35.0):
+   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.0
    ```
+   This resyncs the inline manifests (including the Karpenter template secret) without changing the Kubernetes version.
 
-7. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
+6. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
    ```bash
    # Option 1: Drift nodes (mark for replacement - Karpenter will gracefully replace them)
    kubectl annotate node <NODE_NAME> karpenter.sh/do-not-consolidate=true
@@ -598,7 +601,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    kubectl get nodes -w
    ```
 
-8. **Verify cluster health** after upgrade:
+7. **Verify cluster health** after upgrade:
    ```bash
    # Verify Talos nodes
    talosctl get nodes

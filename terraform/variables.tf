@@ -124,3 +124,9 @@ variable "kubernetes_version" {
   type        = string
   default     = "v1.35.0"
 }
+
+variable "registry_mirror_endpoint" {
+  description = "Registry mirror URL for pull-through cache (e.g. Harbor). Used by Talos for docker.io, ghcr.io, registry.k8s.io."
+  type        = string
+  default     = "https://registry-mirror.internal.local"
+}
