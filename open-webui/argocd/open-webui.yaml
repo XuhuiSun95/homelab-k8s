@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: open-webui
       repoURL: 'https://helm.openwebui.com'
-      targetRevision: 12.5.0
+      targetRevision: 12.8.1
       helm:
         valueFiles:
         - $values/open-webui/values.yaml
