@@ -16,11 +16,10 @@ spec:
       targetRevision: 1.18.2
       helm:
         valueFiles:
-          - $values/values.yaml
+          - $values/harbor/values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
-      path: harbor
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
