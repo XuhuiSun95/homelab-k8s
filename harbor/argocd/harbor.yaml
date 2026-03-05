@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "10"
   name: harbor-harbor
   namespace: argocd
 spec:
@@ -11,12 +11,16 @@ spec:
     namespace: harbor
     server: 'https://kubernetes.default.svc'
   ignoreDifferences:
-    - group: ""
+    - group: ''
       kind: Secret
       jsonPointers:
         - /data
     - group: apps
       kind: Deployment
+      jqPathExpressions:
+        - .spec.template.metadata.annotations
+    - group: apps
+      kind: StatefulSet
       jqPathExpressions:
         - .spec.template.metadata.annotations
   sources:
