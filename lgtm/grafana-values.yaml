@@ -213,3 +213,19 @@ sidecar:
       memory: 128Mi
     limits:
       memory: 128Mi
+
+verticalPodAutoscaler:
+  enabled: true
+  updateMode: "InPlaceOrRecreate"
+  controlledResources:
+    cpu: true
+    memory: true
+
+  # Default safety bounds
+  minAllowed:
+    cpu: "25m"
+    memory: "128Mi"
+
+  maxAllowed:
+    cpu: "1000m"
+    memory: "1Gi"
