@@ -14,10 +14,12 @@ persistence:
   resourcePolicy: keep
   persistentVolumeClaim:
     registry:
-      storageClass: proxmox-local-zfs-xfs
+      storageClass: nfs-csi
+      accessMode: ReadWriteMany
       size: 20Gi
     jobservice:
-      storageClass: proxmox-local-zfs-xfs
+      storageClass: nfs-csi
+      accessMode: ReadWriteMany
       size: 1Gi
     database:
       storageClass: proxmox-local-zfs-xfs
@@ -38,7 +40,7 @@ ipFamily:
   # families: ["IPv6", "IPv4"]
 
 nginx:
-  replicas: 1
+  replicas: 2
   resources:
     requests:
       cpu: 100m
@@ -67,7 +69,7 @@ nginx:
   priorityClassName: platform-critical
 
 portal:
-  replicas: 1
+  replicas: 2
   resources:
     requests:
       cpu: 10m
@@ -96,7 +98,7 @@ portal:
   priorityClassName: platform-critical
 
 core:
-  replicas: 1
+  replicas: 2
   resources:
     requests:
       cpu: 50m
@@ -125,7 +127,7 @@ core:
   priorityClassName: platform-critical
 
 jobservice:
-  replicas: 1
+  replicas: 2
   resources:
     requests:
       cpu: 20m
@@ -168,7 +170,7 @@ registry:
         memory: 32Mi
       limits:
         memory: 32Mi
-  replicas: 1
+  replicas: 2
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -220,33 +222,14 @@ trivy:
   priorityClassName: platform-critical
 
 database:
-  internal:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        memory: 256Mi
-    tolerations:
-      - key: node-role.kubernetes.io/system
-        operator: Exists
-        effect: NoSchedule
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-              - key: karpenter.sh/nodepool
-                operator: In
-                values: ["system"]
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: harbor
-              app.kubernetes.io/component: database
-            topologyKey: kubernetes.io/hostname
-    priorityClassName: platform-critical
+  type: external
+  external:
+    host: harbor-cnpg-cluster-rw
+    port: 5432
+    username: registry 
+    coreDatabase: registry
+    existingSecret: harbor-cnpg-cluster-app
+    sslMode: disable
 
 redis:
   internal:

@@ -2,8 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
-  name: ingress-harbor
+    argocd.argoproj.io/sync-wave: "0"
+  name: harbor-cnpg-cluster
   namespace: argocd
 spec:
   project: default
@@ -11,9 +11,15 @@ spec:
     namespace: harbor
     server: 'https://kubernetes.default.svc'
   sources:
+    - chart: cluster
+      repoURL: 'https://cloudnative-pg.github.io/charts'
+      targetRevision: 0.5.0
+      helm:
+        valueFiles:
+        - $values/harbor/cnpg-cluster-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: harbor/ingress
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
