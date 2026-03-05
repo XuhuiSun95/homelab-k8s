@@ -14,10 +14,12 @@ persistence:
   resourcePolicy: keep
   persistentVolumeClaim:
     registry:
-      storageClass: proxmox-local-zfs-xfs
+      storageClass: nfs-csi
+      accessMode: ReadWriteMany
       size: 20Gi
     jobservice:
-      storageClass: proxmox-local-zfs-xfs
+      storageClass: nfs-csi
+      accessMode: ReadWriteMany
       size: 1Gi
     database:
       storageClass: proxmox-local-zfs-xfs
