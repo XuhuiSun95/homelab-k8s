@@ -10,6 +10,15 @@ spec:
   destination:
     namespace: harbor
     server: 'https://kubernetes.default.svc'
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      jsonPointers:
+        - /data
+    - group: apps
+      kind: Deployment
+      jqPathExpressions:
+        - .spec.template.metadata.annotations
   sources:
     - chart: harbor
       repoURL: 'https://helm.goharbor.io'
@@ -23,5 +32,6 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
     automated:
       selfHeal: true
