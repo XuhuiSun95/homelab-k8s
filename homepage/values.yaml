@@ -87,6 +87,11 @@ config:
             href: https://keycloak.local.xuhuisun.com
             description: iam
             siteMonitor: http://keycloak-keycloak.keycloak.svc.cluster.local
+        - Harbor:
+            icon: harbor
+            href: https://registry-mirror.local.xuhuisun.com
+            description: container registry
+            siteMonitor: http://harbor.harbor.svc.cluster.local
         - Argo CD:
             icon: argo-cd
             href: https://argocd.local.xuhuisun.com

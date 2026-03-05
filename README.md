@@ -3,10 +3,12 @@
 > **Production-ready Kubernetes homelab infrastructure** built with Talos Linux, Proxmox, GitOps (ArgoCD), Istio service mesh, and comprehensive observability stack. Features auto-scaling with Karpenter, zero-trust security, and full cloud-native tooling.
 
 [![Kubernetes](https://img.shields.io/badge/kubernetes-1.29+-blue.svg)](https://kubernetes.io/)
-[![Talos Linux](https://img.shields.io/badge/Talos-v1.8.0-blue)](https://www.talos.dev/)
+[![Talos Linux](https://img.shields.io/badge/Talos-blue)](https://www.talos.dev/)
 [![Terraform](https://img.shields.io/badge/terraform-1.0+-purple.svg)](https://www.terraform.io/)
-[![ArgoCD](https://img.shields.io/badge/ArgoCD-9.0.3-blue)](https://argo-cd.readthedocs.io/)
-[![Istio](https://img.shields.io/badge/Istio-1.27.3-blue)](https://istio.io/)
+[![ArgoCD](https://img.shields.io/badge/ArgoCD-blue)](https://argo-cd.readthedocs.io/)
+[![Istio](https://img.shields.io/badge/Istio-blue)](https://istio.io/)
+
+Component versions are defined in Terraform variables (`terraform.tfvars`, `variables.tf`) and ArgoCD application `targetRevision` / Helm values.
 
 A comprehensive, production-grade Kubernetes homelab infrastructure built on **Talos Linux** and **Proxmox**. This repository provides a complete cloud-native platform featuring GitOps workflows, service mesh capabilities, full observability (LGTM stack), auto-scaling, and enterprise-grade security. Perfect for learning Kubernetes, running personal services, or building a production-like environment at home.
 
@@ -112,6 +114,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 |---------|-----|---------|
 | **ArgoCD** | https://argocd.local.xuhuisun.com | GitOps continuous delivery |
 | **Keycloak** | https://keycloak.local.xuhuisun.com | Identity & access management |
+| **IAM (OIDC)** | https://iam.local.xuhuisun.com | OIDC issuer / SSO (Keycloak) |
 | **Homepage** | https://homepage.local.xuhuisun.com | Service dashboard |
 | **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, public.ecr.aws, quay.io |
 
@@ -237,7 +240,8 @@ cd terraform
 # Initialize Terraform
 terraform init
 
-# Configure Proxmox credentials (create credentials.auto.tfvars)
+# Configure Proxmox credentials. This project uses Terraform Cloud for the backend (see terraform/terraform.tf).
+# Set credentials either in the Terraform Cloud workspace or via a local file:
 cat > credentials.auto.tfvars << EOF
 virtual_environment_endpoint = "https://<pve-ip>:8006"
 virtual_environment_api_token = "your-proxmox-api-token"
@@ -277,7 +281,7 @@ kubectl get pods --all-namespaces
 
 ### 2. Configure Cluster Networking and Cloud Providers
 
-Deploy Cilium CNI with BGP integration and Proxmox cloud integrations:
+Deploy Cilium CNI with BGP integration and Proxmox cloud integrations. **Run all commands in this step from the `terraform` directory** (paths like `files/` are relative to it).
 
 ```bash
 # Add Helm repositories
@@ -314,7 +318,7 @@ kubectl apply -f files/priority-class.yaml
 
 ### 3. Bootstrap ArgoCD
 
-Deploy ArgoCD manually for the first time (it will self-manage afterwards):
+From the **repository root**, deploy ArgoCD manually for the first time (it will self-manage afterwards):
 
 ```bash
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -419,13 +423,13 @@ The Proxmox credentials for CCM, CSI, and Karpenter are automatically configured
 
 ### 5. Deploy All Applications
 
-Deploy the entire stack using GitOps:
+From the **repository root**, deploy the entire stack using GitOps:
 
 ```bash
 kubectl apply -f deployment.yaml
 ```
 
-This single command deploys all applications in the correct order using ArgoCD sync waves.
+This deploys the root ArgoCD Application that recursively syncs `argocd/applications`, installing all applications in the correct order via sync waves.
 
 ### 6. Apply Istio CNI Health Probe Fix (Required for Cilium with eBPF Host Routing)
 
@@ -643,13 +647,14 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 3. **Wave 20**: Cert-Manager (certificate management)
 4. **Wave 21**: Vertical Pod Autoscaler
 5. **Wave 30**: Istio (service mesh) and OpenTelemetry Kube Stack
-6. **Wave 41**: KEDA (event-driven autoscaling)
-7. **Wave 42**: ArgoCD (GitOps)
-8. **Wave 50**: External DNS (DNS automation)
-9. **Wave 60**: Storage and observability operators (AIStor, CloudNativePG, ECK, Kiali)
-10. **Wave 70**: Keycloak and LGTM stack
-11. **Wave 80**: Strimzi (Kafka)
-12. **Wave 200**: User applications (Homepage, Open-WebUI, Immich, n8n)
+6. **Wave 40**: Harbor (container registry)
+7. **Wave 41**: KEDA (event-driven autoscaling)
+8. **Wave 42**: ArgoCD (GitOps)
+9. **Wave 50**: External DNS (DNS automation)
+10. **Wave 60**: Storage and observability operators (AIStor, CloudNativePG, ECK, Kiali)
+11. **Wave 70**: Keycloak and LGTM stack
+12. **Wave 80**: Strimzi (Kafka)
+13. **Wave 200**: User applications (Homepage, Open-WebUI, Immich, n8n)
 
 ## 🎯 Key Features
 
@@ -701,7 +706,7 @@ This Kubernetes homelab is perfect for:
 │   │   ├── worker.yaml.tmpl    # Worker node template for Karpenter
 │   │   └── gpu-worker.yaml.tmpl # GPU worker node template
 │   ├── terraform.tfvars        # Terraform variables (customize for your Proxmox)
-│   ├── terraform.tf            # Terraform backend configuration
+│   ├── terraform.tf            # Terraform backend (Terraform Cloud) and required providers
 │   ├── variables.tf            # Variable definitions
 │   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, credentials)
 │   ├── providers.tf            # Terraform provider configuration
@@ -721,10 +726,11 @@ This Kubernetes homelab is perfect for:
 │   │   ├── cloud-native-network/ # Cilium CNI and BGP
 │   │   ├── cloud-native-storage/ # Storage solutions (AIStor, NFS CSI, Proxmox CSI)
 │   │   ├── continuous-integration-delivery/ # ArgoCD
+│   │   ├── container-registry/ # Harbor (pull-through cache)
 │   │   ├── continuous-optimization/ # Karpenter, VPA, priority classes
 │   │   ├── database/           # CloudNativePG operator
 │   │   ├── dns/                # External DNS
-│   │   ├── observability/      # LGTM, ECK, Kiali, Metrics Server, OpenTelemetry
+│   │   ├── observability/      # LGTM, ECK, Kiali, Metrics Server (mertics-server.yaml), OpenTelemetry
 │   │   ├── scheduling-orchestration/ # KEDA
 │   │   ├── security-compliance/ # Cert-Manager, Keycloak
 │   │   ├── service-mesh/       # Istio
@@ -737,6 +743,7 @@ This Kubernetes homelab is perfect for:
 ├── csi-driver-nfs/            # NFS CSI driver configuration
 ├── eck/                       # Elastic Cloud on Kubernetes
 ├── external-dns/              # External DNS configuration
+├── harbor/                    # Harbor registry mirror (values, ArgoCD app, ingress)
 ├── homepage/                  # Service dashboard
 ├── immich/                    # Photo management application
 ├── istio/                     # Service mesh configuration
