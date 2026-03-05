@@ -34,7 +34,8 @@ harborAdminPassword: "Harbor12345"
 
 ipFamily:
   policy: PreferDualStack
-  families: ["IPv6", "IPv4"]
+  # TODO: fix upstream chart issue
+  # families: ["IPv6", "IPv4"]
 
 nginx:
   replicas: 1
