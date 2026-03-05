@@ -18,9 +18,10 @@ persistence:
       accessMode: ReadWriteMany
       size: 20Gi
     jobservice:
-      storageClass: nfs-csi
-      accessMode: ReadWriteMany
-      size: 1Gi
+      jobLog:
+        storageClass: nfs-csi
+        accessMode: ReadWriteMany
+        size: 1Gi
     database:
       storageClass: proxmox-local-zfs-xfs
       size: 1Gi
