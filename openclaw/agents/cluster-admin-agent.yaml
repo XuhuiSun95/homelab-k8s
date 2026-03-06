@@ -26,7 +26,7 @@ spec:
   security:
     networkPolicy:
       allowedIngressNamespaces:
-        - openclaw
+        - homepage
         - istio-ingress
   resources:
     requests:
