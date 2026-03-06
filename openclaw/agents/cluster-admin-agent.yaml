@@ -1,0 +1,24 @@
+# OpenClawInstance CR = cluster admin agent (in-cluster administrator operations).
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: cluster-admin-agent
+  namespace: openclaw
+spec:
+  # selfConfigure:
+  #   enabled: true
+  #   allowedActions: [skills, config, envVars, workspaceFiles]
+  # resources:
+  #   requests:
+  #     cpu: 200m
+  #     memory: 2Gi
+  #   limits:
+  #     memory: 2Gi
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: nfs-csi
+  # networking:
+  #   service:
+  #     type: ClusterIP
