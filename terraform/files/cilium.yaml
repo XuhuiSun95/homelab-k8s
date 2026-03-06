@@ -48,8 +48,19 @@ cni:
 
 resources:
   requests:
-    cpu: 1000m
+    cpu: 400m
     memory: 1Gi
+  limits:
+    memory: 1Gi
+
+envoy:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 256Mi
+
 operator:
   resources:
     requests:
@@ -57,6 +68,7 @@ operator:
       memory: 128Mi
     limits:
       memory: 128Mi
+
 securityContext:
   capabilities:
     ciliumAgent:
