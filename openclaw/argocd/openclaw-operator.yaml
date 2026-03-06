@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: openclaw-operator
+  namespace: openclaw
+spec:
+  project: default
+  destination:
+    namespace: openclaw-operator-system
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: .
+      repoURL: 'oci://ghcr.io/openclaw-rocks/charts/openclaw-operator'
+      targetRevision: v0.10.22
+      helm:
+        valueFiles:
+          - $values/openclaw/values.yaml
+    - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
+      targetRevision: main
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true

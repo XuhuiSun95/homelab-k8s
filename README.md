@@ -136,6 +136,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **Open-WebUI** | https://open-webui.local.xuhuisun.com | AI interface (LLM frontend) |
+| **OpenClaw** | port-forward or Ingress | AI agent (Telegram, Discord, etc.; see [openclaw/README.md](openclaw/README.md)) |
 | **Immich** | https://immich.local.xuhuisun.com | Photo management & backup |
 | **n8n** | https://n8n.local.xuhuisun.com | Workflow automation |
 
@@ -654,7 +655,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 10. **Wave 60**: Storage and observability operators (AIStor, CloudNativePG, ECK, Kiali)
 11. **Wave 70**: Keycloak and LGTM stack
 12. **Wave 80**: Strimzi (Kafka)
-13. **Wave 200**: User applications (Homepage, Open-WebUI, Immich, n8n)
+13. **Wave 200**: User applications (Homepage, Open-WebUI, OpenClaw, Immich, n8n)
 
 ## 🎯 Key Features
 
@@ -735,7 +736,7 @@ This Kubernetes homelab is perfect for:
 │   │   ├── security-compliance/ # Cert-Manager, Keycloak
 │   │   ├── service-mesh/       # Istio
 │   │   ├── streaming-messaging/ # Strimzi Kafka
-│   │   └── user-defined-apps/  # Homepage, Immich, n8n, Open-WebUI
+│   │   └── user-defined-apps/  # Homepage, Immich, n8n, Open-WebUI, OpenClaw
 │   └── values.yaml            # ArgoCD Helm values
 ├── aistor/                    # AIStor object storage (MinKMS operator, AIStor operator, object store, ingress)
 ├── cert-manager/              # Certificate management
@@ -753,6 +754,7 @@ This Kubernetes homelab is perfect for:
 ├── lgtm/                      # LGTM observability stack (Loki, Grafana, Tempo, Mimir)
 ├── metrics-server/            # Kubernetes metrics server
 ├── open-webui/                # AI interface application
+├── openclaw/                  # OpenClaw AI agent (operator + instance)
 ├── opentelemetry-kube-stack/  # OpenTelemetry configuration
 ├── strimzi/                   # Kafka operator
 ├── deployment.yaml            # Root ArgoCD application (deploys all applications)
@@ -876,7 +878,7 @@ This project uses and demonstrates:
 
 **CI/CD & Automation**: `argocd` `gitops` `renovate` `continuous-delivery`
 
-**Applications**: `immich` `open-webui` `homepage` `n8n` `kafka` `strimzi`
+**Applications**: `immich` `open-webui` `openclaw` `homepage` `n8n` `kafka` `strimzi`
 
 **Infrastructure**: `homelab` `self-hosted` `cloud-native` `cncf` `production-ready`
 

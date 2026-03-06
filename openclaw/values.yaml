@@ -1,0 +1,11 @@
+# OpenClaw Operator Helm values (overrides)
+# Chart: oci://ghcr.io/openclaw-rocks/charts/openclaw-operator
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 128Mi
+  limits:
+    memory: 128Mi
