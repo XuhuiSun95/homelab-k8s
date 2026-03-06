@@ -7,10 +7,10 @@ ingester:
      enabled: false
   resources:
     requests:
-      cpu: 40m
-      memory: 1Gi
+      cpu: 50m
+      memory: 2Gi
     limits:
-      memory: 1Gi
+      memory: 2Gi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -112,10 +112,10 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 30m
-      memory: 1Gi
+      cpu: 100m
+      memory: 2Gi
     limits:
-      memory: 1Gi
+      memory: 2Gi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
