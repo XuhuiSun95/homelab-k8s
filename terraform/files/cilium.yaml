@@ -1,3 +1,6 @@
+image:
+  useDigest: false
+
 ipv4:
   enabled: true
 ipv6:
