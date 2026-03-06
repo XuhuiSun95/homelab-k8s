@@ -11,8 +11,8 @@ spec:
     namespace: keycloak
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: cluster
-      repoURL: 'https://cloudnative-pg.github.io/charts'
+    - path: .
+      repoURL: 'oci://ghcr.io/cloudnative-pg/charts/cluster'
       targetRevision: 0.5.0
       helm:
         valueFiles:
