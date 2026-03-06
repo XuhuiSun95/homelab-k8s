@@ -103,9 +103,9 @@ core:
   resources:
     requests:
       cpu: 50m
-      memory: 128Mi
+      memory: 256Mi
     limits:
-      memory: 128Mi
+      memory: 256Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -198,9 +198,9 @@ trivy:
   resources:
     requests:
       cpu: 200m
-      memory: 256Mi
+      memory: 512Mi
     limits:
-      memory: 256Mi
+      memory: 512Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
