@@ -5,6 +5,9 @@ metadata:
   name: cluster-admin-agent
   namespace: openclaw
 spec:
+  envFrom:
+    - secretRef:
+        name: openclaw-env-vars
   config:
     mergeMode: merge
     raw:
@@ -12,6 +15,9 @@ spec:
         defaults:
           model:
             primary: "openai-codex/gpt-5.3-codex"
+      channels:
+        discord:
+          enabled: true
   # selfConfigure:
   #   enabled: true
   #   allowedActions: [skills, config, envVars, workspaceFiles]
