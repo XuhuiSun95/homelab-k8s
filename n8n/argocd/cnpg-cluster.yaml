@@ -13,7 +13,7 @@ spec:
   sources:
     - path: .
       repoURL: 'oci://ghcr.io/cloudnative-pg/charts/cluster'
-      targetRevision: 0.5.0
+      targetRevision: 0.6.0
       helm:
         valueFiles:
         - $values/n8n/cnpg-cluster-values.yaml
