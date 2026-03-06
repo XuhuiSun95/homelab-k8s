@@ -48,17 +48,13 @@ cni:
 
 resources:
   requests:
-    cpu: 400m
+    cpu: 800m
     memory: 1Gi
-  limits:
-    memory: 2Gi
 
 envoy:
   resources:
     requests:
       cpu: 100m
-      memory: 256Mi
-    limits:
       memory: 256Mi
 
 operator:
