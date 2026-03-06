@@ -1,0 +1,18 @@
+# Istio VirtualService: OpenClaw Control UI (gateway port 18789)
+# cluster-admin-agent service is created by the OpenClaw operator
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: openclaw-cluster-admin-agent-vs
+  namespace: openclaw
+spec:
+  hosts:
+    - openclaw-cluster-admin-agent.local.xuhuisun.com
+  gateways:
+    - istio-ingress/gateway
+  http:
+    - route:
+        - destination:
+            host: cluster-admin-agent
+            port:
+              number: 18789

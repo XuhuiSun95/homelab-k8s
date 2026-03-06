@@ -136,7 +136,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **Open-WebUI** | https://open-webui.local.xuhuisun.com | AI interface (LLM frontend) |
-| **OpenClaw** | port-forward or Ingress | AI agent (Telegram, Discord, etc.; see [openclaw/README.md](openclaw/README.md)) |
+| **OpenClaw** | https://openclaw-cluster-admin-agent.local.xuhuisun.com | AI agent Control UI (Telegram, Discord, in-cluster admin; [openclaw-rocks/k8s-operator](https://github.com/openclaw-rocks/k8s-operator)) |
 | **Immich** | https://immich.local.xuhuisun.com | Photo management & backup |
 | **n8n** | https://n8n.local.xuhuisun.com | Workflow automation |
 
@@ -363,6 +363,20 @@ kubectl create secret generic snapshot-settings \
   --from-literal=s3.client.default.secret_key=$YOUR_SECRET_ACCESS_KEY \
   --namespace elastic
 ```
+
+#### OpenClaw agents
+Create the required secrets in the `openclaw` namespace **before** deploying OpenClaw agents (e.g. via Argo CD). Agents reference these via `spec.envFrom`; without them, pods may fail to start or integrations (Discord, etc.) will not work.
+
+**Environment and integration tokens** (e.g. Discord bot token, AI provider keys if not in env-vars). Create `openclaw-env-vars`:
+
+```bash
+export DISCORD_BOT_TOKEN=<discord_bot_token>
+kubectl create secret generic openclaw-env-vars \
+  --from-literal="DISCORD_BOT_TOKEN=$DISCORD_BOT_TOKEN" \
+  --namespace openclaw
+```
+
+Add more `--from-literal` entries for other integrations or API keys as needed (e.g. `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`). Ensure the `openclaw` namespace exists, or create it first: `kubectl create namespace openclaw`. Agent definitions are in `openclaw/agents/` (one `OpenClawInstance` YAML per agent); Istio ingress is in `openclaw/ingress/`.
 
 #### MinKMS Operator MinIO License
 If you use the MinKMS operator (e.g. for AIStor) with a commercial MinIO license, create a secret from your license file so the operator can use it:
@@ -754,7 +768,7 @@ This Kubernetes homelab is perfect for:
 ├── lgtm/                      # LGTM observability stack (Loki, Grafana, Tempo, Mimir)
 ├── metrics-server/            # Kubernetes metrics server
 ├── open-webui/                # AI interface application
-├── openclaw/                  # OpenClaw AI agent (operator + agent definitions)
+├── openclaw/                  # OpenClaw AI agents: values.yaml, argocd/ (operator, agents, ingress), agents/ (one CR per agent), ingress/ (Istio VS)
 ├── opentelemetry-kube-stack/  # OpenTelemetry configuration
 ├── strimzi/                   # Kafka operator
 ├── deployment.yaml            # Root ArgoCD application (deploys all applications)

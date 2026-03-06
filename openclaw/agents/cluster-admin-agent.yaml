@@ -8,25 +8,30 @@ spec:
   envFrom:
     - secretRef:
         name: openclaw-env-vars
+  gateway:
+    allowedOrigins: ["https://openclaw-cluster-admin-agent.local.xuhuisun.com"]
   config:
-    mergeMode: merge
+    mergeMode: overwrite
     raw:
       agents:
         defaults:
           model:
             primary: "openai-codex/gpt-5.3-codex"
+          sandbox:
+            mode: all
+            workspaceAccess: rw
       channels:
         discord:
           enabled: true
   # selfConfigure:
   #   enabled: true
   #   allowedActions: [skills, config, envVars, workspaceFiles]
-  # resources:
-  #   requests:
-  #     cpu: 200m
-  #     memory: 2Gi
-  #   limits:
-  #     memory: 2Gi
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 4Gi
+    limits:
+      memory: 4Gi
   storage:
     persistence:
       enabled: true
