@@ -34,6 +34,8 @@ spec:
       memory: 4Gi
   storage:
     persistence:
+      # accessModes:
+      #   - ReadWriteMany
       enabled: true
       size: 10Gi
       storageClass: nfs-csi
