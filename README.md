@@ -754,7 +754,7 @@ This Kubernetes homelab is perfect for:
 ├── lgtm/                      # LGTM observability stack (Loki, Grafana, Tempo, Mimir)
 ├── metrics-server/            # Kubernetes metrics server
 ├── open-webui/                # AI interface application
-├── openclaw/                  # OpenClaw AI agent (operator + instance)
+├── openclaw/                  # OpenClaw AI agent (operator + agent definitions)
 ├── opentelemetry-kube-stack/  # OpenTelemetry configuration
 ├── strimzi/                   # Kafka operator
 ├── deployment.yaml            # Root ArgoCD application (deploys all applications)
