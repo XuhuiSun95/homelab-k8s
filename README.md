@@ -364,6 +364,20 @@ kubectl create secret generic snapshot-settings \
   --namespace elastic
 ```
 
+#### OpenClaw agents
+Create the required secrets in the `openclaw` namespace **before** deploying OpenClaw agents (e.g. via Argo CD). Agents reference these via `spec.envFrom`; without them, pods may fail to start or integrations (Discord, etc.) will not work.
+
+**Environment and integration tokens** (e.g. Discord bot token, AI provider keys if not in env-vars). Create `openclaw-env-vars`:
+
+```bash
+export DISCORD_BOT_TOKEN=<discord_bot_token>
+kubectl create secret generic openclaw-env-vars \
+  --from-literal="DISCORD_BOT_TOKEN=$DISCORD_BOT_TOKEN" \
+  --namespace openclaw
+```
+
+Add more `--from-literal` entries for other integrations or API keys as needed (e.g. `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`). Ensure the `openclaw` namespace exists, or create it first: `kubectl create namespace openclaw`.
+
 #### MinKMS Operator MinIO License
 If you use the MinKMS operator (e.g. for AIStor) with a commercial MinIO license, create a secret from your license file so the operator can use it:
 
