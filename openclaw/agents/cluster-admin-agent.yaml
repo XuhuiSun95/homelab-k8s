@@ -23,6 +23,11 @@ spec:
   # selfConfigure:
   #   enabled: true
   #   allowedActions: [skills, config, envVars, workspaceFiles]
+  security:
+    networkPolicy:
+      allowedIngressNamespaces:
+        - openclaw
+        - istio-ingress
   resources:
     requests:
       cpu: 1000m
