@@ -13,7 +13,7 @@ spec:
   sources:
     - path: .
       repoURL: 'oci://ghcr.io/openclaw-rocks/charts/openclaw-operator'
-      targetRevision: v0.10.22
+      targetRevision: 0.10.22
       helm:
         valueFiles:
           - $values/openclaw/values.yaml
