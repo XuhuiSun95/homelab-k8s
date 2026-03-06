@@ -123,6 +123,11 @@ config:
             href: https://open-webui.local.xuhuisun.com
             description: ai interface
             # siteMonitor: http://open-webui.open-webui.svc.cluster.local
+        - OpenClaw Cluster Admin Agent:
+            icon: openclaw
+            href: https://openclaw-cluster-admin-agent.local.xuhuisun.com
+            description: ai agent control ui
+            siteMonitor: http://cluster-admin-agent.openclaw.svc.cluster.local:18789
         - Immich:
             icon: immich
             href: https://immich.local.xuhuisun.com

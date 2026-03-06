@@ -7,7 +7,7 @@ metadata:
   namespace: openclaw
 spec:
   hosts:
-    - openclaw.local.xuhuisun.com
+    - openclaw-cluster-admin-agent.local.xuhuisun.com
   gateways:
     - istio-ingress/gateway
   http:
