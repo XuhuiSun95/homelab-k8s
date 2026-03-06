@@ -5,6 +5,12 @@ metadata:
   name: cluster-admin-agent
   namespace: openclaw
 spec:
+  config:
+    raw:
+      agents:
+        defaults:
+          model:
+            primary: "openai-codex/gpt-5.3-codex"
   # selfConfigure:
   #   enabled: true
   #   allowedActions: [skills, config, envVars, workspaceFiles]
@@ -19,6 +25,3 @@ spec:
       enabled: true
       size: 10Gi
       storageClass: nfs-csi
-  # networking:
-  #   service:
-  #     type: ClusterIP
