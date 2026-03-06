@@ -8,6 +8,8 @@ spec:
   envFrom:
     - secretRef:
         name: openclaw-env-vars
+  gateway:
+    allowedOrigins: ["https://openclaw-cluster-admin-agent.local.xuhuisun.com"]
   config:
     mergeMode: overwrite
     raw:
