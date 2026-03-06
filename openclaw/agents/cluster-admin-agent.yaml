@@ -9,7 +9,7 @@ spec:
     - secretRef:
         name: openclaw-env-vars
   gateway:
-    allowedOrigins: ["https://openclaw-cluster-admin-agent.local.xuhuisun.com"]
+    controlUiOrigins: ["https://openclaw-cluster-admin-agent.local.xuhuisun.com"]
   config:
     mergeMode: overwrite
     raw:
@@ -17,9 +17,6 @@ spec:
         defaults:
           model:
             primary: "openai-codex/gpt-5.3-codex"
-          sandbox:
-            mode: all
-            workspaceAccess: rw
       channels:
         discord:
           enabled: true
