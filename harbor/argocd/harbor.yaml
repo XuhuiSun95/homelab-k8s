@@ -23,6 +23,13 @@ spec:
       kind: StatefulSet
       jqPathExpressions:
         - .spec.template.metadata.annotations
+    # Avoid sync loop: chart/cluster disagree on redis podAntiAffinity structure (labelSelector vs topologyKey-only)
+    - group: apps
+      kind: StatefulSet
+      name: harbor-harbor-redis
+      namespace: harbor
+      jqPathExpressions:
+        - .spec.template.spec.affinity
   sources:
     - chart: harbor
       repoURL: 'https://helm.goharbor.io'
