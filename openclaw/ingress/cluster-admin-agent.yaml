@@ -3,7 +3,7 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: openclaw-vs
+  name: openclaw-cluster-admin-agent-vs
   namespace: openclaw
 spec:
   hosts:
