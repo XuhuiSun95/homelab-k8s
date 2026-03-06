@@ -1,6 +1,3 @@
-image:
-  useDigest: false
-
 ipv4:
   enabled: true
 ipv6:
@@ -49,18 +46,24 @@ bandwidthManager:
 cni:
   exclusive: false
 
+image:
+  useDigest: false
 resources:
   requests:
     cpu: 800m
     memory: 1Gi
 
 envoy:
+  image:
+    useDigest: false
   resources:
     requests:
       cpu: 100m
       memory: 256Mi
 
 operator:
+  image:
+    useDigest: false
   resources:
     requests:
       cpu: 10m
