@@ -29,10 +29,10 @@ minkms:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 64Mi
+      cpu: 80m
+      memory: 32Mi
     limits:
-      memory: 64Mi
+      memory: 32Mi
   sideCars:
     resources:
       requests:

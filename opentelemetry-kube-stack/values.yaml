@@ -8,17 +8,17 @@ opentelemetry-operator:
     createRbacPermissions: true
     resources:
       requests:
-        cpu: 10m
-        memory: 128Mi
+        cpu: 5m
+        memory: 64Mi
       limits:
-        memory: 128Mi
+        memory: 64Mi
   kubeRBACProxy:
     resources:
       requests:
         cpu: 5m
-        memory: 32Mi
+        memory: 16Mi
       limits:
-        memory: 32Mi
+        memory: 16Mi
   priorityClassName: platform-critical
   affinity:
     nodeAffinity:

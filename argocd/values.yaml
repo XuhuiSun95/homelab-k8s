@@ -80,16 +80,16 @@ redis-ha:
     resources:
       requests:
         cpu: 30m
-        memory: 64Mi
+        memory: 32Mi
       limits:
-        memory: 64Mi
+        memory: 32Mi
   splitBrainDetection:
     resources:
       requests:
         cpu: 5m
-        memory: 16Mi
+        memory: 8Mi
       limits:
-        memory: 16Mi
+        memory: 8Mi
   additionalAffinities:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
