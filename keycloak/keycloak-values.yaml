@@ -33,7 +33,7 @@ metrics:
 
 resources:
   requests:
-    cpu: 200m
+    cpu: 100m
     memory: 1250Mi
   limits:
     memory: 1250Mi
