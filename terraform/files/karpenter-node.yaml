@@ -1,5 +1,5 @@
 # Karpenter NodePools and Proxmox NodeClasses for homelab.
-# Cluster capacity: 88 vCPU, 503Gi usable. Pool limits below (72 CPU, 368Gi total) leave headroom for control plane and static workloads.
+# Cluster capacity: 88 vCPU, 503Gi usable. Pool limits below (76 CPU, 400Gi total) leave headroom for control plane and static workloads.
 # Instance types: c1/t1/s1/m1/x1 per https://github.com/sergelogvinov/karpenter-provider-proxmox/blob/main/docs/instancetypes.md
 # expireAfter is max node lifetime; drift/consolidation can still replace nodes earlier.
 ---
@@ -119,8 +119,8 @@ spec:
       - "Drifted"
     - nodes: "1"
   limits:
-    cpu: "20"
-    memory: 80Gi
+    cpu: "24"
+    memory: 96Gi
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool
@@ -148,7 +148,6 @@ spec:
         - key: node.kubernetes.io/instance-type
           operator: In
           values:
-            - "m1.2VCPU-16GB"
             - "m1.4VCPU-32GB"
             - "m1.8VCPU-64GB"
   disruption:
@@ -161,8 +160,8 @@ spec:
       - "Drifted"
     - nodes: "1"
   limits:
-    cpu: "20"
-    memory: 160Gi
+    cpu: "24"
+    memory: 192Gi
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool
@@ -206,5 +205,5 @@ spec:
       - "Drifted"
     - nodes: "1"
   limits:
-    cpu: "32"
-    memory: 128Gi
+    cpu: "28"
+    memory: 112Gi
