@@ -41,3 +41,5 @@ spec:
       enabled: true
       size: 10Gi
       storageClass: nfs-csi
+  autoUpdate:
+    enabled: true
