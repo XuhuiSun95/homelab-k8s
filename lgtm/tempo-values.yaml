@@ -138,7 +138,7 @@ compactor:
               operator: In
               values: ["memory-optimized"]
   tolerations:
-    - key: node-role.kubernetes.io/memory-optimized 
+    - key: node-role.kubernetes.io/memory-optimized
       operator: Exists
       effect: NoSchedule
 querier:
