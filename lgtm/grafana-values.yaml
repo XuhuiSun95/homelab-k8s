@@ -114,7 +114,7 @@ dashboards:
     15760-kubernetes-views-pods:
       # renovate: depName="Kubernetes Views Pods"
       gnetId: 15760
-      revision: 37
+      revision: 39
       datasource: Mimir
     1860-node-exporter-full:
       # renovate: depName="Node Exporter Full"
