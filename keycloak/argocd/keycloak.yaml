@@ -11,8 +11,8 @@ spec:
     namespace: keycloak
     server: 'https://kubernetes.default.svc'
   sources:
-    - path: .
-      repoURL: 'oci://registry-1.docker.io/bitnamicharts/keycloak'
+    - chart: keycloak
+      repoURL: 'https://charts.bitnami.com/bitnami'
       targetRevision: 25.2.0
       helm:
         valueFiles:
