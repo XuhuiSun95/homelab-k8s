@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: aistor-operator
       repoURL: 'https://helm.min.io/'
-      targetRevision: 5.5.1
+      targetRevision: 5.5.2
       helm:
         valueFiles:
         - $values/aistor/aistor-operator-values.yaml
