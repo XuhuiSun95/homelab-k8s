@@ -13,7 +13,7 @@ spec:
   sources:
     - path: .
       repoURL: 'oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg'
-      targetRevision: 0.27.1
+      targetRevision: 0.28.0
       helm:
         valueFiles:
         - $values/cloudnative-pg/values.yaml
