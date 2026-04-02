@@ -119,7 +119,7 @@ dashboards:
     1860-node-exporter-full:
       # renovate: depName="Node Exporter Full"
       gnetId: 1860
-      revision: 42
+      revision: 43
       datasource: Mimir
     7639-istio-mesh-dashboard:
       # renovate: depName="Istio Mesh Dashboard"
