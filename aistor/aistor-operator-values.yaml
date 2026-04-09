@@ -65,31 +65,31 @@ operators:
         memory: 96Mi
       limits:
         memory: 96Mi
-  webhook:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-              - key: karpenter.sh/nodepool
-                operator: In
-                values: ["system"]
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                aistor.min.io/name: object-store-webhook
-              topologyKey: topology.kubernetes.io/zone
-            weight: 100
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                aistor.min.io/name: object-store-webhook
-            topologyKey: kubernetes.io/hostname
-    resources:
-      requests:
-        cpu: 5m
-        memory: 32Mi
-      limits:
-        memory: 32Mi
+    webhook:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: karpenter.sh/nodepool
+                  operator: In
+                  values: ["system"]
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  aistor.min.io/name: object-store-webhook
+                topologyKey: topology.kubernetes.io/zone
+              weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  aistor.min.io/name: object-store-webhook
+              topologyKey: kubernetes.io/hostname
+      resources:
+        requests:
+          cpu: 5m
+          memory: 32Mi
+        limits:
+          memory: 32Mi
