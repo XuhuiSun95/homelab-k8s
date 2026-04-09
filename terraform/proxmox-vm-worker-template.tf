@@ -29,7 +29,7 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
 
   disk {
     datastore_id = var.nodes[each.key].storage
-    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image[each.key].id
+    file_id      = proxmox_download_file.talos_cloud_image[each.key].id
     interface    = "scsi0"
     iothread     = true
     cache        = "none"
@@ -74,6 +74,6 @@ resource "proxmox_virtual_environment_vm" "worker-template" {
   }
 
   depends_on = [
-    proxmox_virtual_environment_download_file.talos_cloud_image,
+    proxmox_download_file.talos_cloud_image,
   ]
 }

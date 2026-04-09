@@ -63,8 +63,8 @@ resource "talos_machine_configuration_apply" "controlplane" {
         "clusters" : [{
           "url" : "${var.virtual_environment_endpoint}/api2/json"
           "insecure" : true
-          "token_id" : split("=", proxmox_virtual_environment_user_token.ccm.value)[0]
-          "token_secret" : split("=", proxmox_virtual_environment_user_token.ccm.value)[1]
+          "token_id" : split("=", proxmox_user_token.ccm.value)[0]
+          "token_secret" : split("=", proxmox_user_token.ccm.value)[1]
           "region" : var.region
         }]
       })
@@ -72,8 +72,8 @@ resource "talos_machine_configuration_apply" "controlplane" {
         "clusters" : [{
           "url" : "${var.virtual_environment_endpoint}/api2/json"
           "insecure" : true
-          "token_id" : split("=", proxmox_virtual_environment_user_token.csi.value)[0]
-          "token_secret" : split("=", proxmox_virtual_environment_user_token.csi.value)[1]
+          "token_id" : split("=", proxmox_user_token.csi.value)[0]
+          "token_secret" : split("=", proxmox_user_token.csi.value)[1]
           "region" : var.region
         }]
       })
@@ -81,8 +81,8 @@ resource "talos_machine_configuration_apply" "controlplane" {
         "clusters" : [{
           "url" : "${var.virtual_environment_endpoint}/api2/json"
           "insecure" : true
-          "token_id" : split("=", proxmox_virtual_environment_user_token.karpenter.value)[0]
-          "token_secret" : split("=", proxmox_virtual_environment_user_token.karpenter.value)[1]
+          "token_id" : split("=", proxmox_user_token.karpenter.value)[0]
+          "token_secret" : split("=", proxmox_user_token.karpenter.value)[1]
           "region" : var.region
         }]
       })

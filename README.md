@@ -116,7 +116,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | **Keycloak** | https://keycloak.local.xuhuisun.com | Identity & access management |
 | **IAM (OIDC)** | https://iam.local.xuhuisun.com | OIDC issuer / SSO (Keycloak) |
 | **Homepage** | https://homepage.local.xuhuisun.com | Service dashboard |
-| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, public.ecr.aws, quay.io |
+| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, ecr-public.aws.com, quay.io |
 
 ### 📈 Observability & Monitoring
 | Service | URL | Purpose |
@@ -492,10 +492,10 @@ mimirtool alertmanager load ./lgtm/mimir-alertmanager.yaml --address=https://mim
 
 ### 8. Registry Mirror (Harbor)
 
-Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos nodes (controlplane and workers) are configured to use this mirror for **docker.io**, **ghcr.io**, **registry.k8s.io**, **public.ecr.aws**, and **quay.io**, so image pulls are served from the cache when possible and only hit upstream on cache miss.
+Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos nodes (controlplane and workers) are configured to use this mirror for **docker.io**, **ghcr.io**, **registry.k8s.io**, **ecr-public.aws.com**, and **quay.io**, so image pulls are served from the cache when possible and only hit upstream on cache miss.
 
 - **Change the mirror URL**: Set the Terraform variable `registry_mirror_endpoint` (default `https://registry-mirror.local.xuhuisun.com`), e.g. in `terraform.tfvars` or via `-var`, then re-apply and roll or re-apply Talos machine config so nodes pick up the new endpoint.
-- **Harbor proxy cache projects**: Create proxy cache project(s) in the Harbor UI (or API) for each upstream registry so the cache keys match what Talos uses (e.g. project names `docker.io`, `ghcr.io`, `registry.k8s.io`, `public.ecr.aws`, `quay.io`). The Terraform Talos provider uses string-only mirror endpoints; for path-based Harbor proxies with `overridePath`, see [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and apply mirror config via `talosctl` if needed. See [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
+- **Harbor proxy cache projects**: Create proxy cache project(s) in the Harbor UI (or API) for each upstream registry so the cache keys match what Talos uses (e.g. project names `docker.io`, `ghcr.io`, `registry.k8s.io`, `ecr-public.aws.com`, `quay.io`). The Terraform Talos provider uses string-only mirror endpoints; for path-based Harbor proxies with `overridePath`, see [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and apply mirror config via `talosctl` if needed. See [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
 - **Existing nodes**: After changing Terraform/Talos config, apply the updated machine config to existing nodes (e.g. `talosctl apply-config` or roll nodes). New nodes (e.g. from Karpenter) receive the config from the applied templates automatically.
 
 ## 🔑 Access Credentials
@@ -573,7 +573,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    
    # Edit terraform/terraform.tfvars and update kubernetes_version to match new Talos image
    # Example:
-   # kubernetes_version = "v1.35.0"
+   # kubernetes_version = "v1.35.2"
    
    # Review planned changes (Terraform will auto-detect latest Talos version)
    terraform plan
@@ -593,7 +593,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    talosctl upgrade --nodes <NODE_IP> --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:<VERSION>
    
    # Example:
-   # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.0
+   # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.6
    ```
 
 5. **Resync inline manifests** (e.g. Karpenter template secret) by running `talosctl upgrade-k8s` to the current Kubernetes version on a control plane node:
@@ -601,8 +601,8 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    # Replace <NODE_IP> with a control plane node IP and use the cluster's current k8s version
    talosctl upgrade-k8s --nodes <NODE_IP> --to <CURRENT_K8S_VERSION>
 
-   # Example (current version 1.35.0):
-   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.0
+   # Example (current version 1.35.2):
+   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.2
    ```
    This resyncs the inline manifests (including the Karpenter template secret) without changing the Kubernetes version.
 

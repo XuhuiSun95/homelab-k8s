@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_hardware_mapping_pci" "nvidia-gpu" {
+resource "proxmox_hardware_mapping_pci" "nvidia-gpu" {
   for_each = { for inx, zone in local.zones : zone => inx if lookup(var.nodes[zone], "pci_devices", []) != [] }
 
   comment = "NVIDIA GPU"

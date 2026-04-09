@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_download_file" "talos_cloud_image" {
+resource "proxmox_download_file" "talos_cloud_image" {
   for_each = { for inx, zone in local.zones : zone => inx }
 
   content_type = "iso"
@@ -9,7 +9,7 @@ resource "proxmox_virtual_environment_download_file" "talos_cloud_image" {
   file_name    = "talos-${local.talos_image_version}.iso"
 }
 
-resource "proxmox_virtual_environment_download_file" "gpu_talos_cloud_image" {
+resource "proxmox_download_file" "gpu_talos_cloud_image" {
   for_each = { for inx, zone in local.zones : zone => inx }
 
   content_type = "iso"
@@ -20,7 +20,7 @@ resource "proxmox_virtual_environment_download_file" "gpu_talos_cloud_image" {
   file_name    = "gpu-talos-${local.talos_image_version}.iso"
 }
 
-resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
+resource "proxmox_download_file" "ubuntu_cloud_image" {
   for_each = { for inx, zone in local.zones : zone => inx }
 
   content_type = "iso"
