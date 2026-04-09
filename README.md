@@ -593,7 +593,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    talosctl upgrade --nodes <NODE_IP> --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:<VERSION>
    
    # Example:
-   # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.0
+   # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.6
    ```
 
 5. **Resync inline manifests** (e.g. Karpenter template secret) by running `talosctl upgrade-k8s` to the current Kubernetes version on a control plane node:
