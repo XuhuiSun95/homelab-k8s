@@ -122,7 +122,7 @@ variable "cluster_endpoint" {
 variable "kubernetes_version" {
   description = "The version of the Kubernetes"
   type        = string
-  default     = "v1.35.0"
+  default     = "v1.35.2"
 }
 
 variable "registry_mirror_endpoint" {

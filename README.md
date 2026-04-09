@@ -573,7 +573,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    
    # Edit terraform/terraform.tfvars and update kubernetes_version to match new Talos image
    # Example:
-   # kubernetes_version = "v1.35.0"
+   # kubernetes_version = "v1.35.2"
    
    # Review planned changes (Terraform will auto-detect latest Talos version)
    terraform plan
@@ -601,8 +601,8 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    # Replace <NODE_IP> with a control plane node IP and use the cluster's current k8s version
    talosctl upgrade-k8s --nodes <NODE_IP> --to <CURRENT_K8S_VERSION>
 
-   # Example (current version 1.35.0):
-   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.0
+   # Example (current version 1.35.2):
+   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.2
    ```
    This resyncs the inline manifests (including the Karpenter template secret) without changing the Kubernetes version.
 
