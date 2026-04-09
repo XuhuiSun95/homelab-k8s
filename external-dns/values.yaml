@@ -18,10 +18,10 @@ priorityClassName: platform-critical
 
 resources:
   requests:
-    cpu: 10m
-    memory: 64Mi
+    cpu: 5m
+    memory: 48Mi
   limits:
-    memory: 64Mi
+    memory: 48Mi
 
 sources:
   - service
@@ -52,7 +52,7 @@ provider:
             key: api-key
     resources:
       requests:
-        cpu: 5m
+        cpu: 1m
         memory: 64Mi
       limits:
         memory: 64Mi
