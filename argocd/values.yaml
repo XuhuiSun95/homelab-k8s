@@ -143,6 +143,6 @@ repoServer:
   resources:
     requests:
       cpu: 30m
-      memory: 256Mi
+      memory: 768Mi
     limits:
-      memory: 512Mi
+      memory: 768Mi
