@@ -2,18 +2,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "30"
-  name: ingress-kafka
+    argocd.argoproj.io/sync-wave: "10"
+  name: strimzi-drain-cleaner
   namespace: argocd
 spec:
   project: default
   destination:
-    namespace: kafka
+    namespace: strimzi-drain-cleaner
     server: 'https://kubernetes.default.svc'
   sources:
+    - path: .
+      repoURL: 'oci://quay.io/strimzi-helm/strimzi-drain-cleaner'
+      targetRevision: 1.5.0
+      helm:
+        valueFiles:
+        - $values/strimzi/strimzi-drain-cleaner-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
-      path: strimzi/ingress
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
