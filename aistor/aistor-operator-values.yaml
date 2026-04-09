@@ -1,13 +1,7 @@
 global:
   operator:
-    # TODO: missing affinity and priorityClassName
+    # TODO: missing priorityClassName
     replicas: 2
-    resources:
-      requests:
-        cpu: 5m
-        memory: 32Mi 
-      limits:
-        memory: 32Mi
     tolerations:
       - key: node-role.kubernetes.io/system
         operator: Exists
@@ -16,6 +10,27 @@ global:
 
 operators:
   adminjob:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: In
+                values: ["system"]
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  aistor.min.io/name: adminjob-operator
+              topologyKey: topology.kubernetes.io/zone
+            weight: 100
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                aistor.min.io/name: adminjob-operator
+            topologyKey: kubernetes.io/hostname
     resources:
       requests:
         cpu: 5m
@@ -23,9 +38,58 @@ operators:
       limits:
         memory: 32Mi
   object-store:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: In
+                values: ["system"]
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  aistor.min.io/name: object-store-operator
+              topologyKey: topology.kubernetes.io/zone
+            weight: 100
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                aistor.min.io/name: object-store-operator
+            topologyKey: kubernetes.io/hostname
     resources:
       requests:
         cpu: 10m
-        memory: 128Mi
+        memory: 96Mi
       limits:
-        memory: 128Mi
+        memory: 96Mi
+  webhook:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: In
+                values: ["system"]
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                aistor.min.io/name: object-store-webhook
+              topologyKey: topology.kubernetes.io/zone
+            weight: 100
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                aistor.min.io/name: object-store-webhook
+            topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 5m
+        memory: 32Mi
+      limits:
+        memory: 32Mi
