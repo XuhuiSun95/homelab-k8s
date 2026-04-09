@@ -93,7 +93,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   disk {
     datastore_id = var.nodes[each.value.zone].storage
-    file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image[each.value.zone].id
+    file_id      = proxmox_download_file.ubuntu_cloud_image[each.value.zone].id
     interface    = "scsi0"
     iothread     = true
     cache        = "none"
@@ -145,7 +145,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
   }
 
   depends_on = [
-    proxmox_virtual_environment_download_file.ubuntu_cloud_image,
+    proxmox_download_file.ubuntu_cloud_image,
     proxmox_virtual_environment_file.bastion_cloud_config,
   ]
 }

@@ -76,7 +76,7 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
 
   disk {
     datastore_id = var.nodes[each.value.zone].storage
-    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image[each.value.zone].id
+    file_id      = proxmox_download_file.talos_cloud_image[each.value.zone].id
     interface    = "scsi0"
     iothread     = true
     cache        = "none"
@@ -136,6 +136,6 @@ resource "proxmox_virtual_environment_vm" "controlplane" {
 
   depends_on = [
     proxmox_virtual_environment_file.controlplane_metadata,
-    proxmox_virtual_environment_download_file.talos_cloud_image,
+    proxmox_download_file.talos_cloud_image,
   ]
 }
