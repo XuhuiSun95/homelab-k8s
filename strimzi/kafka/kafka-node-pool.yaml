@@ -14,9 +14,9 @@ spec:
   resources:
     requests:
       cpu: 100m
-      memory: 1Gi
+      memory: 4Gi
     limits:
-      memory: 1Gi
+      memory: 4Gi
   storage:
     type: persistent-claim
     size: 3Gi
@@ -40,12 +40,24 @@ spec:
               - matchExpressions:
                 - key:  karpenter.sh/nodepool
                   operator: In
-                  values: ["system"]
+                  values: ["memory-optimized"]
       tolerations:
         - key: node-role.kubernetes.io/system
           operator: Exists
           effect: NoSchedule
       priorityClassName: platform-critical
+  jvmOptions:
+    "-Xms": "3g"
+    "-Xmx": "3g"
+    "-XX":
+      "MetaspaceSize": "96m"
+      "UseG1GC": "true"
+      "MaxGCPauseMillis": "20"
+      "InitiatingHeapOccupancyPercent": "35"
+      "G1HeapRegionSize": "16M"
+      "MinMetaspaceFreeRatio": "50"
+      "MaxMetaspaceFreeRatio": "80"
+      "ExplicitGCInvokesConcurrent": "true" 
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
@@ -63,9 +75,9 @@ spec:
   resources:
     requests:
       cpu: 200m
-      memory: 4Gi
+      memory: 8Gi
     limits:
-      memory: 4Gi
+      memory: 8Gi
   storage:
     type: persistent-claim
     size: 20Gi
@@ -95,3 +107,15 @@ spec:
           operator: Exists
           effect: NoSchedule
       priorityClassName: platform-critical
+  jvmOptions:
+    "-Xms": "6g"
+    "-Xmx": "6g"
+    "-XX":
+      "MetaspaceSize": "96m"
+      "UseG1GC": "true"
+      "MaxGCPauseMillis": "20"
+      "InitiatingHeapOccupancyPercent": "35"
+      "G1HeapRegionSize": "16M"
+      "MinMetaspaceFreeRatio": "50"
+      "MaxMetaspaceFreeRatio": "80"
+      "ExplicitGCInvokesConcurrent": "true"
