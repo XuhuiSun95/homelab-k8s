@@ -2,14 +2,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: cluster-operator-metrics
-  namespace: strimzi
+  namespace: strimzi-operator
 spec:
   selector:
     matchLabels:
       strimzi.io/kind: cluster-operator
   namespaceSelector:
     matchNames:
-      - strimzi
+      - strimzi-operator
   podMetricsEndpoints:
   - path: /metrics
     port: http
@@ -18,7 +18,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: entity-operator-metrics
-  namespace: strimzi
+  namespace: strimzi-operator
 spec:
   selector:
     matchLabels:
@@ -34,7 +34,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: bridge-metrics
-  namespace: strimzi
+  namespace: strimzi-operator
 spec:
   selector:
     matchLabels:
@@ -50,7 +50,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: kafka-resources-metrics
-  namespace: strimzi
+  namespace: strimzi-operator
 spec:
   selector:
     matchExpressions:
