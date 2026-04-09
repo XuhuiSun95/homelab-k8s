@@ -44,10 +44,10 @@ nginx:
   replicas: 2
   resources:
     requests:
-      cpu: 100m
-      memory: 64Mi
+      cpu: 40m
+      memory: 32Mi
     limits:
-      memory: 64Mi
+      memory: 32Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -73,10 +73,10 @@ portal:
   replicas: 2
   resources:
     requests:
-      cpu: 10m
-      memory: 32Mi
+      cpu: 5m
+      memory: 16Mi
     limits:
-      memory: 32Mi
+      memory: 16Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -102,10 +102,10 @@ core:
   replicas: 2
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
-      memory: 256Mi
+      memory: 128Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -131,7 +131,7 @@ jobservice:
   replicas: 2
   resources:
     requests:
-      cpu: 20m
+      cpu: 10m
       memory: 64Mi
     limits:
       memory: 64Mi
@@ -160,17 +160,17 @@ registry:
   registry:
     resources:
       requests:
-        cpu: 300m
-        memory: 128Mi
+        cpu: 150m
+        memory: 64Mi
       limits:
-        memory: 128Mi
+        memory: 64Mi
   controller:
     resources:
       requests:
-        cpu: 10m
-        memory: 32Mi
+        cpu: 5m
+        memory: 16Mi
       limits:
-        memory: 32Mi
+        memory: 16Mi
   replicas: 2
   tolerations:
     - key: node-role.kubernetes.io/system
@@ -197,10 +197,11 @@ trivy:
   replicas: 1
   resources:
     requests:
-      cpu: 200m
-      memory: 512Mi
+      cpu: 100m
+      memory: 256Mi
     limits:
-      memory: 512Mi
+      cpu: null
+      memory: 256Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -236,10 +237,10 @@ redis:
   internal:
     resources:
       requests:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 15m
+        memory: 32Mi
       limits:
-        memory: 128Mi
+        memory: 32Mi
     tolerations:
       - key: node-role.kubernetes.io/memory-optimized
         operator: Exists
