@@ -16,7 +16,7 @@ spec:
       targetRevision: 0.51.0
       helm:
         valueFiles:
-        - $values/strimzi/values.yaml
+        - $values/strimzi/strimzi-operator-values.yaml
     - repoURL: 'https://github.com/XuhuiSun95/homelab-k8s.git'
       targetRevision: main
       ref: values
