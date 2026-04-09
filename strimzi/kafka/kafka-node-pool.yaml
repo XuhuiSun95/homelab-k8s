@@ -42,7 +42,7 @@ spec:
                   operator: In
                   values: ["memory-optimized"]
       tolerations:
-        - key: node-role.kubernetes.io/system
+        - key: node-role.kubernetes.io/memory-optimized
           operator: Exists
           effect: NoSchedule
       priorityClassName: platform-critical
