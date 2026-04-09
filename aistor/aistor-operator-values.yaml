@@ -77,9 +77,9 @@ operators:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
-              labelSelector:
-                matchLabels:
-                  aistor.min.io/name: object-store-webhook
+                labelSelector:
+                  matchLabels:
+                    aistor.min.io/name: object-store-webhook
                 topologyKey: topology.kubernetes.io/zone
               weight: 100
           requiredDuringSchedulingIgnoredDuringExecution:
