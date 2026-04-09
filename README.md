@@ -116,7 +116,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | **Keycloak** | https://keycloak.local.xuhuisun.com | Identity & access management |
 | **IAM (OIDC)** | https://iam.local.xuhuisun.com | OIDC issuer / SSO (Keycloak) |
 | **Homepage** | https://homepage.local.xuhuisun.com | Service dashboard |
-| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, public.ecr.aws, quay.io |
+| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, ecr-public.aws.com, quay.io |
 
 ### 📈 Observability & Monitoring
 | Service | URL | Purpose |
@@ -492,10 +492,10 @@ mimirtool alertmanager load ./lgtm/mimir-alertmanager.yaml --address=https://mim
 
 ### 8. Registry Mirror (Harbor)
 
-Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos nodes (controlplane and workers) are configured to use this mirror for **docker.io**, **ghcr.io**, **registry.k8s.io**, **public.ecr.aws**, and **quay.io**, so image pulls are served from the cache when possible and only hit upstream on cache miss.
+Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos nodes (controlplane and workers) are configured to use this mirror for **docker.io**, **ghcr.io**, **registry.k8s.io**, **ecr-public.aws.com**, and **quay.io**, so image pulls are served from the cache when possible and only hit upstream on cache miss.
 
 - **Change the mirror URL**: Set the Terraform variable `registry_mirror_endpoint` (default `https://registry-mirror.local.xuhuisun.com`), e.g. in `terraform.tfvars` or via `-var`, then re-apply and roll or re-apply Talos machine config so nodes pick up the new endpoint.
-- **Harbor proxy cache projects**: Create proxy cache project(s) in the Harbor UI (or API) for each upstream registry so the cache keys match what Talos uses (e.g. project names `docker.io`, `ghcr.io`, `registry.k8s.io`, `public.ecr.aws`, `quay.io`). The Terraform Talos provider uses string-only mirror endpoints; for path-based Harbor proxies with `overridePath`, see [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and apply mirror config via `talosctl` if needed. See [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
+- **Harbor proxy cache projects**: Create proxy cache project(s) in the Harbor UI (or API) for each upstream registry so the cache keys match what Talos uses (e.g. project names `docker.io`, `ghcr.io`, `registry.k8s.io`, `ecr-public.aws.com`, `quay.io`). The Terraform Talos provider uses string-only mirror endpoints; for path-based Harbor proxies with `overridePath`, see [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and apply mirror config via `talosctl` if needed. See [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
 - **Existing nodes**: After changing Terraform/Talos config, apply the updated machine config to existing nodes (e.g. `talosctl apply-config` or roll nodes). New nodes (e.g. from Karpenter) receive the config from the applied templates automatically.
 
 ## 🔑 Access Credentials
