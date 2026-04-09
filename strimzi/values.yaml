@@ -1,5 +1,6 @@
 replicas: 2
-watchAnyNamespace: true
+watchNamespaces:
+  - kafka
 
 affinity:
   nodeAffinity:
@@ -27,9 +28,11 @@ tolerations:
   operator: Exists
   effect: NoSchedule
 priorityClassName: platform-critical
+
+leaderElection:
+  enable: true
 podDisruptionBudget:
   enabled: true
-  minAvailable: 1
 
 dashboards:
   enabled: true
