@@ -2,6 +2,12 @@ global:
   operator:
     # TODO: missing priorityClassName
     replicas: 2
+    resources:
+      requests:
+        cpu: 5m
+        memory: 32Mi
+      limits:
+        memory: 32Mi
     tolerations:
       - key: node-role.kubernetes.io/system
         operator: Exists
@@ -87,9 +93,3 @@ operators:
                 matchLabels:
                   aistor.min.io/name: object-store-webhook
               topologyKey: kubernetes.io/hostname
-      resources:
-        requests:
-          cpu: 5m
-          memory: 32Mi
-        limits:
-          memory: 32Mi
