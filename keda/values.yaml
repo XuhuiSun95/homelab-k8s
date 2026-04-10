@@ -95,7 +95,7 @@ webhooks:
 resources:
   operator:
     requests:
-      cpu: 10m
+      cpu: 5m
       memory: 64Mi
     limits:
       cpu: null
@@ -109,7 +109,7 @@ resources:
       memory: 64Mi
   webhooks:
     requests:
-      cpu: 5m
+      cpu: 2m
       memory: 32Mi
     limits:
       cpu: null

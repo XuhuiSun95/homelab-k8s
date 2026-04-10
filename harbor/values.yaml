@@ -160,10 +160,10 @@ registry:
   registry:
     resources:
       requests:
-        cpu: 150m
-        memory: 64Mi
+        cpu: 100m
+        memory: 96Mi
       limits:
-        memory: 64Mi
+        memory: 96Mi
   controller:
     resources:
       requests:

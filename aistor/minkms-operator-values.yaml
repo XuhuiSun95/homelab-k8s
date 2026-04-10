@@ -4,9 +4,9 @@ global:
     resources:
       requests:
         cpu: 5m
-        memory: 96Mi
+        memory: 64Mi
       limits:
-        memory: 96Mi
+        memory: 64Mi
     # TODO: tolerations did not work 
     tolerations:
       - key: node-role.kubernetes.io/system
