@@ -87,9 +87,9 @@ redis-ha:
     resources:
       requests:
         cpu: 1m
-        memory: 4Mi
+        memory: 8Mi
       limits:
-        memory: 4Mi
+        memory: 8Mi
   additionalAffinities:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
