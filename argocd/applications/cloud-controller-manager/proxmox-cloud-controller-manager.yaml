@@ -13,7 +13,7 @@ spec:
   sources:
     - path: . 
       repoURL: 'oci://ghcr.io/sergelogvinov/charts/proxmox-cloud-controller-manager'
-      targetRevision: 0.2.27
+      targetRevision: 0.2.28
       helm:
         valueFiles:
         - $values/terraform/files/proxmox-ccm.yaml
