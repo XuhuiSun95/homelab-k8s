@@ -35,6 +35,6 @@ cluster_name = "homelab-k8s"
 
 cluster_endpoint = "https://homelab-k8s.local.xuhuisun.com:6443"
 
-kubernetes_version = "v1.35.2"
-# release                  = "v1.12.6"
+kubernetes_version       = "v1.36.0"
+release                  = "v1.13.2"
 registry_mirror_endpoint = "https://registry-mirror.local.xuhuisun.com"

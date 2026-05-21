@@ -55,9 +55,9 @@ spec:
 
 This homelab deploys a **production-ready Kubernetes cluster** using modern cloud-native technologies:
 
-- **Infrastructure**: **Talos Linux** on **Proxmox VMs** with **Terraform** for immutable Kubernetes deployment
+- **Infrastructure**: **Talos Linux** on **Proxmox VMs** with **Terraform** for immutable Kubernetes deployment; **Ubuntu** bastion hosts for jump access
 - **Cloud Provider**: **Proxmox** integration with **Cloud Controller Manager (CCM)**, **Container Storage Interface (CSI)**, and **Karpenter** for automation
-- **Networking**: **Cilium CNI** with **eBPF** host routing (kubeProxyReplacement), **BGP** integration, and dual-stack **IPv4/IPv6** support
+- **Networking**: **Cilium CNI** with **eBPF** host routing (kubeProxyReplacement), **BGP** integration, **hybrid** load balancing with native acceleration, and dual-stack **IPv4/IPv6** support
 - **Auto-scaling**: **Karpenter** with Proxmox provider for dynamic node provisioning and workload scaling
 - **GitOps**: **ArgoCD** for declarative application management and continuous delivery
 - **Service Mesh**: **Istio Ambient Mode** for zero-trust traffic management, security, and observability
@@ -116,7 +116,7 @@ Access your services at [Homepage Dashboard](https://homepage.local.xuhuisun.com
 | **Keycloak** | https://keycloak.local.xuhuisun.com | Identity & access management |
 | **IAM (OIDC)** | https://iam.local.xuhuisun.com | OIDC issuer / SSO (Keycloak) |
 | **Homepage** | https://homepage.local.xuhuisun.com | Service dashboard |
-| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for docker.io, ghcr.io, registry.k8s.io, ecr-public.aws.com, quay.io |
+| **Registry Mirror (Harbor)** | https://registry-mirror.local.xuhuisun.com | Pull-through cache for **docker.io** (Talos nodes use Harbor path-based proxy) |
 
 ### 📈 Observability & Monitoring
 | Service | URL | Purpose |
@@ -256,6 +256,9 @@ EOF
 # - controlplane: Control plane VM specifications
 # - cluster_name: Kubernetes cluster name
 # - cluster_endpoint: API server endpoint
+# - kubernetes_version: Kubernetes version (e.g. v1.35.2)
+# - release: Talos version (e.g. v1.12.6) or "latest" for auto-detect
+# - registry_mirror_endpoint: Harbor pull-through URL for docker.io
 
 # Plan the deployment
 terraform plan
@@ -278,6 +281,8 @@ export KUBECONFIG="$(pwd)/kubeconfig"
 # Verify cluster is running
 kubectl get nodes
 kubectl get pods --all-namespaces
+
+# kubeconfig and talosconfig are written under terraform/; keep them local (do not commit)
 ```
 
 ### 2. Configure Cluster Networking and Cloud Providers
@@ -492,11 +497,11 @@ mimirtool alertmanager load ./lgtm/mimir-alertmanager.yaml --address=https://mim
 
 ### 8. Registry Mirror (Harbor)
 
-Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos nodes (controlplane and workers) are configured to use this mirror for **docker.io**, **ghcr.io**, **registry.k8s.io**, **ecr-public.aws.com**, and **quay.io**, so image pulls are served from the cache when possible and only hit upstream on cache miss.
+Harbor provides a **pull-through cache** at **https://registry-mirror.local.xuhuisun.com**. Talos machine config (control plane and worker templates) mirrors **docker.io** only via a path-based Harbor proxy (`${registry_mirror_endpoint}/v2/docker.io` with `overridePath: true`). Other registries (e.g. **ghcr.io**, **registry.k8s.io**) pull directly from upstream unless you add mirrors manually.
 
-- **Change the mirror URL**: Set the Terraform variable `registry_mirror_endpoint` (default `https://registry-mirror.local.xuhuisun.com`), e.g. in `terraform.tfvars` or via `-var`, then re-apply and roll or re-apply Talos machine config so nodes pick up the new endpoint.
-- **Harbor proxy cache projects**: Create proxy cache project(s) in the Harbor UI (or API) for each upstream registry so the cache keys match what Talos uses (e.g. project names `docker.io`, `ghcr.io`, `registry.k8s.io`, `ecr-public.aws.com`, `quay.io`). The Terraform Talos provider uses string-only mirror endpoints; for path-based Harbor proxies with `overridePath`, see [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and apply mirror config via `talosctl` if needed. See [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
-- **Existing nodes**: After changing Terraform/Talos config, apply the updated machine config to existing nodes (e.g. `talosctl apply-config` or roll nodes). New nodes (e.g. from Karpenter) receive the config from the applied templates automatically.
+- **Change the mirror URL**: Set `registry_mirror_endpoint` in `terraform.tfvars` or via `-var`, then re-apply Terraform and roll nodes or re-apply Talos machine config so nodes pick up the new endpoint.
+- **Harbor proxy cache project**: Create a Harbor proxy cache project named **`docker.io`** so path-based pulls match Talos config. You can add more proxy projects in Harbor for other registries, but they are not wired in Terraform templates by default. See [Talos: Harbor as a caching registry](https://docs.siderolabs.com/talos/v1.12/configure-your-talos-cluster/images-container-runtime/pull-through-cache#using-harbor-as-a-caching-registry) and [Harbor: Configure Proxy Cache](https://goharbor.io/docs/main/administration/configure-proxy-cache/).
+- **Existing nodes**: After changing Terraform/Talos config, apply the updated machine config to existing nodes (e.g. `talosctl apply-config` or roll nodes). New Karpenter nodes receive config from the inline template secret automatically.
 
 ## 🔑 Access Credentials
 
@@ -556,7 +561,10 @@ Upgrade Talos Linux and Kubernetes to the latest version:
 
 #### Automatic Upgrade to Latest Version
 
-Terraform automatically detects and upgrades to the latest stable Talos version when `release = "latest"` is set in `terraform.tfvars` (this is the default).
+Pin or bump versions in `terraform/terraform.tfvars` before you start:
+
+- `release` — Talos version (e.g. `v1.12.6`) or `"latest"` (auto-detect via `terraform/talos-image-factory.tf`)
+- `kubernetes_version` — target Kubernetes version (e.g. `v1.35.2`)
 
 **Steps:**
 
@@ -566,47 +574,67 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    curl -sL https://talos.dev/install | sh
    ```
 
-2. **Modify Terraform values and plan** - Update Kubernetes version and auto-detect latest Talos image:
+2. **Upgrade Talos on control plane nodes** (one node at a time, before `terraform apply`):
+
+   With `release` / `kubernetes_version` already set in `terraform.tfvars`, resolve the installer image URL (same schematic as `terraform/talos-image-factory.tf`):
+
    ```bash
-   # Navigate to terraform directory
    cd terraform
-   
-   # Edit terraform/terraform.tfvars and update kubernetes_version to match new Talos image
-   # Example:
-   # kubernetes_version = "v1.35.2"
-   
-   # Review planned changes (Terraform will auto-detect latest Talos version)
+
+   # Option A: terraform output (refresh state first; does not recreate VMs)
+   terraform apply -refresh-only
+   terraform output -raw talos_installer_image
+
+   # Option B: terraform console (after terraform plan; no apply required)
    terraform plan
+   terraform console
+   # > data.talos_image_factory_urls.talos_image.urls.installer
    ```
 
-3. **Apply the upgrade** - Run terraform apply to upgrade:
-   ```bash
-   # Apply the upgrade (this will recreate VMs with new Talos version)
-   terraform apply
-   ```
+   Upgrade each control plane node with that URL:
 
-   **Note:** Steps 2 and 3 only upgrade the template for future Karpenter provisioned nodes. Existing nodes are not upgraded automatically. New nodes created by Karpenter will use the updated Talos image template.
-
-4. **Manually upgrade Talos control plane nodes** by running CLI:
    ```bash
-   # Upgrade control plane nodes (replace node IP and image version with corresponding values)
-   talosctl upgrade --nodes <NODE_IP> --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:<VERSION>
-   
-   # Example:
+   export TALOSCONFIG="$(pwd)/terraform/talosconfig"
+
+   IMAGE=$(terraform output -raw talos_installer_image)
+   talosctl upgrade --nodes <NODE_IP> --image "$IMAGE"
+
+   # Example with explicit image:
    # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.6
    ```
 
-5. **Resync inline manifests** (e.g. Karpenter template secret) by running `talosctl upgrade-k8s` to the current Kubernetes version on a control plane node:
+   You can also look up the image manually at [Talos Image Factory](https://factory.talos.dev/). Wait for each node to rejoin before upgrading the next.
+
+3. **Review Terraform plan** — confirm Proxmox ISO/template and inline manifest changes for the versions set in step 2:
    ```bash
-   # Replace <NODE_IP> with a control plane node IP and use the cluster's current k8s version
-   talosctl upgrade-k8s --nodes <NODE_IP> --to <CURRENT_K8S_VERSION>
-
-   # Example (current version 1.35.2):
-   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.2
+   cd terraform
+   terraform plan
    ```
-   This resyncs the inline manifests (including the Karpenter template secret) without changing the Kubernetes version.
 
-6. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
+4. **Apply Terraform** — refresh Proxmox Talos ISOs, worker/GPU templates, and Karpenter inline manifests:
+   ```bash
+   terraform apply
+   ```
+
+   **Note:** Step 4 updates Proxmox templates and secrets for **future** Karpenter nodes only. Existing workers stay on the old image until step 6.
+
+5. **Upgrade Kubernetes and resync inline manifests** on a control plane node:
+
+   If `kubernetes_version` changed in step 2, upgrade the control plane to the new version. If only `release` changed, run `upgrade-k8s` with the **current** cluster version to push updated inline manifests (Karpenter template secret) after step 4.
+
+   ```bash
+   export TALOSCONFIG="$(pwd)/terraform/talosconfig"
+
+   # Strip leading "v" from terraform.tfvars kubernetes_version (e.g. v1.35.2 -> 1.35.2)
+   K8S_VERSION=1.35.2
+
+   talosctl upgrade-k8s --nodes <NODE_IP> --to $K8S_VERSION --upgrade-kubelet=false
+
+   # Example:
+   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.2 --upgrade-kubelet=false
+   ```
+
+6. **Replace Karpenter worker nodes** so new nodes pick up the Talos image and machine config from step 4:
    ```bash
    # Option 1: Drift nodes (mark for replacement - Karpenter will gracefully replace them)
    kubectl annotate node <NODE_NAME> karpenter.sh/do-not-consolidate=true
@@ -620,7 +648,7 @@ Terraform automatically detects and upgrades to the latest stable Talos version 
    kubectl get nodes -w
    ```
 
-7. **Verify cluster health** after upgrade:
+7. **Verify cluster health**:
    ```bash
    # Verify Talos nodes
    talosctl get nodes
@@ -686,7 +714,7 @@ Worker nodes are automatically managed by Karpenter. Control plane nodes are man
 - **📦 Container-Optimized**: Built specifically for **Kubernetes workloads** with optimized resource usage
 - **🔄 Dynamic Scaling**: **Karpenter** auto-scales nodes based on workload demand with Proxmox integration
 - **🏷️ Node Pool Management**: Separate pools for system and user workloads with resource isolation
-- **🌐 Advanced Networking**: **Cilium eBPF** datapath, **BGP** routing, dual-stack **IPv4/IPv6**, and **DSR** mode support
+- **🌐 Advanced Networking**: **Cilium eBPF** datapath, **BGP** routing, dual-stack **IPv4/IPv6**, and **hybrid** load balancer mode with native acceleration
 - **🔍 Service Mesh**: **Istio Ambient Mode** for zero-trust security without sidecar overhead
 
 ## 💡 Use Cases
@@ -707,7 +735,7 @@ This Kubernetes homelab is perfect for:
 ```
 ├── terraform/                   # Talos Linux infrastructure as code
 │   ├── files/                   # Kubernetes manifests and Helm values
-│   │   ├── cilium.yaml         # Cilium CNI configuration (BGP, DSR, dual-stack)
+│   │   ├── cilium.yaml         # Cilium CNI configuration (BGP, hybrid LB, dual-stack)
 │   │   ├── cilium-bgp.yaml     # Cilium BGP routing configuration
 │   │   ├── proxmox-ccm.yaml    # Proxmox Cloud Controller Manager
 │   │   ├── proxmox-csi.yaml    # Proxmox CSI Plugin
@@ -723,18 +751,20 @@ This Kubernetes homelab is perfect for:
 │   ├── terraform.tfvars        # Terraform variables (customize for your Proxmox)
 │   ├── terraform.tf            # Terraform backend (Terraform Cloud) and required providers
 │   ├── variables.tf            # Variable definitions
-│   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, credentials)
+│   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, installer images, credentials)
 │   ├── providers.tf            # Terraform provider configuration
 │   ├── network.tf              # Network configuration and helpers
 │   ├── talos-bootstrap.tf      # Talos cluster bootstrap and kubeconfig generation
 │   ├── proxmox-kubenetes-token.tf # Proxmox API tokens for cloud providers
-│   ├── proxmox-vm-cloud-image.tf  # Talos image management in Proxmox
+│   ├── proxmox-vm-cloud-image.tf  # Talos and Ubuntu cloud image downloads in Proxmox
 │   ├── proxmox-vm-control-plane.tf # Control plane VM definitions
 │   ├── proxmox-vm-worker-template.tf # Worker template for Karpenter
 │   ├── proxmox-vm-gpu-worker-template.tf # GPU worker template
-│   ├── proxmox-vm-bastion.tf   # Bastion host VM
+│   ├── proxmox-vm-bastion.tf   # Bastion host VM (Ubuntu cloud image)
 │   ├── proxmox-pci-device.tf   # PCI device passthrough configuration
-│   └── talos-image-factory.tf  # Talos image factory integration
+│   ├── proxmox-backup.tf     # Proxmox Backup Server jobs (bastion, control plane, templates)
+│   ├── talos-image-factory.tf  # Talos image factory (version, schematics, URLs)
+│   └── ubuntu-image-factory.tf # Ubuntu cloud image version locals (bastion)
 ├── argocd/                     # ArgoCD configuration and applications
 │   ├── applications/           # Application definitions by category
 │   │   ├── cloud-controller-manager/ # Proxmox & Talos CCM
@@ -784,7 +814,7 @@ This Kubernetes homelab is perfect for:
 - **Cloud Provider**: Proxmox with CCM, CSI, and Karpenter integration
 - **Auto-scaling**: Karpenter with dynamic node provisioning from Proxmox templates
 - **Dual Stack**: IPv6/IPv4 support with native routing
-- **CNI**: Cilium with eBPF host routing (kubeProxyReplacement), BGP integration, DSR mode, and advanced BPF features
+- **CNI**: Cilium with eBPF host routing (kubeProxyReplacement), BGP integration, hybrid load balancer mode (`acceleration: native`), and advanced BPF features (netkit datapath)
 - **Networking**: Native routing with BGP, load balancer IP pools, pod CIDR management, and eBPF datapath (netkit)
 
 ### Storage Strategy
@@ -849,12 +879,19 @@ This Kubernetes homelab is perfect for:
 
 ### Proxmox Integration
 - **Automated Credentials**: CCM, CSI, and Karpenter credentials are generated by Terraform
+- **CCM Role**: Proxmox CCM role includes `VM.GuestAgent.Audit` (with `Sys.Audit` and `VM.Audit`) for guest agent visibility
 - **Secrets Management**: All Proxmox API tokens stored securely via inline manifests
-- **Dynamic Provisioning**: Karpenter uses Proxmox templates for on-demand node scaling
+- **Dynamic Provisioning**: Karpenter uses Proxmox worker and GPU worker templates for on-demand node scaling
 - **Storage Integration**: Proxmox CSI provides native block storage provisioning
 - **Network Integration**: Cilium BGP enables advanced routing with Proxmox infrastructure
+- **Backups**: Daily PBS snapshots cover bastion, control plane, and Karpenter VM templates (`proxmox-backup.tf`)
+
+### Bastion Host
+- **Ubuntu cloud image**: Version is centralized in `terraform/ubuntu-image-factory.tf` (default: Ubuntu 26.04 Resolute). Change `ubuntu_release_version` there and re-apply to roll bastion VMs.
+- **Purpose**: Jump host with QEMU guest agent; one bastion per Proxmox zone defined in `bastion` in `terraform.tfvars`.
 
 ### Backup Strategy
+- **Proxmox Backup Server**: Daily snapshots of bastion, control plane, and Karpenter VM templates (`terraform/proxmox-backup.tf`)
 - **AIStor / S3**: Object versioning and lifecycle policies (S3-compatible)
 - **CloudNativePG**: Automated backups to object storage (e.g. AIStor S3)
 - **Elasticsearch**: Snapshot backups to object storage (e.g. AIStor S3)

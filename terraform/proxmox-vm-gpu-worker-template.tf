@@ -6,7 +6,7 @@ resource "proxmox_virtual_environment_vm" "gpu-worker-template" {
   tags        = ["managed-by_terraform", "os_linux", "os-sku_talos", "os-image-version_gpu-${local.talos_image_version}", "type_k8s-gpu-worker-template", "network-interface_${var.nodes[each.key].bridge}", "vlan-id_${var.nodes[each.key].vlan_id}"]
 
   node_name = each.key
-  vm_id     = lookup(try(var.controlplane[each.key], {}), "id", 9000) + each.value + 200
+  vm_id     = each.value + lookup(try(var.controlplane[each.key], {}), "id", 9000) + 101
 
   template = true
 

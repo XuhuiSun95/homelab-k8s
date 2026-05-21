@@ -27,6 +27,6 @@ resource "proxmox_download_file" "ubuntu_cloud_image" {
   datastore_id = "local"
   node_name    = each.key
   overwrite    = false
-  url          = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-  file_name    = "noble-server-cloudimg-amd64.img"
+  url          = "https://cloud-images.ubuntu.com/${local.ubuntu_release_version}/current/${local.ubuntu_image_version}.img"
+  file_name    = "${local.ubuntu_image_version}.img"
 }

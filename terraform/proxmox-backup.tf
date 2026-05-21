@@ -19,5 +19,19 @@ resource "proxmox_backup_job" "talos_daily_backup" {
   mailnotification = "failure"
   mailto           = ["ericsun1995@gmail.com"]
 
-  depends_on = [proxmox_virtual_environment_vm.bastion, proxmox_virtual_environment_vm.controlplane]
+  depends_on = [
+    proxmox_virtual_environment_vm.bastion,
+    proxmox_virtual_environment_vm.controlplane,
+    proxmox_virtual_environment_vm.worker-template,
+    proxmox_virtual_environment_vm.gpu-worker-template,
+  ]
+
+  lifecycle {
+    replace_triggered_by = [
+      proxmox_virtual_environment_vm.bastion,
+      proxmox_virtual_environment_vm.controlplane,
+      proxmox_virtual_environment_vm.worker-template,
+      proxmox_virtual_environment_vm.gpu-worker-template,
+    ]
+  }
 }

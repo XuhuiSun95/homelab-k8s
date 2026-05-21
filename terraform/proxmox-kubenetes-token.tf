@@ -41,8 +41,9 @@ resource "proxmox_virtual_environment_role" "ccm" {
   role_id = "CCM"
 
   privileges = [
-    "VM.Audit",
     "Sys.Audit",
+    "VM.Audit",
+    "VM.GuestAgent.Audit",
   ]
 }
 
