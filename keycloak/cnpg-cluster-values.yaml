@@ -21,15 +21,15 @@ recovery:
 cluster:
   instances: 3
   storage:
-    size: 4Gi
+    size: 10Gi
     storageClass: proxmox-local-zfs-xfs
   resources:
     requests:
-      cpu: 300m
-      memory: 512Mi
+      cpu: 1
+      memory: 2Gi
     limits:
-      cpu: 300m
-      memory: 512Mi
+      cpu: 1
+      memory: 2Gi
   priorityClassName: platform-critical
   affinity:
     topologyKey: kubernetes.io/hostname
@@ -47,8 +47,35 @@ cluster:
     prometheusRule:
       enabled: false
   postgresql:
+    synchronous:
+      method: any
+      number: 1
     parameters:
-      shared_buffers: 128MB
+      wal_compression: lz4
+      max_wal_size: 1GB
+      max_slot_wal_keep_size: 2GB
+      checkpoint_timeout: 15min
+      checkpoint_completion_target: 0.9
+      checkpoint_flush_after: 2MB
+      wal_writer_flush_after: 2MB
+      min_wal_size: 512MB
+      shared_buffers: 512MB
+      effective_cache_size: 1536MB
+      work_mem: 8MB
+      maintenance_work_mem: 128MB
+      autovacuum_vacuum_cost_limit: 2400
+      random_page_cost: 1.1
+      effective_io_concurrency: 64
+      maintenance_io_concurrency: 32
+      log_checkpoints: on
+      log_lock_waits: on
+      log_min_duration_statement: 1000
+      log_statement: ddl
+      log_temp_files: 1024
+      log_autovacuum_min_duration: 1s
+      pg_stat_statements.max: 10000
+      pg_stat_statements.track: all
+      hot_standby_feedback: on
   initdb:
     database: keycloak
 
