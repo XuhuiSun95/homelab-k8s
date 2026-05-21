@@ -5,6 +5,7 @@ ipv6:
 
 kubeProxyReplacement: true
 loadBalancer:
+  acceleration: best-effort
   mode: dsr
   dsrDispatch: opt
 
@@ -19,9 +20,9 @@ ipam:
 
 routingMode: native
 autoDirectNodeRoutes: true
-devices: "eth+"
+devices: eth0 
 nodePort:
-  directRoutingDevice: "eth+"
+  directRoutingDevice: eth0
 
 bgpControlPlane:
   enabled: true
@@ -46,24 +47,18 @@ bandwidthManager:
 cni:
   exclusive: false
 
-image:
-  useDigest: false
 resources:
   requests:
     cpu: 800m
     memory: 1Gi
 
 envoy:
-  image:
-    useDigest: false
   resources:
     requests:
       cpu: 100m
       memory: 256Mi
 
 operator:
-  image:
-    useDigest: false
   resources:
     requests:
       cpu: 10m
