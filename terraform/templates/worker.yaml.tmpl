@@ -5,22 +5,6 @@ machine:
         endpoints:
           - ${registry_mirror_endpoint}/v2/docker.io
         overridePath: true
-      ghcr.io:
-        endpoints:
-          - ${registry_mirror_endpoint}/v2/ghcr.io
-        overridePath: true
-      registry.k8s.io:
-        endpoints:
-          - ${registry_mirror_endpoint}/v2/registry.k8s.io
-        overridePath: true
-      ecr-public.aws.com:
-        endpoints:
-          - ${registry_mirror_endpoint}/v2/ecr-public.aws.com
-        overridePath: true
-      quay.io:
-        endpoints:
-          - ${registry_mirror_endpoint}/v2/quay.io
-        overridePath: true
   kubelet:
     extraArgs:
       cloud-provider: external
