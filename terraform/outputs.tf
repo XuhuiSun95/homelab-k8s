@@ -30,3 +30,8 @@ output "kubeconfig" {
   sensitive = true
   value     = talos_cluster_kubeconfig.this.kubeconfig_raw
 }
+
+output "talos_installer_image" {
+  description = "Talos Image Factory installer URL (control plane and workers). Use with talosctl upgrade --image."
+  value       = data.talos_image_factory_urls.talos_image.urls.installer
+}

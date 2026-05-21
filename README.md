@@ -561,7 +561,10 @@ Upgrade Talos Linux and Kubernetes to the latest version:
 
 #### Automatic Upgrade to Latest Version
 
-Set `release` in `terraform.tfvars` to a pinned Talos version (e.g. `v1.12.6`) or `"latest"` to auto-detect the newest stable image from Talos Image Factory (`terraform/talos-image-factory.tf`).
+Pin or bump versions in `terraform/terraform.tfvars` before you start:
+
+- `release` — Talos version (e.g. `v1.12.6`) or `"latest"` (auto-detect via `terraform/talos-image-factory.tf`)
+- `kubernetes_version` — target Kubernetes version (e.g. `v1.35.2`)
 
 **Steps:**
 
@@ -571,48 +574,67 @@ Set `release` in `terraform.tfvars` to a pinned Talos version (e.g. `v1.12.6`) o
    curl -sL https://talos.dev/install | sh
    ```
 
-2. **Modify Terraform values and plan** - Update Kubernetes version and auto-detect latest Talos image:
+2. **Upgrade Talos on control plane nodes** (one node at a time, before `terraform apply`):
+
+   With `release` / `kubernetes_version` already set in `terraform.tfvars`, resolve the installer image URL (same schematic as `terraform/talos-image-factory.tf`):
+
    ```bash
-   # Navigate to terraform directory
    cd terraform
-   
-   # Edit terraform/terraform.tfvars and update release and kubernetes_version together
-   # Example:
-   # release = "v1.12.6"
-   # kubernetes_version = "v1.35.2"
-   
-   # Review planned changes (Terraform will auto-detect latest Talos version)
+
+   # Option A: terraform output (refresh state first; does not recreate VMs)
+   terraform apply -refresh-only
+   terraform output -raw talos_installer_image
+
+   # Option B: terraform console (after terraform plan; no apply required)
    terraform plan
+   terraform console
+   # > data.talos_image_factory_urls.talos_image.urls.installer
    ```
 
-3. **Apply the upgrade** - Run terraform apply to upgrade:
-   ```bash
-   # Apply the upgrade (this will recreate VMs with new Talos version)
-   terraform apply
-   ```
+   Upgrade each control plane node with that URL:
 
-   **Note:** Steps 2 and 3 only upgrade the template for future Karpenter provisioned nodes. Existing nodes are not upgraded automatically. New nodes created by Karpenter will use the updated Talos image template.
-
-4. **Manually upgrade Talos control plane nodes** by running CLI:
    ```bash
-   # Upgrade control plane nodes (replace node IP and image version with corresponding values)
-   talosctl upgrade --nodes <NODE_IP> --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:<VERSION>
-   
-   # Example:
+   export TALOSCONFIG="$(pwd)/terraform/talosconfig"
+
+   IMAGE=$(terraform output -raw talos_installer_image)
+   talosctl upgrade --nodes <NODE_IP> --image "$IMAGE"
+
+   # Example with explicit image:
    # talosctl upgrade --nodes 10.101.70.30 --image factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.6
    ```
 
-5. **Resync inline manifests** (e.g. Karpenter template secret) by running `talosctl upgrade-k8s` to the current Kubernetes version on a control plane node:
+   You can also look up the image manually at [Talos Image Factory](https://factory.talos.dev/). Wait for each node to rejoin before upgrading the next.
+
+3. **Review Terraform plan** — confirm Proxmox ISO/template and inline manifest changes for the versions set in step 2:
    ```bash
-   # Replace <NODE_IP> with a control plane node IP and use the cluster's current k8s version
-   talosctl upgrade-k8s --nodes <NODE_IP> --to <CURRENT_K8S_VERSION>
-
-   # Example (current version 1.35.2):
-   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.2
+   cd terraform
+   terraform plan
    ```
-   This resyncs the inline manifests (including the Karpenter template secret) without changing the Kubernetes version.
 
-6. **Drift or delete old Karpenter provisioned nodes** so Karpenter can provision new nodes with the new Talos image and machine config:
+4. **Apply Terraform** — refresh Proxmox Talos ISOs, worker/GPU templates, and Karpenter inline manifests:
+   ```bash
+   terraform apply
+   ```
+
+   **Note:** Step 4 updates Proxmox templates and secrets for **future** Karpenter nodes only. Existing workers stay on the old image until step 6.
+
+5. **Upgrade Kubernetes and resync inline manifests** on a control plane node:
+
+   If `kubernetes_version` changed in step 2, upgrade the control plane to the new version. If only `release` changed, run `upgrade-k8s` with the **current** cluster version to push updated inline manifests (Karpenter template secret) after step 4.
+
+   ```bash
+   export TALOSCONFIG="$(pwd)/terraform/talosconfig"
+
+   # Strip leading "v" from terraform.tfvars kubernetes_version (e.g. v1.35.2 -> 1.35.2)
+   K8S_VERSION=1.35.2
+
+   talosctl upgrade-k8s --nodes <NODE_IP> --to $K8S_VERSION --upgrade-kubelet=false
+
+   # Example:
+   # talosctl upgrade-k8s --nodes 10.101.70.30 --to 1.35.2 --upgrade-kubelet=false
+   ```
+
+6. **Replace Karpenter worker nodes** so new nodes pick up the Talos image and machine config from step 4:
    ```bash
    # Option 1: Drift nodes (mark for replacement - Karpenter will gracefully replace them)
    kubectl annotate node <NODE_NAME> karpenter.sh/do-not-consolidate=true
@@ -626,7 +648,7 @@ Set `release` in `terraform.tfvars` to a pinned Talos version (e.g. `v1.12.6`) o
    kubectl get nodes -w
    ```
 
-7. **Verify cluster health** after upgrade:
+7. **Verify cluster health**:
    ```bash
    # Verify Talos nodes
    talosctl get nodes
@@ -729,7 +751,7 @@ This Kubernetes homelab is perfect for:
 │   ├── terraform.tfvars        # Terraform variables (customize for your Proxmox)
 │   ├── terraform.tf            # Terraform backend (Terraform Cloud) and required providers
 │   ├── variables.tf            # Variable definitions
-│   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, credentials)
+│   ├── outputs.tf              # Terraform outputs (kubeconfig, talosconfig, installer images, credentials)
 │   ├── providers.tf            # Terraform provider configuration
 │   ├── network.tf              # Network configuration and helpers
 │   ├── talos-bootstrap.tf      # Talos cluster bootstrap and kubeconfig generation
