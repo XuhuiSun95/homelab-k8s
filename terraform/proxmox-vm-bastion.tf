@@ -64,7 +64,7 @@ resource "proxmox_virtual_environment_vm" "bastion" {
 
   name        = each.value.name
   description = "Bastion host for ${each.value.zone}"
-  tags        = ["managed-by_terraform", "os_linux", "os-sku_ubuntu", "os-image-version_noble-server-cloudimg-amd64", "type_vm", "network-interface_${each.value.bridge}", "vlan-id_${each.value.vlan_id}"]
+  tags        = ["managed-by_terraform", "os_linux", "os-sku_ubuntu", "os-image-version_${local.ubuntu_image_version}", "type_vm", "network-interface_${each.value.bridge}", "vlan-id_${each.value.vlan_id}"]
 
   node_name = each.value.zone
   vm_id     = each.value.id
