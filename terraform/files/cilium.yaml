@@ -5,7 +5,7 @@ ipv6:
 
 kubeProxyReplacement: true
 loadBalancer:
-  acceleration: best-effort
+  acceleration: native
   mode: dsr
   dsrDispatch: opt
 
