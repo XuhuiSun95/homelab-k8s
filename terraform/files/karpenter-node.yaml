@@ -105,8 +105,8 @@ spec:
         - key: node.kubernetes.io/instance-type
           operator: In
           values:
-            - "c1.8VCPU-16GB"
             - "s1.4VCPU-16GB"
+            - "c1.8VCPU-16GB"
             - "s1.8VCPU-32GB"
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
@@ -190,10 +190,10 @@ spec:
           operator: In
           values:
             - "c1.4VCPU-8GB"
-            - "c1.8VCPU-16GB"
-            - "c1.16VCPU-32GB"
             - "s1.4VCPU-16GB"
+            - "c1.8VCPU-16GB"
             - "s1.8VCPU-32GB"
+            - "c1.16VCPU-32GB"
             - "s1.16VCPU-64GB"
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized

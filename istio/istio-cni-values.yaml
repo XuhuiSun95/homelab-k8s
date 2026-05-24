@@ -2,7 +2,7 @@ profile: ambient
 
 resources:
   requests:
-    cpu: 5m
+    cpu: 2m
     memory: 64Mi
   limits:
     memory: 64Mi
