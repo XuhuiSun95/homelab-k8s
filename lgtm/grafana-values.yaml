@@ -84,6 +84,8 @@ dashboardProviders:
       options:
         path: /var/lib/grafana/dashboards/default
 
+defaultCurlOptions: "-kf"
+
 dashboards:
   default:
     15761-kubernetes-system-api-server:
