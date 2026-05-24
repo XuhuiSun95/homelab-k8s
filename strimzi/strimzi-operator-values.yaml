@@ -39,7 +39,7 @@ dashboards:
 
 resources:
   requests:
-    cpu: 25m
+    cpu: 20m
     memory: 512Mi
   limits:
     cpu: null
