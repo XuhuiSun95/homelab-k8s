@@ -2,7 +2,7 @@ region = "vegas-1"
 
 network_shift = 1
 
-vpc_cidr = ["10.101.70.0/24", "fd10:101:70::/64"]
+vpc_cidr = ["10.101.70.0/24", "2600:8801:2a8b:6c04::/64"]
 
 nodes = {
   "pve2" = {

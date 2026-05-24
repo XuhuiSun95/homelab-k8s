@@ -7,7 +7,7 @@ extraArgs:
   - --allocate-node-cidrs
   - --cidr-allocator-type=CloudAllocator
   - --node-cidr-mask-size-ipv4=24
-  - --node-cidr-mask-size-ipv6=120
+  - --node-cidr-mask-size-ipv6=80
 
 transformations:
   - name: system
