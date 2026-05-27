@@ -137,7 +137,7 @@ config:
             icon: n8n
             href: https://n8n.local.xuhuisun.com
             description: workflow automation
-            siteMonitor: http://n8n-n8n.n8n.svc.cluster.local:80
+            # siteMonitor: http://n8n-n8n.n8n.svc.cluster.local:80
   widgets:
     - kubernetes:
         cluster:
