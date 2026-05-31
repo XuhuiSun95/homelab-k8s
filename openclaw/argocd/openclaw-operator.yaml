@@ -13,7 +13,7 @@ spec:
   sources:
     - path: .
       repoURL: 'oci://ghcr.io/paperclipinc/charts/openclaw-operator'
-      targetRevision: 0.34.5
+      targetRevision: 0.34.6
       helm:
         valueFiles:
           - $values/openclaw/values.yaml
