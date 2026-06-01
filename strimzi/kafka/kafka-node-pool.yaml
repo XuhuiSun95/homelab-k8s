@@ -1,3 +1,4 @@
+---
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
 metadata:
@@ -20,44 +21,44 @@ spec:
   storage:
     type: persistent-claim
     size: 3Gi
-    deleteClaim: false
     class: proxmox-local-zfs-xfs
   template:
     pod:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: strimzi.io/pool-name
-                    operator: In
-                    values:
-                      - controller
-              topologyKey: kubernetes.io/hostname
+          - labelSelector:
+              matchExpressions:
+              - key: strimzi.io/pool-name
+                operator: In
+                values:
+                - controller
+            topologyKey: kubernetes.io/hostname
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-              - matchExpressions:
-                - key:  karpenter.sh/nodepool
-                  operator: In
-                  values: ["memory-optimized"]
+            - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: In
+                values:
+                - memory-optimized
       tolerations:
-        - key: node-role.kubernetes.io/memory-optimized
-          operator: Exists
-          effect: NoSchedule
+      - key: node-role.kubernetes.io/memory-optimized
+        operator: Exists
+        effect: NoSchedule
       priorityClassName: platform-critical
   jvmOptions:
-    "-Xms": "3g"
-    "-Xmx": "3g"
+    "-Xms": 3g
+    "-Xmx": 3g
     "-XX":
-      "MetaspaceSize": "96m"
-      "UseG1GC": "true"
-      "MaxGCPauseMillis": "20"
-      "InitiatingHeapOccupancyPercent": "35"
-      "G1HeapRegionSize": "16M"
-      "MinMetaspaceFreeRatio": "50"
-      "MaxMetaspaceFreeRatio": "80"
-      "ExplicitGCInvokesConcurrent": "true" 
+      MetaspaceSize: 96m
+      UseG1GC: "true"
+      MaxGCPauseMillis: "20"
+      InitiatingHeapOccupancyPercent: "35"
+      G1HeapRegionSize: 16M
+      MinMetaspaceFreeRatio: "50"
+      MaxMetaspaceFreeRatio: "80"
+      ExplicitGCInvokesConcurrent: "true"
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
@@ -81,41 +82,41 @@ spec:
   storage:
     type: persistent-claim
     size: 20Gi
-    deleteClaim: false
     class: proxmox-local-zfs-xfs
   template:
     pod:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: strimzi.io/pool-name
-                    operator: In
-                    values:
-                      - kafka
-              topologyKey: kubernetes.io/hostname
+          - labelSelector:
+              matchExpressions:
+              - key: strimzi.io/pool-name
+                operator: In
+                values:
+                - kafka
+            topologyKey: kubernetes.io/hostname
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-              - matchExpressions:
-                - key:  karpenter.sh/nodepool
-                  operator: In
-                  values: ["memory-optimized"]
+            - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: In
+                values:
+                - memory-optimized
       tolerations:
-        - key: node-role.kubernetes.io/memory-optimized
-          operator: Exists
-          effect: NoSchedule
+      - key: node-role.kubernetes.io/memory-optimized
+        operator: Exists
+        effect: NoSchedule
       priorityClassName: platform-critical
   jvmOptions:
-    "-Xms": "6g"
-    "-Xmx": "6g"
+    "-Xms": 6g
+    "-Xmx": 6g
     "-XX":
-      "MetaspaceSize": "96m"
-      "UseG1GC": "true"
-      "MaxGCPauseMillis": "20"
-      "InitiatingHeapOccupancyPercent": "35"
-      "G1HeapRegionSize": "16M"
-      "MinMetaspaceFreeRatio": "50"
-      "MaxMetaspaceFreeRatio": "80"
-      "ExplicitGCInvokesConcurrent": "true"
+      MetaspaceSize: 96m
+      UseG1GC: "true"
+      MaxGCPauseMillis: "20"
+      InitiatingHeapOccupancyPercent: "35"
+      G1HeapRegionSize: 16M
+      MinMetaspaceFreeRatio: "50"
+      MaxMetaspaceFreeRatio: "80"
+      ExplicitGCInvokesConcurrent: "true"

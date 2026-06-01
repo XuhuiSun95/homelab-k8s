@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
@@ -9,7 +10,7 @@ spec:
       strimzi.io/kind: cluster-operator
   namespaceSelector:
     matchNames:
-      - strimzi-operator
+    - strimzi-operator
   podMetricsEndpoints:
   - path: /metrics
     port: http
@@ -25,7 +26,7 @@ spec:
       app.kubernetes.io/name: entity-operator
   namespaceSelector:
     matchNames:
-      - kafka
+    - kafka
   podMetricsEndpoints:
   - path: /metrics
     port: healthcheck
@@ -41,7 +42,7 @@ spec:
       strimzi.io/kind: KafkaBridge
   namespaceSelector:
     matchNames:
-      - kafka
+    - kafka
   podMetricsEndpoints:
   - path: /metrics
     port: rest-api
@@ -54,12 +55,15 @@ metadata:
 spec:
   selector:
     matchExpressions:
-      - key: "strimzi.io/kind"
-        operator: In
-        values: ["Kafka", "KafkaConnect", "KafkaMirrorMaker2"]
+    - key: strimzi.io/kind
+      operator: In
+      values:
+      - Kafka
+      - KafkaConnect
+      - KafkaMirrorMaker2
   namespaceSelector:
     matchNames:
-      - kafka
+    - kafka
   podMetricsEndpoints:
   - path: /metrics
     port: tcp-prometheus
@@ -68,25 +72,29 @@ spec:
       regex: __meta_kubernetes_pod_label_(strimzi_io_.+)
       replacement: $1
       action: labelmap
-    - sourceLabels: [__meta_kubernetes_namespace]
+    - sourceLabels:
+      - __meta_kubernetes_namespace
       separator: ;
       regex: (.*)
       targetLabel: namespace
       replacement: $1
       action: replace
-    - sourceLabels: [__meta_kubernetes_pod_name]
+    - sourceLabels:
+      - __meta_kubernetes_pod_name
       separator: ;
       regex: (.*)
       targetLabel: kubernetes_pod_name
       replacement: $1
       action: replace
-    - sourceLabels: [__meta_kubernetes_pod_node_name]
+    - sourceLabels:
+      - __meta_kubernetes_pod_node_name
       separator: ;
       regex: (.*)
       targetLabel: node_name
       replacement: $1
       action: replace
-    - sourceLabels: [__meta_kubernetes_pod_host_ip]
+    - sourceLabels:
+      - __meta_kubernetes_pod_host_ip
       separator: ;
       regex: (.*)
       targetLabel: node_ip
