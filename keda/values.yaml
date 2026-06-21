@@ -103,10 +103,10 @@ resources:
   metricServer:
     requests:
       cpu: 10m
-      memory: 45Mi
+      memory: 50Mi
     limits:
       cpu: null
-      memory: 45Mi
+      memory: 50Mi
   webhooks:
     requests:
       cpu: 1m

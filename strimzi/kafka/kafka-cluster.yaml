@@ -57,9 +57,9 @@ spec:
     resources:
       requests:
         cpu: 5m
-        memory: 30Mi
+        memory: 20Mi
       limits:
-        memory: 30Mi
+        memory: 20Mi
     template:
       pod:
         affinity:
@@ -82,14 +82,14 @@ spec:
         limits:
           memory: 300Mi
         requests:
-          cpu: 6m
+          cpu: 8m
           memory: 300Mi
     userOperator:
       resources:
         limits:
           memory: 300Mi
         requests:
-          cpu: 6m
+          cpu: 8m
           memory: 300Mi
     template:
       pod:

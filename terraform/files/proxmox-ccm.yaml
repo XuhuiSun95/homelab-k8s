@@ -5,10 +5,10 @@ existingConfigSecret: proxmox-cloud-controller-manager
 
 resources:
   requests:
-    cpu: 10m
-    memory: 64Mi
+    cpu: 4m
+    memory: 40Mi
   limits:
-    memory: 64Mi
+    memory: 40Mi
 
 affinity:
   nodeAffinity:
