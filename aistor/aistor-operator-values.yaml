@@ -4,10 +4,10 @@ global:
     replicas: 2
     resources:
       requests:
-        cpu: 5m
-        memory: 32Mi
+        cpu: 2m
+        memory: 20Mi
       limits:
-        memory: 32Mi
+        memory: 20Mi
     tolerations:
       - key: node-role.kubernetes.io/system
         operator: Exists
@@ -39,10 +39,10 @@ operators:
             topologyKey: kubernetes.io/hostname
     resources:
       requests:
-        cpu: 5m
-        memory: 32Mi
+        cpu: 1m
+        memory: 20Mi
       limits:
-        memory: 32Mi
+        memory: 20Mi
   object-store:
     affinity:
       nodeAffinity:
@@ -67,10 +67,10 @@ operators:
             topologyKey: kubernetes.io/hostname
     resources:
       requests:
-        cpu: 10m
-        memory: 96Mi
+        cpu: 3m
+        memory: 75Mi
       limits:
-        memory: 96Mi
+        memory: 75Mi
     # TODO: disable webhook affinity due to upstream chart missing tolerations
     # webhook:
     #   affinity:

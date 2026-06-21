@@ -29,17 +29,17 @@ minkms:
   replicas: 3
   resources:
     requests:
-      cpu: 50m
-      memory: 32Mi
+      cpu: 40m
+      memory: 20Mi
     limits:
-      memory: 32Mi
+      memory: 20Mi
   sideCars:
     resources:
       requests:
         cpu: 1m
-        memory: 32Mi
+        memory: 15Mi
       limits:
-        memory: 32Mi
+        memory: 15Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists

@@ -7,10 +7,10 @@ crds:
 replicaCount: 2
 resources:
   requests:
-    cpu: 2m
-    memory: 64Mi
+    cpu: 1m
+    memory: 40Mi
   limits:
-    memory: 64Mi
+    memory: 40Mi
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
@@ -82,10 +82,10 @@ cainjector:
   replicaCount: 2
   resources:
     requests:
-      cpu: 5m
-      memory: 128Mi
+      cpu: 1m
+      memory: 70Mi
     limits:
-      memory: 128Mi
+      memory: 70Mi
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
@@ -145,10 +145,10 @@ webhook:
   replicaCount: 3
   resources:
     requests:
-      cpu: 2m
-      memory: 32Mi
+      cpu: 1m
+      memory: 30Mi
     limits:
-      memory: 32Mi
+      memory: 30Mi
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
