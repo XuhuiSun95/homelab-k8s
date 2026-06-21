@@ -37,10 +37,10 @@ applicationSet:
     minAvailable: 1
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 10m
+      memory: 120Mi
     limits:
-      memory: 128Mi
+      memory: 120Mi
 
 dex:
   enabled: false
@@ -53,10 +53,10 @@ redis-ha:
   haproxy:
     resources:
       requests:
-        cpu: 10m
-        memory: 128Mi
+        cpu: 5m
+        memory: 120Mi
       limits:
-        memory: 128Mi
+        memory: 120Mi
     additionalAffinities:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -73,23 +73,23 @@ redis-ha:
     resources:
       requests:
         cpu: 30m
-        memory: 64Mi
+        memory: 30Mi
       limits:
-        memory: 64Mi
+        memory: 30Mi
   sentinel:
     resources:
       requests:
         cpu: 30m
-        memory: 16Mi
+        memory: 10Mi
       limits:
-        memory: 16Mi
+        memory: 10Mi
   splitBrainDetection:
     resources:
       requests:
         cpu: 1m
-        memory: 8Mi
+        memory: 5Mi
       limits:
-        memory: 8Mi
+        memory: 5Mi
   additionalAffinities:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -112,16 +112,16 @@ controller:
       controlledResources: ["cpu", "memory"]
       minAllowed:
         cpu: 100m
-        memory: 512Mi
+        memory: 1Gi 
       maxAllowed:
         cpu: 1
         memory: 2Gi
   resources:
     requests:
       cpu: 150m
-      memory: 1024Mi
+      memory: 1Gi
     limits:
-      memory: 1024Mi
+      memory: 1Gi
 
 server:
   replicas: 2
@@ -130,10 +130,10 @@ server:
     minAvailable: 1
   resources:
     requests:
-      cpu: 20m
-      memory: 180Mi
+      cpu: 10m
+      memory: 150Mi
     limits:
-      memory: 180Mi
+      memory: 150Mi
 
 repoServer:
   replicas: 2
@@ -143,6 +143,6 @@ repoServer:
   resources:
     requests:
       cpu: 30m
-      memory: 768Mi
+      memory: 750Mi
     limits:
-      memory: 768Mi
+      memory: 750Mi
