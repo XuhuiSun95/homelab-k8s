@@ -4,10 +4,10 @@ autoscaleMin: 2
 replicaCount: 2
 resources:
   requests:
-    cpu: 50m
-    memory: 256Mi
+    cpu: 15m
+    memory: 200Mi
   limits:
-    memory: 256Mi
+    memory: 200Mi
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:

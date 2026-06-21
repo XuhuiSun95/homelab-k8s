@@ -2,7 +2,7 @@ resourceName: ztunnel
 
 resources:
   requests:
-    cpu: 10m
-    memory: 64Mi
+    cpu: 5m
+    memory: 50Mi
   limits:
-    memory: 64Mi
+    memory: 50Mi

@@ -18,7 +18,7 @@ priorityClassName: platform-critical
 
 resources:
   requests:
-    cpu: 2m
+    cpu: 1m
     memory: 40Mi
   limits:
     memory: 40Mi
@@ -53,9 +53,9 @@ provider:
     resources:
       requests:
         cpu: 1m
-        memory: 60Mi
+        memory: 70Mi
       limits:
-        memory: 60Mi
+        memory: 70Mi
     livenessProbe:
       httpGet:
         path: /healthz
