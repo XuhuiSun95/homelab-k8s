@@ -2,10 +2,10 @@ replicaCount: 2
 
 resources:
   requests:
-    cpu: 10m
-    memory: 96Mi
+    cpu: 5m
+    memory: 85Mi
   limits:
-    memory: 96Mi
+    memory: 85Mi
 
 affinity:
   nodeAffinity:

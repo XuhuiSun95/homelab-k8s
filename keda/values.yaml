@@ -95,22 +95,22 @@ webhooks:
 resources:
   operator:
     requests:
-      cpu: 5m
-      memory: 64Mi
+      cpu: 4m
+      memory: 35Mi
     limits:
       cpu: null
-      memory: 64Mi
+      memory: 35Mi
   metricServer:
     requests:
-      cpu: 15m
-      memory: 64Mi
+      cpu: 10m
+      memory: 45Mi
     limits:
       cpu: null
-      memory: 64Mi
+      memory: 45Mi
   webhooks:
     requests:
-      cpu: 2m
-      memory: 32Mi
+      cpu: 1m
+      memory: 15Mi
     limits:
       cpu: null
-      memory: 32Mi
+      memory: 15Mi

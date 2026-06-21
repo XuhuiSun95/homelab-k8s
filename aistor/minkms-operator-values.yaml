@@ -3,10 +3,10 @@ global:
     replicas: 2
     resources:
       requests:
-        cpu: 4m
-        memory: 64Mi
+        cpu: 2m
+        memory: 50Mi
       limits:
-        memory: 64Mi
+        memory: 50Mi
     # TODO: tolerations did not work 
     tolerations:
       - key: node-role.kubernetes.io/system
