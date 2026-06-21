@@ -49,7 +49,7 @@ objectStore:
     - name: MINIO_KMS_API_KEY
       value: "k1:E-4M_dXrKywZrL2r5w5vRfrrBPlmMlHluINDWRHWDyc"
     - name: MINIO_IDENTITY_OPENID_CONFIG_URL
-      value: "https://iam.local.xuhuisun.com/realms/local/.well-known/openid-configuration"
+      value: "http://keycloak-keycloak.keycloak.svc.cluster.local/realms/local/.well-known/openid-configuration"
     - name: MINIO_IDENTITY_OPENID_CLIENT_ID
       value: "minio"
     - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
