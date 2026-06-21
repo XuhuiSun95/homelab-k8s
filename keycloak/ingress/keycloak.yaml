@@ -22,6 +22,10 @@ spec:
     - authority:
         exact: iam.local.xuhuisun.com
       uri:
+        exact: /
+    - authority:
+        exact: iam.local.xuhuisun.com
+      uri:
         prefix: /realms/
     - authority:
         exact: iam.local.xuhuisun.com
