@@ -80,9 +80,9 @@ distributor:
   resources:
     requests:
       cpu: 20m
-      memory: 256Mi
+      memory: 200Mi
     limits:
-      memory: 256Mi
+      memory: 200Mi
   affinity: |
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

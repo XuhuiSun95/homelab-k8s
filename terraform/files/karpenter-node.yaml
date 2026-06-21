@@ -105,6 +105,7 @@ spec:
         - key: node.kubernetes.io/instance-type
           operator: In
           values:
+            - "c1.4VCPU-8GB"
             - "s1.4VCPU-16GB"
             - "c1.8VCPU-16GB"
             - "s1.8VCPU-32GB"
@@ -148,6 +149,7 @@ spec:
         - key: node.kubernetes.io/instance-type
           operator: In
           values:
+            - "m1.2VCPU-16GB"
             - "m1.4VCPU-32GB"
             - "m1.8VCPU-64GB"
   disruption:

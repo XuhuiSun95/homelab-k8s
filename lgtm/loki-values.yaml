@@ -168,9 +168,9 @@ distributor:
   resources:
     requests:
       cpu: 60m
-      memory: 256Mi
+      memory: 200Mi
     limits:
-      memory: 256Mi
+      memory: 200Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -253,9 +253,9 @@ gateway:
   resources:
     requests:
       cpu: 10m
-      memory: 64Mi
+      memory: 30Mi
     limits:
-      memory: 64Mi
+      memory: 30Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -279,10 +279,10 @@ gateway:
 memcachedExporter:
   resources:
     requests:
-      cpu: 5m
-      memory: 16Mi
+      cpu: 4m
+      memory: 10Mi
     limits:
-      memory: 16Mi
+      memory: 10Mi
 resultsCache:
   replicas: 1
   allocatedMemory: 213
