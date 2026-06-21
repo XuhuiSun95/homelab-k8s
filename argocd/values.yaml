@@ -80,9 +80,9 @@ redis-ha:
     resources:
       requests:
         cpu: 30m
-        memory: 10Mi
+        memory: 15Mi
       limits:
-        memory: 10Mi
+        memory: 15Mi
   splitBrainDetection:
     resources:
       requests:
