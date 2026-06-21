@@ -59,10 +59,10 @@ transformations:
 
 resources:
   requests:
-    cpu: 10m
-    memory: 64Mi
+    cpu: 4m
+    memory: 50Mi
   limits:
-    memory: 64Mi
+    memory: 50Mi
 
 daemonSet:
   enabled: true

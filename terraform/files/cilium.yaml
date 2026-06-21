@@ -49,22 +49,22 @@ cni:
 
 resources:
   requests:
-    cpu: 800m
+    cpu: 400m
     memory: 1Gi
 
 envoy:
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 200Mi
 
 operator:
   resources:
     requests:
       cpu: 10m
-      memory: 128Mi
+      memory: 100Mi
     limits:
-      memory: 128Mi
+      memory: 100Mi
 
 securityContext:
   capabilities:

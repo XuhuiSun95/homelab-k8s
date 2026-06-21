@@ -1,9 +1,9 @@
 resources:
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 10m
+    memory: 80Mi
   limits:
-    memory: 128Mi
+    memory: 80Mi
 
 nodeSelector:
   node-role.kubernetes.io/control-plane: ""
