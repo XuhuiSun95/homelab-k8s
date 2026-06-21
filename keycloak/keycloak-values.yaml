@@ -13,7 +13,7 @@ extraEnvVars:
   - name: KC_HOSTNAME_ADMIN
     value: https://keycloak.local.xuhuisun.com
   - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
-    value: true
+    value: "true"
 
 replicaCount: 2
 podLabels:
