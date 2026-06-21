@@ -185,9 +185,9 @@ grafana.ini:
     email_attribute_path: email
     login_attribute_path: username
     name_attribute_path: full_name
-    auth_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/auth
-    token_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/token
-    api_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/userinfo
+    auth_url: http://keycloak-keycloak.keycloak.svc.cluster.local/realms/local/protocol/openid-connect/auth
+    token_url: http://keycloak-keycloak.keycloak.svc.cluster.local/realms/local/protocol/openid-connect/token
+    api_url: http://keycloak-keycloak.keycloak.svc.cluster.local/realms/local/protocol/openid-connect/userinfo
     role_attribute_path: "contains(resource_access.grafana.roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(resource_access.grafana.roles[*], 'admin') && 'Admin' || contains(resource_access.grafana.roles[*], 'editor') && 'Editor' || 'Viewer'"
     groups_attribute_path: groups
     signout_redirect_url: https://iam.local.xuhuisun.com/realms/local/protocol/openid-connect/logout?post_logout_redirect_uri=https%3A%2F%2Fgrafana.local.xuhuisun.com%2Flogin
