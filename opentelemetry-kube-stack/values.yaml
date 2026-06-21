@@ -9,9 +9,9 @@ opentelemetry-operator:
     resources:
       requests:
         cpu: 3m
-        memory: 65Mi
+        memory: 60Mi
       limits:
-        memory: 65Mi
+        memory: 60Mi
   kubeRBACProxy:
     resources:
       requests:
@@ -44,11 +44,11 @@ collectors:
   daemon:
     resources:
       requests:
-        cpu: 100m
-        memory: 256Mi
+        cpu: 50m
+        memory: 200Mi
       limits:
         cpu: null
-        memory: 256Mi
+        memory: 200Mi
     targetAllocator:
       enabled: true
       # priorityClassName: platform-critical
@@ -414,8 +414,8 @@ prometheus-node-exporter:
     #   enabled: true
   resources:
     requests:
-      cpu: 10m
-      memory: 32Mi
+      cpu: 5m
+      memory: 25Mi
     limits:
-      memory: 32Mi
+      memory: 25Mi
   priorityClassName: platform-critical
