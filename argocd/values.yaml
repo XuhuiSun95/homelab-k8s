@@ -38,9 +38,9 @@ applicationSet:
   resources:
     requests:
       cpu: 10m
-      memory: 120Mi
+      memory: 100Mi
     limits:
-      memory: 120Mi
+      memory: 100Mi
 
 dex:
   enabled: false
@@ -131,9 +131,9 @@ server:
   resources:
     requests:
       cpu: 10m
-      memory: 150Mi
+      memory: 100Mi
     limits:
-      memory: 150Mi
+      memory: 100Mi
 
 repoServer:
   replicas: 2

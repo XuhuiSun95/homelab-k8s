@@ -4,9 +4,9 @@ service:
 resources:
   requests:
     cpu: 200m
-    memory: 512Mi
+    memory: 650Mi
   limits:
-    memory: 512Mi
+    memory: 650Mi
 podLabels:
   istio.io/dataplane-mode: ambient
 affinity:
@@ -224,7 +224,7 @@ verticalPodAutoscaler:
   # Default safety bounds
   minAllowed:
     cpu: "100m"
-    memory: "512Mi"
+    memory: "650Mi"
 
   maxAllowed:
     cpu: "1000m"
