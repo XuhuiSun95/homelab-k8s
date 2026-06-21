@@ -7,6 +7,14 @@ auth:
 production: true
 proxyHeaders: xforwarded
 
+extraEnvVars:
+  - name: KC_HOSTNAME
+    value: https://iam.local.xuhuisun.com
+  - name: KC_HOSTNAME_ADMIN
+    value: https://keycloak.local.xuhuisun.com
+  - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
+    value: true
+
 replicaCount: 2
 podLabels:
   istio.io/dataplane-mode: ambient
