@@ -3,9 +3,9 @@ replicaCount: 2
 resources:
   requests:
     cpu: 5m
-    memory: 85Mi
+    memory: 70Mi
   limits:
-    memory: 85Mi
+    memory: 70Mi
 
 affinity:
   nodeAffinity:

@@ -44,10 +44,10 @@ nginx:
   replicas: 2
   resources:
     requests:
-      cpu: 40m
-      memory: 32Mi
+      cpu: 5m
+      memory: 20Mi
     limits:
-      memory: 32Mi
+      memory: 20Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -73,10 +73,10 @@ portal:
   replicas: 2
   resources:
     requests:
-      cpu: 5m
-      memory: 16Mi
+      cpu: 1m
+      memory: 15Mi
     limits:
-      memory: 16Mi
+      memory: 15Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -102,10 +102,10 @@ core:
   replicas: 2
   resources:
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 5m
+      memory: 100Mi
     limits:
-      memory: 128Mi
+      memory: 100Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -131,10 +131,10 @@ jobservice:
   replicas: 2
   resources:
     requests:
-      cpu: 10m
-      memory: 64Mi
+      cpu: 5m
+      memory: 50Mi
     limits:
-      memory: 64Mi
+      memory: 50Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -197,11 +197,11 @@ trivy:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 15m
+      memory: 100Mi
     limits:
       cpu: null
-      memory: 256Mi
+      memory: 100Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -237,10 +237,10 @@ redis:
   internal:
     resources:
       requests:
-        cpu: 15m
-        memory: 32Mi
+        cpu: 10m
+        memory: 20Mi
       limits:
-        memory: 32Mi
+        memory: 20Mi
     tolerations:
       - key: node-role.kubernetes.io/memory-optimized
         operator: Exists
