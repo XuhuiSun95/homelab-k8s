@@ -268,10 +268,10 @@ overrides_exporter:
   replicas: 1
   resources:
     requests:
-      cpu: 5m
-      memory: 32Mi
+      cpu: 4m
+      memory: 40Mi
     limits:
-      memory: 32Mi
+      memory: 40Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
