@@ -44,7 +44,7 @@ collectors:
   daemon:
     resources:
       requests:
-        cpu: 20m
+        cpu: 40m
         memory: 200Mi
       limits:
         cpu: null
@@ -66,7 +66,7 @@ collectors:
           effect: NoSchedule
       resources:
         requests:
-          cpu: 80m
+          cpu: 30m
           memory: 230Mi
         limits:
           memory: 230Mi
@@ -415,7 +415,7 @@ prometheus-node-exporter:
   resources:
     requests:
       cpu: 5m
-      memory: 15Mi
+      memory: 20Mi
     limits:
-      memory: 15Mi
+      memory: 20Mi
   priorityClassName: platform-critical
