@@ -8,9 +8,9 @@ replicaCount: 2
 resources:
   requests:
     cpu: 1m
-    memory: 30Mi
+    memory: 35Mi
   limits:
-    memory: 30Mi
+    memory: 35Mi
 podDisruptionBudget:
   enabled: true
   minAvailable: 1

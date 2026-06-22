@@ -8,9 +8,9 @@ podDisruptionBudget:
 resources:
   requests:
     cpu: 4m
-    memory: 220Mi
+    memory: 250Mi
   limits:
-    memory: 220Mi
+    memory: 250Mi
 
 affinity:
   nodeAffinity:

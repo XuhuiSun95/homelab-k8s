@@ -73,9 +73,9 @@ redis-ha:
     resources:
       requests:
         cpu: 30m
-        memory: 30Mi
+        memory: 35Mi
       limits:
-        memory: 30Mi
+        memory: 35Mi
   sentinel:
     resources:
       requests:
