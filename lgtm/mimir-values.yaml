@@ -37,10 +37,10 @@ alertmanager:
   replicas: 2
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 10m
+      memory: 80Mi
     limits:
-      memory: 128Mi
+      memory: 80Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -69,10 +69,10 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: 50m
+      memory: 200Mi
     limits:
-      memory: 512Mi
+      memory: 200Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -131,9 +131,9 @@ ingester:
   resources:
     requests:
       cpu: 100m
-      memory: 2Gi
+      memory: 1200Mi
     limits:
-      memory: 2Gi
+      memory: 1200Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -232,10 +232,10 @@ metadata-cache:
 memcachedExporter:
   resources:
     requests:
-      cpu: 4m
-      memory: 10Mi
+      cpu: 1m
+      memory: 5Mi
     limits:
-      memory: 10Mi
+      memory: 5Mi
 results-cache:
   enabled: true
   replicas: 1
@@ -297,10 +297,10 @@ querier:
   replicas: 1
   resources:
     requests:
-      cpu: 200m
-      memory: 1024Mi
+      cpu: 50m
+      memory: 200Mi
     limits:
-      memory: 1024Mi
+      memory: 200Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -326,10 +326,10 @@ query_frontend:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: 30m
+      memory: 200Mi
     limits:
-      memory: 512Mi
+      memory: 200Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -355,10 +355,10 @@ query_scheduler:
   replicas: 1
   resources:
     requests:
-      cpu: 60m
-      memory: 128Mi
+      cpu: 10m
+      memory: 60Mi
     limits:
-      memory: 128Mi
+      memory: 60Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -384,10 +384,10 @@ ruler:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 80m
+      memory: 160Mi
     limits:
-      memory: 256Mi
+      memory: 160Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -416,10 +416,10 @@ store_gateway:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 1024Mi
+      cpu: 20m
+      memory: 500Mi
     limits:
-      memory: 1024Mi
+      memory: 500Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -447,10 +447,10 @@ gateway:
   replicas: 1
   resources:
     requests:
-      cpu: 20m
-      memory: 30Mi
+      cpu: 10m
+      memory: 20Mi
     limits:
-      memory: 30Mi
+      memory: 20Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -476,10 +476,10 @@ gateway:
 rollout_operator:
   resources:
     requests:
-      cpu: 5m
-      memory: 64Mi
+      cpu: 1m
+      memory: 50Mi
     limits:
-      memory: 64Mi
+      memory: 50Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

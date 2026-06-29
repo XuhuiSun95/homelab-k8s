@@ -5,9 +5,9 @@ global:
     resources:
       requests:
         cpu: 2m
-        memory: 20Mi
+        memory: 25Mi
       limits:
-        memory: 20Mi
+        memory: 25Mi
     tolerations:
       - key: node-role.kubernetes.io/system
         operator: Exists
@@ -67,10 +67,10 @@ operators:
             topologyKey: kubernetes.io/hostname
     resources:
       requests:
-        cpu: 3m
-        memory: 75Mi
+        cpu: 2m
+        memory: 70Mi
       limits:
-        memory: 75Mi
+        memory: 70Mi
     # TODO: disable webhook affinity due to upstream chart missing tolerations
     # webhook:
     #   affinity:

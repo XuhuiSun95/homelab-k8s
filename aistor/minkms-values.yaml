@@ -29,7 +29,7 @@ minkms:
   replicas: 3
   resources:
     requests:
-      cpu: 50m
+      cpu: 40m
       memory: 20Mi
     limits:
       memory: 20Mi
