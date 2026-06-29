@@ -80,17 +80,17 @@ spec:
     topicOperator:
       resources:
         limits:
-          memory: 300Mi
+          memory: 350Mi
         requests:
-          cpu: 8m
-          memory: 300Mi
+          cpu: 6m
+          memory: 350Mi
     userOperator:
       resources:
         limits:
-          memory: 300Mi
+          memory: 350Mi
         requests:
-          cpu: 8m
-          memory: 300Mi
+          cpu: 6m
+          memory: 350Mi
     template:
       pod:
         affinity:
@@ -134,10 +134,10 @@ spec:
         priorityClassName: platform-critical
     resources:
       requests:
-        cpu: 50m
-        memory: 1800Mi
+        cpu: 40m
+        memory: 2000Mi
       limits:
-        memory: 1800Mi
+        memory: 2000Mi
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:
