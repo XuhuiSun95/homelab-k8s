@@ -38,9 +38,9 @@ alertmanager:
   resources:
     requests:
       cpu: 10m
-      memory: 80Mi
+      memory: 70Mi
     limits:
-      memory: 80Mi
+      memory: 70Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -70,7 +70,7 @@ compactor:
   resources:
     requests:
       cpu: 50m
-      memory: 200Mi
+      memory: 100Mi
     limits:
       memory: 200Mi
   affinity:
@@ -99,9 +99,9 @@ distributor:
   resources:
     requests:
       cpu: 150m
-      memory: 200Mi
+      memory: 240Mi
     limits:
-      memory: 200Mi
+      memory: 240Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -130,10 +130,10 @@ ingester:
   replicas: 3
   resources:
     requests:
-      cpu: 100m
-      memory: 1200Mi
+      cpu: 80m
+      memory: 900Mi
     limits:
-      memory: 1200Mi
+      memory: 900Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -297,8 +297,8 @@ querier:
   replicas: 1
   resources:
     requests:
-      cpu: 50m
-      memory: 200Mi
+      cpu: 30m
+      memory: 100Mi
     limits:
       memory: 200Mi
   affinity:
@@ -326,8 +326,8 @@ query_frontend:
   replicas: 1
   resources:
     requests:
-      cpu: 30m
-      memory: 200Mi
+      cpu: 20m
+      memory: 100Mi
     limits:
       memory: 200Mi
   affinity:
@@ -355,7 +355,7 @@ query_scheduler:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
+      cpu: 5m
       memory: 60Mi
     limits:
       memory: 60Mi
@@ -384,10 +384,10 @@ ruler:
   replicas: 1
   resources:
     requests:
-      cpu: 80m
-      memory: 160Mi
+      cpu: 70m
+      memory: 180Mi
     limits:
-      memory: 160Mi
+      memory: 180Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -416,10 +416,10 @@ store_gateway:
   replicas: 3
   resources:
     requests:
-      cpu: 20m
-      memory: 500Mi
+      cpu: 10m
+      memory: 200Mi
     limits:
-      memory: 500Mi
+      memory: 400Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -477,9 +477,9 @@ rollout_operator:
   resources:
     requests:
       cpu: 1m
-      memory: 50Mi
+      memory: 40Mi
     limits:
-      memory: 50Mi
+      memory: 40Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
