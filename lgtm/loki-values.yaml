@@ -50,10 +50,10 @@ ingester:
   replicas: 3
   resources:
     requests:
-      cpu: 50m
-      memory: 1024Mi
+      cpu: 40m
+      memory: 450Mi
     limits:
-      memory: 1024Mi
+      memory: 450Mi
   zoneAwareReplication:
      enabled: false
   affinity:
@@ -81,10 +81,10 @@ querier:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 60m
-      memory: 1024Mi
+      cpu: 20m
+      memory: 200Mi
     limits:
-      memory: 1024Mi
+      memory: 200Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -110,10 +110,10 @@ queryFrontend:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 20m
-      memory: 256Mi
+      cpu: 10m
+      memory: 150Mi
     limits:
-      memory: 256Mi
+      memory: 150Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -138,10 +138,10 @@ queryScheduler:
   replicas: 2
   resources:
     requests:
-      cpu: 20m
-      memory: 128Mi
+      cpu: 5m
+      memory: 70Mi
     limits:
-      memory: 128Mi
+      memory: 70Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -167,10 +167,10 @@ distributor:
   maxUnavailable: 2
   resources:
     requests:
-      cpu: 60m
-      memory: 200Mi
+      cpu: 50m
+      memory: 140Mi
     limits:
-      memory: 200Mi
+      memory: 140Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -195,10 +195,10 @@ compactor:
   replicas: 1
   resources:
     requests:
-      cpu: 30m
-      memory: 512Mi
+      cpu: 20m
+      memory: 200Mi
     limits:
-      memory: 512Mi
+      memory: 200Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -224,10 +224,10 @@ indexGateway:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 20m
-      memory: 512Mi
+      cpu: 5m
+      memory: 100Mi
     limits:
-      memory: 512Mi
+      memory: 100Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -252,10 +252,10 @@ gateway:
   replicas: 1
   resources:
     requests:
-      cpu: 10m
-      memory: 30Mi
+      cpu: 8m
+      memory: 20Mi
     limits:
-      memory: 30Mi
+      memory: 20Mi
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -279,10 +279,10 @@ gateway:
 memcachedExporter:
   resources:
     requests:
-      cpu: 4m
-      memory: 10Mi
+      cpu: 3m
+      memory: 15Mi
     limits:
-      memory: 10Mi
+      memory: 15Mi
 resultsCache:
   replicas: 1
   allocatedMemory: 213

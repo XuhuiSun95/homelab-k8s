@@ -44,10 +44,10 @@ nginx:
   replicas: 2
   resources:
     requests:
-      cpu: 3m
-      memory: 15Mi
+      cpu: 1m
+      memory: 20Mi
     limits:
-      memory: 15Mi
+      memory: 20Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -102,10 +102,10 @@ core:
   replicas: 2
   resources:
     requests:
-      cpu: 15m
-      memory: 80Mi
+      cpu: 10m
+      memory: 120Mi
     limits:
-      memory: 80Mi
+      memory: 120Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
@@ -160,17 +160,17 @@ registry:
   registry:
     resources:
       requests:
-        cpu: 60m
-        memory: 60Mi
+        cpu: 10m
+        memory: 40Mi
       limits:
-        memory: 60Mi
+        memory: 40Mi
   controller:
     resources:
       requests:
-        cpu: 2m
-        memory: 16Mi
+        cpu: 1m
+        memory: 20Mi
       limits:
-        memory: 16Mi
+        memory: 20Mi
   replicas: 2
   tolerations:
     - key: node-role.kubernetes.io/system
@@ -201,7 +201,7 @@ trivy:
       memory: 100Mi
     limits:
       cpu: null
-      memory: 100Mi
+      memory: 200Mi
   tolerations:
     - key: node-role.kubernetes.io/system
       operator: Exists
