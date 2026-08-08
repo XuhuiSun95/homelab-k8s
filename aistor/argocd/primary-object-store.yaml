@@ -13,7 +13,7 @@ spec:
   sources:
     - chart: aistor-objectstore
       repoURL: 'https://helm.min.io/'
-      targetRevision: 1.0.14
+      targetRevision: 1.0.17
       helm:
         valueFiles:
         - $values/aistor/aistor-objectstore-values.yaml
